@@ -11,6 +11,8 @@
 
 <style>
   .header-container{
+    position: absolute;
+    width: 100%;
     display: flex;
     height: 60px;
     justify-content: space-between;

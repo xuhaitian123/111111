@@ -6,7 +6,7 @@
     </div>
     <div class="layout-main">
 
-      <div class="layout-left">
+      <div class="layout-left" v-if="showSidebar">
         <Sidebar/>
       </div>
       <div class="layout-right">
@@ -24,7 +24,9 @@
   }
   .layout-main{
     min-height: 100%;
+    padding-top:60px;
     display: flex;
+    box-sizing: border-box;
   }
   .layout-left{
     width: 200px;
@@ -42,7 +44,10 @@
   // import AppMain from ''
   export default{
     data(){
-      return{}
+
+      return{
+        showSidebar:  this.$route.path !='/main/map'
+      }
     },
     components:{
       Sidebar,
@@ -55,6 +60,11 @@
       },
     mounted(){
 
+    },
+    watch: {
+      '$route' (to, from) {
+        this.showSidebar = to.path !='/main/map'
+      }
     }
   }
 </script>
