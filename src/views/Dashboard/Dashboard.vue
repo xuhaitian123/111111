@@ -98,13 +98,12 @@
                 <div class="Dashboard_card_right">
                   <div class="Dashboard_card_current">
                     <div class="Dashboard_card_title">拥堵里程比例</div>
-                    <div style="height: 100px">
-
+                    <div style="height: 180px;margin-top: 20px" id="main">
                     </div>
 
-
-                    <div style="margin-top: 20px" class="Dashboard_card_title">交叉口拥堵评分</div>
-                    <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph" style="line-height: 18px">
+                    <div style="margin-top: -20px" class="Dashboard_card_title">交叉口拥堵评分</div>
+                    <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph"
+                         style="line-height: 18px">
                       {{item.name}}<span class="fr" style="font-size: 20px">{{item.perc}}</span>
                     </div>
                   </div>
@@ -114,6 +113,7 @@
           </div>
         </el-card>
       </el-col>
+
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
@@ -121,20 +121,37 @@
             <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
-
+            <div class="Dashboard_card_main">
+              <div class="" style="margin: auto;width: 90%">
+                <div class="Dashboard_card_title">
+                  <div style="width: 50%;text-align: center;display: inline-block">交叉口</div>
+                  <div class="Dashboard_card_right" style="text-align: center">拥堵报警</div>
+                </div>
+                <div class="Dashboard_card_progressList" >
+                    <div style="width: 25%;line-height: 35px;text-align: center;font-size: 14px;display: inline-block;margin: 10px 0 10px 10%;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
+                      天津路-南京路
+                    </div>
+                  <div style="width: 30%;text-align: center;font-size: 14px;margin: 10px 0;padding: 0 9%" class="fr">
+                    北进道口右转中度拥挤
+                    <br>
+                    北进道口右转中度拥挤
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </el-card>
       </el-col>
     </el-row>
 
 
-    <div id="map">sdfasdfasdf</div>
-    <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
-    <time-line></time-line>
-    <div class="video">
-      <img :src="videourl"/>
-      <img :src="videoCarurl"/>
-    </div>
+    <!--<div id="map">sdfasdfasdf</div>-->
+    <!--<div id="myChart" :style="{width: '300px', height: '300px'}"></div>-->
+    <!--<time-line></time-line>-->
+    <!--<div class="video">-->
+    <!--<img :src="videourl"/>-->
+    <!--<img :src="videoCarurl"/>-->
+    <!--</div>-->
 
   </div>
 </template>
@@ -200,7 +217,7 @@
 
   .Dashboard_card_title {
     font-size: 14px;
-    padding: 8px 0 8px 20px;
+    padding: 8px 20px;
     background: #1f1f2c;
     color: #a7a7ac;
   }
@@ -321,6 +338,112 @@
           animationDuration: 2000,
         }
       }
+    },
+    mounted() {
+
+      var myChart = this.$echarts.init(document.getElementById('main'));
+
+      let option = {
+        tooltip : {
+          formatter: "{a} <br/>{b} : {c}%"
+        },
+
+        series: [
+          {
+            type: 'gauge',
+            name: '派单占比',
+            width:'220px',
+            radius:'100%',
+            startAngle:'190',
+            endAngle:'-10',
+            //	splitNumber:'50',
+            pointer:{
+              show:false
+            },
+            detail: {
+              show:false,
+              //	offsetCenter:[0,-20],
+              //	formatter:'{value}%'
+            },
+            data: [{value: 65, name: '51%'}],
+            title: {
+              show: true,
+              offsetCenter: [0, 0],
+              textStyle: {
+                color: '#fff',
+                fontStyle: 'normal',
+                fontWeight: 'normal',
+                fontFamily: '微软雅黑',
+                fontSize: 26
+              }
+            },
+            axisLine:{
+              show: true,
+              lineStyle: {
+                color:[[0.5, '#d34e80'], [1, '#fff']],
+                width: 2,
+                shadowBlur: 15,
+                shadowColor: '#e2ea73',
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                opacity: 1
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            splitLine: {
+              show: false,
+              length:25,
+              lineStyle: {
+                color: '#00377a',
+                width: 2,
+                type: 'solid',
+              },
+            },
+            axisLabel: {
+              show: false
+            }
+          }
+        ]
+      };
+
+      myChart.setOption(option);
+
+      this.video()
+      // this.drawLine()
+      var map = new window.BMap.Map("map");    // 创建Map实例
+      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
+      // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
+      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      // map.addControl(new window.BMap.NavigationControl());   //缩放按钮
+      // map.addControl(new window.BMap.MapTypeControl( {mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]} ));   //添加地图类型控件 离线只支持普通、卫星地图; 三维不支持
+      // var driving = new window.BMap.DrivingRoute(map, {
+      //   renderOptions: {
+      //     map: map,
+      //     autoViewport: true
+      //   }
+      // });
+      // // map.setMinZoom(10);
+      // driving.search("中关村", "天安门");
+      // var b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956),new BMap.Point(120.414208,32.657899));
+      // try {
+      //   BMapLib.AreaRestriction.setBounds(map, b);
+      // } catch (e) {
+      //   // Window.layer.msg(e);
+      // }
+      // //监听地图缩放
+      // // map.addEventListener("zoomend", function(){
+      // //     if( this.getZoom() > 8 ) {
+      // //         layer.msg("默认只有8级地图, 超过无法显示");
+      // //     }
+      // // });
+
+      // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
+      // map.addControl(cr); //添加版权控件
+      // var bs = map.getBounds();   //返回地图可视区域
+
+
     },
     methods: {
       drawLine() {
@@ -586,42 +709,6 @@
       }
 
     },
-    mounted() {
-      this.video()
-      this.drawLine()
-      var map = new window.BMap.Map("map");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
-      // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
-      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      // map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      // map.addControl(new window.BMap.MapTypeControl( {mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]} ));   //添加地图类型控件 离线只支持普通、卫星地图; 三维不支持
-      // var driving = new window.BMap.DrivingRoute(map, {
-      //   renderOptions: {
-      //     map: map,
-      //     autoViewport: true
-      //   }
-      // });
-      // // map.setMinZoom(10);
-      // driving.search("中关村", "天安门");
-      // var b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956),new BMap.Point(120.414208,32.657899));
-      // try {
-      //   BMapLib.AreaRestriction.setBounds(map, b);
-      // } catch (e) {
-      //   // Window.layer.msg(e);
-      // }
-      // //监听地图缩放
-      // // map.addEventListener("zoomend", function(){
-      // //     if( this.getZoom() > 8 ) {
-      // //         layer.msg("默认只有8级地图, 超过无法显示");
-      // //     }
-      // // });
-
-      // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
-      // map.addControl(cr); //添加版权控件
-      // var bs = map.getBounds();   //返回地图可视区域
-
-
-    }
 
   }
 </script>
