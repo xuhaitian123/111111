@@ -1,5 +1,133 @@
 <template>
   <div>
+    <div class="Dashboard_titleCascader">
+      <span>省
+        <el-select v-model="currentProvince" size="mini" placeholder="请选择">
+          <el-option
+            v-for="item in provinceList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </span>
+
+      <span>城市
+        <el-select v-model="currentCity" size="mini" placeholder="请选择">
+          <el-option
+            v-for="item in cityList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </span>
+
+      <span>地区
+        <el-select v-model="currentArea" size="mini" placeholder="请选择">
+          <el-option class="selectColor"
+                     v-for="item in areaList"
+                     :key="item.value"
+                     :label="item.label"
+                     :value="item.value">
+          </el-option>
+        </el-select>
+      </span>
+    </div>
+
+    <!--card 模板-->
+    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
+    <!--<div class="Dashboard_clearfix">-->
+    <!--<span>实时地图</span>-->
+    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
+    <!--</div>-->
+    <!--<div class="Dashboard_card_body">-->
+
+    <!--</div>-->
+    <!--</el-card>-->
+
+    <el-row :gutter="5" class="Dashboard_lineRow">
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>实时地图</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body">
+
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>路网数据展示</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body">
+            <div class="Dashboard_card_main">
+              <div class="Dashboard_card_left">
+                <div class="Dashboard_card_current">
+                  <div class="Dashboard_card_title">路网总流量</div>
+
+                  <div class="Dashboard_card_progressList" style="height: 150px">
+                    <div v-for="item in roadFlow" :key="item.vph">
+                      <div class="fl Dashboard_card_progress">
+                        <div class="Dashboard_card_road">{{item.name}}</div>
+                        <el-progress :percentage="item.perc" :stroke-width="8" :color="item.color"
+                                     :show-text="false"></el-progress>
+                      </div>
+                      <div class="fr">
+                        <span class="Dashboard_card_vph">{{item.vph}}vph</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div style="margin-top: 20px" class="Dashboard_card_title">路网拥堵评分</div>
+                    <div style="line-height: 60px;text-align: right" class="">
+                      <span style="font-size: 24px ;color: #ff8539">68</span> 分
+                    </div>
+                    <el-progress :percentage="80" :stroke-width="8" color="#ff8539"
+                                 :show-text="false"></el-progress>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="Dashboard_card_right">
+                  <div class="Dashboard_card_current">
+                    <div class="Dashboard_card_title">拥堵里程比例</div>
+                    <div style="height: 100px">
+
+                    </div>
+
+
+                    <div style="margin-top: 20px" class="Dashboard_card_title">交叉口拥堵评分</div>
+                    <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph" style="line-height: 18px">
+                      {{item.name}}<span class="fr" style="font-size: 20px">{{item.perc}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>报警信息</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body">
+
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+
     <div id="map">sdfasdfasdf</div>
     <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
     <time-line></time-line>
@@ -15,24 +143,113 @@
     width: 300px;
     height: 300px;
   }
+
   .echarts {
     height: 300px;
   }
-  .video{
+
+  .video {
     position: relative;
     height: 300px;
     width: 400px;
   }
-  img{
+
+  img {
     position: absolute;
     height: 100%;
     width: 100%;
   }
+
+  .Dashboard_titleCascader {
+    background: #282635;
+    color: white;
+    line-height: 60px;
+    margin: 0 5px;
+    border-radius: 1px;
+  }
+
+  .Dashboard_box-card {
+    border-radius: 1px;
+    color: white;
+    border: 0;
+  }
+
+  .Dashboard_clearfix {
+    padding: 10px 30px;
+    background: #353644;
+    font-size: 15px;
+  }
+
+  .Dashboard_lineRow {
+    margin: 5px 0 0 !important;
+  }
+
+  .Dashboard_card_body {
+    background: #292936;
+    height: 400px;
+  }
+
+  .Dashboard_card_main {
+    padding: 10px 0;
+  }
+
+  .Dashboard_card_left {
+    width: 50%;
+    float: left;
+  }
+
+  .Dashboard_card_title {
+    font-size: 14px;
+    padding: 8px 0 8px 20px;
+    background: #1f1f2c;
+    color: #a7a7ac;
+  }
+
+  .Dashboard_card_current {
+    margin: auto;
+    width: 80%;
+  }
+
+  .Dashboard_card_right {
+    float: right;
+    width: 50%;
+  }
+
+  .Dashboard_card_progressList {
+    margin-top: 10px;
+    background: #353644;
+    padding: 8px;
+    /*height: 150px;*/
+    color: #a7a7ac;
+    font-size: 12px;
+  }
+
+  .el-progress-bar__inner, .el-progress-bar__outer {
+    border-radius: 0 !important;
+  }
+
+  .el-progress-bar__outer {
+    background: inherit !important;
+  }
+
+  .Dashboard_card_road {
+    padding-bottom: 2px;
+  }
+
+  .Dashboard_card_progress {
+    width: 70%;
+  }
+
+  .Dashboard_card_vph {
+    font-size: 15px;
+    line-height: 30px;
+  }
 </style>
 <script>
   import TimeLine from '../../components/TimeLine/TimeLine'
+
   export default {
-    components:{
+    components: {
       TimeLine,
     },
     data() {
@@ -45,8 +262,30 @@
       }
 
       return {
-        videourl:'',
-        videoCarurl:'',
+
+        provinceList: [{
+          value: '1',
+          label: '江苏'
+        }],
+        cityList: [{
+          value: '1',
+          label: '淮安'
+        }],
+        areaList: [{
+          value: '1',
+          label: '盱眙'
+        }],
+        currentProvince: '1',
+        currentCity: '1',
+        currentArea: '1',
+        roadFlow: [
+          {name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'},
+          {name: '人民路 - 南京路', vph: '312', perc: 70, color: 'yellow'}
+        ],
+
+
+        videourl: '',
+        videoCarurl: '',
         polar: {
           title: {
             text: '极坐标双数值轴'
@@ -79,12 +318,12 @@
               data: data
             }
           ],
-          animationDuration: 2000
+          animationDuration: 2000,
         }
       }
     },
     methods: {
-      drawLine(){
+      drawLine() {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'))
         // 绘制图表
@@ -92,13 +331,13 @@
         // app.title = '笛卡尔坐标系上的热力图';
 
         var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
-          '7a', '8a', '9a','10a','11a',
+          '7a', '8a', '9a', '10a', '11a',
           '12p', '1p', '2p', '3p', '4p', '5p',
           '6p', '7p', '8p', '9p', '10p', '11p'];
         var days = ['Saturday', 'Friday', 'Thursday',
           'Wednesday', 'Tuesday', 'Monday', 'Sunday'];
 
-        var data = [[0,0,10],[0,1,1],[0,2,0],[0,3,0],[0,4,0],[0,5,0],[0,6,0],[0,7,0],[0,8,0],[0,9,0],[0,10,0],[0,11,2],[0,12,4],[0,13,1],[0,14,1],[0,15,3],[0,16,4],[0,17,6],[0,18,4],[0,19,4],[0,20,3],[0,21,3],[0,22,2],[0,23,5],[1,0,7],[1,1,0],[1,2,0],[1,3,0],[1,4,0],[1,5,0],[1,6,0],[1,7,0],[1,8,0],[1,9,0],[1,10,5],[1,11,2],[1,12,2],[1,13,6],[1,14,9],[1,15,11],[1,16,6],[1,17,7],[1,18,8],[1,19,12],[1,20,5],[1,21,5],[1,22,7],[1,23,2],[2,0,1],[2,1,1],[2,2,0],[2,3,0],[2,4,0],[2,5,0],[2,6,0],[2,7,0],[2,8,0],[2,9,0],[2,10,3],[2,11,2],[2,12,1],[2,13,9],[2,14,8],[2,15,10],[2,16,6],[2,17,5],[2,18,5],[2,19,5],[2,20,7],[2,21,4],[2,22,2],[2,23,4],[3,0,7],[3,1,3],[3,2,0],[3,3,0],[3,4,0],[3,5,0],[3,6,0],[3,7,0],[3,8,1],[3,9,0],[3,10,5],[3,11,4],[3,12,7],[3,13,14],[3,14,13],[3,15,12],[3,16,9],[3,17,5],[3,18,5],[3,19,10],[3,20,6],[3,21,4],[3,22,4],[3,23,1],[4,0,1],[4,1,3],[4,2,0],[4,3,0],[4,4,0],[4,5,1],[4,6,0],[4,7,0],[4,8,0],[4,9,2],[4,10,4],[4,11,4],[4,12,2],[4,13,4],[4,14,4],[4,15,14],[4,16,12],[4,17,1],[4,18,8],[4,19,5],[4,20,3],[4,21,7],[4,22,3],[4,23,0],[5,0,2],[5,1,1],[5,2,0],[5,3,3],[5,4,0],[5,5,0],[5,6,0],[5,7,0],[5,8,2],[5,9,0],[5,10,4],[5,11,1],[5,12,5],[5,13,10],[5,14,5],[5,15,7],[5,16,11],[5,17,6],[5,18,0],[5,19,5],[5,20,3],[5,21,4],[5,22,2],[5,23,0],[6,0,1],[6,1,0],[6,2,0],[6,3,0],[6,4,0],[6,5,0],[6,6,0],[6,7,0],[6,8,0],[6,9,0],[6,10,1],[6,11,0],[6,12,2],[6,13,1],[6,14,3],[6,15,4],[6,16,0],[6,17,0],[6,18,0],[6,19,0],[6,20,1],[6,21,2],[6,22,2],[6,23,6]];
+        var data = [[0, 0, 10], [0, 1, 1], [0, 2, 0], [0, 3, 0], [0, 4, 0], [0, 5, 0], [0, 6, 0], [0, 7, 0], [0, 8, 0], [0, 9, 0], [0, 10, 0], [0, 11, 2], [0, 12, 4], [0, 13, 1], [0, 14, 1], [0, 15, 3], [0, 16, 4], [0, 17, 6], [0, 18, 4], [0, 19, 4], [0, 20, 3], [0, 21, 3], [0, 22, 2], [0, 23, 5], [1, 0, 7], [1, 1, 0], [1, 2, 0], [1, 3, 0], [1, 4, 0], [1, 5, 0], [1, 6, 0], [1, 7, 0], [1, 8, 0], [1, 9, 0], [1, 10, 5], [1, 11, 2], [1, 12, 2], [1, 13, 6], [1, 14, 9], [1, 15, 11], [1, 16, 6], [1, 17, 7], [1, 18, 8], [1, 19, 12], [1, 20, 5], [1, 21, 5], [1, 22, 7], [1, 23, 2], [2, 0, 1], [2, 1, 1], [2, 2, 0], [2, 3, 0], [2, 4, 0], [2, 5, 0], [2, 6, 0], [2, 7, 0], [2, 8, 0], [2, 9, 0], [2, 10, 3], [2, 11, 2], [2, 12, 1], [2, 13, 9], [2, 14, 8], [2, 15, 10], [2, 16, 6], [2, 17, 5], [2, 18, 5], [2, 19, 5], [2, 20, 7], [2, 21, 4], [2, 22, 2], [2, 23, 4], [3, 0, 7], [3, 1, 3], [3, 2, 0], [3, 3, 0], [3, 4, 0], [3, 5, 0], [3, 6, 0], [3, 7, 0], [3, 8, 1], [3, 9, 0], [3, 10, 5], [3, 11, 4], [3, 12, 7], [3, 13, 14], [3, 14, 13], [3, 15, 12], [3, 16, 9], [3, 17, 5], [3, 18, 5], [3, 19, 10], [3, 20, 6], [3, 21, 4], [3, 22, 4], [3, 23, 1], [4, 0, 1], [4, 1, 3], [4, 2, 0], [4, 3, 0], [4, 4, 0], [4, 5, 1], [4, 6, 0], [4, 7, 0], [4, 8, 0], [4, 9, 2], [4, 10, 4], [4, 11, 4], [4, 12, 2], [4, 13, 4], [4, 14, 4], [4, 15, 14], [4, 16, 12], [4, 17, 1], [4, 18, 8], [4, 19, 5], [4, 20, 3], [4, 21, 7], [4, 22, 3], [4, 23, 0], [5, 0, 2], [5, 1, 1], [5, 2, 0], [5, 3, 3], [5, 4, 0], [5, 5, 0], [5, 6, 0], [5, 7, 0], [5, 8, 2], [5, 9, 0], [5, 10, 4], [5, 11, 1], [5, 12, 5], [5, 13, 10], [5, 14, 5], [5, 15, 7], [5, 16, 11], [5, 17, 6], [5, 18, 0], [5, 19, 5], [5, 20, 3], [5, 21, 4], [5, 22, 2], [5, 23, 0], [6, 0, 1], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0], [6, 10, 1], [6, 11, 0], [6, 12, 2], [6, 13, 1], [6, 14, 3], [6, 15, 4], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 1], [6, 21, 2], [6, 22, 2], [6, 23, 6]];
 
         data = data.map(function (item) {
           return [item[0], item[1], item[2] || '-'];
@@ -153,18 +392,177 @@
           }]
         }
 
-        myChart.setOption(option  );
+        myChart.setOption(option);
       },
-      video(){
-        var images = [{"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021418910_3120.jpg", "timestamp": 1535021418910}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021418957_3121.jpg", "timestamp": 1535021418957}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419004_3122.jpg", "timestamp": 1535021419004}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419055_3123.jpg", "timestamp": 1535021419055}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419235_3124.jpg", "timestamp": 1535021419235}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419431_3125.jpg", "timestamp": 1535021419431}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419631_3126.jpg", "timestamp": 1535021419631}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419827_3127.jpg", "timestamp": 1535021419827}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420025_3128.jpg", "timestamp": 1535021420025}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420226_3129.jpg", "timestamp": 1535021420226}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420441_3130.jpg", "timestamp": 1535021420441}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420631_3131.jpg", "timestamp": 1535021420631}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420825_3132.jpg", "timestamp": 1535021420825}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421028_3133.jpg", "timestamp": 1535021421028}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421226_3134.jpg", "timestamp": 1535021421226}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421433_3135.jpg", "timestamp": 1535021421433}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421626_3136.jpg", "timestamp": 1535021421626}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421825_3137.jpg", "timestamp": 1535021421825}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422027_3138.jpg", "timestamp": 1535021422027}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422227_3139.jpg", "timestamp": 1535021422227}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422445_3140.jpg", "timestamp": 1535021422445}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422630_3141.jpg", "timestamp": 1535021422630}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422830_3142.jpg", "timestamp": 1535021422830}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423027_3143.jpg", "timestamp": 1535021423027}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423230_3144.jpg", "timestamp": 1535021423230}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423426_3145.jpg", "timestamp": 1535021423426}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423623_3146.jpg", "timestamp": 1535021423623}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423823_3147.jpg", "timestamp": 1535021423823}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424024_3148.jpg", "timestamp": 1535021424024}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424223_3149.jpg", "timestamp": 1535021424223}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424457_3150.jpg", "timestamp": 1535021424457}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424627_3151.jpg", "timestamp": 1535021424627}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424823_3152.jpg", "timestamp": 1535021424823}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425017_3153.jpg", "timestamp": 1535021425017}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425227_3154.jpg", "timestamp": 1535021425227}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425425_3155.jpg", "timestamp": 1535021425425}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425626_3156.jpg", "timestamp": 1535021425626}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425820_3157.jpg", "timestamp": 1535021425820}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426025_3158.jpg", "timestamp": 1535021426025}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426233_3159.jpg", "timestamp": 1535021426233}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426451_3160.jpg", "timestamp": 1535021426451}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426625_3161.jpg", "timestamp": 1535021426625}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426833_3162.jpg", "timestamp": 1535021426833}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427026_3163.jpg", "timestamp": 1535021427026}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427223_3164.jpg", "timestamp": 1535021427223}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427430_3165.jpg", "timestamp": 1535021427430}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427631_3166.jpg", "timestamp": 1535021427631}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427827_3167.jpg", "timestamp": 1535021427827}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428027_3168.jpg", "timestamp": 1535021428027}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428217_3169.jpg", "timestamp": 1535021428217}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428448_3170.jpg", "timestamp": 1535021428448}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428635_3171.jpg", "timestamp": 1535021428635}, {"url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428829_3172.jpg", "timestamp": 1535021428829}]
-         images = images.map(item => {
-          item.url = item.url.replace('192.168.8.131:8002','47.97.165.170:6003')
+      video() {
+        var images = [{
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021418910_3120.jpg",
+          "timestamp": 1535021418910
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021418957_3121.jpg",
+          "timestamp": 1535021418957
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419004_3122.jpg",
+          "timestamp": 1535021419004
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419055_3123.jpg",
+          "timestamp": 1535021419055
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419235_3124.jpg",
+          "timestamp": 1535021419235
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419431_3125.jpg",
+          "timestamp": 1535021419431
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419631_3126.jpg",
+          "timestamp": 1535021419631
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419827_3127.jpg",
+          "timestamp": 1535021419827
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420025_3128.jpg",
+          "timestamp": 1535021420025
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420226_3129.jpg",
+          "timestamp": 1535021420226
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420441_3130.jpg",
+          "timestamp": 1535021420441
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420631_3131.jpg",
+          "timestamp": 1535021420631
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420825_3132.jpg",
+          "timestamp": 1535021420825
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421028_3133.jpg",
+          "timestamp": 1535021421028
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421226_3134.jpg",
+          "timestamp": 1535021421226
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421433_3135.jpg",
+          "timestamp": 1535021421433
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421626_3136.jpg",
+          "timestamp": 1535021421626
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421825_3137.jpg",
+          "timestamp": 1535021421825
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422027_3138.jpg",
+          "timestamp": 1535021422027
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422227_3139.jpg",
+          "timestamp": 1535021422227
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422445_3140.jpg",
+          "timestamp": 1535021422445
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422630_3141.jpg",
+          "timestamp": 1535021422630
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422830_3142.jpg",
+          "timestamp": 1535021422830
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423027_3143.jpg",
+          "timestamp": 1535021423027
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423230_3144.jpg",
+          "timestamp": 1535021423230
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423426_3145.jpg",
+          "timestamp": 1535021423426
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423623_3146.jpg",
+          "timestamp": 1535021423623
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423823_3147.jpg",
+          "timestamp": 1535021423823
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424024_3148.jpg",
+          "timestamp": 1535021424024
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424223_3149.jpg",
+          "timestamp": 1535021424223
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424457_3150.jpg",
+          "timestamp": 1535021424457
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424627_3151.jpg",
+          "timestamp": 1535021424627
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424823_3152.jpg",
+          "timestamp": 1535021424823
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425017_3153.jpg",
+          "timestamp": 1535021425017
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425227_3154.jpg",
+          "timestamp": 1535021425227
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425425_3155.jpg",
+          "timestamp": 1535021425425
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425626_3156.jpg",
+          "timestamp": 1535021425626
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425820_3157.jpg",
+          "timestamp": 1535021425820
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426025_3158.jpg",
+          "timestamp": 1535021426025
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426233_3159.jpg",
+          "timestamp": 1535021426233
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426451_3160.jpg",
+          "timestamp": 1535021426451
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426625_3161.jpg",
+          "timestamp": 1535021426625
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426833_3162.jpg",
+          "timestamp": 1535021426833
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427026_3163.jpg",
+          "timestamp": 1535021427026
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427223_3164.jpg",
+          "timestamp": 1535021427223
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427430_3165.jpg",
+          "timestamp": 1535021427430
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427631_3166.jpg",
+          "timestamp": 1535021427631
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427827_3167.jpg",
+          "timestamp": 1535021427827
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428027_3168.jpg",
+          "timestamp": 1535021428027
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428217_3169.jpg",
+          "timestamp": 1535021428217
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428448_3170.jpg",
+          "timestamp": 1535021428448
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428635_3171.jpg",
+          "timestamp": 1535021428635
+        }, {
+          "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428829_3172.jpg",
+          "timestamp": 1535021428829
+        }]
+        images = images.map(item => {
+          item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003')
           return item
         })
 
 
-        let allPromise = images.map((item)=>{
-          new Promise(function(resolve){
+        let allPromise = images.map((item) => {
+          new Promise(function (resolve) {
             let imgObj = new Image(); // 创建图片对象
             imgObj.src = item.url;
 
@@ -173,19 +571,16 @@
             }, false);
           })
         })
-        Promise.all(allPromise).then(()=>{
+        Promise.all(allPromise).then(() => {
           console.log('start')
-          var i =0;
-          let timer = setInterval(()=>{
+          var i = 0;
+          let timer = setInterval(() => {
             i++
-            if(images.length<i) clearInterval(timer)
+            if (images.length < i) clearInterval(timer)
             this.videourl = images[i].url
-            this.videoCarurl= images[i].url.replace('img/','mask/').replace('jpg','png')
-          },100)
+            this.videoCarurl = images[i].url.replace('img/', 'mask/').replace('jpg', 'png')
+          }, 100)
         })
-
-
-
 
 
       }
@@ -195,7 +590,7 @@
       this.video()
       this.drawLine()
       var map = new window.BMap.Map("map");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306,33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
+      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
       // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
       // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
       // map.addControl(new window.BMap.NavigationControl());   //缩放按钮
