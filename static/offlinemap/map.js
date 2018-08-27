@@ -1711,7 +1711,7 @@ function my_log(s){
 		c && (d = document.createElementNS(c, a));
 		return x.D.nF(d, b || {})
 	}
-	function Wa(a) {
+	function Wa(a)   {
 		if (a.currentStyle) return a.currentStyle;
 		if (a.ownerDocument && a.ownerDocument.defaultView) return a.ownerDocument.defaultView.getComputedStyle(a, p)
 	}

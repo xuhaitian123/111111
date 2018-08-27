@@ -14,11 +14,11 @@ export default {
   mounted(){
     var map = new BMap.Map('allmap');
     map.centerAndZoom(new BMap.Point(116.404269,39.916042), 12);
-    var  mapStyle ={
-      features: ["road", "building","water","land"],//隐藏地图上的poi
-      style : "dark"  //设置地图风格为高端黑
-    }
-    map.setMapStyle(mapStyle);
+    // var  mapStyle ={
+    //   features: ["road", "building","water","land"],//隐藏地图上的poi
+    //   style : "dark"  //设置地图风格为高端黑
+    // }
+    // map.setMapStyle(mapStyle);
     function checkhHtml5()
     {
       if (typeof(Worker) === "undefined")

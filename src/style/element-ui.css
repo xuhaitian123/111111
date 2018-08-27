@@ -1,0 +1,23 @@
+.el-menu{
+  text-align: left;
+}
+.red{
+  display: none;
+}
+.is-active>.active-item{
+  width: 5px;
+  height: 100%;
+  background: #ffab2f;
+  float: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+}
+.el-menu-item,
+.menuitem{
+  position: relative;
+}
+.el-submenu .el-menu-item{
+  min-width: 50px;
+}
