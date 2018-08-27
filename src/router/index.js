@@ -21,11 +21,24 @@ export default new Router({
         }
       ],
     },
+
     {
       path: '/main',
       component: Layout,
       name: 'Layout',
       // redirect: '/main/map',
+      children: [
+        {
+          path: 'map',
+          component: Map,
+          name: 'map'
+        }
+      ],
+    },{
+      path: '',
+      component: Layout,
+      name: 'Layout',
+      redirect: '/main/map',
       children: [
         {
           path: 'map',

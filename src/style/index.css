@@ -7,4 +7,5 @@ body{
   background: black;
   min-width: 1500px;
   color: #ffffff;
+  overflow: hidden;
 }
