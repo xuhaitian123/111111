@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 200%">
     <div id="map">sdfasdfasdf</div>
     <div id="myChart" :style="{width: '300px', height: '300px'}"></div>
     <time-line></time-line>

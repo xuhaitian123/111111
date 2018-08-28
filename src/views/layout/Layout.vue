@@ -23,7 +23,7 @@
     height: 100%;
   }
   .layout-main{
-    min-height: 100%;
+    height: 100%;
     padding-top:60px;
     display: flex;
     box-sizing: border-box;
@@ -35,6 +35,8 @@
     flex-grow:1;
     border: 1px solid #999999;
     background: #999999;
+    height: 100%;
+    overflow: auto;
   }
 </style>
 <script>

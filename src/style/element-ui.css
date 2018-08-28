@@ -21,3 +21,30 @@
 .el-submenu .el-menu-item{
   min-width: 50px;
 }
+
+.el-select {
+  width: 100px;
+  height: 30px;
+  background: black;
+}
+.el-select input{
+  height: 30px;
+  background: black;
+  border: 1px solid black;
+  color: #ffffff;
+}
+
+.el-select input:hover{
+  height: 30px;
+  background: black;
+  border: 1px solid black !important;
+}
+
+.el-select .el-input{
+  height: 30px;
+  background: black;
+
+}
+.el-select .el-input__icon{
+  line-height: 30px;
+}
