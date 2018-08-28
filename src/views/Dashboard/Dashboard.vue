@@ -54,7 +54,7 @@
             <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
-
+            <div id="map"></div>
           </div>
         </el-card>
       </el-col>
@@ -157,8 +157,8 @@
 </template>
 <style>
   #map {
-    width: 300px;
-    height: 300px;
+    width: 100%;
+    height: 400px;
   }
 
   .echarts {
@@ -415,8 +415,8 @@
       var map = new window.BMap.Map("map");    // 创建Map实例
       map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
       // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
-      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      // map.addControl(new window.BMap.NavigationControl());   //缩放按钮
+      map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      map.addControl(new window.BMap.NavigationControl());   //缩放按钮
       // map.addControl(new window.BMap.MapTypeControl( {mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]} ));   //添加地图类型控件 离线只支持普通、卫星地图; 三维不支持
       // var driving = new window.BMap.DrivingRoute(map, {
       //   renderOptions: {
