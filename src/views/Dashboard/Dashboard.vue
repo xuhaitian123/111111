@@ -179,7 +179,7 @@
             <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-
+            <SmoothBarLine></SmoothBarLine>
           </div>
         </el-card>
       </el-col>
@@ -313,6 +313,7 @@
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import MixLineBar from '../../components/ECharts/MixLineBarItem'
   import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
+  import SmoothBarLine from '../../components/ECharts/SmoothBarLineItem'
 
   export default {
     components: {
@@ -320,6 +321,7 @@
       RoadGauge,
       MixLineBar,
       PieDoughnut,
+      SmoothBarLine,
     },
     data() {
       let data = []

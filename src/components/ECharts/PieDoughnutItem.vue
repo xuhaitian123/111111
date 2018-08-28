@@ -47,21 +47,21 @@
                 "name": "通畅",
                 "icon": "circle",
                 "textStyle": {
-                  "color": "#fff",
+                  "color": "#7d7d7d",
                 }
               },
               {
                 "name": "正常",
                 "icon": "circle",
                 "textStyle": {
-                  "color": "#fff",
+                  "color": "#7d7d7d",
                 }
               },
               {
                 "name": "拥堵",
                 "icon": "circle",
                 "textStyle": {
-                  "color": "#fff",
+                  "color": "#7d7d7d",
 
                 }
               }]
