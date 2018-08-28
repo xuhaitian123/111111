@@ -33,8 +33,8 @@
   }
   .layout-right{
     flex-grow:1;
-    border: 1px solid #999999;
-    background: #999999;
+    border: 1px solid #171821;
+    background: #171821;
   }
 </style>
 <script>

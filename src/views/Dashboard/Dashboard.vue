@@ -46,7 +46,7 @@
     <!--</div>-->
     <!--</el-card>-->
 
-    <el-row :gutter="5" class="Dashboard_lineRow">
+    <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
@@ -98,10 +98,9 @@
                 <div class="Dashboard_card_right">
                   <div class="Dashboard_card_current">
                     <div class="Dashboard_card_title">拥堵里程比例</div>
-                    <div style="height: 180px;margin-top: 20px" id="main">
-                    </div>
+                    <RoadGauge></RoadGauge>
 
-                    <div style="margin-top: -20px" class="Dashboard_card_title">交叉口拥堵评分</div>
+                    <div style="margin-top: -50px" class="Dashboard_card_title">交叉口拥堵评分</div>
                     <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph"
                          style="line-height: 18px">
                       {{item.name}}<span class="fr" style="font-size: 20px">{{item.perc}}</span>
@@ -139,6 +138,43 @@
                 </div>
               </div>
             </div>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+
+    <el-row :gutter="10" class="Dashboard_lineRow">
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>信号灯优化前后数据展示</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body_two">
+            <MixLineBar></MixLineBar>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>信号灯优化前后数据展示</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body_two">
+
+          </div>
+        </el-card>
+      </el-col>
+
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>数据变化趋势对比分析</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body_two">
+
           </div>
         </el-card>
       </el-col>
@@ -192,18 +228,23 @@
   }
 
   .Dashboard_clearfix {
-    padding: 10px 30px;
+    padding: 8px 30px;
     background: #353644;
     font-size: 15px;
   }
 
   .Dashboard_lineRow {
-    margin: 5px 0 0 !important;
+    margin: 10px 0 0 !important;
   }
 
   .Dashboard_card_body {
     background: #292936;
     height: 400px;
+  }
+
+  .Dashboard_card_body_two {
+    background: #292936;
+    height: 200px;
   }
 
   .Dashboard_card_main {
@@ -264,10 +305,14 @@
 </style>
 <script>
   import TimeLine from '../../components/TimeLine/TimeLine'
+  import RoadGauge from '../../components/ECharts/RoadGaugeItem'
+  import MixLineBar from '../../components/ECharts/MixLineBarItem'
 
   export default {
     components: {
       TimeLine,
+      RoadGauge,
+      MixLineBar,
     },
     data() {
       let data = []
@@ -340,76 +385,6 @@
       }
     },
     mounted() {
-
-      var myChart = this.$echarts.init(document.getElementById('main'));
-
-      let option = {
-        tooltip : {
-          formatter: "{a} <br/>{b} : {c}%"
-        },
-
-        series: [
-          {
-            type: 'gauge',
-            name: '派单占比',
-            width:'220px',
-            radius:'100%',
-            startAngle:'190',
-            endAngle:'-10',
-            //	splitNumber:'50',
-            pointer:{
-              show:false
-            },
-            detail: {
-              show:false,
-              //	offsetCenter:[0,-20],
-              //	formatter:'{value}%'
-            },
-            data: [{value: 65, name: '51%'}],
-            title: {
-              show: true,
-              offsetCenter: [0, 0],
-              textStyle: {
-                color: '#fff',
-                fontStyle: 'normal',
-                fontWeight: 'normal',
-                fontFamily: '微软雅黑',
-                fontSize: 26
-              }
-            },
-            axisLine:{
-              show: true,
-              lineStyle: {
-                color:[[0.5, '#d34e80'], [1, '#fff']],
-                width: 2,
-                shadowBlur: 15,
-                shadowColor: '#e2ea73',
-                shadowOffsetX: 0,
-                shadowOffsetY: 0,
-                opacity: 1
-              }
-            },
-            axisTick: {
-              show: false
-            },
-            splitLine: {
-              show: false,
-              length:25,
-              lineStyle: {
-                color: '#00377a',
-                width: 2,
-                type: 'solid',
-              },
-            },
-            axisLabel: {
-              show: false
-            }
-          }
-        ]
-      };
-
-      myChart.setOption(option);
-
       this.video()
       // this.drawLine()
       var map = new window.BMap.Map("map");    // 创建Map实例
