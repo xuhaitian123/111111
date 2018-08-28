@@ -126,10 +126,11 @@
                   <div style="width: 50%;text-align: center;display: inline-block">交叉口</div>
                   <div class="Dashboard_card_right" style="text-align: center">拥堵报警</div>
                 </div>
-                <div class="Dashboard_card_progressList" >
-                    <div style="width: 25%;line-height: 35px;text-align: center;font-size: 14px;display: inline-block;margin: 10px 0 10px 10%;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
-                      天津路-南京路
-                    </div>
+                <div class="Dashboard_card_progressList">
+                  <div
+                    style="width: 25%;line-height: 35px;text-align: center;font-size: 14px;display: inline-block;margin: 10px 0 10px 10%;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
+                    天津路-南京路
+                  </div>
                   <div style="width: 30%;text-align: center;font-size: 14px;margin: 10px 0;padding: 0 9%" class="fr">
                     北进道口右转中度拥挤
                     <br>
@@ -143,48 +144,163 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="10" class="Dashboard_lineRow">
-      <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
-          <div class="Dashboard_clearfix">
-            <span>信号灯优化前后数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
-          </div>
-          <div class="Dashboard_card_body_two">
-            <MixLineBar></MixLineBar>
-          </div>
-        </el-card>
-      </el-col>
-      <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
-          <div class="Dashboard_clearfix">
-            <span>信号灯优化前后数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
-          </div>
-          <div class="Dashboard_card_body_two">
-            <div style="width: 50%;height: 80%;display: inline-block">
-              <PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>
-            </div>
-            <div style="width: 50%;height: 80%;display: inline-block" class="fr">
-              <PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>
-            </div>
-          </div>
-        </el-card>
-      </el-col>
+    <!--<el-row :gutter="10" class="Dashboard_lineRow">-->
+    <!--<el-col :span="8">-->
+    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
+    <!--<div class="Dashboard_clearfix">-->
+    <!--<span>信号灯优化前后数据展示</span>-->
+    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
+    <!--</div>-->
+    <!--<div class="Dashboard_card_body_two">-->
+    <!--<MixLineBar></MixLineBar>-->
+    <!--</div>-->
+    <!--</el-card>-->
+    <!--</el-col>-->
+    <!--<el-col :span="8">-->
+    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
+    <!--<div class="Dashboard_clearfix">-->
+    <!--<span>信号灯优化前后数据展示</span>-->
+    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
+    <!--</div>-->
+    <!--<div class="Dashboard_card_body_two">-->
+    <!--<div style="width: 50%;height: 80%;display: inline-block">-->
+    <!--<PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>-->
+    <!--</div>-->
+    <!--<div style="width: 50%;height: 80%;display: inline-block" class="fr">-->
+    <!--<PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</el-card>-->
+    <!--</el-col>-->
 
-      <el-col :span="8">
+    <!--<el-col :span="8">-->
+    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
+    <!--<div class="Dashboard_clearfix">-->
+    <!--<span>数据变化趋势对比分析</span>-->
+    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
+    <!--</div>-->
+    <!--<div class="Dashboard_card_body_two">-->
+    <!--<SmoothBarLine></SmoothBarLine>-->
+    <!--</div>-->
+    <!--</el-card>-->
+    <!--</el-col>-->
+    <!--</el-row>-->
+
+    <el-row :gutter="10" class="Dashboard_lineRow">
+      <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
-            <span>数据变化趋势对比分析</span>
+            <span>优先通行控制设置</span>
             <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
           </div>
-          <div class="Dashboard_card_body_two">
-            <SmoothBarLine></SmoothBarLine>
+          <div class="Dashboard_card_body_two" style="padding: 20px">
+
+            <el-col :span="6" class="">
+              <div class="Dashboard_set_col" style="height: 180px;position: relative">
+                人民路-珠海路优先通行控制设置
+
+                <div>
+                  <div class="fl" style="padding-left: 10px;margin: 10px 0">
+                    <span>优先方式</span>
+                    <ul>
+                      <el-checkbox-group style="margin: 10px 0" v-model="firstMode">
+                        <li>
+                          <el-checkbox label="绿灯延长"></el-checkbox>
+                        </li>
+                        <li>
+                          <el-checkbox label="红灯提前结束"></el-checkbox>
+                        </li>
+                        <li>
+                          <el-checkbox label="调整相位顺序"></el-checkbox>
+                        </li>
+                      </el-checkbox-group>
+                    </ul>
+                  </div>
+                  <div class="fr" style="margin: 10px 0">
+                    <div class="fl">
+                      <span>优先车辆和等级</span>
+                      <ul>
+                        <el-checkbox-group v-model="firstVehicle" style="margin: 10px 0 10px 10px">
+                          <li>
+                            <el-checkbox label="警卫车辆">警卫车辆</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="警务车辆">警务车辆</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="领导车辆">领导车辆</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="救护车">救护车</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="公交车">公交车</el-checkbox>
+                          </li>
+                        </el-checkbox-group>
+                      </ul>
+                    </div>
+                    <div class="fr" style="margin-left: 5px;">
+                      <span>高 中 低</span>
+                      <ul style="margin: 10px 0">
+                        <li>
+                          <el-radio-group v-model="radio">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio1">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio2">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio3">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio4">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                      </ul>
+                    </div>
+
+                    <div style="position: absolute;bottom: 20px;left: 30px">
+                      启动优先通行
+                      <el-radio v-model="radioLine" :label="1">&nbsp;</el-radio>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="6" class="">
+              <div class="Dashboard_set_col">123</div>
+            </el-col>
+            <el-col :span="6" class="">
+              <div class="Dashboard_set_col">123</div>
+            </el-col>
+
+
           </div>
         </el-card>
       </el-col>
     </el-row>
-
 
     <!--<div id="map">sdfasdfasdf</div>-->
     <!--<div id="myChart" :style="{width: '300px', height: '300px'}"></div>-->
@@ -197,6 +313,26 @@
   </div>
 </template>
 <style>
+  li{
+    margin: 5px 0;
+  }
+  ul {
+    display: block;
+    list-style-type: none;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    -webkit-padding-start: 0;
+  }
+
+  .el-checkbox__label {
+    display: inline-block;
+    padding-left: 5px!important;
+    font-size: 12px!important;
+    color: #a7a7ac!important;
+  }
+
   #map {
     width: 100%;
     height: 400px;
@@ -204,6 +340,18 @@
 
   .echarts {
     height: 300px;
+  }
+
+  .el-radio + .el-radio {
+    margin-left: 0!important;
+  }
+
+  .el-radio-group{
+    line-height: 16px!important;
+  }
+
+  .el-radio__label{
+    padding-left: 0!important;
   }
 
   .video {
@@ -307,6 +455,13 @@
     font-size: 15px;
     line-height: 30px;
   }
+
+  .Dashboard_set_col {
+    background: #353644;
+    padding: 10px 30px;
+    font-size: x-small;
+    color: #b9b9b9;
+  }
 </style>
 <script>
   import TimeLine from '../../components/TimeLine/TimeLine'
@@ -353,6 +508,14 @@
           {name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'},
           {name: '人民路 - 南京路', vph: '312', perc: 70, color: 'yellow'}
         ],
+        firstMode: [],
+        firstVehicle: [],
+        radio: 3,
+        radio1: 3,
+        radio2: 3,
+        radio3: 3,
+        radio4:2,
+        radioLine:1,
 
 
         videourl: '',
