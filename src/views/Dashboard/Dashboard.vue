@@ -162,7 +162,12 @@
             <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-
+            <div style="width: 50%;height: 80%;display: inline-block">
+              <PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>
+            </div>
+            <div style="width: 50%;height: 80%;display: inline-block" class="fr">
+              <PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>
+            </div>
           </div>
         </el-card>
       </el-col>
@@ -307,12 +312,14 @@
   import TimeLine from '../../components/TimeLine/TimeLine'
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import MixLineBar from '../../components/ECharts/MixLineBarItem'
+  import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
 
   export default {
     components: {
       TimeLine,
       RoadGauge,
       MixLineBar,
+      PieDoughnut,
     },
     data() {
       let data = []

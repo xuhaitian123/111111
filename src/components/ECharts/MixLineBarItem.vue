@@ -38,7 +38,6 @@
                 "icon": "square",
                 "textStyle": {
                   "color": "#fff",
-
                 }
               },
               {
