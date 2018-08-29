@@ -144,47 +144,47 @@
       </el-col>
     </el-row>
 
-    <!--<el-row :gutter="10" class="Dashboard_lineRow">-->
-    <!--<el-col :span="8">-->
-    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
-    <!--<div class="Dashboard_clearfix">-->
-    <!--<span>信号灯优化前后数据展示</span>-->
-    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
-    <!--</div>-->
-    <!--<div class="Dashboard_card_body_two">-->
-    <!--<MixLineBar></MixLineBar>-->
-    <!--</div>-->
-    <!--</el-card>-->
-    <!--</el-col>-->
-    <!--<el-col :span="8">-->
-    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
-    <!--<div class="Dashboard_clearfix">-->
-    <!--<span>信号灯优化前后数据展示</span>-->
-    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
-    <!--</div>-->
-    <!--<div class="Dashboard_card_body_two">-->
-    <!--<div style="width: 50%;height: 80%;display: inline-block">-->
-    <!--<PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>-->
-    <!--</div>-->
-    <!--<div style="width: 50%;height: 80%;display: inline-block" class="fr">-->
-    <!--<PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</el-card>-->
-    <!--</el-col>-->
+    <el-row :gutter="10" class="Dashboard_lineRow">
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>信号灯优化前后数据展示</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body_two">
+            <MixLineBar></MixLineBar>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>信号灯优化前后数据展示</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body_two">
+            <div style="width: 50%;height: 80%;display: inline-block">
+              <PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>
+            </div>
+            <div style="width: 50%;height: 80%;display: inline-block" class="fr">
+              <PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>
+            </div>
+          </div>
+        </el-card>
+      </el-col>
 
-    <!--<el-col :span="8">-->
-    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
-    <!--<div class="Dashboard_clearfix">-->
-    <!--<span>数据变化趋势对比分析</span>-->
-    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
-    <!--</div>-->
-    <!--<div class="Dashboard_card_body_two">-->
-    <!--<SmoothBarLine></SmoothBarLine>-->
-    <!--</div>-->
-    <!--</el-card>-->
-    <!--</el-col>-->
-    <!--</el-row>-->
+      <el-col :span="8">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+          <div class="Dashboard_clearfix">
+            <span>数据变化趋势对比分析</span>
+            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body_two">
+            <SmoothBarLine></SmoothBarLine>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col>
@@ -313,9 +313,10 @@
   </div>
 </template>
 <style>
-  li{
+  li {
     margin: 5px 0;
   }
+
   ul {
     display: block;
     list-style-type: none;
@@ -328,9 +329,9 @@
 
   .el-checkbox__label {
     display: inline-block;
-    padding-left: 5px!important;
-    font-size: 12px!important;
-    color: #a7a7ac!important;
+    padding-left: 5px !important;
+    font-size: 12px !important;
+    color: #a7a7ac !important;
   }
 
   #map {
@@ -343,15 +344,15 @@
   }
 
   .el-radio + .el-radio {
-    margin-left: 0!important;
+    margin-left: 0 !important;
   }
 
-  .el-radio-group{
-    line-height: 16px!important;
+  .el-radio-group {
+    line-height: 16px !important;
   }
 
-  .el-radio__label{
-    padding-left: 0!important;
+  .el-radio__label {
+    padding-left: 0 !important;
   }
 
   .video {
@@ -514,8 +515,8 @@
         radio1: 3,
         radio2: 3,
         radio3: 3,
-        radio4:2,
-        radioLine:1,
+        radio4: 2,
+        radioLine: 1,
 
 
         videourl: '',
