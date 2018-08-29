@@ -52,6 +52,7 @@
           </div>
         </el-card>
       </el-col>
+
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
@@ -63,7 +64,7 @@
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">路网总流量</div>
 
-                <div class="Dashboard_card_progressList" style="height: 170px">
+                <div class="Dashboard_card_progressList Dashboard_card_progressHeight">
                   <div v-for="item in roadFlow" :key="item.vph">
                     <div class="fl Dashboard_card_progress">
                       <div class="Dashboard_card_road">{{item.name}}</div>
@@ -77,9 +78,9 @@
                 </div>
 
                 <div>
-                  <div style="margin-top: 10px" class="Dashboard_card_title">路网拥堵评分</div>
-                  <div style="line-height: 30px;text-align: right;width: 80%" class="">
-                    <span style="font-size: 18px ;color: #ff8539">68 </span><span style="font-size: 12px"> %</span>
+                  <div class="Dashboard_card_title mt10">路网拥堵评分</div>
+                  <div class="Dashboard_card_score">
+                    <span class="Dashboard_score_num">68 </span><span class="fs12"> %</span>
                   </div>
                   <el-progress :percentage="80" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
@@ -90,12 +91,11 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">拥堵里程比例</div>
-                <RoadGauge></RoadGauge>
+                <RoadGauge class="Dashboard_card_roadGauge"></RoadGauge>
 
-                <div style="margin-top: -50px" class="Dashboard_card_title">交叉口拥堵评分</div>
-                <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph"
-                     style="line-height: 18px">
-                  {{item.name}}<span class="fr" style="font-size: 20px">{{item.perc}}</span>
+                <div class="Dashboard_card_title">交叉口拥堵评分</div>
+                <div class="Dashboard_card_progressList_score" v-for="item in roadFlow" :key="item.vph">
+                  {{item.name}}<span class="fr fs20">{{item.perc}}</span>
                 </div>
               </div>
 
@@ -426,6 +426,21 @@
     color: #a7a7ac;
   }
 
+  .Dashboard_card_roadGauge{
+    height: 180px;margin-bottom: -70px
+  }
+
+  .Dashboard_card_score {
+    line-height: 30px;
+    text-align: right;
+    width: 80%
+  }
+
+  .Dashboard_score_num {
+    font-size: 18px;
+    color: #ff8539
+  }
+
   .Dashboard_card_current {
     margin: auto;
     width: 85%;
@@ -437,6 +452,19 @@
     width: 50%;
   }
 
+  .Dashboard_card_progressList_score {
+    background: #353644;
+    color: #a7a7ac;
+    font-size: 12px;
+    margin-top: 10px;
+    padding: 3px;
+    line-height: 18px;
+  }
+
+  .Dashboard_card_progressHeight {
+    height: 170px
+  }
+
   .Dashboard_card_progressList {
     margin-top: 10px;
     background: #353644;
@@ -445,12 +473,24 @@
     font-size: 12px;
   }
 
+  .mt10 {
+    margin-top: 10px
+  }
+
+  .fs12{
+    font-size: 12px;
+  }
+
+  .fs20{
+    font-size: 20px
+  }
+
   .el-progress-bar__inner, .el-progress-bar__outer {
     border-radius: 0 !important;
   }
 
   .el-progress-bar__outer {
-    background: inherit !important;
+    background: #353643 !important;
   }
 
   .Dashboard_card_road {
