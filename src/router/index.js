@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Layout from '../views/layout/Layout'
 import Dashboard from  '../views/Dashboard/Dashboard'
 import Map from '../views/Map/Map'
+import TrafficVideo from  '../views/TrafficVideo/TrafficVideo'
 Vue.use(Router)
 
 export default new Router({
@@ -34,7 +35,8 @@ export default new Router({
           name: 'map'
         }
       ],
-    },{
+    },
+    {
       path: '',
       component: Layout,
       name: 'Layout',
@@ -46,6 +48,19 @@ export default new Router({
           name: 'map'
         }
       ],
-    }
+    },
+    {
+      path: '/main',
+      component: Layout,
+      name: 'Layout',
+      // redirect: '/main/map',
+      children: [
+        {
+          path: 'trafficVideo',
+          component: TrafficVideo,
+          name: 'trafficVideo'
+        }
+      ],
+    },
   ]
 })

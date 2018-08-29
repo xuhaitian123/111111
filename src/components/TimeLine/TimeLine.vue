@@ -90,6 +90,12 @@
 
 <script>
   export default {
+    props:{
+      isRealTime:{
+        type:Boolean,
+        default: true
+      }
+    },
     data() {
       var that = this;
       return {
@@ -97,10 +103,14 @@
         endPosition:0,
         isChangeTime:false,
         timer :'',
-        left: -10,
+        left: function(){
+          var currentTime = new Date();
+
+          return -10 + parseInt((currentTime.getHours()*60 + currentTime.getMinutes()) /5 )* (document.body.clientWidth - 300)/288
+        }(),
         space: (document.body.clientWidth - 300)/288,
         scale: 0,
-        rate: 60000,
+        rate: 5000,
         timeLineWidth: document.body.clientWidth - 300,
         yearList: [{value: 2018, disable: true}, {value: 2017, disable: true}, {value: 2016, disable: true}],
         monthList: function (currentMonth) {
@@ -139,7 +149,7 @@
         this.isChangeTime =  false;
         this.timer =  setInterval(() => {
           this.changePosition()
-        }, this.rate/60)
+        }, this.rate)
       },
       changePosition(){
         if(this.isChangeTime|| this.left>= this.timeLineWidth-10) return;

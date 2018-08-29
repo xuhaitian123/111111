@@ -17,4 +17,12 @@ export default {
   height: 100%;
   /*margin-top: 60px;*/
 }
+
+  .fr{
+    float: right;
+  }
+
+  .fl{
+    float: left;
+  }
 </style>
