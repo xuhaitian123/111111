@@ -112,20 +112,29 @@
           </div>
           <div class="Dashboard_card_body">
             <div class="Dashboard_card_main">
-              <div class="" style="margin: auto;width: 90%">
+              <div class="">
                 <div class="Dashboard_card_title">
-                  <div style="width: 50%;text-align: center;display: inline-block">交叉口</div>
-                  <div class="Dashboard_card_right" style="text-align: center">拥堵报警</div>
+                  <div style="float: left;width: 30%;text-align: center">交叉口</div>
+                  <div style="float: left;width: 35%;text-align: right">拥堵报警</div>
+                  <span style="margin-left: 20%">时间</span>
                 </div>
-                <div class="Dashboard_card_progressList">
+                <div class="Dashboard_card_progressList" style="padding: 10px 30px">
                   <div
-                    style="width: 25%;line-height: 35px;text-align: center;font-size: 14px;display: inline-block;margin: 10px 0 10px 10%;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
+                    style="width: 25%;white-space:nowrap;line-height: 35px;display: inline-block;text-align: center;font-size: 14px;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
                     天津路-南京路
                   </div>
-                  <div style="width: 30%;text-align: center;font-size: 14px;margin: 10px 0;padding: 0 9%" class="fr">
-                    北进道口右转中度拥挤
-                    <br>
-                    北进道口右转中度拥挤
+                  <div class="fr" style="width: 60%">
+                    <div style="text-align: center;font-size: 14px;line-height: 20px" class="fl">
+                      北进道口右转中度拥挤
+                      <br>
+                      北进道口右转中度拥挤
+                    </div>
+
+                    <div class="fr" style="font-size: 14px;line-height: 20px">
+                      2018.08.27
+                      <br>
+                      18: 00
+                    </div>
                   </div>
                 </div>
               </div>
@@ -406,11 +415,11 @@
 
   .Dashboard_card_body_two {
     background: #292936;
-    height: 200px;
+    height: 280px;
   }
 
   .Dashboard_card_main {
-    padding: 10px 0;
+    padding: 20px 30px;
   }
 
   .Dashboard_card_left {
@@ -426,8 +435,9 @@
     color: #a7a7ac;
   }
 
-  .Dashboard_card_roadGauge{
-    height: 180px;margin-bottom: -70px
+  .Dashboard_card_roadGauge {
+    height: 180px;
+    margin-bottom: -70px
   }
 
   .Dashboard_card_score {
@@ -477,11 +487,11 @@
     margin-top: 10px
   }
 
-  .fs12{
+  .fs12 {
     font-size: 12px;
   }
 
-  .fs20{
+  .fs20 {
     font-size: 20px
   }
 
