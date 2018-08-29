@@ -14,16 +14,15 @@
       </span>
 
       <span>城市
-
+        <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
+          <el-option
+            v-for="item in cityList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
       </span>
-      <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
-        <el-option
-          v-for="item in cityList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
 
       <span>地区
         <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
@@ -42,7 +41,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>实时地图</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
             <div id="map"></div>
@@ -53,7 +52,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>路网数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
             <div class="Dashboard_card_main">
@@ -108,7 +107,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>报警信息</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
             <div class="Dashboard_card_main">
@@ -140,7 +139,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <MixLineBar></MixLineBar>
@@ -151,7 +150,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
@@ -168,7 +167,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>数据变化趋势对比分析</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <SmoothBarLine></SmoothBarLine>
@@ -182,7 +181,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>优先通行控制设置</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two" style="padding: 20px">
 
@@ -303,7 +302,7 @@
 
   </div>
 </template>
-<style>
+<style lang="css">
   li {
     margin: 5px 0;
   }
@@ -336,7 +335,7 @@
     line-height: 20px;
   }
 
-  .Dashboard_titleSelect{
+  .Dashboard_titleSelect {
     margin: 0 10px;
   }
 
@@ -390,13 +389,13 @@
   }
 
   .Dashboard_clearfix {
-    padding: 8px 30px;
+    padding: 10px 30px;
     background: #353644;
     font-size: 15px;
   }
 
   .Dashboard_lineRow {
-    margin: 10px 0 0 !important;
+    margin: 10px 5px!important;
   }
 
   .Dashboard_card_body {

@@ -8,8 +8,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import  './style/index.css'
 import '@/style/element-ui.css' // global css
 import './style/map.css'
-import rem from 'vue-rem'
-
+import './assets/rem'
+import './assets/iconfont.css'
 import timelinepick from "vue-timelinepick"
 import "vue-timelinepick/dist/vue-timelinepick.css"
 
@@ -18,11 +18,6 @@ Vue.use(timelinepick)
 import echarts from 'echarts'
 
 Vue.prototype.$echarts = echarts
-Vue.use(rem, {
-  design: 1920,
-  size: 1,
-  minWidth:1380
-});
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 
