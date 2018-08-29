@@ -3,7 +3,7 @@
   <div>
     <div class="Dashboard_titleCascader">
       <span>省
-        <el-select v-model="currentProvince" size="mini" placeholder="请选择">
+        <el-select v-model="currentProvince" placeholder="请选择" class="Dashboard_titleSelect">
           <el-option
             v-for="item in provinceList"
             :key="item.value"
@@ -14,18 +14,19 @@
       </span>
 
       <span>城市
-        <el-select v-model="currentCity" size="mini" placeholder="请选择">
-          <el-option
-            v-for="item in cityList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+
       </span>
+      <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
+        <el-option
+          v-for="item in cityList"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
 
       <span>地区
-        <el-select v-model="currentArea" size="mini" placeholder="请选择">
+        <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
           <el-option class="selectColor"
                      v-for="item in areaList"
                      :key="item.value"
@@ -34,19 +35,7 @@
           </el-option>
         </el-select>
       </span>
-
     </div>
-
-    <!--card 模板-->
-    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
-    <!--<div class="Dashboard_clearfix">-->
-    <!--<span>实时地图</span>-->
-    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
-    <!--</div>-->
-    <!--<div class="Dashboard_card_body">-->
-
-    <!--</div>-->
-    <!--</el-card>-->
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
@@ -336,6 +325,21 @@
     color: #a7a7ac !important;
   }
 
+  .el-select .el-input, .el-select, .el-select input {
+    height: 20px !important;
+    font-size: 12px !important;
+    background: #353643;
+    border: 1px solid #353643;
+  }
+
+  .el-select .el-input__icon {
+    line-height: 20px;
+  }
+
+  .Dashboard_titleSelect{
+    margin: 0 10px;
+  }
+
   #map {
     width: 100%;
     height: 400px;
@@ -372,8 +376,10 @@
   .Dashboard_titleCascader {
     background: #282635;
     color: white;
-    line-height: 60px;
-    margin: 0 5px;
+    font-size: 12px;
+    height: 20px;
+    padding: 12.5px 20px;
+    margin: 0 10px;
     border-radius: 1px;
   }
 
@@ -481,6 +487,7 @@
       PieDoughnut,
       SmoothBarLine,
     },
+
     data() {
       let data = []
 
@@ -491,7 +498,7 @@
       }
 
       return {
-
+        size: this.$size,
         provinceList: [{
           value: '1',
           label: '江苏'
@@ -557,6 +564,14 @@
           ],
           animationDuration: 2000,
         }
+      }
+    },
+    watch: {
+      size: {
+        handler(x) {
+          console.log(x.rem)
+        },
+        deep: true
       }
     },
     mounted() {
