@@ -1,10 +1,105 @@
 <template>
-
+  <div :id="id" style="height: 100%"></div>
 </template>
 
 <script>
     export default {
-        name: "pie-doughnut-item"
+        name: "pie-doughnut-item",
+      props:{
+          id:String,
+          title:String,
+      },
+      data(){
+        return {
+
+        }
+      },
+      mounted() {
+
+        let myChart = this.$echarts.init(document.getElementById(this.id));
+        let app = {};
+        let option = {};
+        app.title = '环形图';
+
+        option = {
+          title:{
+            text:this.title,
+            bottom:1,
+            left:'50%',
+            textStyle: {
+              color: '#7d7d7d',
+              fontSize:14
+            }
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b}: {c} ({d}%)"
+          },
+          legend: {
+            orient: 'vertical',
+            x: 'right',
+            y: 'center',
+            textStyle: {
+              color: "#fff"
+            },
+            data:[
+              {
+                "name": "通畅",
+                "icon": "circle",
+                "textStyle": {
+                  "color": "#7d7d7d",
+                }
+              },
+              {
+                "name": "正常",
+                "icon": "circle",
+                "textStyle": {
+                  "color": "#7d7d7d",
+                }
+              },
+              {
+                "name": "拥堵",
+                "icon": "circle",
+                "textStyle": {
+                  "color": "#7d7d7d",
+
+                }
+              }]
+          },
+          series: [
+            {
+              name:'访问来源',
+              type:'pie',
+              radius: ['60%', '70%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                  position: 'center'
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                    fontSize: '25',
+                    fontWeight: 'bold'
+                  }
+                }
+              },
+              labelLine: {
+                normal: {
+                  show: false
+                }
+              },
+              data:[
+                {value:335, name:'通畅',itemStyle: {color:'#5ebfba'}},
+                {value:310, name:'正常',itemStyle: {color:'#ff8539'}},
+                {value:234, name:'拥堵',itemStyle: {color:'#b14671'}}
+              ]
+            }
+          ]
+        };
+          myChart.setOption(option, true);
+      },
     }
 </script>
 

@@ -28,6 +28,10 @@
               }
             }
           },
+          grid: {
+            top: 30,
+            bottom:50,
+          },
           toolbox: {
 
           },
@@ -37,29 +41,26 @@
                 "name": "优化前延误",
                 "icon": "square",
                 "textStyle": {
-                  "color": "#fff",
-
+                  "color": "#7d7d7d",
                 }
               },
               {
                 "name": "优化后延误",
                 "icon": "square",
                 "textStyle": {
-                  "color": "#fff"
+                  "color": "#7d7d7d"
                 }
               },
               {
                 "name": "优化前报警次数",
-                // "icon": "line",
                 "textStyle": {
-                  "color": "#fff"
+                  "color": "#7d7d7d"
                 }
               },
               {
                 "name": "优化后报警次数",
-                // "icon": "bar",
                 "textStyle": {
-                  "color": "#fff"
+                  "color": "#7d7d7d"
                 }
               }]
           },
@@ -68,7 +69,7 @@
               axisLine: {
                 onZero: false,
                 lineStyle: {
-                  color: '#fff'
+                  color: '#7d7d7d'
                 }
               },
               type: 'category',
@@ -82,7 +83,7 @@
             {
               name: "平均延误时间",
               nameTextStyle: {
-                color: "#fff",
+                color: "#7d7d7d",
                 align:'left'
               },
               nameLocation: "center",
@@ -91,7 +92,7 @@
               axisLine: {
                 show: false,
                 lineStyle: {
-                  color: '#fff'
+                  color: '#7d7d7d'
                 }
               },
               axisTick: {
@@ -108,7 +109,7 @@
             {
               "name": "报警次数",
               "nameTextStyle": {
-                "color": "#fff"
+                "color": "#7d7d7d"
               },
               nameLocation: "center",
               nameGap:'30',
@@ -116,7 +117,7 @@
               axisLine: {
                 show: false,
                 lineStyle: {
-                  color: '#fff'
+                  color: '#7d7d7d'
                 }
               },
               axisTick: {
