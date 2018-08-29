@@ -9,7 +9,7 @@ import  './style/index.css'
 import '@/style/element-ui.css' // global css
 import './style/map.css'
 import './assets/rem'
-import './assets/iconfont.css'
+import './assets/font/iconfont.css'
 import timelinepick from "vue-timelinepick"
 import "vue-timelinepick/dist/vue-timelinepick.css"
 

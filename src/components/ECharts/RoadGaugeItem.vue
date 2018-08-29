@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 180px;margin-top: 20px" id="main">
+  <div style="height: 180px;" id="main">
   </div>
 </template>
 
@@ -23,26 +23,25 @@
             {
               type: 'gauge',
               name: 'gaugeRoad',
-              width: '220px',
-              radius: '100%',
-              startAngle: '190',
-              endAngle: '-10',
+              radius: '70%',
+              startAngle: '180',
+              endAngle: '0',
               pointer: {
                 show: false
               },
               detail: {
                 show: false,
               },
-              data: [{value: 65, name: '51%'}],
+              data: [{value: 65, name: '51 分'}],
               title: {
                 show: true,
-                offsetCenter: [0, 0],
+                offsetCenter: [0, -10],
                 textStyle: {
                   color: '#fff',
                   fontStyle: 'normal',
                   fontWeight: 'normal',
                   fontFamily: '微软雅黑',
-                  fontSize: 26
+                  fontSize: 24
                 }
               },
               axisLine: {

@@ -41,7 +41,11 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>实时地图</span>
-            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
+            <div style="float: right; padding: 3px 0">
+              <i class="iconfont icon-fangda"></i>
+              <i class="iconfont icon-shuxian"></i>
+              <i class="iconfont icon-webicon03"></i>
+            </div>
           </div>
           <div class="Dashboard_card_body">
             <div id="map"></div>
@@ -52,52 +56,49 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>路网数据展示</span>
-            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
-            <div class="Dashboard_card_main">
-              <div class="Dashboard_card_left">
-                <div class="Dashboard_card_current">
-                  <div class="Dashboard_card_title">路网总流量</div>
+            <div class="Dashboard_card_left">
+              <div class="Dashboard_card_current">
+                <div class="Dashboard_card_title">路网总流量</div>
 
-                  <div class="Dashboard_card_progressList" style="height: 150px">
-                    <div v-for="item in roadFlow" :key="item.vph">
-                      <div class="fl Dashboard_card_progress">
-                        <div class="Dashboard_card_road">{{item.name}}</div>
-                        <el-progress :percentage="item.perc" :stroke-width="8" :color="item.color"
-                                     :show-text="false"></el-progress>
-                      </div>
-                      <div class="fr">
-                        <span class="Dashboard_card_vph">{{item.vph}}vph</span>
-                      </div>
+                <div class="Dashboard_card_progressList" style="height: 170px">
+                  <div v-for="item in roadFlow" :key="item.vph">
+                    <div class="fl Dashboard_card_progress">
+                      <div class="Dashboard_card_road">{{item.name}}</div>
+                      <el-progress :percentage="item.perc" :stroke-width="6" :color="item.color"
+                                   :show-text="false"></el-progress>
                     </div>
-                  </div>
-
-                  <div>
-                    <div style="margin-top: 20px" class="Dashboard_card_title">路网拥堵评分</div>
-                    <div style="line-height: 60px;text-align: right" class="">
-                      <span style="font-size: 24px ;color: #ff8539">68</span> 分
-                    </div>
-                    <el-progress :percentage="80" :stroke-width="8" color="#ff8539"
-                                 :show-text="false"></el-progress>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="Dashboard_card_right">
-                  <div class="Dashboard_card_current">
-                    <div class="Dashboard_card_title">拥堵里程比例</div>
-                    <RoadGauge></RoadGauge>
-
-                    <div style="margin-top: -50px" class="Dashboard_card_title">交叉口拥堵评分</div>
-                    <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph"
-                         style="line-height: 18px">
-                      {{item.name}}<span class="fr" style="font-size: 20px">{{item.perc}}</span>
+                    <div class="fr">
+                      <span class="Dashboard_card_vph">{{item.vph}}vph</span>
                     </div>
                   </div>
                 </div>
+
+                <div>
+                  <div style="margin-top: 10px" class="Dashboard_card_title">路网拥堵评分</div>
+                  <div style="line-height: 30px;text-align: right;width: 80%" class="">
+                    <span style="font-size: 18px ;color: #ff8539">68 </span><span style="font-size: 12px"> %</span>
+                  </div>
+                  <el-progress :percentage="80" :stroke-width="6" color="#ff8539"
+                               :show-text="false"></el-progress>
+                </div>
               </div>
+            </div>
+
+            <div class="Dashboard_card_right">
+              <div class="Dashboard_card_current">
+                <div class="Dashboard_card_title">拥堵里程比例</div>
+                <RoadGauge></RoadGauge>
+
+                <div style="margin-top: -50px" class="Dashboard_card_title">交叉口拥堵评分</div>
+                <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph"
+                     style="line-height: 18px">
+                  {{item.name}}<span class="fr" style="font-size: 20px">{{item.perc}}</span>
+                </div>
+              </div>
+
             </div>
           </div>
         </el-card>
@@ -107,7 +108,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>报警信息</span>
-            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
             <div class="Dashboard_card_main">
@@ -139,7 +140,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
-            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <MixLineBar></MixLineBar>
@@ -150,7 +151,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
-            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
@@ -167,7 +168,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>数据变化趋势对比分析</span>
-            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <SmoothBarLine></SmoothBarLine>
@@ -181,7 +182,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>优先通行控制设置</span>
-            <i class="iconfont el-icon-onion-webicon03" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two" style="padding: 20px">
 
@@ -395,12 +396,12 @@
   }
 
   .Dashboard_lineRow {
-    margin: 10px 5px!important;
+    margin: 10px 5px !important;
   }
 
   .Dashboard_card_body {
     background: #292936;
-    height: 400px;
+    height: 380px;
   }
 
   .Dashboard_card_body_two {
@@ -414,6 +415,7 @@
 
   .Dashboard_card_left {
     width: 50%;
+    padding: 10px 0;
     float: left;
   }
 
@@ -426,10 +428,11 @@
 
   .Dashboard_card_current {
     margin: auto;
-    width: 80%;
+    width: 85%;
   }
 
   .Dashboard_card_right {
+    padding: 10px 0;
     float: right;
     width: 50%;
   }
@@ -438,7 +441,6 @@
     margin-top: 10px;
     background: #353644;
     padding: 8px;
-    /*height: 150px;*/
     color: #a7a7ac;
     font-size: 12px;
   }
