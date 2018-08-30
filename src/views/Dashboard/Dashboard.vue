@@ -366,6 +366,12 @@
     line-height: 16px !important;
   }
 
+  .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,
+  .el-radio__input.is-checked .el-radio__inner {
+    background-color: #ef7f3e !important;
+    border-color: #ef7f3e;
+  }
+
   .el-radio__label {
     padding-left: 0 !important;
   }
