@@ -1,5 +1,7 @@
 <template>
-
+  <div>
+    123231
+  </div>
 </template>
 
 <script>

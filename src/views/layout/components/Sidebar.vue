@@ -2,19 +2,20 @@
 
 
     <el-menu
-      default-active="2"
+      :default-active="$route.path"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
       background-color="#545c64"
       text-color="#fff"
+      :router="true"
       active-text-color="#ffd04b">
-      <el-submenu index="1">
+      <el-submenu index="/main/dashboard">
         <template slot="title">
           <span>交通数据展示</span>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="1-1">拥堵地图<div class="active-item"></div></el-menu-item>
+          <el-menu-item index="/main/congestionMap">拥堵地图<div class="active-item"></div></el-menu-item>
           <el-menu-item index="1-2">交叉口数据展示<div class="active-item"></div></el-menu-item>
           <el-menu-item index="1-3">道路数据展示<div class="active-item"></div></el-menu-item>
         <!--</el-menu-item-group>-->
@@ -50,12 +51,19 @@
     data(){
       return{}
     },
+    mounted(){
+    },
     methods: {
       handleOpen(key, keyPath) {
         console.log(key, keyPath);
       },
       handleClose(key, keyPath) {
         console.log(key, keyPath);
+      }
+    },
+    watch: {
+      '$route' (to, from) {
+        console.log(this.$route.path)
       }
     }
   }
