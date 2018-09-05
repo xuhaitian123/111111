@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Layout from '../views/layout/Layout'
 import Dashboard from  '../views/Dashboard/Dashboard'
+import CongestionMap from  '../views/Dashboard/CongestionMap'
 import Map from '../views/Map/Map'
 import TrafficVideo from  '../views/TrafficVideo/TrafficVideo'
 Vue.use(Router)
@@ -22,7 +23,19 @@ export default new Router({
         }
       ],
     },
-
+    {
+      path: '/main',
+      component: Layout,
+      name: 'Layout',
+      redirect: '/main/dashboard',
+      children: [
+        {
+          path: 'congestionMap',
+          component: CongestionMap,
+          name: 'CongestionMap'
+        }
+      ],
+    },
     {
       path: '/main',
       component: Layout,

@@ -65,14 +65,14 @@
                 <div class="Dashboard_card_title">路网总流量</div>
 
                 <div class="Dashboard_card_progressList Dashboard_card_progressHeight">
-                  <div v-for="item in roadFlow" :key="item.vph">
+                  <div v-for="item in allRoadFlow" :key="item.node_id">
                     <div class="fl Dashboard_card_progress">
                       <div class="Dashboard_card_road">{{item.name}}</div>
-                      <el-progress :percentage="item.perc" :stroke-width="6" :color="item.color"
+                      <el-progress :percentage="item.value /1000" :stroke-width="6"
                                    :show-text="false"></el-progress>
                     </div>
                     <div class="fr">
-                      <span class="Dashboard_card_vph">{{item.vph}}vph</span>
+                      <span class="Dashboard_card_vph">{{item.value}}vph</span>
                     </div>
                   </div>
                 </div>
@@ -80,9 +80,10 @@
                 <div>
                   <div class="Dashboard_card_title mt10">路网拥堵评分</div>
                   <div class="Dashboard_card_score">
-                    <span class="Dashboard_score_num">68 </span><span class="fs12"> %</span>
+                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span><span
+                    class="fs12"> %</span>
                   </div>
-                  <el-progress :percentage="80" :stroke-width="6" color="#ff8539"
+                  <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
                 </div>
               </div>
@@ -91,10 +92,10 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">拥堵里程比例</div>
-                <RoadGauge class="Dashboard_card_roadGauge"></RoadGauge>
+                <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
-                <div class="Dashboard_card_progressList_score" v-for="item in roadFlow" :key="item.vph">
+                <div class="Dashboard_card_progressList_score" v-for="item in nodeFlow" :key="item.vph">
                   {{item.name}}<span class="fr fs20">{{item.perc}}</span>
                 </div>
               </div>
@@ -124,13 +125,13 @@
                     天津路-南京路
                   </div>
                   <div class="fr" style="width: 60%">
-                    <div style="text-align: center;font-size: 14px;line-height: 20px" class="fl">
+                    <div style="text-align: center;font-size: 12px;line-height: 20px" class="fl">
                       北进道口右转中度拥挤
                       <br>
                       北进道口右转中度拥挤
                     </div>
 
-                    <div class="fr" style="font-size: 14px;line-height: 20px">
+                    <div class="fr" style="font-size: 12px;line-height: 20px">
                       2018.08.27
                       <br>
                       18: 00
@@ -544,7 +545,6 @@
       PieDoughnut,
       SmoothBarLine,
     },
-
     data() {
       let data = []
 
@@ -571,10 +571,14 @@
         currentProvince: '1',
         currentCity: '1',
         currentArea: '1',
-        roadFlow: [
+        allRoadFlow: [],
+        nodeFlow: [
           {name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'},
           {name: '人民路 - 南京路', vph: '312', perc: 70, color: 'yellow'}
         ],
+        roadNetCongestionScore: 0,
+        nodeCongestionScore: 0,
+        congestionPercent: 0,
         firstMode: [],
         firstVehicle: [],
         radio: 3,
@@ -623,51 +627,70 @@
         }
       }
     },
-    watch: {
-      size: {
-        handler(x) {
-          console.log(x.rem)
-        },
-        deep: true
-      }
-    },
     mounted() {
-      this.video()
+      // this.video()
       // this.drawLine()
-      var map = new window.BMap.Map("map");    // 创建Map实例
+      let map = new window.BMap.Map("map");    // 创建Map实例
       map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
       // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
       map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
       map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      // map.addControl(new window.BMap.MapTypeControl( {mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]} ));   //添加地图类型控件 离线只支持普通、卫星地图; 三维不支持
-      // var driving = new window.BMap.DrivingRoute(map, {
+      // let driving = new window.BMap.DrivingRoute(map, {
       //   renderOptions: {
       //     map: map,
       //     autoViewport: true
       //   }
       // });
-      // // map.setMinZoom(10);
       // driving.search("中关村", "天安门");
-      // var b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956),new BMap.Point(120.414208,32.657899));
-      // try {
-      //   BMapLib.AreaRestriction.setBounds(map, b);
-      // } catch (e) {
-      //   // Window.layer.msg(e);
-      // }
-      // //监听地图缩放
-      // // map.addEventListener("zoomend", function(){
-      // //     if( this.getZoom() > 8 ) {
-      // //         layer.msg("默认只有8级地图, 超过无法显示");
-      // //     }
-      // // });
-
+      let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
+      try {
+        BMapLib.AreaRestriction.setBounds(map, b);
+      } catch (e) {
+        // Window.layer.msg(e);
+      }
       // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
       // map.addControl(cr); //添加版权控件
-      // var bs = map.getBounds();   //返回地图可视区域
+      // var bs = map.getBounds();   //返回地图可视区域0.
 
-
+      this.getTrafficCongestionRoadNetAllFlow();
+      this.getTrafficCongestionRoadNetCongestionScore();
+      this.getTrafficCongestionCongestionPercent();
+      this.getNodeData();
     },
     methods: {
+      getTrafficCongestionNodeAvgDelay() { //交叉口平均延误
+        this.$http
+          .get('/trafficCongestion/roadNetAllFlow?&current=true')
+          .then(response => (console.log(response)))
+      },
+      getTrafficCongestionCongestionPercent() { //拥堵里程比例
+        this.$http
+          .get('/trafficCongestion/congestionPercent?current=true')
+          .then((response) => {
+            this.congestionPercent = response.data.value;
+          })
+      },
+      getTrafficCongestionRoadNetAllFlow() { //路网总流量
+        this.$http
+          .get('/trafficCongestion/roadNetAllFlow?&current=true')
+          .then((response) => {
+            this.allRoadFlow = response.data;
+          })
+      },
+      getTrafficCongestionRoadNetCongestionScore() { //路网拥堵评分
+        this.$http
+          .get('/trafficCongestion/roadNetCongestionScore?current=true')
+          .then((response) => {
+            this.roadNetCongestionScore = response.data;
+          })
+      },
+      getNodeData() {
+        this.$http
+          .get('/nodeData/getNodes')
+          .then((response) => {
+            console.log(response)
+          })
+      },
       drawLine() {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'))
@@ -930,7 +953,8 @@
 
       }
 
-    },
+    }
+    ,
 
   }
 </script>
