@@ -3,7 +3,7 @@
   <div>
     <div class="Dashboard_titleCascader">
       <span>省
-        <el-select v-model="currentProvince" size="mini" placeholder="请选择">
+        <el-select v-model="currentProvince" placeholder="请选择" class="Dashboard_titleSelect">
           <el-option
             v-for="item in provinceList"
             :key="item.value"
@@ -14,7 +14,7 @@
       </span>
 
       <span>城市
-        <el-select v-model="currentCity" size="mini" placeholder="请选择">
+        <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
           <el-option
             v-for="item in cityList"
             :key="item.value"
@@ -25,7 +25,7 @@
       </span>
 
       <span>地区
-        <el-select v-model="currentArea" size="mini" placeholder="请选择">
+        <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
           <el-option class="selectColor"
                      v-for="item in areaList"
                      :key="item.value"
@@ -34,82 +34,72 @@
           </el-option>
         </el-select>
       </span>
-
     </div>
-
-    <!--card 模板-->
-    <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">-->
-    <!--<div class="Dashboard_clearfix">-->
-    <!--<span>实时地图</span>-->
-    <!--<i class="el-icon-menu" style="float: right; padding: 3px 0"></i>-->
-    <!--</div>-->
-    <!--<div class="Dashboard_card_body">-->
-
-    <!--</div>-->
-    <!--</el-card>-->
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>实时地图</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <div style="float: right; padding: 3px 0">
+              <i class="iconfont icon-fangda"></i>
+              <i class="iconfont icon-shuxian"></i>
+              <i class="iconfont icon-webicon03"></i>
+            </div>
           </div>
           <div class="Dashboard_card_body">
             <div id="map"></div>
           </div>
         </el-card>
       </el-col>
+
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>路网数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
-            <div class="Dashboard_card_main">
-              <div class="Dashboard_card_left">
-                <div class="Dashboard_card_current">
-                  <div class="Dashboard_card_title">路网总流量</div>
+            <div class="Dashboard_card_left">
+              <div class="Dashboard_card_current">
+                <div class="Dashboard_card_title">路网总流量</div>
 
-                  <div class="Dashboard_card_progressList" style="height: 150px">
-                    <div v-for="item in roadFlow" :key="item.vph">
-                      <div class="fl Dashboard_card_progress">
-                        <div class="Dashboard_card_road">{{item.name}}</div>
-                        <el-progress :percentage="item.perc" :stroke-width="8" :color="item.color"
-                                     :show-text="false"></el-progress>
-                      </div>
-                      <div class="fr">
-                        <span class="Dashboard_card_vph">{{item.vph}}vph</span>
-                      </div>
+                <div class="Dashboard_card_progressList Dashboard_card_progressHeight">
+                  <div v-for="item in allRoadFlow" :key="item.node_id">
+                    <div class="fl Dashboard_card_progress">
+                      <div class="Dashboard_card_road">{{item.name}}</div>
+                      <el-progress :percentage="item.value /1000" :stroke-width="6"
+                                   :show-text="false"></el-progress>
                     </div>
-                  </div>
-
-                  <div>
-                    <div style="margin-top: 20px" class="Dashboard_card_title">路网拥堵评分</div>
-                    <div style="line-height: 60px;text-align: right" class="">
-                      <span style="font-size: 24px ;color: #ff8539">68</span> 分
-                    </div>
-                    <el-progress :percentage="80" :stroke-width="8" color="#ff8539"
-                                 :show-text="false"></el-progress>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="Dashboard_card_right">
-                  <div class="Dashboard_card_current">
-                    <div class="Dashboard_card_title">拥堵里程比例</div>
-                    <RoadGauge></RoadGauge>
-
-                    <div style="margin-top: -50px" class="Dashboard_card_title">交叉口拥堵评分</div>
-                    <div class="Dashboard_card_progressList" v-for="item in roadFlow" :key="item.vph"
-                         style="line-height: 18px">
-                      {{item.name}}<span class="fr" style="font-size: 20px">{{item.perc}}</span>
+                    <div class="fr">
+                      <span class="Dashboard_card_vph">{{item.value}}vph</span>
                     </div>
                   </div>
                 </div>
+
+                <div>
+                  <div class="Dashboard_card_title mt10">路网拥堵评分</div>
+                  <div class="Dashboard_card_score">
+                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span><span
+                    class="fs12"> %</span>
+                  </div>
+                  <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="6" color="#ff8539"
+                               :show-text="false"></el-progress>
+                </div>
               </div>
+            </div>
+
+            <div class="Dashboard_card_right">
+              <div class="Dashboard_card_current">
+                <div class="Dashboard_card_title">拥堵里程比例</div>
+                <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
+
+                <div class="Dashboard_card_title">交叉口拥堵评分</div>
+                <div class="Dashboard_card_progressList_score" v-for="item in nodeFlow" :key="item.vph">
+                  {{item.name}}<span class="fr fs20">{{item.perc}}</span>
+                </div>
+              </div>
+
             </div>
           </div>
         </el-card>
@@ -119,24 +109,33 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>报警信息</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body">
             <div class="Dashboard_card_main">
-              <div class="" style="margin: auto;width: 90%">
+              <div class="">
                 <div class="Dashboard_card_title">
-                  <div style="width: 50%;text-align: center;display: inline-block">交叉口</div>
-                  <div class="Dashboard_card_right" style="text-align: center">拥堵报警</div>
+                  <div style="float: left;width: 30%;text-align: center">交叉口</div>
+                  <div style="float: left;width: 35%;text-align: right">拥堵报警</div>
+                  <span style="margin-left: 20%">时间</span>
                 </div>
-                <div class="Dashboard_card_progressList">
+                <div class="Dashboard_card_progressList" style="padding: 10px 30px">
                   <div
-                    style="width: 25%;line-height: 35px;text-align: center;font-size: 14px;display: inline-block;margin: 10px 0 10px 10%;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
+                    style="width: 25%;white-space:nowrap;line-height: 35px;display: inline-block;text-align: center;font-size: 14px;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
                     天津路-南京路
                   </div>
-                  <div style="width: 30%;text-align: center;font-size: 14px;margin: 10px 0;padding: 0 9%" class="fr">
-                    北进道口右转中度拥挤
-                    <br>
-                    北进道口右转中度拥挤
+                  <div class="fr" style="width: 60%">
+                    <div style="text-align: center;font-size: 12px;line-height: 20px" class="fl">
+                      北进道口右转中度拥挤
+                      <br>
+                      北进道口右转中度拥挤
+                    </div>
+
+                    <div class="fr" style="font-size: 12px;line-height: 20px">
+                      2018.08.27
+                      <br>
+                      18: 00
+                    </div>
                   </div>
                 </div>
               </div>
@@ -151,7 +150,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <MixLineBar></MixLineBar>
@@ -162,7 +161,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
@@ -179,7 +178,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>数据变化趋势对比分析</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <SmoothBarLine></SmoothBarLine>
@@ -193,7 +192,7 @@
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
             <span>优先通行控制设置</span>
-            <i class="el-icon-menu" style="float: right; padding: 3px 0"></i>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two" style="padding: 20px">
 
@@ -314,7 +313,7 @@
 
   </div>
 </template>
-<style>
+<style lang="css">
   li {
     margin: 5px 0;
   }
@@ -336,6 +335,21 @@
     color: #a7a7ac !important;
   }
 
+  .el-select .el-input, .el-select, .el-select input {
+    height: 20px !important;
+    font-size: 12px !important;
+    background: #353643;
+    border: 1px solid #353643;
+  }
+
+  .el-select .el-input__icon {
+    line-height: 20px;
+  }
+
+  .Dashboard_titleSelect {
+    margin: 0 10px;
+  }
+
   #map {
     width: 100%;
     height: 400px;
@@ -351,6 +365,12 @@
 
   .el-radio-group {
     line-height: 16px !important;
+  }
+
+  .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,
+  .el-radio__input.is-checked .el-radio__inner {
+    background-color: #ef7f3e !important;
+    border-color: #ef7f3e;
   }
 
   .el-radio__label {
@@ -372,8 +392,10 @@
   .Dashboard_titleCascader {
     background: #282635;
     color: white;
-    line-height: 60px;
-    margin: 0 5px;
+    font-size: 12px;
+    height: 20px;
+    padding: 12.5px 20px;
+    margin: 0 10px;
     border-radius: 1px;
   }
 
@@ -384,31 +406,32 @@
   }
 
   .Dashboard_clearfix {
-    padding: 8px 30px;
+    padding: 10px 30px;
     background: #353644;
     font-size: 15px;
   }
 
   .Dashboard_lineRow {
-    margin: 10px 0 0 !important;
+    margin: 10px 5px !important;
   }
 
   .Dashboard_card_body {
     background: #292936;
-    height: 400px;
+    height: 380px;
   }
 
   .Dashboard_card_body_two {
     background: #292936;
-    height: 200px;
+    height: 280px;
   }
 
   .Dashboard_card_main {
-    padding: 10px 0;
+    padding: 20px 30px;
   }
 
   .Dashboard_card_left {
     width: 50%;
+    padding: 10px 0;
     float: left;
   }
 
@@ -419,23 +442,64 @@
     color: #a7a7ac;
   }
 
+  .Dashboard_card_roadGauge {
+    height: 180px;
+    margin-bottom: -70px
+  }
+
+  .Dashboard_card_score {
+    line-height: 30px;
+    text-align: right;
+    width: 80%
+  }
+
+  .Dashboard_score_num {
+    font-size: 18px;
+    color: #ff8539
+  }
+
   .Dashboard_card_current {
     margin: auto;
-    width: 80%;
+    width: 85%;
   }
 
   .Dashboard_card_right {
+    padding: 10px 0;
     float: right;
     width: 50%;
+  }
+
+  .Dashboard_card_progressList_score {
+    background: #353644;
+    color: #a7a7ac;
+    font-size: 12px;
+    margin-top: 10px;
+    padding: 3px;
+    line-height: 18px;
+  }
+
+  .Dashboard_card_progressHeight {
+    height: 170px
   }
 
   .Dashboard_card_progressList {
     margin-top: 10px;
     background: #353644;
     padding: 8px;
-    /*height: 150px;*/
     color: #a7a7ac;
     font-size: 12px;
+  }
+
+  .mt10 {
+    margin-top: 10px
+  }
+
+  .fs12 {
+    font-size: 12px;
+  }
+
+  .fs20 {
+    font-size: 20px
   }
 
   .el-progress-bar__inner, .el-progress-bar__outer {
@@ -443,7 +507,7 @@
   }
 
   .el-progress-bar__outer {
-    background: inherit !important;
+    background: #353643 !important;
   }
 
   .Dashboard_card_road {
@@ -491,7 +555,7 @@
       }
 
       return {
-
+        size: this.$size,
         provinceList: [{
           value: '1',
           label: '江苏'
@@ -507,10 +571,14 @@
         currentProvince: '1',
         currentCity: '1',
         currentArea: '1',
-        roadFlow: [
+        allRoadFlow: [],
+        nodeFlow: [
           {name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'},
           {name: '人民路 - 南京路', vph: '312', perc: 70, color: 'yellow'}
         ],
+        roadNetCongestionScore: 0,
+        nodeCongestionScore: 0,
+        congestionPercent: 0,
         firstMode: [],
         firstVehicle: [],
         radio: 3,
@@ -560,42 +628,69 @@
       }
     },
     mounted() {
-      this.video()
+      // this.video()
       // this.drawLine()
-      var map = new window.BMap.Map("map");    // 创建Map实例
+      let map = new window.BMap.Map("map");    // 创建Map实例
       map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
       // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
       map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
       map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      // map.addControl(new window.BMap.MapTypeControl( {mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]} ));   //添加地图类型控件 离线只支持普通、卫星地图; 三维不支持
-      // var driving = new window.BMap.DrivingRoute(map, {
+      // let driving = new window.BMap.DrivingRoute(map, {
       //   renderOptions: {
       //     map: map,
       //     autoViewport: true
       //   }
       // });
-      // // map.setMinZoom(10);
       // driving.search("中关村", "天安门");
-      // var b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956),new BMap.Point(120.414208,32.657899));
-      // try {
-      //   BMapLib.AreaRestriction.setBounds(map, b);
-      // } catch (e) {
-      //   // Window.layer.msg(e);
-      // }
-      // //监听地图缩放
-      // // map.addEventListener("zoomend", function(){
-      // //     if( this.getZoom() > 8 ) {
-      // //         layer.msg("默认只有8级地图, 超过无法显示");
-      // //     }
-      // // });
-
+      let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
+      try {
+        BMapLib.AreaRestriction.setBounds(map, b);
+      } catch (e) {
+        // Window.layer.msg(e);
+      }
       // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
       // map.addControl(cr); //添加版权控件
-      // var bs = map.getBounds();   //返回地图可视区域
+      // var bs = map.getBounds();   //返回地图可视区域0.
 
-
+      this.getTrafficCongestionRoadNetAllFlow();
+      this.getTrafficCongestionRoadNetCongestionScore();
+      this.getTrafficCongestionCongestionPercent();
+      this.getNodeData();
     },
     methods: {
+      getTrafficCongestionNodeAvgDelay() { //交叉口平均延误
+        this.$http
+          .get('/trafficCongestion/roadNetAllFlow?&current=true')
+          .then(response => (console.log(response)))
+      },
+      getTrafficCongestionCongestionPercent() { //拥堵里程比例
+        this.$http
+          .get('/trafficCongestion/congestionPercent?current=true')
+          .then((response) => {
+            this.congestionPercent = response.data.value;
+          })
+      },
+      getTrafficCongestionRoadNetAllFlow() { //路网总流量
+        this.$http
+          .get('/trafficCongestion/roadNetAllFlow?&current=true')
+          .then((response) => {
+            this.allRoadFlow = response.data;
+          })
+      },
+      getTrafficCongestionRoadNetCongestionScore() { //路网拥堵评分
+        this.$http
+          .get('/trafficCongestion/roadNetCongestionScore?current=true')
+          .then((response) => {
+            this.roadNetCongestionScore = response.data;
+          })
+      },
+      getNodeData() {
+        this.$http
+          .get('/nodeData/getNodes')
+          .then((response) => {
+            console.log(response)
+          })
+      },
       drawLine() {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'))
@@ -668,7 +763,8 @@
         myChart.setOption(option);
       },
 
-    },
+    }
+    ,
 
   }
 </script>
