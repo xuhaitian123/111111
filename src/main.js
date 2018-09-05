@@ -9,13 +9,10 @@ import  './style/index.css'
 import '@/style/element-ui.css' // global css
 import './style/map.css'
 
-
-import timelinepick from "vue-timelinepick"
-import "vue-timelinepick/dist/vue-timelinepick.css"
-
-Vue.use(timelinepick)
-
 import echarts from 'echarts'
+
+import axios from 'axios'
+Vue.prototype.$http = axios
 
 Vue.prototype.$echarts = echarts
 

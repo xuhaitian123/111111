@@ -33,7 +33,7 @@
       日
       <el-button @click="restart"> 确定</el-button>
     </div>
-    <canvas id="timeLine-line" width="1440" height="100">
+    <canvas id="timeLine-line"  height="100">
     </canvas>
     <div class="timeLine-current-line"   id='timeLine_line' @mousedown="stop"   v-bind:style="{left: left+'px'}">
     </div>
@@ -43,7 +43,7 @@
 
 <style>
   .timeLine-container {
-    width: 1440px;
+    /*width: 1440px;*/
     height: 100px;
     position: relative;
     background: rgb(54, 54, 66);
@@ -94,6 +94,14 @@
       isRealTime:{
         type:Boolean,
         default: true
+      },
+      rate:{
+        type: Number,
+        default: 5000
+      },
+      space:{
+        type: Number,
+        default:  (document.body.clientWidth - 300)/288,
       }
     },
     data() {
@@ -103,14 +111,8 @@
         endPosition:0,
         isChangeTime:false,
         timer :'',
-        left: function(){
-          var currentTime = new Date();
-
-          return -10 + parseInt((currentTime.getHours()*60 + currentTime.getMinutes()) /5 )* (document.body.clientWidth - 300)/288
-        }(),
-        space: (document.body.clientWidth - 300)/288,
+        left: -10,
         scale: 0,
-        rate: 5000,
         timeLineWidth: document.body.clientWidth - 300,
         yearList: [{value: 2018, disable: true}, {value: 2017, disable: true}, {value: 2016, disable: true}],
         monthList: function (currentMonth) {
@@ -127,25 +129,21 @@
       }
     },
     mounted() {
-
-
-      this.timeLineWidth = document.body.clientWidth - 300;
-      this.init()
+      document.getElementById('timeLine-line').width = this.timeLineWidth+20;
+      this.initPosition();
+      this.init();
       this.start()
     },
     methods: {
       restart(){
-        clearInterval(this.timer)
+        clearInterval(this.timer);
         this.left = -10;
         this.start()
       },
       stopChange(){
         this.isChangeTime = false
-        // this.start()
       },
       start(e) {
-
-
         this.isChangeTime =  false;
         this.timer =  setInterval(() => {
           this.changePosition()
@@ -153,14 +151,12 @@
       },
       changePosition(){
         if(this.isChangeTime|| this.left>= this.timeLineWidth-10) return;
-
         if(this.endPosition && this.startPosition){
           let left =this.left +  this.endPosition-this.startPosition;
           this.left = parseInt(left/(this.space))*(this.space)
           this.endPosition = 0;
           this.startPosition=0;
         }
-
 
         this.left += this.space/ (5*60*1000/this.rate);
         this.getTimer()
@@ -169,42 +165,41 @@
       stop(e){
         this.isChangeTime =  true;
         this.startPosition =  e.clientX;
-        // clearInterval(this.timer)
       },
       getTimer(){
         var seconds = (this.left+10) / (this.space)*5*60;
         var hour = parseInt(seconds/60/60);
         var minuth = Math.floor(seconds/60%60);
-
         if(this.rate === 5000){
-
           var second =  Math.round(seconds%60)
-
         }else{
-          // var minuths = (this.left+10) / (this.space)*5;
-          // var hour = parseInt(minuths/60);
-          // var minuth = Math.floor(minuths%60);
           var second = 0
         }
         var time =  new Date(this.checkedYear+'-'+this.checkedMonth+'-'+this.checkedDay)
         time.setHours(hour)
         time.setMinutes(minuth)
         time.setSeconds(second)
-
         console.log(time)
         this.$emit('newTime', time)
       },
 
 
       changeTimer(e){
-        // console.log(e);
-        if(!this.isChangeTime) return
+
+        if(!this.isChangeTime) return;
         this.endPosition =  e.clientX;
         document.getElementById('timeLine_line').style.left = this.left + this.endPosition-this.startPosition  + 'px'
 
-        // console.log(e)
       },
+      initPosition(){
+        var currentTime = new Date();
 
+        var minTime =   this.space/ (5*60*1000/this.rate)
+        if(this.rate > 59999){
+          return this.left = -10 + parseInt((currentTime.getHours()*60 + currentTime.getMinutes()) /5 )* this.space
+        }
+        this.left =  -10 + parseInt((currentTime.getHours()*60*60 + currentTime.getMinutes()*60 + currentTime.getSeconds())/(this.rate/1000)) * minTime
+      },
       init() {
         let c = document.getElementById("timeLine-line");
         let ctx = c.getContext("2d");
@@ -265,10 +260,10 @@
         }
       },
       getDayList(year, month, day) {
-        var maxDay = this.mGetDate(year, month)
+        var maxDay = this.mGetDate(year, month);
         var dayList = [];
         for (var i = 1; i <= maxDay; i++) {
-          var dayInfo = {value: i, disable: false}
+          var dayInfo = {value: i, disable: false};
           if (day && day <i) {
             dayInfo.disable = true
           }
@@ -279,9 +274,9 @@
       },
       getMonthList(currentMonth) {
 
-        var monthList = []
+        var monthList = [];
         for (var i = 1; i < 13; i++) {
-          var monthInfo = {value: i, disable: false}
+          var monthInfo = {value: i, disable: false};
           if (currentMonth && currentMonth < i) {
             monthInfo.disable = true
           }
@@ -296,12 +291,12 @@
       checkedYear(year) {
         var maxDay = this.mGetDate(year, this.checkedMonth);
         this.checkedMonth = 1;
-        this.checkedDay = 1
+        this.checkedDay = 1;
         this.checkTimeList()
       },
       checkedMonth() {
         var maxDay = this.mGetDate(this.checkedYear, this.checkedMonth);
-        this.checkedDay = 1
+        this.checkedDay = 1;
         this.checkTimeList()
       }
     }

@@ -8,4 +8,5 @@ body{
   /*min-width: 1700px;*/
   color: #ffffff;
   overflow: hidden;
+  box-sizing: border-box;
 }
