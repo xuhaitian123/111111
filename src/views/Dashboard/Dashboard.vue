@@ -656,6 +656,10 @@
       this.getTrafficCongestionRoadNetCongestionScore();
       this.getTrafficCongestionCongestionPercent();
       this.getNodeData();
+
+      // setInterval(()=>{
+      //     this.nodeFlow.push({name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'})
+      // },1000)
     },
     methods: {
       getTrafficCongestionNodeAvgDelay() { //交叉口平均延误

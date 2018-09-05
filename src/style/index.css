@@ -1,7 +1,17 @@
 
-html,
+html{
+  width: 1920px;
+  margin: 0;
+  padding: 0;
+  background: black;
+  /*min-width: 1640px;*/
+  color: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
 body{
-  /*height: 100%;*/
   width: 1920px;
   margin: 0;
   padding: 0;
