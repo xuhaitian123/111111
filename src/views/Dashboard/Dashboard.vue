@@ -68,7 +68,7 @@
                   <div v-for="item in allRoadFlow" :key="item.node_id">
                     <div class="fl Dashboard_card_progress">
                       <div class="Dashboard_card_road">{{item.name}}</div>
-                      <el-progress :percentage="item.value /1000" :stroke-width="6"
+                      <el-progress :percentage="item.value /100" :stroke-width="6"
                                    :show-text="false"></el-progress>
                     </div>
                     <div class="fr">
@@ -80,8 +80,7 @@
                 <div>
                   <div class="Dashboard_card_title mt10">路网拥堵评分</div>
                   <div class="Dashboard_card_score">
-                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span><span
-                    class="fs12"> %</span>
+                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span>
                   </div>
                   <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
@@ -113,32 +112,66 @@
           </div>
           <div class="Dashboard_card_body">
             <div class="Dashboard_card_main">
-              <div class="">
-                <div class="Dashboard_card_title">
-                  <div style="float: left;width: 30%;text-align: center">交叉口</div>
-                  <div style="float: left;width: 35%;text-align: right">拥堵报警</div>
-                  <span style="margin-left: 20%">时间</span>
-                </div>
-                <div class="Dashboard_card_progressList" style="padding: 10px 30px">
-                  <div
-                    style="width: 25%;white-space:nowrap;line-height: 35px;display: inline-block;text-align: center;font-size: 14px;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
-                    天津路-南京路
-                  </div>
-                  <div class="fr" style="width: 60%">
-                    <div style="text-align: center;font-size: 12px;line-height: 20px" class="fl">
-                      北进道口右转中度拥挤
-                      <br>
-                      北进道口右转中度拥挤
-                    </div>
 
-                    <div class="fr" style="font-size: 12px;line-height: 20px">
-                      2018.08.27
-                      <br>
-                      18: 00
-                    </div>
+              <el-row style="line-height: 30px;text-align: center;background: #1f1f2c;font-size: 14px;    color: #a7a7ac;margin-bottom: 10px">
+                <el-col :span="6" :offset="1">
+                  <div class="">时间</div>
+                </el-col>
+                <el-col :span="7">
+                  <div class="">交叉口</div>
+                </el-col>
+                <el-col :span="10">
+                  <div class="">拥堵报警</div>
+                </el-col>
+              </el-row>
+
+
+              <el-row style="text-align: center;background: #353644;font-size: 14px;color: #a7a7ac;margin-bottom: 5px">
+                <el-col :span="6" :offset="1">
+                  <div class="" style="margin-top: 10px;border-left: 5px solid #9f172b">
+                    2018 08 17
+                    <br>
+                    18:00
                   </div>
-                </div>
-              </div>
+                </el-col>
+                <el-col :span="7">
+                  <div class="" style="line-height: 55px">天津路-南京路</div>
+                </el-col>
+                <el-col :span="10">
+                  <div class="" style="margin-top: 10px;border-left: 1px solid #63646f;line-height: 18px">
+                    北进道口右转中度拥挤
+                    <br>
+                    北进道口右转中度拥挤
+                  </div>
+                </el-col>
+              </el-row>
+
+              <!--<div class="">-->
+              <!--<div class="Dashboard_card_title">-->
+              <!--<span style="">时间</span>-->
+              <!--<div style="float: right;width: 40%;text-align: center">交叉口</div>-->
+              <!--<div style="float: left;width: 35%;text-align: right">拥堵报警</div>-->
+              <!--</div>-->
+              <!--<div class="Dashboard_card_progressList" style="padding: 10px 30px">-->
+              <!--<div-->
+              <!--style="width: 25%;white-space:nowrap;line-height: 35px;display: inline-block;text-align: center;font-size: 14px;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">-->
+              <!--天津路-南京路-->
+              <!--</div>-->
+              <!--<div class="fr" style="width: 60%">-->
+              <!--<div style="text-align: center;font-size: 12px;line-height: 20px" class="fl">-->
+              <!--北进道口右转中度拥挤-->
+              <!--<br>-->
+              <!--北进道口右转中度拥挤-->
+              <!--</div>-->
+
+              <!--<div class="fr" style="font-size: 12px;line-height: 20px">-->
+              <!--2018.08.27-->
+              <!--<br>-->
+              <!--18: 00-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--</div>-->
+              <!--</div>-->
             </div>
           </div>
         </el-card>
@@ -331,13 +364,52 @@
   .el-checkbox__label {
     display: inline-block;
     padding-left: 5px !important;
-    font-size: 12px !important;
+    font-size: 12px;
     color: #a7a7ac !important;
+  }
+
+  .el-checkbox__inner,.el-radio__inner{
+   background: initial;
+  }
+
+  .el-select-dropdown {
+    border: 0;
+    text-align: center;
+  }
+
+  .el-select-dropdown__list {
+    padding: 0 5px 5px 5px;
+    background: #353644;
+  }
+
+  .el-select-dropdown__list li {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px solid #949494;
+  }
+
+  .el-popper .popper__arrow, .el-popper .popper__arrow::after {
+    border-style: none;
+  }
+
+  .el-select-dropdown__item.selected {
+    color: white;
+    font-weight: 100;
+    background: #353644;
+  }
+
+  .el-select-dropdown__item.selected span {
+    font-size: 12px !important;
+  }
+
+  .el-select-dropdown__item {
+    height: initial;
+    line-height: initial;
   }
 
   .el-select .el-input, .el-select, .el-select input {
     height: 20px !important;
-    font-size: 12px !important;
+    font-size: 14px;
     background: #353643;
     border: 1px solid #353643;
   }
@@ -450,11 +522,12 @@
   .Dashboard_card_score {
     line-height: 30px;
     text-align: right;
-    width: 80%
+    margin-top: 20px;
+    width: 75%
   }
 
   .Dashboard_score_num {
-    font-size: 18px;
+    font-size: 24px;
     color: #ff8539
   }
 
@@ -512,6 +585,7 @@
 
   .Dashboard_card_road {
     padding-bottom: 2px;
+    font-size: 12px;
   }
 
   .Dashboard_card_progress {

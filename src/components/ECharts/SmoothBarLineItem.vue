@@ -56,6 +56,13 @@
                 color: '#7d7d7d'
               }
             },
+            splitLine: {
+              show: true,
+              interval: 'auto',
+              lineStyle: {
+                color: ['#353644']
+              }
+            },
           }
         ],
         series: [

@@ -77,7 +77,7 @@
                 }
               },
               type: 'category',
-              data: ['1月','2月','3月','4月','5月','6月','7月','8月'],
+              data: ['xx交叉口','xx交叉口','xx交叉口','xx交叉口','xx交叉口','xx交叉口','xx交叉口','xx交叉口'],
               axisPointer: {
                 type: 'shadow'
               }
@@ -85,7 +85,7 @@
           ],
           yAxis: [
             {
-              name: "平均延误时间",
+              name: "平    (s)",
               nameTextStyle: {
                 color: "#7d7d7d",
                 align:'left'
@@ -111,7 +111,7 @@
               }
             },
             {
-              "name": "报警次数",
+              "name": "报",
               "nameTextStyle": {
                 "color": "#7d7d7d"
               },
@@ -122,6 +122,13 @@
                 show: false,
                 lineStyle: {
                   color: '#7d7d7d'
+                }
+              },
+              splitLine: {
+                show: true,
+                interval: 'auto',
+                lineStyle: {
+                  color: ['#353644']
                 }
               },
               axisTick: {
