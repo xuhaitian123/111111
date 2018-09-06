@@ -40,9 +40,9 @@
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
           <div class="Dashboard_clearfix">
-            <span>实时地图</span>
+            <span>拥堵地图</span>
             <div style="float: right; padding: 3px 0">
-              <i class="iconfont icon-fangda"></i>
+              <i class="iconfont icon-fangda" @click="jumpPage()"></i>
               <i class="iconfont icon-shuxian"></i>
               <i class="iconfont icon-webicon03"></i>
             </div>
@@ -629,7 +629,6 @@
       }
 
       return {
-        size: this.$size,
         provinceList: [{
           value: '1',
           label: '江苏'
@@ -729,7 +728,7 @@
       this.getTrafficCongestionRoadNetAllFlow();
       this.getTrafficCongestionRoadNetCongestionScore();
       this.getTrafficCongestionCongestionPercent();
-      this.getNodeData();
+      // this.getNodeDataD22ByNodeId();
 
       // setInterval(()=>{
       //     this.nodeFlow.push({name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'})
@@ -768,6 +767,16 @@
           .then((response) => {
             console.log(response)
           })
+      },
+      getNodeDataD22ByNodeId(){
+        this.$http
+          .get('/nodeData/getNodeDataD22ByNodeId?nodeId=2&current=true')
+          .then((response) => {
+            console.log(response)
+          })
+      },
+      jumpPage(){
+
       },
       drawLine() {
         // 基于准备好的dom，初始化echarts实例
