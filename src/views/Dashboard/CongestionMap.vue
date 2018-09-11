@@ -180,11 +180,6 @@
     margin: 0 10px;
   }
 
-  #map {
-    width: 100%;
-    height: 955px;
-  }
-
   .echarts {
     height: 300px;
   }
@@ -243,11 +238,6 @@
 
   .Dashboard_lineRow {
     margin: 10px 5px !important;
-  }
-
-  .Dashboard_card_body {
-    background: #292936;
-    height: 955px;
   }
 
 </style>

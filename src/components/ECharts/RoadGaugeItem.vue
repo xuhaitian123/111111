@@ -38,7 +38,7 @@
                 detail: {
                   show: false,
                 },
-                data: [{value: this.data, name: this.data}],
+                data: [{value: this.data, name: String(this.data)}],
                 title: {
                   show: true,
                   offsetCenter: [0, -10],
@@ -47,7 +47,7 @@
                     fontStyle: 'normal',
                     fontWeight: 'normal',
                     fontFamily: '微软雅黑',
-                    fontSize: 24
+                    fontSize: 30
                   }
                 },
                 axisLine: {

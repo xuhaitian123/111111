@@ -14,9 +14,7 @@
       mounted() {
 
         let myChart = this.$echarts.init(document.getElementById('container'));
-        let app = {};
         let option = {};
-        app.title = '折柱混合';
 
         option = {
           tooltip: {
