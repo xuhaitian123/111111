@@ -141,9 +141,9 @@
                 </el-col>
                 <el-col :span="10">
                   <div class="Dashboard_alarm_info">
-                    <span :style="{color:alarmColor(i.value[0].value)}">北进道口右转中度拥挤</span>
+                    <span :style="{color:alarmColor(i.value[0].value)}">{{i.value[0].link_direction}}进道口右转{{alarmText(i.value[0].value)}}度拥挤</span>
                     <br>
-                    <span :style="{color:alarmColor(i.value[1].value)}">北进道口右转中度拥挤</span>
+                    <span :style="{color:alarmColor(i.value[1].value)}">{{i.value[1].link_direction}}进道口右转{{alarmText(i.value[1].value)}}度拥挤</span>
                   </div>
                 </el-col>
               </el-row>
@@ -581,7 +581,7 @@
     margin-bottom: 10px
   }
 
-  .Dashboard_alarm_list span{
+  .Dashboard_alarm_list span {
     font-size: 14px;
   }
 
@@ -644,6 +644,15 @@
             return "#a43f43";
           }
         },
+        alarmText: function (val) {
+          if (val < 60) {
+            return "轻";
+          } else if (val > 60 && val < 80) {
+            return "中";
+          } else if (val > 80) {
+            return "重";
+          }
+        },
         provinceList: [{
           value: '1',
           label: '江苏'
@@ -660,10 +669,6 @@
         currentCity: '1',
         currentArea: '1',
         allRoadFlow: [],
-        nodeFlow: [
-          {name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'},
-          {name: '人民路 - 南京路', vph: '312', perc: 70, color: 'yellow'}
-        ],
         roadNetCongestionScore: 0,
         nodeCongestionScore: 0,
         congestionPercent: 0,
@@ -720,7 +725,6 @@
     mounted() {
       // this.video()
       // this.drawLine()
-      console.log(this.formatDate(new Date(1536654600000), 'yyyy MM dd'));
       let map = new window.BMap.Map("map");    // 创建Map实例
       map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
       // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
@@ -743,14 +747,13 @@
       // map.addControl(cr); //添加版权控件
       // var bs = map.getBounds();   //返回地图可视区域0.
 
-      this.getTrafficCongestionRoadNetAllFlow();
-      this.getTrafficCongestionRoadNetCongestionScore();
-      this.getTrafficCongestionCongestionPercent();
-      this.getTrafficCongestionNodeCongestionSource();
-      this.getTrafficCongestionAllNodeCongestionAlarm();
-      // setInterval(()=>{
-      //     this.nodeFlow.push({name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'})
-      // },1000)
+      setInterval(() => {
+        this.getTrafficCongestionRoadNetAllFlow();
+        this.getTrafficCongestionRoadNetCongestionScore();
+        this.getTrafficCongestionCongestionPercent();
+        this.getTrafficCongestionNodeCongestionSource();
+        this.getTrafficCongestionAllNodeCongestionAlarm();
+      }, 5 * 60 * 1000)
     },
     methods: {
       getTrafficCongestionCongestionPercent() { //拥堵里程比例
@@ -780,7 +783,7 @@
             this.allNodeScore = response.data;
           })
       },
-      getTrafficCongestionAllNodeCongestionAlarm() {
+      getTrafficCongestionAllNodeCongestionAlarm() {  //交叉口报警信息
         this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
             this.allNodeAlarmInfo = response.data;
