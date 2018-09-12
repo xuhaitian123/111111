@@ -65,11 +65,11 @@
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
-                    <div class="Dashboard_card_score" style="margin-top: 20%">
-                      <b class="Dashboard_score_num">{{roadNetCongestionScore.value}}</b>
-                    </div>
-                    <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="8" color="#ff8539"
-                                 :show-text="false" style="width: 80%;margin: auto;margin-top: 5%"></el-progress>
+                      <div class="Dashboard_card_score" style="margin-top: 20%">
+                        <b class="Dashboard_score_num">{{roadNetCongestionScore.value}}</b>
+                      </div>
+                      <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="8" color="#ff8539"
+                                   :show-text="false" style="width: 80%;margin: auto;margin-top: 5%"></el-progress>
                     </div>
                   </el-col>
                 </el-row>
@@ -89,8 +89,7 @@
                 </el-row>
 
                 <el-row class="Dashboard_alarm_list" v-for="i in allNodeAlarmInfo" :key="i.node_id">
-                  <el-col :span="6" :offset="1">
-                    <!--#9f172b-->
+                  <el-col :span="5" :offset="1">
                     <div class=""
                          :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
                       <span>{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
@@ -98,7 +97,7 @@
                       <span>{{ formatDate(new Date(i.end),'hh:mm')}}</span>
                     </div>
                   </el-col>
-                  <el-col :span="7">
+                  <el-col :span="8">
                     <div class="" style="line-height: 55px">
                       <span>{{i.node_name}}</span>
                     </div>
@@ -178,7 +177,7 @@
     },
     mounted() {
       let map = new window.BMap.Map("bigMap");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
+      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 13);  // 初始化地图,设置中心点坐标和地图级别
       map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
       map.addControl(new window.BMap.NavigationControl());   //缩放按钮
       // let driving = new window.BMap.DrivingRoute(map, {
@@ -231,10 +230,12 @@
   li {
     margin: 5px 0;
   }
+
   .Dashboard_card_roadGauge {
     height: 180px;
     margin-bottom: -70px
   }
+
   .el-progress-bar__inner, .el-progress-bar__outer {
     border-radius: 0 !important;
   }
@@ -259,6 +260,12 @@
     font-size: 12px;
   }
 
+  .Dashboard_alarm_info {
+    margin-top: 10px;
+    border-left: 1px solid #63646f;
+    line-height: 18px
+  }
+
   ul {
     display: block;
     list-style-type: none;
@@ -270,7 +277,7 @@
   }
 
   .Dashboard_card_body {
-    background: rgba(41,41,54,0.8);
+    background: rgba(41, 41, 54, 0.8);
     height: 380px;
   }
 
@@ -282,7 +289,7 @@
     color: #a7a7ac;
   }
 
-  .mb10{
+  .mb10 {
     margin-bottom: 10px
   }
 
