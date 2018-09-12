@@ -3,7 +3,7 @@
   <div>
     <div class="Dashboard_titleCascader">
       <span>省
-        <el-select v-model="currentProvince" placeholder="请选择" class="Dashboard_titleSelect">
+        <el-select v-model="currentProvince" placeholder="请选择" class="Dashboard_titleSelect" :popper-append-to-body="false">
           <el-option
             v-for="item in provinceList"
             :key="item.value"
@@ -14,7 +14,7 @@
       </span>
 
       <span>城市
-        <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
+        <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect" :popper-append-to-body="false">
           <el-option
             v-for="item in cityList"
             :key="item.value"
@@ -25,7 +25,7 @@
       </span>
 
       <span>地区
-        <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
+        <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_titleSelect" :popper-append-to-body="false">
           <el-option class="selectColor"
                      v-for="item in areaList"
                      :key="item.value"
@@ -567,7 +567,11 @@
         areaList: [{
           value: '1',
           label: '盱眙'
-        }],
+        },
+          {
+            value: '2',
+            label: '盱眙1'
+          }],
         currentProvince: '1',
         currentCity: '1',
         currentArea: '1',

@@ -1,13 +1,69 @@
 .el-menu{
   text-align: left;
+  background-color: rgb(41,41,53);
+  color: rgb(136,136,143);
 }
+.el-submenu__title:hover {
+  background: rgb(41,41,53);
+  color: #fff !important;
+}
+
+.el-menu-item:focus, .el-menu-item:hover {
+  outline: 0;
+  background-color: rgb(41,41,53);
+  color: #fff !important;
+}
+
+.el-menu--inline{
+  background: rgb(32, 32, 45) !important;
+}
+
+
+
+.el-popper .popper__arrow{
+  display: none;
+}
+
+.el-select-dropdown{
+  border: none;
+}
+
+.el-select-dropdown__list{
+  background:  rgb(41,41,53);
+  color: rgb(136,136,143);
+  width: 120px;
+  text-align: center;
+  padding: 0;
+
+
+}
+
+.el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
+  background-color: rgb(41,41,53);
+  color: #fff !important;
+}
+.el-select-dropdown__item{
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  background:  rgb(41,41,53);
+  margin: 0;
+  border-bottom: 1px solid  rgb(136,136,143);
+  font-size: 14px;
+}
+.el-select-dropdown__item:last-child{
+  border-bottom: none;
+}
+
+
 .red{
   display: none;
 }
+
 .is-active>.active-item{
   width: 5px;
   height: 100%;
-  background: #ffab2f;
+  background: rgb(249,144,33);
   float: right;
   position: absolute;
   right: 0;

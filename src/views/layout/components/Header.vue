@@ -15,6 +15,7 @@
     width: 100%;
     display: flex;
     height: 60px;
+    background: rgb(25,25,38);
     justify-content: space-between;
   }
   .logo-container{
