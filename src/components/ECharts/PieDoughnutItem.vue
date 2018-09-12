@@ -22,11 +22,11 @@
       option = {
         title: {
           text: this.title,
-          bottom: 1,
-          left: '50%',
+          x: '28%',
+          y: 'center',
           textStyle: {
             color: '#7d7d7d',
-            fontSize: 14
+            fontSize: 20
           }
         },
         tooltip: {
@@ -72,6 +72,7 @@
           {
             name: '访问来源',
             type: 'pie',
+            center: ['40%', '50%'],
             radius: ['60%', '70%'],
             avoidLabelOverlap: false,
             label: {

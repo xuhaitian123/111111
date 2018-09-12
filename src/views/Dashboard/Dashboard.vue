@@ -42,7 +42,7 @@
           <div class="Dashboard_clearfix">
             <span>实时地图</span>
             <div style="float: right; padding: 3px 0">
-              <i class="iconfont icon-fangda"></i>
+              <i class="iconfont icon-fangda" @click="jumpPage('/main/congestionMap')"></i>
               <i class="iconfont icon-shuxian"></i>
               <i class="iconfont icon-webicon03"></i>
             </div>
@@ -68,7 +68,7 @@
                   <div v-for="item in allRoadFlow" :key="item.node_id">
                     <div class="fl Dashboard_card_progress">
                       <div class="Dashboard_card_road">{{item.name}}</div>
-                      <el-progress :percentage="item.value /1000" :stroke-width="6"
+                      <el-progress :percentage="item.value /100" :stroke-width="6"
                                    :show-text="false"></el-progress>
                     </div>
                     <div class="fr">
@@ -80,8 +80,7 @@
                 <div>
                   <div class="Dashboard_card_title mt10">路网拥堵评分</div>
                   <div class="Dashboard_card_score">
-                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span><span
-                    class="fs12"> %</span>
+                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span>
                   </div>
                   <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
@@ -95,8 +94,8 @@
                 <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
-                <div class="Dashboard_card_progressList_score" v-for="item in nodeFlow" :key="item.vph">
-                  {{item.name}}<span class="fr fs20">{{item.perc}}</span>
+                <div class="Dashboard_card_progressList_score" v-for="item in allNodeScore" :key="item.node_id">
+                  {{item.road_name}}<span class="fr fs20">{{item.value.toFixed(0)}}</span>
                 </div>
               </div>
 
@@ -113,32 +112,41 @@
           </div>
           <div class="Dashboard_card_body">
             <div class="Dashboard_card_main">
-              <div class="">
-                <div class="Dashboard_card_title">
-                  <div style="float: left;width: 30%;text-align: center">交叉口</div>
-                  <div style="float: left;width: 35%;text-align: right">拥堵报警</div>
-                  <span style="margin-left: 20%">时间</span>
-                </div>
-                <div class="Dashboard_card_progressList" style="padding: 10px 30px">
-                  <div
-                    style="width: 25%;white-space:nowrap;line-height: 35px;display: inline-block;text-align: center;font-size: 14px;padding-right: 5%;border-left: 5px #9f172b solid;;border-right: 2px #63646f solid">
-                    天津路-南京路
-                  </div>
-                  <div class="fr" style="width: 60%">
-                    <div style="text-align: center;font-size: 12px;line-height: 20px" class="fl">
-                      北进道口右转中度拥挤
-                      <br>
-                      北进道口右转中度拥挤
-                    </div>
 
-                    <div class="fr" style="font-size: 12px;line-height: 20px">
-                      2018.08.27
-                      <br>
-                      18: 00
-                    </div>
+              <el-row class="Dashboard_card_alarm">
+                <el-col :span="6" :offset="1">
+                  <div class="">时间</div>
+                </el-col>
+                <el-col :span="7">
+                  <div class="">交叉口</div>
+                </el-col>
+                <el-col :span="10">
+                  <div class="">拥堵报警</div>
+                </el-col>
+              </el-row>
+
+              <el-row class="Dashboard_alarm_list" v-for="i in allNodeAlarmInfo" :key="i.node_id">
+                <el-col :span="6" :offset="1">
+                  <!--#9f172b-->
+                  <div class="" :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
+                    <span>{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
+                    <br>
+                    <span>{{ formatDate(new Date(i.end),'hh:mm')}}</span>
                   </div>
-                </div>
-              </div>
+                </el-col>
+                <el-col :span="7">
+                  <div class="" style="line-height: 55px">
+                    <span>{{i.node_name}}</span>
+                  </div>
+                </el-col>
+                <el-col :span="10">
+                  <div class="Dashboard_alarm_info">
+                    <span :style="{color:alarmColor(i.value[0].value)}">{{i.value[0].link_direction}}进道口右转{{alarmText(i.value[0].value)}}度拥挤</span>
+                    <br>
+                    <span :style="{color:alarmColor(i.value[1].value)}">{{i.value[1].link_direction}}进道口右转{{alarmText(i.value[1].value)}}度拥挤</span>
+                  </div>
+                </el-col>
+              </el-row>
             </div>
           </div>
         </el-card>
@@ -331,13 +339,53 @@
   .el-checkbox__label {
     display: inline-block;
     padding-left: 5px !important;
-    font-size: 12px !important;
+    font-size: 12px;
     color: #a7a7ac !important;
+  }
+
+  .el-checkbox__inner, .el-radio__inner {
+    background: initial;
+    font-size: 14px;
+  }
+
+  .el-select-dropdown {
+    border: 0;
+    text-align: center;
+  }
+
+  .el-select-dropdown__list {
+    padding: 0 5px 5px 5px;
+    background: #353644;
+  }
+
+  .el-select-dropdown__list li {
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px solid #949494;
+  }
+
+  .el-popper .popper__arrow, .el-popper .popper__arrow::after {
+    border-style: none;
+  }
+
+  .el-select-dropdown__item.selected {
+    color: white;
+    font-weight: 100;
+    background: #353644;
+  }
+
+  .el-select-dropdown__item.selected span {
+    font-size: 12px !important;
+  }
+
+  .el-select-dropdown__item {
+    height: initial;
+    line-height: initial;
   }
 
   .el-select .el-input, .el-select, .el-select input {
     height: 20px !important;
-    font-size: 12px !important;
+    font-size: 14px;
     background: #353643;
     border: 1px solid #353643;
   }
@@ -450,11 +498,12 @@
   .Dashboard_card_score {
     line-height: 30px;
     text-align: right;
-    width: 80%
+    margin-top: 20px;
+    width: 75%
   }
 
   .Dashboard_score_num {
-    font-size: 18px;
+    font-size: 24px;
     color: #ff8539
   }
 
@@ -498,6 +547,10 @@
     font-size: 12px;
   }
 
+  .fs14 {
+    font-size: 14px;
+  }
+
   .fs20 {
     font-size: 20px
   }
@@ -512,10 +565,37 @@
 
   .Dashboard_card_road {
     padding-bottom: 2px;
+    font-size: 12px;
   }
 
   .Dashboard_card_progress {
     width: 70%;
+  }
+
+  .Dashboard_card_alarm {
+    line-height: 30px;
+    text-align: center;
+    background: #1f1f2c;
+    font-size: 14px;
+    color: #a7a7ac;
+    margin-bottom: 10px
+  }
+
+  .Dashboard_alarm_list span {
+    font-size: 14px;
+  }
+
+  .Dashboard_alarm_list {
+    text-align: center;
+    background: #353644;
+    color: #a7a7ac;
+    margin-bottom: 5px
+  }
+
+  .Dashboard_alarm_info {
+    margin-top: 10px;
+    border-left: 1px solid #63646f;
+    line-height: 18px
   }
 
   .Dashboard_card_vph {
@@ -555,7 +635,24 @@
       }
 
       return {
-        size: this.$size,
+        alarmColor: function (val) {
+          if (val < 60) {
+            return "#ccccd0";
+          } else if (val > 60 && val < 80) {
+            return "#c8772a";
+          } else if (val > 80) {
+            return "#a43f43";
+          }
+        },
+        alarmText: function (val) {
+          if (val < 60) {
+            return "轻";
+          } else if (val > 60 && val < 80) {
+            return "中";
+          } else if (val > 80) {
+            return "重";
+          }
+        },
         provinceList: [{
           value: '1',
           label: '江苏'
@@ -576,15 +673,13 @@
         currentCity: '1',
         currentArea: '1',
         allRoadFlow: [],
-        nodeFlow: [
-          {name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'},
-          {name: '人民路 - 南京路', vph: '312', perc: 70, color: 'yellow'}
-        ],
         roadNetCongestionScore: 0,
         nodeCongestionScore: 0,
         congestionPercent: 0,
         firstMode: [],
         firstVehicle: [],
+        allNodeScore: [],
+        allNodeAlarmInfo: [],
         radio: 3,
         radio1: 3,
         radio2: 3,
@@ -656,21 +751,15 @@
       // map.addControl(cr); //添加版权控件
       // var bs = map.getBounds();   //返回地图可视区域0.
 
-      this.getTrafficCongestionRoadNetAllFlow();
-      this.getTrafficCongestionRoadNetCongestionScore();
-      this.getTrafficCongestionCongestionPercent();
-      this.getNodeData();
-
-      // setInterval(()=>{
-      //     this.nodeFlow.push({name: '人民路 - 南京路', vph: '123', perc: 12, color: 'blue'})
-      // },1000)
+      setInterval(() => {
+        this.getTrafficCongestionRoadNetAllFlow();
+        this.getTrafficCongestionRoadNetCongestionScore();
+        this.getTrafficCongestionCongestionPercent();
+        this.getTrafficCongestionNodeCongestionSource();
+        this.getTrafficCongestionAllNodeCongestionAlarm();
+      }, 5 * 60 * 1000)
     },
     methods: {
-      getTrafficCongestionNodeAvgDelay() { //交叉口平均延误
-        this.$http
-          .get('/trafficCongestion/roadNetAllFlow?&current=true')
-          .then(response => (console.log(response)))
-      },
       getTrafficCongestionCongestionPercent() { //拥堵里程比例
         this.$http
           .get('/trafficCongestion/congestionPercent?current=true')
@@ -692,12 +781,22 @@
             this.roadNetCongestionScore = response.data;
           })
       },
-      getNodeData() {
-        this.$http
-          .get('/nodeData/getNodes')
+      getTrafficCongestionNodeCongestionSource() {  //所有交叉口拥堵评分
+        this.$http.get('/trafficCongestion/allNodeCongestionSource?current=true')
           .then((response) => {
+            this.allNodeScore = response.data;
+          })
+      },
+      getTrafficCongestionAllNodeCongestionAlarm() {  //交叉口报警信息
+        this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
+          .then((response) => {
+            this.allNodeAlarmInfo = response.data;
             console.log(response)
           })
+      },
+
+      jumpPage(key) {
+        this.$router.push(key);
       },
       drawLine() {
         // 基于准备好的dom，初始化echarts实例
@@ -771,8 +870,7 @@
         myChart.setOption(option);
       },
 
-    }
-    ,
+    },
 
   }
 </script>

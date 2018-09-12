@@ -38,22 +38,22 @@
                 detail: {
                   show: false,
                 },
-                data: [{value: this.data, name: this.data}],
+                data: [{value: this.data, name: String(this.data)}],
                 title: {
                   show: true,
                   offsetCenter: [0, -10],
                   textStyle: {
-                    color: '#fff',
+                    color: '#c94343',
                     fontStyle: 'normal',
                     fontWeight: 'normal',
                     fontFamily: '微软雅黑',
-                    fontSize: 24
+                    fontSize: 30
                   }
                 },
                 axisLine: {
                   show: true,
                   lineStyle: {
-                    color: [[this.data/100, '#d34e80'], [1, '#fff']],
+                    color: [[this.data/1, '#d34e80'], [1, '#fff']],
                     width: 2,
                     shadowBlur: 15,
                     shadowColor: '#e2ea73',
