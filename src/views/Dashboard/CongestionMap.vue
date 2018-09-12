@@ -49,7 +49,7 @@
             <div id="bigMap" style="height: 980px"></div>
 
             <div style="position: absolute;width: 340px;height: 100%;top: 10px;right: 15px">
-              <div style="height: 150px;    background: rgba(41,41,54,0.8);">
+              <div style="height: 150px;background: rgba(41,41,54,0.8);">
                 <el-row class="Dashboard_card_alarm">
                   <el-col :span="12">
                     <div class="">路网拥堵评分</div>
@@ -110,6 +110,36 @@
                     </div>
                   </el-col>
                 </el-row>
+              </div>
+
+              <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.8);margin-top: 10px;float: right">
+                <div
+                  style="color: #a7a7ac;font-size: 16px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+                  图例
+                </div>
+
+                <ul class="CongestionMap_Legend">
+                  <li>
+                    <i class="el-icon-info"></i>
+                    <span>延误时间 < 30秒</span>
+                  </li>
+                  <li>
+                    <i class="el-icon-info"></i>
+                    <span>延误时间 30-50秒</span>
+                  </li>
+                  <li>
+                    <i class="el-icon-info"></i>
+                    <span>延误时间 50-60秒</span>
+                  </li>
+                  <li>
+                    <i class="el-icon-info"></i>
+                    <span>延误时间 > 60秒</span></li>
+                  <li>
+                    <i class="el-icon-info"></i>
+                    <span>未知</span>
+                  </li>
+                </ul>
+
               </div>
             </div>
           </div>
@@ -234,6 +264,25 @@
   .Dashboard_card_roadGauge {
     height: 180px;
     margin-bottom: -70px
+  }
+
+  .CongestionMap_Legend i {
+    margin-right: 5px;
+  }
+
+  .CongestionMap_Legend i, .CongestionMap_Legend span {
+    font-size: 12px;
+    color: #a7a7ac;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  .CongestionMap_Legend li:last-child{
+    border-bottom: 0;
+  }
+  .CongestionMap_Legend li {
+    margin: 0 10px;
+    border-bottom: 1px solid #a7a7ac;
   }
 
   .el-progress-bar__inner, .el-progress-bar__outer {
