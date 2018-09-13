@@ -49,15 +49,19 @@
             <div id="bigMap" style="height: 980px"></div>
 
             <div style="position: absolute;top: 15px;width: 100%;text-align: center">
-              <el-row style="width: 250px;height: 40px;background: rgba(41,41,54,0.8);;margin: auto;border-radius: 45px">
+              <el-row
+                style="width: 250px;height: 40px;background: rgba(41,41,54,0.8);;margin: auto;border-radius: 45px">
                 <el-col :span="12">
-                  <div class="" style="width: 100px;height: 30px;background: rgba(31,31,44);margin-top: 5px;border-radius: 40px;line-height: 30px;margin-left: 15px">路网流量</div>
+                  <div @click="setRoadNetStatus(false)" class="CongestionMap_Status"
+                       :style="{background : !currentRoadNet?'rgba(31,31,44)':''}">路网流量
+                  </div>
                 </el-col>
                 <el-col style="width: 1px;height: 30px;background: #ccccd0;margin-top: 5px">
-
-                </el-col >
+                </el-col>
                 <el-col :span="11">
-                  <div class="" style="width: 100px;height: 30px;margin-top: 5px;border-radius: 40px;line-height: 30px;margin-right: 15px;">路网延误</div>
+                  <div @click="setRoadNetStatus(true)" class="CongestionMap_Status"
+                       :style="{background : currentRoadNet?'rgba(31,31,44)':''}">路网延误
+                  </div>
                 </el-col>
               </el-row>
             </div>
@@ -155,6 +159,11 @@
                 </ul>
 
               </div>
+
+            </div>
+
+            <div  style="position:absolute;bottom: 80px;width: 100%">
+              <time-line></time-line>
             </div>
           </div>
         </el-card>
@@ -164,20 +173,14 @@
 </template>
 
 <script>
-  import TimeLine from '../../components/TimeLine/TimeLine'
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
-  import MixLineBar from '../../components/ECharts/MixLineBarItem'
-  import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
-  import SmoothBarLine from '../../components/ECharts/SmoothBarLineItem'
+  import TimeLine from '../../components/TimeLine/TimeLine'
 
   export default {
     name: "congestion-map",
     components: {
-      TimeLine,
       RoadGauge,
-      MixLineBar,
-      PieDoughnut,
-      SmoothBarLine,
+      TimeLine,
     },
     data() {
       return {
@@ -217,6 +220,7 @@
         allNodeAlarmInfo: [],
         congestionPercent: 0,
         roadNetCongestionScore: 0,
+        currentRoadNet: false,
       }
     },
     mounted() {
@@ -263,9 +267,11 @@
         this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
             this.allNodeAlarmInfo = response.data;
-            console.log(response)
           })
       },
+      setRoadNetStatus(is) {
+        this.currentRoadNet = is;
+      }
     }
   }
 </script>
@@ -284,6 +290,15 @@
     margin-right: 5px;
   }
 
+  .CongestionMap_Status {
+    width: 100px;
+    height: 30px;
+    margin-top: 5px;
+    border-radius: 40px;
+    line-height: 30px;
+    margin-left: 15px;
+  }
+
   .CongestionMap_Legend i, .CongestionMap_Legend span {
     font-size: 12px;
     color: #a7a7ac;
@@ -291,9 +306,10 @@
     text-align: center;
   }
 
-  .CongestionMap_Legend li:last-child{
+  .CongestionMap_Legend li:last-child {
     border-bottom: 0;
   }
+
   .CongestionMap_Legend li {
     margin: 0 10px;
     border-bottom: 1px solid #a7a7ac;

@@ -44,6 +44,8 @@
 <style>
   .timeLine-container {
     /*width: 1440px;*/
+    margin: auto;
+    box-shadow: 5px 5px 5px #111;
     height: 100px;
     position: relative;
     background: rgb(54, 54, 66);
