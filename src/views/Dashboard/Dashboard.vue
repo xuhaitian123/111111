@@ -80,9 +80,9 @@
                 <div>
                   <div class="Dashboard_card_title mt10">路网拥堵评分</div>
                   <div class="Dashboard_card_score">
-                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span>
+                    <span class="Dashboard_score_num">{{roadNetCongestionScore}}</span>
                   </div>
-                  <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="6" color="#ff8539"
+                  <el-progress :percentage="roadNetCongestionScore" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
                 </div>
               </div>
@@ -141,9 +141,11 @@
                 </el-col>
                 <el-col :span="10">
                   <div class="Dashboard_alarm_info">
-                    <span :style="{color:alarmColor(i.value[0].value)}">{{i.value[0].link_direction}}进道口右转{{alarmText(i.value[0].value)}}度拥挤</span>
+                    <span :style="{color:alarmColor(i.value[0].value)}">
+                      {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                     <br>
-                    <span :style="{color:alarmColor(i.value[1].value)}">{{i.value[1].link_direction}}进道口右转{{alarmText(i.value[1].value)}}度拥挤</span>
+                    <span :style="{color:alarmColor(i.value[1].value)}">
+                      {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
                   </div>
                 </el-col>
               </el-row>
@@ -403,10 +405,6 @@
     height: 400px;
   }
 
-  .echarts {
-    height: 300px;
-  }
-
   .el-radio + .el-radio {
     margin-left: 0 !important;
   }
@@ -423,18 +421,6 @@
 
   .el-radio__label {
     padding-left: 0 !important;
-  }
-
-  .video {
-    position: relative;
-    height: 300px;
-    width: 400px;
-  }
-
-  img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
   }
 
   .Dashboard_titleCascader {
@@ -543,14 +529,6 @@
     margin-top: 10px
   }
 
-  .fs12 {
-    font-size: 12px;
-  }
-
-  .fs14 {
-    font-size: 14px;
-  }
-
   .fs20 {
     font-size: 20px
   }
@@ -653,6 +631,11 @@
             return "重";
           }
         },
+        flowText: {
+          right: '右转',
+          left: '左转',
+          straight: '直行'
+        },
         provinceList: [{
           value: '1',
           label: '江苏'
@@ -746,16 +729,21 @@
       // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
       // map.addControl(cr); //添加版权控件
       // var bs = map.getBounds();   //返回地图可视区域0.
-
-      setInterval(() => {
+      this.init()
+    },
+    methods: {
+      init() {
+        this.getAllData();
+        let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
+      },
+      getAllData() {
+        console.log('----')
         this.getTrafficCongestionRoadNetAllFlow();
         this.getTrafficCongestionRoadNetCongestionScore();
         this.getTrafficCongestionCongestionPercent();
         this.getTrafficCongestionNodeCongestionSource();
         this.getTrafficCongestionAllNodeCongestionAlarm();
-      }, 5 * 60 * 1000)
-    },
-    methods: {
+      },
       getTrafficCongestionCongestionPercent() { //拥堵里程比例
         this.$http
           .get('/trafficCongestion/congestionPercent?current=true')
@@ -774,7 +762,7 @@
         this.$http
           .get('/trafficCongestion/roadNetCongestionScore?current=true')
           .then((response) => {
-            this.roadNetCongestionScore = response.data;
+            this.roadNetCongestionScore = response.data.value;
           })
       },
       getTrafficCongestionNodeCongestionSource() {  //所有交叉口拥堵评分

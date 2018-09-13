@@ -40,7 +40,7 @@
           <div class="Dashboard_clearfix">
             <span>拥堵地图</span>
             <div style="float: right; padding: 3px 0">
-              <i class="iconfont icon-fangda" @click="jumpPage()"></i>
+              <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
               <i class="iconfont icon-shuxian"></i>
               <i class="iconfont icon-webicon03"></i>
             </div>
@@ -98,16 +98,16 @@
                   <el-col :span="6" :offset="1">
                     <div class="">时间</div>
                   </el-col>
-                  <el-col :span="7">
+                  <el-col :span="8">
                     <div class="">交叉口</div>
                   </el-col>
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <div class="">拥堵报警</div>
                   </el-col>
                 </el-row>
 
                 <el-row class="Dashboard_alarm_list" v-for="i in allNodeAlarmInfo" :key="i.node_id">
-                  <el-col :span="5" :offset="1">
+                  <el-col :span="6" :offset="1">
                     <div class=""
                          :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
                       <span>{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
@@ -120,11 +120,13 @@
                       <span>{{i.node_name}}</span>
                     </div>
                   </el-col>
-                  <el-col :span="10">
+                  <el-col :span="9">
                     <div class="Dashboard_alarm_info">
-                      <span :style="{color:alarmColor(i.value[0].value)}">{{i.value[0].link_direction}}进道口右转{{alarmText(i.value[0].value)}}度拥挤</span>
+                      <span :style="{color:alarmColor(i.value[0].value)}">
+                      {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                       <br>
-                      <span :style="{color:alarmColor(i.value[1].value)}">{{i.value[1].link_direction}}进道口右转{{alarmText(i.value[1].value)}}度拥挤</span>
+                      <span :style="{color:alarmColor(i.value[1].value)}">
+                      {{flowText[i.value[1].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
                     </div>
                   </el-col>
                 </el-row>
@@ -162,7 +164,7 @@
 
             </div>
 
-            <div  style="position:absolute;bottom: 80px;width: 100%">
+            <div style="position:absolute;bottom: 80px;width: 100%">
               <time-line></time-line>
             </div>
           </div>
@@ -201,6 +203,11 @@
           } else if (val > 80) {
             return "重";
           }
+        },
+        flowText: {
+          right: '右转',
+          left: '左转',
+          straight: '直行'
         },
         provinceList: [{
           value: '1',
@@ -249,6 +256,9 @@
       this.getTrafficCongestionAllNodeCongestionAlarm();
     },
     methods: {
+      jumpPage(key) {
+        this.$router.push(key);
+      },
       getTrafficCongestionCongestionPercent() { //拥堵里程比例
         this.$http
           .get('/trafficCongestion/congestionPercent?current=true')
@@ -315,14 +325,6 @@
     border-bottom: 1px solid #a7a7ac;
   }
 
-  .el-progress-bar__inner, .el-progress-bar__outer {
-    border-radius: 0 !important;
-  }
-
-  .el-progress-bar__outer {
-    background: #353643 !important;
-  }
-
   .Dashboard_card_score {
     line-height: 30px;
     text-align: right;
@@ -379,6 +381,50 @@
     margin-bottom: 5px
   }
 
+  .Dashboard_titleSelect {
+    margin: 0 10px;
+  }
+
+  img {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+
+  .Dashboard_titleCascader {
+    background: #282635;
+    color: white;
+    font-size: 12px;
+    height: 20px;
+    padding: 12.5px 20px;
+    margin: 0 10px;
+    border-radius: 1px;
+  }
+
+  .Dashboard_box-card {
+    border-radius: 1px;
+    color: white;
+    border: 0;
+  }
+
+  .Dashboard_clearfix {
+    padding: 10px 30px;
+    background: #353644;
+    font-size: 15px;
+  }
+
+  .Dashboard_lineRow {
+    margin: 10px 5px !important;
+  }
+
+  .el-progress-bar__inner, .el-progress-bar__outer {
+    border-radius: 0 !important;
+  }
+
+  .el-progress-bar__outer {
+    background: #353643 !important;
+  }
+
   .el-select-dropdown {
     border: 0;
     text-align: center;
@@ -423,70 +469,6 @@
 
   .el-select .el-input__icon {
     line-height: 20px;
-  }
-
-  .Dashboard_titleSelect {
-    margin: 0 10px;
-  }
-
-  .echarts {
-    height: 300px;
-  }
-
-  .el-radio + .el-radio {
-    margin-left: 0 !important;
-  }
-
-  .el-radio-group {
-    line-height: 16px !important;
-  }
-
-  .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,
-  .el-radio__input.is-checked .el-radio__inner {
-    background-color: #ef7f3e !important;
-    border-color: #ef7f3e;
-  }
-
-  .el-radio__label {
-    padding-left: 0 !important;
-  }
-
-  .video {
-    position: relative;
-    height: 300px;
-    width: 400px;
-  }
-
-  img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-  }
-
-  .Dashboard_titleCascader {
-    background: #282635;
-    color: white;
-    font-size: 12px;
-    height: 20px;
-    padding: 12.5px 20px;
-    margin: 0 10px;
-    border-radius: 1px;
-  }
-
-  .Dashboard_box-card {
-    border-radius: 1px;
-    color: white;
-    border: 0;
-  }
-
-  .Dashboard_clearfix {
-    padding: 10px 30px;
-    background: #353644;
-    font-size: 15px;
-  }
-
-  .Dashboard_lineRow {
-    margin: 10px 5px !important;
   }
 
 </style>
