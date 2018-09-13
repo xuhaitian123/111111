@@ -48,6 +48,20 @@
           <div class="" style="height: 980px;position: relative">
             <div id="bigMap" style="height: 980px"></div>
 
+            <div style="position: absolute;top: 15px;width: 100%;text-align: center">
+              <el-row style="width: 250px;height: 40px;background: rgba(41,41,54,0.8);;margin: auto;border-radius: 45px">
+                <el-col :span="12">
+                  <div class="" style="width: 100px;height: 30px;background: rgba(31,31,44);margin-top: 5px;border-radius: 40px;line-height: 30px;margin-left: 15px">路网流量</div>
+                </el-col>
+                <el-col style="width: 1px;height: 30px;background: #ccccd0;margin-top: 5px">
+
+                </el-col >
+                <el-col :span="11">
+                  <div class="" style="width: 100px;height: 30px;margin-top: 5px;border-radius: 40px;line-height: 30px;margin-right: 15px;">路网延误</div>
+                </el-col>
+              </el-row>
+            </div>
+
             <div style="position: absolute;width: 340px;height: 100%;top: 10px;right: 15px">
               <div style="height: 150px;background: rgba(41,41,54,0.8);">
                 <el-row class="Dashboard_card_alarm">
