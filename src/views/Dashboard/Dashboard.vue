@@ -80,7 +80,7 @@
                 <div>
                   <div class="Dashboard_card_title mt10">路网拥堵评分</div>
                   <div class="Dashboard_card_score">
-                    <span class="Dashboard_score_num">{{roadNetCongestionScore}}</span>
+                    <span class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</span>
                   </div>
                   <el-progress :percentage="roadNetCongestionScore" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
@@ -163,7 +163,7 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <MixLineBar></MixLineBar>
+            <MixLineBar :trafficLightData="trafficLightData"></MixLineBar>
           </div>
         </el-card>
       </el-col>
@@ -312,18 +312,9 @@
         </el-card>
       </el-col>
     </el-row>
-
-    <!--<div id="map">sdfasdfasdf</div>-->
-    <!--<div id="myChart" :style="{width: '300px', height: '300px'}"></div>-->
-    <!--<time-line></time-line>-->
-    <!--<div class="video">-->
-    <!--<img :src="videourl"/>-->
-    <!--<img :src="videoCarurl"/>-->
-    <!--</div>-->
-
   </div>
 </template>
-<style lang="css">
+<style scoped>
   .Dashboard_titleSelect {
     margin: 0 10px;
   }
@@ -331,24 +322,6 @@
   #map {
     width: 100%;
     height: 400px;
-  }
-
-  .el-radio + .el-radio {
-    margin-left: 0 !important;
-  }
-
-  .el-radio-group {
-    line-height: 16px !important;
-  }
-
-  .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,
-  .el-radio__input.is-checked .el-radio__inner {
-    background-color: #ef7f3e !important;
-    border-color: #ef7f3e;
-  }
-
-  .el-radio__label {
-    padding-left: 0 !important;
   }
 
   .Dashboard_title_cascader {
@@ -363,7 +336,7 @@
 
   .Dashboard_box_card {
     border-radius: 1px;
-    color: white!important;
+    color: white !important;
     border: 0;
   }
 
@@ -413,6 +386,7 @@
     line-height: 30px;
     text-align: right;
     margin-top: 20px;
+    margin-bottom: 5px;
     width: 75%
   }
 
@@ -579,6 +553,12 @@
         firstVehicle: [],
         allNodeScore: [],
         allNodeAlarmInfo: [],
+        trafficLightData: {
+          afterDelay: [],
+          beforeDelay: [],
+          beforeAlarm: [],
+          afterAlarm: [],
+        },
         radio: 3,
         radio1: 3,
         radio2: 3,
@@ -587,8 +567,6 @@
         radioLine: 1,
 
 
-        videourl: '',
-        videoCarurl: '',
         polar: {
           title: {
             text: '极坐标双数值轴'
@@ -626,29 +604,18 @@
       }
     },
     mounted() {
-      // this.video()
-      // this.drawLine()
       let map = new window.BMap.Map("map");    // 创建Map实例
       map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
-      // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
       map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      map.setMinZoom(10);
+      map.setMaxZoom(16);
       map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      // let driving = new window.BMap.DrivingRoute(map, {
-      //   renderOptions: {
-      //     map: map,
-      //     autoViewport: true
-      //   }
-      // });
-      // driving.search("中关村", "天安门");
       let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
       try {
         BMapLib.AreaRestriction.setBounds(map, b);
       } catch (e) {
-        // Window.layer.msg(e);
       }
-      // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
-      // map.addControl(cr); //添加版权控件
-      // var bs = map.getBounds();   //返回地图可视区域0.
+
       this.init()
     },
     methods: {
@@ -657,12 +624,13 @@
         let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
       },
       getAllData() {
-        console.log('----')
         this.getTrafficCongestionRoadNetAllFlow();
         this.getTrafficCongestionRoadNetCongestionScore();
         this.getTrafficCongestionCongestionPercent();
         this.getTrafficCongestionNodeCongestionSource();
         this.getTrafficCongestionAllNodeCongestionAlarm();
+        this.getHistoryTrafficLightOptimizeDelay();
+        this.getHistoryTrafficLightOptimizeAlarmTimes();
       },
       getTrafficCongestionCongestionPercent() { //拥堵里程比例
         this.$http
@@ -695,10 +663,22 @@
         this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
             this.allNodeAlarmInfo = response.data;
-            console.log(response)
           })
       },
-
+      getHistoryTrafficLightOptimizeDelay() {  //信号灯优化前后平均延误
+        this.$http.get('/history/trafficLightOptimizeDelay?[\'\']')
+          .then((response) => {
+            this.trafficLightData.afterDelay = response.data.after;
+            this.trafficLightData.beforeDelay = response.data.before;
+          })
+      },
+      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后平均延误
+        this.$http.get('/history/trafficLightOptimizeAlarmTimes')
+          .then((response) => {
+            this.trafficLightData.afterAlarm = response.data.after;
+            this.trafficLightData.beforeAlarm = response.data.before;
+          })
+      },
       jumpPage(key) {
         this.$router.push(key);
       },

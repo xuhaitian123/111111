@@ -70,10 +70,10 @@
               <div style="height: 150px;background: rgba(41,41,54,0.8);">
                 <el-row class="Dashboard_card_alarm">
                   <el-col :span="12">
-                    <div class="">路网拥堵评分</div>
+                    <div class="fs14">路网拥堵评分</div>
                   </el-col>
                   <el-col :span="12">
-                    <div class="">拥堵里程比例</div>
+                    <div class="fs14">拥堵里程比例</div>
                   </el-col>
                 </el-row>
 
@@ -84,9 +84,9 @@
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
                       <div class="Dashboard_card_score" style="margin-top: 20%">
-                        <b class="Dashboard_score_num">{{roadNetCongestionScore.value}}</b>
+                        <b class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</b>
                       </div>
-                      <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="8" color="#ff8539"
+                      <el-progress :percentage="roadNetCongestionScore" :stroke-width="8" color="#ff8539"
                                    :show-text="false" style="width: 80%;margin: auto;margin-top: 5%"></el-progress>
                     </div>
                   </el-col>
@@ -96,13 +96,13 @@
               <div class="Dashboard_card_body" style="margin-top: 10px">
                 <el-row class="Dashboard_card_alarm mb10">
                   <el-col :span="6" :offset="1">
-                    <div class="">时间</div>
+                    <div class="fs14">时间</div>
                   </el-col>
                   <el-col :span="8">
-                    <div class="">交叉口</div>
+                    <div class="fs14">交叉口</div>
                   </el-col>
                   <el-col :span="9">
-                    <div class="">拥堵报警</div>
+                    <div class="fs14">拥堵报警</div>
                   </el-col>
                 </el-row>
 
@@ -134,28 +134,28 @@
 
               <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.8);margin-top: 10px;float: right">
                 <div
-                  style="color: #a7a7ac;font-size: 16px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
                   图例
                 </div>
 
                 <ul class="CongestionMap_Legend">
                   <li>
-                    <i class="el-icon-info"></i>
+                    <i class="icon-yuan iconfont" style="color: green"></i>
                     <span>延误时间 < 30秒</span>
                   </li>
                   <li>
-                    <i class="el-icon-info"></i>
+                    <i class="icon-yuan iconfont" style="color: #f7ff84"></i>
                     <span>延误时间 30-50秒</span>
                   </li>
                   <li>
-                    <i class="el-icon-info"></i>
+                    <i class="icon-yuan iconfont" style="color: darkorange"></i>
                     <span>延误时间 50-60秒</span>
                   </li>
                   <li>
-                    <i class="el-icon-info"></i>
+                    <i class="icon-yuan iconfont" style="color: red"></i>
                     <span>延误时间 > 60秒</span></li>
                   <li>
-                    <i class="el-icon-info"></i>
+                    <i class="icon-yuan iconfont"></i>
                     <span>未知</span>
                   </li>
                 </ul>
@@ -231,31 +231,34 @@
       }
     },
     mounted() {
-      let map = new window.BMap.Map("bigMap");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 13);  // 初始化地图,设置中心点坐标和地图级别
-      map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      // let driving = new window.BMap.DrivingRoute(map, {
-      //   renderOptions: {
-      //     map: map,
-      //     autoViewport: true
-      //   }
-      // });
-      // driving.search("中关村", "天安门");
-      let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
-      try {
-        BMapLib.AreaRestriction.setBounds(map, b);
-      } catch (e) {
-        // Window.layer.msg(e);
-      }
-      // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
-      // map.addControl(cr); //添加版权控件
-      // var bs = map.getBounds();   //返回地图可视区域0.
-      this.getTrafficCongestionCongestionPercent();
-      this.getTrafficCongestionRoadNetCongestionScore();
-      this.getTrafficCongestionAllNodeCongestionAlarm();
+      this.init();
     },
     methods: {
+      init() {
+        this.initMap();
+        this.getAllData();
+        let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
+      },
+      initMap(){
+        let map = new window.BMap.Map("bigMap");    // 创建Map实例
+        map.centerAndZoom(new window.BMap.Point(119.014269, 33.613864), 12);  // 初始化地图,设置中心点坐标和地图级别
+        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+        map.setMinZoom(12);
+        map.setMaxZoom(16);
+        map.addControl(new window.BMap.NavigationControl());   //缩放按钮
+        let b = new window.BMap.Bounds(new window.BMap.Point(117.763253, 34.418181), new BMap.Point(120.0793, 32.47694));
+        try {
+          BMapLib.AreaRestriction.setBounds(map, b);
+        } catch (e) {
+        }
+
+
+      },
+      getAllData() {
+        this.getTrafficCongestionCongestionPercent();
+        this.getTrafficCongestionRoadNetCongestionScore();
+        this.getTrafficCongestionAllNodeCongestionAlarm();
+      },
       jumpPage(key) {
         this.$router.push(key);
       },
@@ -270,7 +273,7 @@
         this.$http
           .get('/trafficCongestion/roadNetCongestionScore?current=true')
           .then((response) => {
-            this.roadNetCongestionScore = response.data;
+            this.roadNetCongestionScore = response.data.value;
           })
       },
       getTrafficCongestionAllNodeCongestionAlarm() {  //交叉口报警信息
@@ -279,8 +282,15 @@
             this.allNodeAlarmInfo = response.data;
           })
       },
+      getTrafficCongestionRoadAvgDelay() {
+        this.$http.get('/trafficCongestion/roadAvgDelay?linkId=201&current=true')
+          .then((response) => {
+            console.log(response)
+          })
+      },
       setRoadNetStatus(is) {
         this.currentRoadNet = is;
+        this.getTrafficCongestionRoadAvgDelay();
       }
     }
   }
@@ -353,7 +363,7 @@
     text-align: center;
     background: #1f1f2c;
     font-size: 14px;
-    color: #a7a7ac;
+    color: #fff;
   }
 
   .mb10 {
@@ -383,7 +393,7 @@
 
   .Dashboard_box_card {
     border-radius: 1px;
-    color: white!important;
+    color: white !important;
     border: 0;
   }
 
