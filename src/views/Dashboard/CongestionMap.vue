@@ -1,39 +1,6 @@
 <template>
   <div>
-    <div class="Dashboard_title_cascader">
-      <span>省
-        <el-select v-model="currentProvince" placeholder="请选择" class="Dashboard_title_select">
-          <el-option
-            v-for="item in provinceList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-
-      <span>城市
-        <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_title_select">
-          <el-option
-            v-for="item in cityList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-
-      <span>地区
-        <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_title_select">
-          <el-option class="selectColor"
-                     v-for="item in areaList"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-    </div>
+    <area-select></area-select>
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
@@ -177,10 +144,12 @@
 <script>
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import TimeLine from '../../components/TimeLine/TimeLine'
+  import AreaSelect from '../../components/Area/Area'
 
   export default {
     name: "congestion-map",
     components: {
+      AreaSelect,
       RoadGauge,
       TimeLine,
     },
@@ -239,7 +208,7 @@
         this.getAllData();
         let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
       },
-      initMap(){
+      initMap() {
         let map = new window.BMap.Map("bigMap");    // 创建Map实例
         map.centerAndZoom(new window.BMap.Point(119.014269, 33.613864), 12);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
@@ -282,15 +251,23 @@
             this.allNodeAlarmInfo = response.data;
           })
       },
-      getTrafficCongestionRoadAvgDelay() {
-        this.$http.get('/trafficCongestion/roadAvgDelay?linkId=201&current=true')
+      getTrafficCongestionRoadAvgDelay() {  //所有路段延误
+        this.$http.get('/trafficCongestion/roadAllLinksDelay?current=true')
           .then((response) => {
             console.log(response)
           })
       },
+      getNodeDataGetAllNodeD12s() {  //所有交叉口延误数据
+        this.$http.get('/nodeData/getAllNodeD12s?current=true')
+          .then((response) => {
+            console.log(response)
+          })
+      },
+
       setRoadNetStatus(is) {
         this.currentRoadNet = is;
         this.getTrafficCongestionRoadAvgDelay();
+        this.getNodeDataGetAllNodeD12s();
       }
     }
   }

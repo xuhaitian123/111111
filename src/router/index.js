@@ -6,6 +6,7 @@ import Dashboard from  '../views/Dashboard/Dashboard'
 import CongestionMap from  '../views/Dashboard/CongestionMap'
 import Map from '../views/Map/Map'
 import TrafficVideo from  '../views/TrafficVideo/TrafficVideo'
+import RoadSectionMap from  '../views/Dashboard/RoadSectionMap'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +34,19 @@ export default new Router({
           path: 'congestionMap',
           component: CongestionMap,
           name: 'CongestionMap'
+        }
+      ],
+    },
+    {
+      path: '/main',
+      component: Layout,
+      name: 'Layout',
+      redirect: '/main/dashboard',
+      children: [
+        {
+          path: 'roadSectionMap',
+          component: RoadSectionMap,
+          name: 'RoadSectionMap'
         }
       ],
     },

@@ -1,41 +1,7 @@
 <template>
 
   <div>
-    <div class="Dashboard_title_cascader">
-      <span>省
-        <el-select v-model="currentProvince" placeholder="请选择" class="Dashboard_titleSelect">
-          <el-option
-            v-for="item in provinceList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-
-      <span>城市
-        <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
-          <el-option
-            v-for="item in cityList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-
-      <span>地区
-        <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_titleSelect">
-          <el-option class="selectColor"
-                     v-for="item in areaList"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-    </div>
-
+    <area-select></area-select>
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
@@ -315,23 +281,9 @@
   </div>
 </template>
 <style scoped>
-  .Dashboard_titleSelect {
-    margin: 0 10px;
-  }
-
   #map {
     width: 100%;
     height: 400px;
-  }
-
-  .Dashboard_title_cascader {
-    background: #282635;
-    color: white;
-    font-size: 12px;
-    height: 20px;
-    padding: 12.5px 20px;
-    margin: 0 10px;
-    border-radius: 1px;
   }
 
   .Dashboard_box_card {
@@ -488,9 +440,11 @@
   import MixLineBar from '../../components/ECharts/MixLineBarItem'
   import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
   import SmoothBarLine from '../../components/ECharts/SmoothBarLineItem'
+  import AreaSelect from '../../components/Area/Area'
 
   export default {
     components: {
+      AreaSelect,
       TimeLine,
       RoadGauge,
       MixLineBar,
