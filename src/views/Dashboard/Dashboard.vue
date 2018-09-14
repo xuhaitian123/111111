@@ -484,21 +484,7 @@
           left: '左转',
           straight: '直行'
         },
-        provinceList: [{
-          value: '1',
-          label: '江苏'
-        }],
-        cityList: [{
-          value: '1',
-          label: '淮安'
-        }],
-        areaList: [{
-          value: '1',
-          label: '盱眙'
-        }],
-        currentProvince: '1',
-        currentCity: '1',
-        currentArea: '1',
+
         allRoadFlow: [],
         roadNetCongestionScore: 0,
         nodeCongestionScore: 0,
@@ -507,12 +493,7 @@
         firstVehicle: [],
         allNodeScore: [],
         allNodeAlarmInfo: [],
-        trafficLightData: {
-          afterDelay: [],
-          beforeDelay: [],
-          beforeAlarm: [],
-          afterAlarm: [],
-        },
+        trafficLightData: {},
         radio: 3,
         radio1: 3,
         radio2: 3,

@@ -5,7 +5,7 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span>拥堵地图</span>
+            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>拥堵地图</span>
             <div style="float: right; padding: 3px 0">
               <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
               <i class="iconfont icon-shuxian"></i>
@@ -111,7 +111,7 @@
                     <span>延误时间 < 30秒</span>
                   </li>
                   <li>
-                    <i class="icon-yuan iconfont" style="color: #f7ff84"></i>
+                    <i class="icon-yuan iconfont" style="color: #e7c936"></i>
                     <span>延误时间 30-50秒</span>
                   </li>
                   <li>
@@ -178,25 +178,13 @@
           left: '左转',
           straight: '直行'
         },
-        provinceList: [{
-          value: '1',
-          label: '江苏'
-        }],
-        cityList: [{
-          value: '1',
-          label: '淮安'
-        }],
-        areaList: [{
-          value: '1',
-          label: '盱眙'
-        }],
-        currentProvince: '1',
-        currentCity: '1',
-        currentArea: '1',
+
         allNodeAlarmInfo: [],
         congestionPercent: 0,
         roadNetCongestionScore: 0,
         currentRoadNet: false,
+        allLinksDelay: [],
+        allNodeDelay: [],
       }
     },
     mounted() {
@@ -204,29 +192,30 @@
     },
     methods: {
       init() {
-        this.initMap();
         this.getAllData();
         let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
       },
       initMap() {
         let map = new window.BMap.Map("bigMap");    // 创建Map实例
-        map.centerAndZoom(new window.BMap.Point(119.014269, 33.613864), 12);  // 初始化地图,设置中心点坐标和地图级别
+        map.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);  // 初始化地图,设置中心点坐标和地图级别
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
         map.setMinZoom(12);
         map.setMaxZoom(16);
         map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-        let b = new window.BMap.Bounds(new window.BMap.Point(117.763253, 34.418181), new BMap.Point(120.0793, 32.47694));
+        let b = new window.BMap.Bounds(new window.BMap.Point(118.19214, 32.717855), new window.BMap.Point(119.648976, 34.184862));
         try {
           BMapLib.AreaRestriction.setBounds(map, b);
         } catch (e) {
         }
 
-
+        window.congestionMap = map;
       },
       getAllData() {
         this.getTrafficCongestionCongestionPercent();
         this.getTrafficCongestionRoadNetCongestionScore();
         this.getTrafficCongestionAllNodeCongestionAlarm();
+
+        this.initMap();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -251,24 +240,96 @@
             this.allNodeAlarmInfo = response.data;
           })
       },
-      getTrafficCongestionRoadAvgDelay() {  //所有路段延误
+      getTrafficCongestionRoadAvgDelay(cb) {  //所有路段延误
         this.$http.get('/trafficCongestion/roadAllLinksDelay?current=true')
           .then((response) => {
-            console.log(response)
+            this.allLinksDelay = response.data.values;
+            cb();
           })
       },
-      getNodeDataGetAllNodeD12s() {  //所有交叉口延误数据
+      getNodeDataGetAllNodeD12s(cb) {  //所有交叉口延误数据
         this.$http.get('/nodeData/getAllNodeD12s?current=true')
           .then((response) => {
-            console.log(response)
+            this.allNodeDelay = response.data.values;
+            cb();
           })
       },
 
       setRoadNetStatus(is) {
         this.currentRoadNet = is;
-        this.getTrafficCongestionRoadAvgDelay();
-        this.getNodeDataGetAllNodeD12s();
-      }
+        this.getTrafficCongestionRoadAvgDelay(() => {
+          for (let i = 0; i < this.allLinksDelay.length; i++) {
+            let pois = this.allLinksDelay[i].link.link_nodes.map((node) => {
+              return new BMap.Point(node[0], node[1])
+            });
+            let polyline = new window.BMap.Polyline(pois, {
+              id: this.allLinksDelay[i].link_id,
+              enableEditing: false,//是否启用线编辑，默认为false
+              enableClicking: true,//是否响应点击事件，默认为true
+              strokeWeight: '1',//折线的宽度，以像素为单位
+              strokeOpacity: 0.8,//折线的透明度，取值范围0 - 1
+              strokeColor: this.getRoadAvgDelayColor(this.allLinksDelay[i].value) //折线颜色
+            });
+            console.log(this.allLinksDelay[i])
+            polyline.addEventListener('click', function (pt) {
+              console.log(pt)
+            });
+            window.congestionMap.addOverlay(polyline);          //增加折线
+          }
+        });
+        this.getNodeDataGetAllNodeD12s(() => {
+
+          for (let i = 0; i < this.allNodeDelay.length; i++) {
+            console.log(this.allNodeDelay[i])
+            let pt = new window.BMap.Point(this.allNodeDelay[i].node.long, this.allNodeDelay[i].node.lat);
+            let opts = {
+              position: pt,    // 指定文本标注所在的地理位置
+              offset: new BMap.Size(-70, -70)    //设置文本偏移量
+            };
+            let label = new BMap.Label(this.allNodeDelay[i].node.node_name + "<br>交叉口延误时间 " + this.allNodeDelay[i].value.toFixed(0) + "s", opts);  // 创建文本标注对象
+            label.setStyle({
+              color: "#fff",
+              fontSize: "14px",
+              background: this.getRoadAvgDelayColor(this.allNodeDelay[i].value),
+              height: "40px",
+              border: 0,
+              boxShadow: "5px 5px 5px #111",
+              padding: "5px",
+              lineHeight: "20px",
+            });
+            window.congestionMap.addOverlay(label);
+
+
+            let myIcon = new window.BMap.Icon(this.getNodeDelayImg(this.allNodeDelay[i].value), new window.BMap.Size(168, 167));
+            let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
+            window.congestionMap.addOverlay(marker);
+          }
+        });
+      },
+      getRoadAvgDelayColor(num) {
+        if (num < 30) {
+          return "#green"
+        } else if (num > 30 && num < 50) {
+          return "#e7c936"
+        } else if (num > 50 && num < 60) {
+          return "darkorange"
+        } else if (num > 60) {
+          return "red"
+        } else {
+          return "#c9c9cc"
+        }
+      },
+      getNodeDelayImg(num) {
+        if (num < 30) {
+          return "/static/50.png"
+        } else if (num > 30 && num < 50) {
+          return "/static/53.png"
+        } else if (num > 50 && num < 60) {
+          return "/static/52.png"
+        } else if (num > 60) {
+          return "/static/51.png"
+        }
+      },
     }
   }
 </script>
@@ -352,20 +413,6 @@
     background: #353644;
     color: #a7a7ac;
     margin-bottom: 5px
-  }
-
-  .Dashboard_title_select {
-    margin: 0 10px;
-  }
-
-  .Dashboard_title_cascader {
-    background: #282635;
-    color: white;
-    font-size: 12px;
-    height: 20px;
-    padding: 12.5px 20px;
-    margin: 0 10px;
-    border-radius: 1px;
   }
 
   .Dashboard_box_card {

@@ -5,15 +5,13 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span>拥堵地图</span>
+            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>路段数据展示</span>
             <div style="float: right; padding: 3px 0">
-              <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
-              <i class="iconfont icon-shuxian"></i>
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
           <div class="" style="height: 980px;position: relative">
-            <div id="bigMap" style="height: 980px"></div>
+            <div id="roadMap" style="height: 980px"></div>
           </div>
         </el-card>
       </el-col>
@@ -30,30 +28,13 @@
     },
      data(){
        return {
-         provinceList: [{
-           value: '1',
-           label: '江苏'
-         }],
-         cityList: [{
-           value: '1',
-           label: '淮安'
-         }],
-         areaList: [{
-           value: '1',
-           label: '盱眙'
-         }],
-         currentProvince: '1',
-         currentCity: '1',
-         currentArea: '1',
-         allNodeAlarmInfo: [],
-         congestionPercent: 0,
-         roadNetCongestionScore: 0,
-         currentRoadNet: false,
        }
      }
     }
 </script>
 
 <style scoped>
-
+    #roadMap{
+      width: 1070px;
+    }
 </style>
