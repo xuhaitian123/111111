@@ -216,7 +216,6 @@
         let mid = 6;
         let big = 12;
 
-
         do {
           ctx.beginPath();
           ctx.lineWidth = 2;

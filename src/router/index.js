@@ -7,10 +7,16 @@ import CongestionMap from  '../views/Dashboard/CongestionMap'
 import Map from '../views/Map/Map'
 import TrafficVideo from  '../views/TrafficVideo/TrafficVideo'
 import RoadSectionMap from  '../views/Dashboard/RoadSectionMap'
+import Login from '../views/Login/Login'
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/login',
+      component: Login,
+      name: 'Layout'
+    },
     {
       path: '/main',
       component: Layout,
