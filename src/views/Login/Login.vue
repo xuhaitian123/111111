@@ -1,5 +1,5 @@
 <template>
-    <div class="login" style="background-color: #3e6bb8; color: #6699FF;height: 100%">
+    <div class="container-login">
       123344567788
     </div>
 </template>
@@ -11,9 +11,10 @@
 </script>
 
 <style scoped>
-  .container{
-    height: 100%;
-    background-color: #3e6bb8;
+  .container-login{
+    width: 100%;
+    height: 1080px;
+    background-color: #ffffff;
   }
 
 </style>
