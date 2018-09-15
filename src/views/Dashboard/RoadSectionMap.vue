@@ -206,7 +206,7 @@
                     道路绿灯到达比率
                   </div>
 
-                  <el-row style="padding: 20px">
+                  <el-row style="margin: 20px">
                     <el-col :span="10">
                       <div class="">
                         <div style="float: left;line-height: 50px;font-size: 12px">57.4%</div>
@@ -215,7 +215,8 @@
                     </el-col>
                     <el-col :span="4">
                       <div class="">
-                        <div style="width: 14px;height: 14px;border-radius: 50%;border: 1px solid #f98d21;margin: auto"></div>
+                        <div style="width: 14px;height: 14px;border-radius: 50%;border: 1px solid #f98d21;margin: auto;position: relative"></div>
+                        <div style="font-size: 12px;position: absolute;top: -17px;margin-left: 25px;">人民路</div>
                         <div style="height: 20px;width: 1px;background: #f98d21;margin: auto"></div>
                       </div>
                     </el-col>
