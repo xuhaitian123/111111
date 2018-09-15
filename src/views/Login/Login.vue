@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="container-login">
       <div class="nav">
       </div>
       <div class="container">
@@ -14,11 +14,16 @@
 </script>
 
 <style scoped>
-  .container{
+  .container {
     height: 420px;
     width: 400px;
     margin: 270px 760px 290px 760px;
     background-color: #3e6bb8;
+  }
+  .container-login{
+    width: 100%;
+    height: 1080px;
+    background-color: #ffffff;
   }
 .nav{
   height: 80px;
