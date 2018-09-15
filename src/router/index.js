@@ -52,7 +52,7 @@ export default new Router({
       redirect: '/main/dashboard',
       children: [
         {
-          path: 'roadSectionMap',
+          path: 'roadSectionMap/:id',
           component: RoadSectionMap,
           name: 'RoadSectionMap'
         }

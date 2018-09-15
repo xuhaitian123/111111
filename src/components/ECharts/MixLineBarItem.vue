@@ -7,7 +7,7 @@
   export default {
     name: "mix-line-bar",
     props: {
-      trafficLightData:Object
+      trafficLightData: Object
     },
     data() {
       return {
@@ -182,15 +182,26 @@
     watch: {
       trafficLightData: {
         handler(newVal, oldVal) {
+          console.log(newVal)
           if (this.myChart) {
             if (newVal) {
-              let option  = this.myChart.getOption();
-              option.xAxis[0].data = newVal.afterDelay.map((value => {return value.node_name}));
-              option.series[0].data = newVal.beforeDelay.map((value => {return value.value}));
-              option.series[1].data = newVal.afterDelay.map((value => {return value.value}));
+              let option = this.myChart.getOption();
+              option.xAxis[0].data = newVal.afterDelay.map((value => {
+                return value.node_name
+              }));
+              option.series[0].data = newVal.beforeDelay.map((value => {
+                return value.value
+              }));
+              option.series[1].data = newVal.afterDelay.map((value => {
+                return value.value
+              }));
 
-              option.series[2].data = newVal.beforeAlarm.map((value => {return value.value}));
-              option.series[3].data = newVal.afterAlarm.map((value => {return value.value}));
+              option.series[2].data = newVal.beforeAlarm.map((value => {
+                return value.value
+              }));
+              option.series[3].data = newVal.afterAlarm.map((value => {
+                return value.value
+              }));
 
               this.myChart.setOption(option);
             }
