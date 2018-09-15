@@ -493,7 +493,12 @@
         firstVehicle: [],
         allNodeScore: [],
         allNodeAlarmInfo: [],
-        trafficLightData: {},
+        trafficLightData: {
+          afterDelay:[],
+          beforeDelay:[],
+          afterAlarm:[],
+          beforeAlarm:[],
+        },
         radio: 3,
         radio1: 3,
         radio2: 3,
@@ -559,43 +564,43 @@
         let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
       },
       getAllData() {
-        this.getTrafficCongestionRoadNetAllFlow();
-        this.getTrafficCongestionRoadNetCongestionScore();
-        this.getTrafficCongestionCongestionPercent();
-        this.getTrafficCongestionNodeCongestionSource();
-        this.getTrafficCongestionAllNodeCongestionAlarm();
+        this.getRoadNetAllFlow();
+        this.getRoadNetCongestionScore();
+        this.getCongestionPercent();
+        this.getNodeCongestionSource();
+        this.getAllNodeCongestionAlarm();
         this.getHistoryTrafficLightOptimizeDelay();
         this.getHistoryTrafficLightOptimizeAlarmTimes();
       },
-      getTrafficCongestionCongestionPercent() { //拥堵里程比例
+      getCongestionPercent() { //拥堵里程比例
         this.$http
-          .get('/trafficCongestion/congestionPercent?current=true')
+          .get('/TrafficCongestion/congestionPercent?current=true')
           .then((response) => {
             this.congestionPercent = response.data.value;
           })
       },
-      getTrafficCongestionRoadNetAllFlow() { //路网总流量
+      getRoadNetAllFlow() { //路网总流量
         this.$http
-          .get('/trafficCongestion/roadNetAllFlow?&current=true')
+          .get('/TrafficCongestion/roadNetAllFlow?&current=true')
           .then((response) => {
             this.allRoadFlow = response.data;
           })
       },
-      getTrafficCongestionRoadNetCongestionScore() { //路网拥堵评分
+      getRoadNetCongestionScore() { //路网拥堵评分
         this.$http
-          .get('/trafficCongestion/roadNetCongestionScore?current=true')
+          .get('/TrafficCongestion/roadNetCongestionScore?current=true')
           .then((response) => {
             this.roadNetCongestionScore = response.data.value;
           })
       },
-      getTrafficCongestionNodeCongestionSource() {  //所有交叉口拥堵评分
-        this.$http.get('/trafficCongestion/allNodeCongestionSource?current=true')
+      getNodeCongestionSource() {  //所有交叉口拥堵评分
+        this.$http.get('/TrafficCongestion/allNodeCongestionSource?current=true')
           .then((response) => {
             this.allNodeScore = response.data;
           })
       },
-      getTrafficCongestionAllNodeCongestionAlarm() {  //交叉口报警信息
-        this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
+      getAllNodeCongestionAlarm() {  //交叉口报警信息
+        this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
             this.allNodeAlarmInfo = response.data;
           })
@@ -603,6 +608,7 @@
       getHistoryTrafficLightOptimizeDelay() {  //信号灯优化前后平均延误
         this.$http.get('/history/trafficLightOptimizeDelay?[\'\']')
           .then((response) => {
+            console.log(response)
             this.trafficLightData.afterDelay = response.data.after;
             this.trafficLightData.beforeDelay = response.data.before;
           })

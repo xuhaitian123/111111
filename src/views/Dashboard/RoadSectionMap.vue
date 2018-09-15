@@ -10,8 +10,9 @@
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
-          <div class="" style="height: 980px;position: relative">
-            <div id="roadMap" style="height: 980px"></div>
+          <div class="" style="position: relative;background: #1f1f2c">
+            <RoadNetMap style="width: 1070px"></RoadNetMap>
+
           </div>
         </el-card>
       </el-col>
@@ -21,20 +22,29 @@
 
 <script>
   import AreaSelect from '../../components/Area/Area'
+  import RoadNetMap from '../../components/Map/Map'
 
   export default {
-    components:   {
+    components: {
       AreaSelect,
+      RoadNetMap,
     },
-     data(){
-       return {
-       }
-     }
+    data() {
+      return {}
+    },
+    mounted(){},
+    methods:{
+      getNodeDataD12ByNodeId(){
+
+      },
     }
+  }
 </script>
 
 <style scoped>
-    #roadMap{
-      width: 1070px;
-    }
+  .Dashboard_clearfix {
+    padding: 10px 30px;
+    background: #353644;
+    font-size: 15px;
+  }
 </style>
