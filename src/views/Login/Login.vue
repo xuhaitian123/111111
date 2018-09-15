@@ -1,6 +1,9 @@
 <template>
-    <div class="login" style="background-color: #3e6bb8; color: #6699FF;height: 100%">
-      123344567788
+    <div class="login">
+      <div class="nav">
+      </div>
+      <div class="container">
+      </div>
     </div>
 </template>
 
@@ -12,8 +15,14 @@
 
 <style scoped>
   .container{
-    height: 100%;
+    height: 420px;
+    width: 400px;
+    margin: 270px 760px 290px 760px;
     background-color: #3e6bb8;
   }
-
+.nav{
+  height: 80px;
+  display: flex;
+  background-color: #94949a;
+}
 </style>
