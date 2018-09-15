@@ -8,6 +8,8 @@ import Map from '../views/Map/Map'
 import TrafficVideo from  '../views/TrafficVideo/TrafficVideo'
 import RoadSectionMap from  '../views/Dashboard/RoadSectionMap'
 import Login from '../views/Login/Login'
+import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
+import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
 Vue.use(Router)
 
 export default new Router({
@@ -92,6 +94,32 @@ export default new Router({
           path: 'trafficVideo',
           component: TrafficVideo,
           name: 'trafficVideo'
+        }
+      ],
+    },
+    {
+      path: '/main',
+      component: Layout,
+      name: 'Layout',
+      // redirect: '/main/map',
+      children: [
+        {
+          path: 'firstPassSetting',
+          component: FirstPassSetting,
+          name: 'FirstPassSetting'
+        }
+      ],
+    },
+    {
+      path: '/main',
+      component: Layout,
+      name: 'Layout',
+      // redirect: '/main/map',
+      children: [
+        {
+          path: 'signalLampControl',
+          component: SignalLampControl,
+          name: 'SignalLampControl'
         }
       ],
     },

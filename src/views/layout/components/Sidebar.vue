@@ -38,6 +38,15 @@
           <el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
+      <el-submenu index="4">
+        <template slot="title">
+          <span>智能信号灯优化</span>
+        </template>
+        <!--<el-menu-item-group>-->
+        <el-menu-item index="/main/signalLampControl">智能信号灯控制<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/main/firstPassSetting">优先通行设置<div class="active-item"></div></el-menu-item>
+        <!--</el-menu-item-group>-->
+      </el-submenu>
     </el-menu>
 </template>
 <style>
