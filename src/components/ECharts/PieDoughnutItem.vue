@@ -15,9 +15,7 @@
     mounted() {
 
       let myChart = this.$echarts.init(document.getElementById(this.id));
-      let app = {};
       let option = {};
-      app.title = '环形图';
 
       option = {
         title: {

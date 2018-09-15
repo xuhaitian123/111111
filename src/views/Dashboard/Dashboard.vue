@@ -57,7 +57,7 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">拥堵里程比例</div>
-                <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
+                <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="item in allNodeScore" :key="item.node_id">
@@ -129,7 +129,7 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <MixLineBar :trafficLightData="trafficLightData"></MixLineBar>
+            <mix-line-bar :trafficLightData="trafficLightData"></mix-line-bar>
           </div>
         </el-card>
       </el-col>
@@ -141,10 +141,10 @@
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
-              <PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>
+              <pie-doughnut id="pieDoughnut" title="优化前"></pie-doughnut>
             </div>
             <div style="width: 50%;height: 80%;display: inline-block" class="fr">
-              <PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>
+              <pie-doughnut id="PieDoughnut" title="优化后"></pie-doughnut>
             </div>
           </div>
         </el-card>
@@ -157,7 +157,7 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <SmoothBarLine></SmoothBarLine>
+            <smooth-bar-line></smooth-bar-line>
           </div>
         </el-card>
       </el-col>
@@ -435,7 +435,6 @@
   }
 </style>
 <script>
-  import TimeLine from '../../components/TimeLine/TimeLine'
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import MixLineBar from '../../components/ECharts/MixLineBarItem'
   import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
@@ -445,7 +444,6 @@
   export default {
     components: {
       AreaSelect,
-      TimeLine,
       RoadGauge,
       MixLineBar,
       PieDoughnut,
