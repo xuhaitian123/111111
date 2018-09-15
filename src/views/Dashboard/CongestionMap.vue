@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="" style="height: 980px;position: relative">
-            <RoadNetMap style="width: 100%"></RoadNetMap>
+            <road-net-map style="width: 100%"></road-net-map>
 
             <div style="position: absolute;top: 15px;width: 100%;text-align: center">
               <el-row
@@ -46,7 +46,7 @@
 
                 <el-row class="">
                   <el-col :span="12">
-                    <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
@@ -99,11 +99,8 @@
                 </el-row>
               </div>
 
-              <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.8);margin-top: 10px;float: right">
-                <div
-                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
-                  图例
-                </div>
+              <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">图例</div>
 
                 <ul class="CongestionMap_Legend">
                   <li>
@@ -292,6 +289,7 @@
           polyline.id= this.allLinksDelay[i].link_id;
           console.log(this.allLinksDelay[i])
           polyline.addEventListener('click',  (pt)=> {
+            console.log(pt.currentTarget.id)
             this.jumpPage('/main/RoadSectionMap/'+pt.currentTarget.id);
           });
           window.congestionMap.addOverlay(polyline);          //增加折线
@@ -331,10 +329,6 @@
     margin-bottom: -70px
   }
 
-  .CongestionMap_Legend i {
-    margin-right: 5px;
-  }
-
   .CongestionMap_Status {
     width: 100px;
     height: 30px;
@@ -342,6 +336,9 @@
     border-radius: 40px;
     line-height: 30px;
     margin-left: 15px;
+  }
+  .CongestionMap_Legend i {
+    margin-right: 5px;
   }
 
   .CongestionMap_Legend i, .CongestionMap_Legend span {

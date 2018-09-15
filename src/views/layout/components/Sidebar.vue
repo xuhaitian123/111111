@@ -16,7 +16,7 @@
         </template>
         <!--<el-menu-item-group>-->
           <el-menu-item index="/main/congestionMap">拥堵地图<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/main/RoadSectionMap">道路数据展示<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/main/RoadSectionMap/201">道路数据展示<div class="active-item"></div></el-menu-item>
         <el-menu-item index="1-3">交叉口数据展示<div class="active-item"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>

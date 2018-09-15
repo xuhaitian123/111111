@@ -286,6 +286,11 @@
     height: 400px;
   }
 
+  li {
+    margin: 5px 0;
+  }
+
+
   .Dashboard_box_card {
     border-radius: 1px;
     color: white !important;
@@ -447,7 +452,7 @@
       RoadGauge,
       MixLineBar,
       PieDoughnut,
-      SmoothBarLine,
+      // SmoothBarLine,
     },
     data() {
       let data = []
@@ -542,17 +547,17 @@
       }
     },
     mounted() {
-      let map = new window.BMap.Map("map");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
-      map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      map.setMinZoom(10);
-      map.setMaxZoom(16);
-      map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
-      try {
-        BMapLib.AreaRestriction.setBounds(map, b);
-      } catch (e) {
-      }
+      // let map = new window.BMap.Map("map");    // 创建Map实例
+      // map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
+      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      // map.setMinZoom(10);
+      // map.setMaxZoom(16);
+      // map.addControl(new window.BMap.NavigationControl());   //缩放按钮
+      // let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
+      // try {
+      //   BMapLib.AreaRestriction.setBounds(map, b);
+      // } catch (e) {
+      // }
 
       this.init()
     },

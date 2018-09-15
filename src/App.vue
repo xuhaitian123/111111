@@ -21,10 +21,6 @@ export default {
   /*margin-top: 60px;*/
 }
 
-li {
-  margin: 5px 0;
-}
-
 ul {
   display: block;
   list-style-type: none;

@@ -1,5 +1,5 @@
 <template>
-  <div :id="id" style="height: 100%"></div>
+  <div id="test" style="height: 100%"></div>
 </template>
 
 <script>
@@ -15,6 +15,7 @@
     mounted() {
 
       let myChart = this.$echarts.init(document.getElementById(this.id));
+      let app = {};
       let option = {};
 
       option = {
