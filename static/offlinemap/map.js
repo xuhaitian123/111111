@@ -77,7 +77,7 @@ window.TILE_VERSION = {
 window.BMAP_AUTHENTIC_KEY = "offlinekey";
 function my_log(s){
     if(console)
-     console.log(s);
+     console.log();
 }
 (function() {
 	function aa(a) {

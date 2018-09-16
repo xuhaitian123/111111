@@ -44,6 +44,8 @@
 <style>
   .timeLine-container {
     /*width: 1440px;*/
+    margin: auto;
+    box-shadow: 5px 5px 5px #111;
     height: 100px;
     position: relative;
     background: rgb(54, 54, 66);
@@ -214,15 +216,14 @@
         let mid = 6;
         let big = 12;
 
-
         do {
           ctx.beginPath();
           ctx.lineWidth = 2;
-          ctx.strokeStyle = '#ffffff';
-          ctx.fillStyle = '#ffffff';
+          ctx.strokeStyle = '#94949a';
+          ctx.fillStyle = '#94949a';
           ctx.moveTo(space * index + left, start);
           if (index % big === 0) {
-            ctx.strokeStyle = 'red'
+            ctx.strokeStyle = '#d26011'
             ctx.lineTo(space * index + left, start - bigLine);
             ctx.fillText(index / big + ":00", space * index + left, start - bigLine - 4);
           } else if (index % mid === 0) {

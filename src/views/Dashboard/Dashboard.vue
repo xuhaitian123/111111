@@ -1,44 +1,12 @@
 <template>
 
   <div>
-    <div class="Dashboard_titleCascader">
-      <span>省
-        <el-select v-model="currentProvince" placeholder="请选择" class="Dashboard_titleSelect" :popper-append-to-body="false">
-          <el-option
-            v-for="item in provinceList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
 
-      <span>城市
-        <el-select v-model="currentCity" size="mini" placeholder="请选择" class="Dashboard_titleSelect" :popper-append-to-body="false">
-          <el-option
-            v-for="item in cityList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-
-      <span>地区
-        <el-select v-model="currentArea" size="mini" placeholder="请选择" class="Dashboard_titleSelect" :popper-append-to-body="false">
-          <el-option class="selectColor"
-                     v-for="item in areaList"
-                     :key="item.value"
-                     :label="item.label"
-                     :value="item.value">
-          </el-option>
-        </el-select>
-      </span>
-    </div>
+    <area-select></area-select>
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>实时地图</span>
             <div style="float: right; padding: 3px 0">
@@ -54,7 +22,7 @@
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>路网数据展示</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -80,9 +48,9 @@
                 <div>
                   <div class="Dashboard_card_title mt10">路网拥堵评分</div>
                   <div class="Dashboard_card_score">
-                    <span class="Dashboard_score_num">{{roadNetCongestionScore.value}}</span>
+                    <span class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</span>
                   </div>
-                  <el-progress :percentage="roadNetCongestionScore.value" :stroke-width="6" color="#ff8539"
+                  <el-progress :percentage="roadNetCongestionScore" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
                 </div>
               </div>
@@ -91,7 +59,7 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">拥堵里程比例</div>
-                <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
+                <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="item in allNodeScore" :key="item.node_id">
@@ -105,7 +73,7 @@
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>报警信息</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -141,9 +109,11 @@
                 </el-col>
                 <el-col :span="10">
                   <div class="Dashboard_alarm_info">
-                    <span :style="{color:alarmColor(i.value[0].value)}">{{i.value[0].link_direction}}进道口右转{{alarmText(i.value[0].value)}}度拥挤</span>
+                    <span :style="{color:alarmColor(i.value[0].value)}">
+                      {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                     <br>
-                    <span :style="{color:alarmColor(i.value[1].value)}">{{i.value[1].link_direction}}进道口右转{{alarmText(i.value[1].value)}}度拥挤</span>
+                    <span :style="{color:alarmColor(i.value[1].value)}">
+                      {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
                   </div>
                 </el-col>
               </el-row>
@@ -155,41 +125,41 @@
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <MixLineBar></MixLineBar>
+            <mix-line-bar :trafficLightData="trafficLightData"></mix-line-bar>
           </div>
         </el-card>
       </el-col>
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
-              <PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>
+              <pie-doughnut id="pieDoughnut" title="优化前"></pie-doughnut>
             </div>
             <div style="width: 50%;height: 80%;display: inline-block" class="fr">
-              <PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>
+              <pie-doughnut id="PieDoughnut" title="优化后"></pie-doughnut>
             </div>
           </div>
         </el-card>
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>数据变化趋势对比分析</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <SmoothBarLine></SmoothBarLine>
+            <smooth-bar-line></smooth-bar-line>
           </div>
         </el-card>
       </el-col>
@@ -197,7 +167,7 @@
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col>
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box-card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>优先通行控制设置</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -310,146 +280,22 @@
         </el-card>
       </el-col>
     </el-row>
-
-    <!--<div id="map">sdfasdfasdf</div>-->
-    <!--<div id="myChart" :style="{width: '300px', height: '300px'}"></div>-->
-    <!--<time-line></time-line>-->
-    <!--<div class="video">-->
-    <!--<img :src="videourl"/>-->
-    <!--<img :src="videoCarurl"/>-->
-    <!--</div>-->
-
   </div>
 </template>
-<style lang="css">
-  li {
-    margin: 5px 0;
-  }
-
-  ul {
-    display: block;
-    list-style-type: none;
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
-    -webkit-margin-start: 0;
-    -webkit-margin-end: 0;
-    -webkit-padding-start: 0;
-  }
-
-  .el-checkbox__label {
-    display: inline-block;
-    padding-left: 5px !important;
-    font-size: 12px;
-    color: #a7a7ac !important;
-  }
-
-  .el-checkbox__inner, .el-radio__inner {
-    background: initial;
-    font-size: 14px;
-  }
-
-  .el-select-dropdown {
-    border: 0;
-    text-align: center;
-  }
-
-  .el-select-dropdown__list {
-    padding: 0 5px 5px 5px;
-    background: #353644;
-  }
-
-  .el-select-dropdown__list li {
-    margin: 0;
-    padding: 5px;
-    border-bottom: 1px solid #949494;
-  }
-
-  .el-popper .popper__arrow, .el-popper .popper__arrow::after {
-    border-style: none;
-  }
-
-  .el-select-dropdown__item.selected {
-    color: white;
-    font-weight: 100;
-    background: #353644;
-  }
-
-  .el-select-dropdown__item.selected span {
-    font-size: 12px !important;
-  }
-
-  .el-select-dropdown__item {
-    height: initial;
-    line-height: initial;
-  }
-
-  .el-select .el-input, .el-select, .el-select input {
-    height: 20px !important;
-    font-size: 14px;
-    background: #353643;
-    border: 1px solid #353643;
-  }
-
-  .el-select .el-input__icon {
-    line-height: 20px;
-  }
-
-  .Dashboard_titleSelect {
-    margin: 0 10px;
-  }
-
+<style scoped>
   #map {
     width: 100%;
     height: 400px;
   }
 
-  .echarts {
-    height: 300px;
+  li {
+    margin: 5px 0;
   }
 
-  .el-radio + .el-radio {
-    margin-left: 0 !important;
-  }
 
-  .el-radio-group {
-    line-height: 16px !important;
-  }
-
-  .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner,
-  .el-radio__input.is-checked .el-radio__inner {
-    background-color: #ef7f3e !important;
-    border-color: #ef7f3e;
-  }
-
-  .el-radio__label {
-    padding-left: 0 !important;
-  }
-
-  .video {
-    position: relative;
-    height: 300px;
-    width: 400px;
-  }
-
-  img {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-  }
-
-  .Dashboard_titleCascader {
-    background: #282635;
-    color: white;
-    font-size: 12px;
-    height: 20px;
-    padding: 12.5px 20px;
-    margin: 0 10px;
+  .Dashboard_box_card {
     border-radius: 1px;
-  }
-
-  .Dashboard_box-card {
-    border-radius: 1px;
-    color: white;
+    color: white !important;
     border: 0;
   }
 
@@ -499,6 +345,7 @@
     line-height: 30px;
     text-align: right;
     margin-top: 20px;
+    margin-bottom: 5px;
     width: 75%
   }
 
@@ -543,24 +390,8 @@
     margin-top: 10px
   }
 
-  .fs12 {
-    font-size: 12px;
-  }
-
-  .fs14 {
-    font-size: 14px;
-  }
-
   .fs20 {
     font-size: 20px
-  }
-
-  .el-progress-bar__inner, .el-progress-bar__outer {
-    border-radius: 0 !important;
-  }
-
-  .el-progress-bar__outer {
-    background: #353643 !important;
   }
 
   .Dashboard_card_road {
@@ -611,19 +442,19 @@
   }
 </style>
 <script>
-  import TimeLine from '../../components/TimeLine/TimeLine'
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import MixLineBar from '../../components/ECharts/MixLineBarItem'
   import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
   import SmoothBarLine from '../../components/ECharts/SmoothBarLineItem'
+  import AreaSelect from '../../components/Area/Area'
 
   export default {
     components: {
-      TimeLine,
+      AreaSelect,
       RoadGauge,
       MixLineBar,
       PieDoughnut,
-      SmoothBarLine,
+      // SmoothBarLine,
     },
     data() {
       let data = []
@@ -653,25 +484,12 @@
             return "重";
           }
         },
-        provinceList: [{
-          value: '1',
-          label: '江苏'
-        }],
-        cityList: [{
-          value: '1',
-          label: '淮安'
-        }],
-        areaList: [{
-          value: '1',
-          label: '盱眙'
+        flowText: {
+          right: '右转',
+          left: '左转',
+          straight: '直行'
         },
-          {
-            value: '2',
-            label: '盱眙1'
-          }],
-        currentProvince: '1',
-        currentCity: '1',
-        currentArea: '1',
+
         allRoadFlow: [],
         roadNetCongestionScore: 0,
         nodeCongestionScore: 0,
@@ -680,6 +498,12 @@
         firstVehicle: [],
         allNodeScore: [],
         allNodeAlarmInfo: [],
+        trafficLightData: {
+          afterDelay:[],
+          beforeDelay:[],
+          afterAlarm:[],
+          beforeAlarm:[],
+        },
         radio: 3,
         radio1: 3,
         radio2: 3,
@@ -688,8 +512,6 @@
         radioLine: 1,
 
 
-        videourl: '',
-        videoCarurl: '',
         polar: {
           title: {
             text: '极坐标双数值轴'
@@ -727,74 +549,82 @@
       }
     },
     mounted() {
-      // this.video()
-      // this.drawLine()
-      let map = new window.BMap.Map("map");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
-      // // map.setCurrentCity("武汉");          // 设置地图中心显示的城市 new！
-      map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      // let driving = new window.BMap.DrivingRoute(map, {
-      //   renderOptions: {
-      //     map: map,
-      //     autoViewport: true
-      //   }
-      // });
-      // driving.search("中关村", "天安门");
-      let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
-      try {
-        BMapLib.AreaRestriction.setBounds(map, b);
-      } catch (e) {
-        // Window.layer.msg(e);
-      }
-      // var cr = new window.BMap.CopyrightControl({anchor: BMAP_ANCHOR_TOP_LEFT});   //设置版权控件位置
-      // map.addControl(cr); //添加版权控件
-      // var bs = map.getBounds();   //返回地图可视区域0.
+      // let map = new window.BMap.Map("map");    // 创建Map实例
+      // map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
+      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      // map.setMinZoom(10);
+      // map.setMaxZoom(16);
+      // map.addControl(new window.BMap.NavigationControl());   //缩放按钮
+      // let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
+      // try {
+      //   BMapLib.AreaRestriction.setBounds(map, b);
+      // } catch (e) {
+      // }
 
-      setInterval(() => {
-        this.getTrafficCongestionRoadNetAllFlow();
-        this.getTrafficCongestionRoadNetCongestionScore();
-        this.getTrafficCongestionCongestionPercent();
-        this.getTrafficCongestionNodeCongestionSource();
-        this.getTrafficCongestionAllNodeCongestionAlarm();
-      }, 5 * 60 * 1000)
+      this.init()
     },
     methods: {
-      getTrafficCongestionCongestionPercent() { //拥堵里程比例
+      init() {
+        this.getAllData();
+        let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
+      },
+      getAllData() {
+        this.getRoadNetAllFlow();
+        this.getRoadNetCongestionScore();
+        this.getCongestionPercent();
+        this.getNodeCongestionSource();
+        this.getAllNodeCongestionAlarm();
+        this.getHistoryTrafficLightOptimizeDelay();
+        this.getHistoryTrafficLightOptimizeAlarmTimes();
+      },
+      getCongestionPercent() { //拥堵里程比例
         this.$http
-          .get('/trafficCongestion/congestionPercent?current=true')
+          .get('/TrafficCongestion/congestionPercent?current=true')
           .then((response) => {
             this.congestionPercent = response.data.value;
           })
       },
-      getTrafficCongestionRoadNetAllFlow() { //路网总流量
+      getRoadNetAllFlow() { //路网总流量
         this.$http
-          .get('/trafficCongestion/roadNetAllFlow?&current=true')
+          .get('/TrafficCongestion/roadNetAllFlow?&current=true')
           .then((response) => {
             this.allRoadFlow = response.data;
           })
       },
-      getTrafficCongestionRoadNetCongestionScore() { //路网拥堵评分
+      getRoadNetCongestionScore() { //路网拥堵评分
         this.$http
-          .get('/trafficCongestion/roadNetCongestionScore?current=true')
+          .get('/TrafficCongestion/roadNetCongestionScore?current=true')
           .then((response) => {
-            this.roadNetCongestionScore = response.data;
+            this.roadNetCongestionScore = response.data.value;
           })
       },
-      getTrafficCongestionNodeCongestionSource() {  //所有交叉口拥堵评分
-        this.$http.get('/trafficCongestion/allNodeCongestionSource?current=true')
+      getNodeCongestionSource() {  //所有交叉口拥堵评分
+        this.$http.get('/TrafficCongestion/allNodeCongestionSource?current=true')
           .then((response) => {
             this.allNodeScore = response.data;
           })
       },
-      getTrafficCongestionAllNodeCongestionAlarm() {  //交叉口报警信息
-        this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
+      getAllNodeCongestionAlarm() {  //交叉口报警信息
+        this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
             this.allNodeAlarmInfo = response.data;
-            console.log(response)
           })
       },
-
+      getHistoryTrafficLightOptimizeDelay() {  //信号灯优化前后平均延误
+        this.$http.get('/history/trafficLightOptimizeDelay?[\'\']')
+          .then((response) => {
+            console.log(response)
+            this.trafficLightData.afterDelay = response.data.after;
+            this.trafficLightData.beforeDelay = response.data.before;
+          })
+      },
+      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后平均延误
+        this.$http.get('/history/trafficLightOptimizeAlarmTimes')
+          .then((response) => {
+            this.trafficLightData.afterAlarm = response.data.after;
+            this.trafficLightData.beforeAlarm = response.data.before;
+          })
+      },
       jumpPage(key) {
         this.$router.push(key);
       },

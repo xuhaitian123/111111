@@ -1,28 +1,40 @@
 <template>
   <div>
     <Area></Area>
-    <div class="video-container-header">
+    <div class="trafficVideo-container-header">
 
     </div>
-    <div class="video-container">
+    <div class="trafficVideo-container">
 
-      <div class="video-container-left">
-        <div class="video">
-          <img v-bind:src="videoUrl"/>
-          <img v-if="showCar" v-bind:src="carUrl"/>
-          <img v-if="showBigCar" v-bind:src="bigCarUrl"/>
-          <img  v-if="showPeople" v-bind:src="peopleUrl"/>
+      <div class="trafficVideo-container-left">
+        <div class="trafficVideo" id="trafficVideo">
+          <!--<img class="show"  v-bind:src="videoUrl"/>-->
+          <!--<div>-->
+          <!--<img v-bind:class='{"show": (currentIndex == 0)}'  v-bind:src="videoUrl0"/>-->
+          <!--<img v-bind:class='{"show": (currentIndex == 1)}'   v-bind:src="videoUrl1"/>-->
+          <!--<img v-bind:class='{"show": (currentIndex == 2)}'   v-bind:src="videoUrl2"/>-->
+          <!--<img v-bind:class='{"show": (currentIndex == 3)}'  v-bind:src="videoUrl3"/>-->
+          <!--<img v-bind:class='{"show": (currentIndex == 4)}'   v-bind:src="videoUrl4"/>  -->
+          <!--</div>-->
+
+
+
+          <!--<img v-if="showCar" v-bind:src="carUrl"/>-->
+          <!--<img v-if="showBigCar" v-bind:src="bigCarUrl"/>-->
+          <!--<img v-if="showPeople" v-bind:src="peopleUrl"/>-->
         </div>
+        <div class="trafficVideo" id="trafficVideo1">
 
+        </div>
       </div>
-      <div class="video-container-right">
+      <div class="trafficVideo-container-right">
         <div>
-          <div class="video-right-top">
+          <div class="trafficVideo-right-top">
 
           </div>
 
         </div>
-        <div class="video-right-bottom">
+        <div class="trafficVideo-right-bottom">
           <el-switch
             v-model="showCar"
             active-text="shi"
@@ -42,7 +54,7 @@
         </div>
       </div>
     </div>
-    <TimeLine ></TimeLine>
+    <!--<TimeLine></TimeLine>-->
   </div>
 
 </template>
@@ -54,228 +66,179 @@
   export default {
     data() {
       return {
-        showCar: true,
-        showBigCar: true,
-        showPeople: true,
-        videoUrl:'',
-        carUrl:'',
-        bigCarUrl:'',
-        peopleUrl:''
+        timer:"",
+        imageList: {},
+        currentIndex: 0,
+        delay: 10000,
+        delay_show: 5000,
+        prevloading: 3000
       }
     },
     components: {
       TimeLine,
       Area,
     },
-    mounted(){
+    mounted() {
+
       this.init()
     },
+    beforeDestroy(){
+      clearInterval(this.timer)
+    },
     methods: {
-      init(){
+      init() {
+        let i = 0;
+        var j = 0;
+        this.timer  = setInterval(() => {
+          i++;
+          j++
+          // if(j>100) return
+          if (i % 10 === 0 ) {
+            this.loadImage();
+            i = 0;
+          }
+          this.showImage()
+        }, 100)
+      },
+      showImage(type) {
+        let currentTime = new Date();
+        let millSecond = currentTime.getMilliseconds();
+        currentTime.setMilliseconds(0);
+        let startTime = currentTime.getTime() - this.delay_show;
 
-          var endTime = new Date().getTime()
-          var startTime = endTime - 5000
+        var prevloadingTime = startTime+ this.prevloading;
 
-          this.$http.get('http://47.97.165.170:6001/frames?task_id=20a545e03dec11e8b051d094663aac3d&start='+startTime+ '&end='+ endTime).then(
-            (images)=>{
-              images = images.map(item => {
-                item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003')
-                return item
-              })
+
+        for(var i = startTime; startTime<prevloadingTime)
 
 
 
-              let allPromise = images.map((item) => {
-                new Promise(function (resolve) {
-                  let imgObj = new Image(); // 创建图片对象
-                  imgObj.src = item.url;
+          if (!this.imageList[startTime]||
+            !this.imageList[startTime].isLoading ||
+            !this.imageList[nextTime]||
+            !this.imageList[nextTime].isLoading ||
+            !this.imageList[nextTime2]||
+            !this.imageList[nextTime2].isLoading) {
+            return  console.log('================loading================')
+          }
 
-                  imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
-                    resolve()
-                  }, false);
-                })
-              })
-              Promise.all(allPromise).then(() => {
-                console.log('start')
-                var i = 0;
-                let timer = setInterval(() => {
-                  i++
-                  if (images.length < i) clearInterval(timer)
-                  this.videoUrl = images[i].url
-                  this.carUrl = images[i].url.replace('img/', 'mask/').replace('jpg', 'png')
-                  this.bigCarUrl = images[i].url.replace('img/', 'mask2/').replace('jpg', 'png')
-                  this.peopleUrl= images[i].url.replace('img/', 'mask3/').replace('jpg', 'png')
-                }, 100)
-              })
-
+        if(this.imageList[startTime] && this.imageList[startTime].index !=0){
+          for(var time in this.imageList){
+            if(time< startTime){
+              delete  this.imageList[time]
             }
-          )
+          }
+          $('#'+startTime+"_car").nextAll().remove();
+          $('#'+startTime+"_origin").nextAll().remove()
+        }
 
-          // var images = [{
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021418910_3120.jpg",
-          //   "timestamp": 1535021418910
-          // },
-          //   {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021418957_3121.jpg",
-          //   "timestamp": 1535021418957
-          // },
-          //   {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419004_3122.jpg",
-          //   "timestamp": 1535021419004
-          // },
-          //   {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419055_3123.jpg",
-          //   "timestamp": 1535021419055
-          // },
-          //   {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419235_3124.jpg",
-          //   "timestamp": 1535021419235
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419431_3125.jpg",
-          //   "timestamp": 1535021419431
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419631_3126.jpg",
-          //   "timestamp": 1535021419631
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021419827_3127.jpg",
-          //   "timestamp": 1535021419827
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420025_3128.jpg",
-          //   "timestamp": 1535021420025
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420226_3129.jpg",
-          //   "timestamp": 1535021420226
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420441_3130.jpg",
-          //   "timestamp": 1535021420441
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420631_3131.jpg",
-          //   "timestamp": 1535021420631
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021420825_3132.jpg",
-          //   "timestamp": 1535021420825
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421028_3133.jpg",
-          //   "timestamp": 1535021421028
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421226_3134.jpg",
-          //   "timestamp": 1535021421226
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421433_3135.jpg",
-          //   "timestamp": 1535021421433
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421626_3136.jpg",
-          //   "timestamp": 1535021421626
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021421825_3137.jpg",
-          //   "timestamp": 1535021421825
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422027_3138.jpg",
-          //   "timestamp": 1535021422027
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422227_3139.jpg",
-          //   "timestamp": 1535021422227
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422445_3140.jpg",
-          //   "timestamp": 1535021422445
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422630_3141.jpg",
-          //   "timestamp": 1535021422630
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021422830_3142.jpg",
-          //   "timestamp": 1535021422830
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423027_3143.jpg",
-          //   "timestamp": 1535021423027
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423230_3144.jpg",
-          //   "timestamp": 1535021423230
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423426_3145.jpg",
-          //   "timestamp": 1535021423426
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423623_3146.jpg",
-          //   "timestamp": 1535021423623
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021423823_3147.jpg",
-          //   "timestamp": 1535021423823
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424024_3148.jpg",
-          //   "timestamp": 1535021424024
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424223_3149.jpg",
-          //   "timestamp": 1535021424223
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424457_3150.jpg",
-          //   "timestamp": 1535021424457
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424627_3151.jpg",
-          //   "timestamp": 1535021424627
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021424823_3152.jpg",
-          //   "timestamp": 1535021424823
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425017_3153.jpg",
-          //   "timestamp": 1535021425017
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425227_3154.jpg",
-          //   "timestamp": 1535021425227
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425425_3155.jpg",
-          //   "timestamp": 1535021425425
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425626_3156.jpg",
-          //   "timestamp": 1535021425626
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021425820_3157.jpg",
-          //   "timestamp": 1535021425820
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426025_3158.jpg",
-          //   "timestamp": 1535021426025
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426233_3159.jpg",
-          //   "timestamp": 1535021426233
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426451_3160.jpg",
-          //   "timestamp": 1535021426451
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426625_3161.jpg",
-          //   "timestamp": 1535021426625
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021426833_3162.jpg",
-          //   "timestamp": 1535021426833
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427026_3163.jpg",
-          //   "timestamp": 1535021427026
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427223_3164.jpg",
-          //   "timestamp": 1535021427223
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427430_3165.jpg",
-          //   "timestamp": 1535021427430
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427631_3166.jpg",
-          //   "timestamp": 1535021427631
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021427827_3167.jpg",
-          //   "timestamp": 1535021427827
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428027_3168.jpg",
-          //   "timestamp": 1535021428027
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428217_3169.jpg",
-          //   "timestamp": 1535021428217
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428448_3170.jpg",
-          //   "timestamp": 1535021428448
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428635_3171.jpg",
-          //   "timestamp": 1535021428635
-          // }, {
-          //   "url": "http://192.168.8.131:8002/images/1535021400/04461d423ded11e8b051d094663aac3d/img/1535021428829_3172.jpg",
-          //   "timestamp": 1535021428829
-          // }]
+        if(window.current != startTime){
 
+          if(!window.current){
+            let fristImages = this.imageList[startTime].imageList;
+            var string = "<div id='"+ startTime+"_origin'>"
+            fristImages.forEach((image)=>{
+              string += "<img src='"+  image.url  +"'>"
+            });
+            string += "</div>";
+            $('#trafficVideo').prepend(string)
+
+            let nextImages = this.imageList[nextTime].imageList;
+            string = "<div id='"+ nextTime+"_origin'>"
+            nextImages.forEach((image)=>{
+              string += "<img src='"+  image.url  +"'>"
+            });
+            string += "</div>";
+            $('#trafficVideo').prepend(string);
+          }
+
+          var nextTImages = this.imageList[nextTime2].imageList;
+          var string = "<div id='"+ nextTime2+"_origin'>"
+          nextTImages.forEach((image)=>{
+            string += "<img src='"+  image.url+"'>"
+          });
+          string += "</div>";
+          $('#trafficVideo').prepend(string);
+          window.current = startTime;
+        }
+
+
+
+
+
+
+
+        let images = this.imageList[startTime].imageList;
+        let index = this.imageList[startTime].index;
+        if(!images[index]) return
+        if(images[index].timestamp%1000 > millSecond) return
+
+
+        if (this.imageList[startTime].isLoading && index < images.length) {
+          // console.log('show')
+          $('#'+startTime+"_origin img").eq(index).addClass('show')
+          $('#'+startTime+"_car img").eq(index).addClass('show').prevAll().removeClass('show')
+          if(index+1 == images.length) return
+          this.imageList[startTime].index += 1
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      },
+
+      loadImage() {
+        let currentTime = new Date();
+        currentTime.setMilliseconds(0);
+        var endTime = currentTime.getTime() - this.delay;
+        var startTime = endTime - 1000;
+        this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0};
+        // console.log('http://47.97.165.170:6001/frames?' + 'task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
+        this.$http.get('http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
+          (images) => {
+            if(images.data.length ===0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
+            images = images.data.map(item => {
+              item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
+              return item
+            })
+
+            let allPromise = images.map((item) => {
+              new Promise(function (resolve) {
+                let imgObj = new Image(); // 创建图片对象
+                imgObj.src = item.url;
+
+                imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+                  resolve()
+                }, false);
+              })
+            })
+            let allPromise1 = images.map((item) => {
+              new Promise(function (resolve) {
+                let imgObj = new Image(); // 创建图片对象
+                imgObj.src = item.url.replace('img/', 'mask/').replace('jpg', 'png');
+
+                imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+                  resolve()
+                }, false);
+              })
+            })
+
+            Promise.all([Promise.all(allPromise)]).then(() => {
+              this.imageList[startTime] = {isLoading: 1, imageList: images, index: 0}
+            })
+          })
       }
     }
   }
@@ -283,43 +246,67 @@
 </script>
 
 <style>
-  .video-container {
+  .trafficVideo-container {
     height: 500px;
     width: 100%;
     padding: 20px;
     display: flex;
 
+
   }
-  .video-container-header{
+
+  .trafficVideo-container-header {
     width: 100%;
     height: 30px;
   }
-  .video-container-left{
-    width: 800px;
-    height: 700px;
-  }
-  .video-container-right{
-    flex-grow: 1;
-    height: 700px;
-    padding: 0  20px;
-  }
-  .video{
+
+  .trafficVideo-container-left {
+    width: 1080px;
+    height: 715px;
     position: relative;
   }
-  .video-right-top{
-    height: 200px;
-    background: black;
-    margin-bottom: 20px;
+
+  .trafficVideo-container-right {
+    flex-grow: 1;
+    height: 700px;
+    padding: 0 20px;
   }
-  .video-right-bottom{
-    height: 200px;
-    background: black;
+
+  .trafficVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
-  .video img{
+
+  .trafficVideo img {
     position: absolute;
     left: 0;
     top: 0;
     width: 100%;
+    height: 100%;
+    opacity: 0;
   }
+  .trafficVideo img.show {
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+  }
+
+
+
+  .trafficVideo-right-top {
+    height: 200px;
+    background: black;
+    margin-bottom: 20px;
+  }
+
+  .trafficVideo-right-bottom {
+    height: 200px;
+    background: black;
+  }
+
+
 
 </style>
