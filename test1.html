@@ -1,0 +1,173 @@
+<script src="static/jquery.min.js"></script>
+
+<div class="iframe-video-origin">
+
+</div>
+<div class="iframe-video-car">
+
+</div>
+<div class="iframe-video-bike">
+
+</div>
+<div class="iframe-video-bigBus">
+
+</div>
+
+<style>
+  .iframe-video-origin,
+  .iframe-video-car,
+  .iframe-video-bike,
+  .iframe-video-bigBus{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .image-container{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .image-container img{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    /*height: 100%;*/
+    opacity: 0;
+  }
+  .image-container img.show{
+    opacity: 1;
+  }
+
+
+</style>
+
+<script>
+
+
+
+
+  let currentTime = Number(window.location.search.split('=')[1]);
+  var endTime = currentTime.getTime() - 4000;
+  var startTime = endTime - 1000;
+  function loadImage() {
+    let currentTime = new Date();
+    currentTime.setMilliseconds(0);
+    return new Promise(resolve => {
+      $.ajax({
+        url: 'http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime,
+        method: 'get'
+      }).then(
+        (images) => {
+          images = JSON.parse(
+            images
+          ).map(item => {
+            item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
+            return item
+          })
+
+
+          let allPromise = images.map((item) => {
+
+            new Promise(function (resolve) {
+              let imgObj = new Image(); // 创建图片对象
+              imgObj.src = item.url;
+
+              imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+
+                resolve()
+              }, false);
+            })
+          })
+
+
+          // let allPromise1 = images.map((item) => {
+          //   new Promise(function (resolve) {
+          //     let imgObj = new Image(); // 创建图片对象
+          //     imgObj.src = item.url.replace('img/', 'mask2/').replace('jpg', 'png');
+          //
+          //     imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+          //       resolve()
+          //     }, false);
+          //   })
+          // })
+          //
+          //
+          // let allPromise2 = images.map((item) => {
+          //   new Promise(function (resolve) {
+          //     let imgObj = new Image(); // 创建图片对象
+          //     imgObj.src = item.url.replace('img/', 'mask3/').replace('jpg', 'png');
+          //
+          //     imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+          //       resolve()
+          //     }, false);
+          //   })
+          // })
+          //
+          // let allPromise3 = images.map((item) => {
+          //   new Promise(function (resolve) {
+          //     let imgObj = new Image(); // 创建图片对象
+          //     imgObj.src = item.url.replace('img/', 'mask/').replace('jpg', 'png');
+          //     imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+          //       resolve()
+          //     }, false);
+          //   })
+          // })
+
+
+           Promise.all([Promise.all(allPromise)]).then(function(){
+             resolve(images)
+           })
+        })
+    })
+
+  }
+
+  function addImage(imageList) {
+    var typeMap = {
+      origin: null,
+      // car:'mask',
+      // bike: 'mask1',
+      // bigBus: 'mask2'
+    };
+    for (var type in typeMap) {
+      var string = "<div id='" + startTime + "_" + type + "' class='image-container'>";
+      imageList.forEach((image) => {
+        if (typeMap[type]) {
+          string += "<img src='" + image.url.replace('img/', '' + typeMap[type] + '/').replace('jpg', 'png') + "'>"
+        } else {
+          string += "<img src='" + image.url + "'>"
+        }
+      });
+      string += "</div>";
+      $('.iframe-video-' + type).prepend(string);
+    }
+  }
+
+  loadImage().then(imageList=>{
+     addImage(imageList)
+  }).then(()=>{
+    parent.navigation.hadLoading(currentTime);
+
+  })
+
+  function showImage(index){
+    var typeMap = {
+      origin: null,
+      // car:'mask',
+      // bike: 'mask1',
+      // bigBus: 'mask2'
+    };
+
+    for (var type in typeMap) {
+     var id =  startTime + "_" + type ;
+      $('#'+ id +' img').eq(index).addClass('show').prevAll().removeClass('show')
+      // $('#'+ id +' img').eq(index).addClass('show')
+    }
+  }
+
+</script>
