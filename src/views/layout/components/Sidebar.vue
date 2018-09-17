@@ -36,7 +36,7 @@
           <span>监控视频</span>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="3-1">实时监控<div class="active-item"></div></el-menu-item>
+          <el-menu-item index="/main/trafficVideo">实时监控<div class="active-item"></div></el-menu-item>
           <el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>

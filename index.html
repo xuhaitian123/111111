@@ -22,8 +22,8 @@
     function setRem() {
       const scale = window.document.body.clientWidth / 1920;
       document.getElementById('app').style.transform =  'scale('+  scale +')';
-      document.body.style.height =  window.document.body.clientHeight +"px";
-      document.getElementsByClassName('layout-right')[0].style.height =   (window.document.body.clientHeight)/ scale + 'px'
+      document.body.style.height =  window.screen.availHeight+"px";
+      document.getElementsByClassName('layout-right')[0].style.height =   (window.screen.availHeight)/ scale + 'px'
     }
 
     // 初始化
