@@ -111,43 +111,33 @@
 
               <el-row class="Road_right_link">
                 <el-col :span="8">
-                  <div>
-                    <div class="Road_fl"> > 150 100 50 <</div>
-                    <div class="Road_fr"> < 150 100 50 ></div>
-                    <div style="position: relative">
-                      <div class="Road_chart_line Road_fl">| | | | |</div>
-                      <div style="width: 1%;background: #c9c9cc;;position: absolute;left: 50%;margin-top: 20px"
-                           :style="{height: 85 * linksInfo[0].length+'px'}"></div>
-                      <div class="Road_chart_line Road_fr">| | | | |</div>
-                      <!--<div style="border-bottom: 1px solid;width: 100%;float: right;">-->
-                      <!--<div style="width: 10px;height: 65px;background: #43af7e;float: right;"></div>-->
-                      <!--</div>-->
+                  <div class="">
+                    <div class="" style="width: 50%;float: left;color: #c9c9cc;">
+                      <div> > 150 100 50 < </div>
+                      <div class="Road_chart_line">| | | |</div>
 
-                      <div class="Road_fl">
-                        <div v-for="link in linksInfo[0]" :key="link.link_id+'link'"
-                             style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden;">
-                          <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
-                               style="height: 65px;float: right;"></div>
-                        </div>
+                      <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
+                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                             style="height: 65px;float: right;"></div>
                       </div>
 
-                      <div class="Road_fr">
-                        <div v-for="link in linksInfo[1]" :key="link.link_id"
-                             style="border-bottom: 1px solid;overflow: hidden;">
-                          <div :style="{width: getFlowNum(link) + 'px',background: getFlowColor(link.flow)}"
-                               style="height: 65px;"></div>
-                        </div>
-                      </div>
                     </div>
+                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;"
+                         :style="{height: 85 * linksInfo[0].length+'px'}"></div>
+
+                    <div class="" style="width: 49%;float: right;color: #c9c9cc;">
+                      <div> < 150 100 50 > </div>
+                      <div class="Road_chart_line">| | | | |</div>
+
+                      <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
+                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                             style="width: 30px;height: 65px;"></div>
+                      </div>
+
+                    </div>
+
+                    <div class="Road_chart_bottom"><span>↑</span> {{allLinkId.link_name}} <span>↓</span></div>
                   </div>
-                  <!--<div class="" style="width: 49%;float: right;color: #c9c9cc;">-->
-                  <!--<div style="">-->
-                  <!---->
-                  <!--</div>-->
-                  <!--</div>-->
-
-                  <div class="Road_chart_bottom"><span>↑</span> {{allLinkId.link_name}} <span>↓</span></div>
-
                 </el-col>
                 <el-col :span="3">
                   <div class="" style="margin-top: 10px">
@@ -160,28 +150,26 @@
                   <div class="">
                     <div class="" style="width: 50%;float: left;color: #c9c9cc;">
                       <div> > 25 12 0</div>
-                      <div>
-                        <div class="Road_chart_line">| | | |</div>
+                      <div class="Road_chart_line">| | | | |</div>
 
-                        <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
-                          <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
-                               style="height: 65px;float: right;"></div>
-                        </div>
-
+                      <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
+                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                             style="height: 65px;float: right;"></div>
                       </div>
+
                     </div>
                     <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;"
                          :style="{height: 85 * linksInfo[0].length+'px'}"></div>
+
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
                       <div> 0 12 25 ></div>
-                      <div style="">
-                        <div class="Road_chart_line">| | | |</div>
+                      <div class="Road_chart_line">| | | |</div>
 
-                        <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
-                          <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
-                               style="width: 30px;height: 65px;"></div>
-                        </div>
+                      <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
+                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                             style="width: 30px;height: 65px;"></div>
                       </div>
+
                     </div>
 
                     <div class="Road_chart_bottom"><span>↑</span> {{allLinkId.link_name}} <span>↓</span></div>
