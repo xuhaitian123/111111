@@ -1,7 +1,9 @@
 <template>
 
   <div>
+
     <area-select></area-select>
+
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">

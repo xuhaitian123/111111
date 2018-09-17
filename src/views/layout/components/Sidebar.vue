@@ -6,15 +6,16 @@
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose"
-      background-color="#545c64"
-      text-color="#fff"
       :router="true"
-      active-text-color="#ffd04b">
+      text-color="#88888F"
+      active-text-color="#ffffff">
       <el-submenu index="/main/dashboard">
         <template slot="title">
           <span>交通数据展示</span>
+          <div class="item-line"></div>
         </template>
         <!--<el-menu-item-group>-->
+
           <el-menu-item index="/main/congestionMap">拥堵地图<div class="active-item"></div></el-menu-item>
         <el-menu-item index="/main/roadSectionMap/201">道路数据展示<div class="active-item"></div></el-menu-item>
         <el-menu-item index="/main/intersectionsMap">交叉口数据展示<div class="active-item"></div></el-menu-item>
@@ -23,19 +24,20 @@
       <el-submenu index="2">
         <template slot="title">
           <span>交通数据分析</span>
+          <div class="item-line"></div>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="2-1">信号灯优化前后数据分析<div class="active-item"></div></el-menu-item>
-          <el-menu-item index="2-2">拥堵情况数据前后分析<div class="active-item"></div></el-menu-item>
+          <el-menu-item index="2-1">信号灯优化前后数据<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+          <el-menu-item index="2-2">拥堵情况变化趋势<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
-      <el-submenu index="3">
+      <el-submenu index="">
         <template slot="title">
           <span>监控视频</span>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="3-1">实时监控<div class="active-item"></div></el-menu-item>
-          <el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>
+          <el-menu-item index="/main/trafficVideo">监控视频 <div class="active-item"></div></el-menu-item>
+          <!--<el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>-->
         <!--</el-menu-item-group>-->
       </el-submenu>
       <el-submenu index="4">
@@ -49,7 +51,38 @@
       </el-submenu>
     </el-menu>
 </template>
-<style>
+<style scoped>
+  .el-menu-item, .el-submenu__title{
+    position: relative;
+    font-size: 14px;
+  }
+  .el-menu-item  .item-line{
+    /*height: 1px;*/
+    /*background: rgb(136,136,143);*/
+    position: absolute;
+    bottom: 0;
+    width: 148px;
+    left: 20px;
+
+  }
+  .el-menu>.el-menu-item:last-child .item-line{
+    display: none;
+  }
+
+  .is-opened>.el-submenu__title >.item-line{
+    display: none;
+  }
+  .el-submenu__title  .item-line{
+    /*height: 1px;*/
+    /*background: rgb(136,136,143);*/
+    position: absolute;
+    bottom: 0;
+    width: 168px;
+    left: 10px;
+  }
+
+
+
 
 
 </style>

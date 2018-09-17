@@ -1,62 +1,81 @@
 <template>
-  <div class="timeLine-container" v-bind:style="{width: timeLineWidth+50+'px'}" @mousemove="changeTimer" @mouseup='stopChange' @mouseleave="stopChange">
-    <div class="timeLine-day-container">
-      <el-select v-model="checkedYear" placeholder="请选择">
-        <el-option
-          v-for="item in yearList"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-          :disabled="!item.disable">
-        </el-option>
-      </el-select>
-      年
-      <el-select v-model="checkedMonth" placeholder="请选择">
-        <el-option
-          v-for="item in monthList"
-          :key="item.value"
-          :label="item.value"
-          :value="item.value"
-          :disabled="item.disable">
-        </el-option>
-      </el-select>
-      月
-      <el-select v-model="checkedDay" placeholder="请选择">
-        <el-option
-          v-for="item in dayList"
-          :key="item.value"
-          :label="item.value"
-          :value="item.value"
-          :disabled="item.disable">
-        </el-option>
-      </el-select>
-      日
-      <el-button @click="restart"> 确定</el-button>
+  <div class='timeLine-main'>
+
+    <div class="timeLine-container"  @mousemove="changeTimer" @mouseup='stopChange' @mouseleave="stopChange">
+      <div class="timeLine-day-container">
+        <el-select v-model="checkedYear" placeholder="请选择">
+          <el-option
+            v-for="item in yearList"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+            :disabled="!item.disable">
+          </el-option>
+        </el-select>
+        年
+        <el-select v-model="checkedMonth" placeholder="请选择">
+          <el-option
+            v-for="item in monthList"
+            :key="item.value"
+            :label="item.value"
+            :value="item.value"
+            :disabled="item.disable">
+          </el-option>
+        </el-select>
+        月
+        <el-select v-model="checkedDay" placeholder="请选择">
+          <el-option
+            v-for="item in dayList"
+            :key="item.value"
+            :label="item.value"
+            :value="item.value"
+            :disabled="item.disable">
+          </el-option>
+        </el-select>
+        日
+        <img @click="restart"  class="timeLine-time-reset"  src="/static/timeLine/19.png">
+      </div>
+      <canvas id="timeLine-line"  height="100">
+      </canvas>
+      <div class="timeLine-current-line"   id='timeLine_line' @mousedown="stop"   v-bind:style="{left: left+'px'}">
+      </div>
     </div>
-    <canvas id="timeLine-line"  height="100">
-    </canvas>
-    <div class="timeLine-current-line"   id='timeLine_line' @mousedown="stop"   v-bind:style="{left: left+'px'}">
-    </div>
+
   </div>
+
 
 </template>
 
-<style>
-  .timeLine-container {
-    /*width: 1440px;*/
+<style scoped>
+  .timeLine-main{
+    width: 1574px;
     margin: auto;
     box-shadow: 5px 5px 5px #111;
     height: 100px;
     position: relative;
     background: rgb(54, 54, 66);
+    box-sizing: border-box;
+  }
+  .timeLine-container {
+    width: 1474px;
+    margin: auto;
+    height: 100px;
+    position: relative;
+    background: rgb(54, 54, 66);
+    box-sizing: border-box;
+    /*text-align: center  ;*/
   }
 
   .timeLine-day-container {
     position: absolute;
     top: 10px;
-    right: 30px;
+    right: 0;
     z-index: 99;
     color: #ffffff;
+    display: flex;
+    align-items: center;
+    width: 440px;
+    justify-content: space-between;
   }
 
   .timeLine-current-line {
@@ -68,7 +87,8 @@
     /*background-origin: 0.5;*/
     overflow: visible;
     z-index: 70;
-    background: url("../../../static/timeLine/line.jpg") center ;
+    background: url("../../../static/timeLine/line.png") center ;
+    background-size: 16px 100%;
   }
 
   .timeLine-current-line image {
@@ -87,6 +107,10 @@
     border-right: 10px solid transparent;
     border-bottom: 10px solid red;
   }
+  .timeLine-time-reset{
+    width: 25px;
+    height: 25px;
+  }
 
 </style>
 
@@ -99,11 +123,11 @@
       },
       rate:{
         type: Number,
-        default: 5000
+        default: 200
       },
       space:{
         type: Number,
-        default:  (document.body.clientWidth - 300)/288,
+        default:  (1460)/288,
       }
     },
     data() {
@@ -115,7 +139,7 @@
         timer :'',
         left: -10,
         scale: 0,
-        timeLineWidth: document.body.clientWidth - 300,
+        timeLineWidth: 1460,
         yearList: [{value: 2018, disable: true}, {value: 2017, disable: true}, {value: 2016, disable: true}],
         monthList: function (currentMonth) {
           return that.getMonthList(new Date().getMonth() + 1)
@@ -131,7 +155,7 @@
       }
     },
     mounted() {
-      document.getElementById('timeLine-line').width = this.timeLineWidth+20;
+      document.getElementById('timeLine-line').width = this.timeLineWidth+50;
       this.initPosition();
       this.init();
       this.start()
@@ -197,10 +221,16 @@
         var currentTime = new Date();
 
         var minTime =   this.space/ (5*60*1000/this.rate)
+
         if(this.rate > 59999){
           return this.left = -10 + parseInt((currentTime.getHours()*60 + currentTime.getMinutes()) /5 )* this.space
         }
+
         this.left =  -10 + parseInt((currentTime.getHours()*60*60 + currentTime.getMinutes()*60 + currentTime.getSeconds())/(this.rate/1000)) * minTime
+        console.log(currentTime.getHours())
+          console.log(currentTime.getMinutes())
+        console.log(currentTime.getSeconds())
+        console.log(this.left)
       },
       init() {
         let c = document.getElementById("timeLine-line");
