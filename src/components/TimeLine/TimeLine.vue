@@ -210,6 +210,7 @@
         time.setHours(hour)
         time.setMinutes(minuth)
         time.setSeconds(second)
+        // console.log(time)
         time.setMilliseconds(milliseconds*100)
         this.$emit('newTime', time.getTime())
       },
