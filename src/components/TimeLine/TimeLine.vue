@@ -205,7 +205,7 @@
         time.setHours(hour)
         time.setMinutes(minuth)
         time.setSeconds(second)
-        console.log(time)
+        // console.log(time)
         this.$emit('newTime', time)
       },
 

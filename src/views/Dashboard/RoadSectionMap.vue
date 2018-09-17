@@ -130,6 +130,7 @@
                         <div style="border-bottom: 1px solid;width: 100%;float: right;">
                           <div style="width: 10px;height: 65px;background: #43af7e;float: right;"></div>
                         </div>
+
                       </div>
                     </div>
 
@@ -275,30 +276,40 @@
         this.getNodeDataD18ByLinkId();
       },
       getLinkDelayDoubleDirection() {  //路段双向延误(双向)
-        this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=201&current=true')
+        this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id+ '&current=true')
           .then((response) => {
             // console.log(response)
             this.linkData = response.data
           })
       },
-      getNodeDataD3ByLinkId() {  //进道口机动车流量
-        this.$http.get('/nodeData/getNodeDataD3ByLinkId?linkId=201&current=true')
+      getNodeDataD3ByLinkId() {  //进道口机动车流量 + 非机动车流量
+        this.$http.get('/nodeData/getNodeDataD3ByLinkId?linkId='+ this.$route.params.id +'&current=true')
+          .then((response) => {
+            this.$http.get('/nodeData/getNodeDataD4ByLinkId?linkId='+ this.$route.params.id +'&current=true')
+              .then((result) => {
+                console.log(response.data.value+result.data.value)
+              })
+          })
+      },
+      getNodeDataD13ByLinkId() {   //获取进道口排队长度(双向)
+        this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?linkId='+ this.$route.params.id +'&current=true')
           .then((response) => {
             console.log(response)
           })
-      },
-      getNodeDataD13ByLinkId() {  //进道口排队长度
-        this.$http.get('/nodeData/getNodeDataD13ByLinkId?linkId=201&current=true')
+        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=201')
           .then((response) => {
-            console.log(response)
+            // console.log(response)
           })
       },
-      getNodeDataD18ByLinkId() {
-        this.$http.get('/nodeData/getNodeDataD18ByLinkId?linkId=201&current=true')
+
+      getNodeDataD18ByLinkId() {  //进道口绿灯到达率
+        this.$http.get('/nodeData/getNodeDataD18ByLinkId?linkId='+ this.$route.params.id +'&current=true')
           .then((response) => {
-            console.log(response)
+            // console.log(response)
           })
       }
+
+      //道路绿灯达到比例
     }
   }
 </script>
@@ -406,7 +417,7 @@
 
   .Road_row_list span {
     position: absolute;
-    right: 15px;
+    right: 40px;
     line-height: 10px;
   }
 
