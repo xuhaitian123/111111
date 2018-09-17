@@ -128,6 +128,7 @@
       },
       mounted: function () {
         this.showEchartColumn();
+        this.showDayLineChart();
 
       },
       methods:{
@@ -139,9 +140,9 @@
         },
         showEchartColumn:function () {
           /*ECharts图表*/
-          this.buildData()
+          this.buildWeekData()
         },
-        buildData:function () {
+        buildWeekData:function () {
           var legendData = ['', ''];
           var bgColorList = ['#ba4c48','#62ac82'];
           var axisLabel = ['', '', '', '', '', '',''];
@@ -175,9 +176,9 @@
             seriesValue.push(seriesDataVal);
           }
 
-          this.buildChart(legendData, axisLabel, seriesValue);
+          this.buildWeekChart(legendData, axisLabel, seriesValue);
         },
-        buildChart:function(legendData, axisLabel, seriesValue) {
+        buildWeekChart:function(legendData, axisLabel, seriesValue) {
           var chart = document.getElementById('week_echart');
           var echart = echarts.init(chart);
           var option = {
@@ -229,8 +230,11 @@
           };
 
           echart.setOption(option);
+        },
+        showDayLineChart:function () {
+
         }
-        }
+      }
     }
 </script>
 
