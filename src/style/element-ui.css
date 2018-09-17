@@ -101,6 +101,10 @@
   background: #353644;
 }
 
+.el-card{
+  background: #1f1f2c;
+}
+
 .el-select-dropdown__item.selected span {
   font-size: 12px !important;
 }
