@@ -123,7 +123,7 @@
       },
       rate:{
         type: Number,
-        default: 200
+        default: 100
       },
       space:{
         type: Number,
@@ -193,20 +193,25 @@
         this.startPosition =  e.clientX;
       },
       getTimer(){
-        var seconds = (this.left+10) / (this.space)*5*60;
-        var hour = parseInt(seconds/60/60);
-        var minuth = Math.floor(seconds/60%60);
-        if(this.rate === 5000){
-          var second =  Math.round(seconds%60)
-        }else{
-          var second = 0
-        }
+        var seconds = (this.left+10) / (this.space)*5*60*10;
+        var hour = parseInt(seconds/60/60/10);
+        var minuth = Math.floor(seconds/60/10%60);
+        // if(this.rate === 5000){
+
+          var second =  Math.round(seconds/10%60);
+          var milliseconds =  Math.round(seconds%10);
+
+
+        // }else{
+        //   var second = 0
+        // }
+
         var time =  new Date(this.checkedYear+'-'+this.checkedMonth+'-'+this.checkedDay)
         time.setHours(hour)
         time.setMinutes(minuth)
         time.setSeconds(second)
-        console.log(time)
-        this.$emit('newTime', time)
+        time.setMilliseconds(milliseconds*100)
+        this.$emit('newTime', time.getTime())
       },
 
 
@@ -227,10 +232,7 @@
         }
 
         this.left =  -10 + parseInt((currentTime.getHours()*60*60 + currentTime.getMinutes()*60 + currentTime.getSeconds())/(this.rate/1000)) * minTime
-        console.log(currentTime.getHours())
-          console.log(currentTime.getMinutes())
-        console.log(currentTime.getSeconds())
-        console.log(this.left)
+
       },
       init() {
         let c = document.getElementById("timeLine-line");
