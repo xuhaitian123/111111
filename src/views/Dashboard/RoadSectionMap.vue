@@ -329,21 +329,26 @@
           .then((response) => {
             this.allLinkId = response.data;
             let links = Object.values(response.data.links);
+
             links.forEach((direction) => {
-              direction.forEach((link) => {
-                this.getNodeDataD3ByLinkId(link.link_id, (result) => {
-                  link.flow = result;
-                });
-                this.getNodeDataD13ByLinkId(link.link_id, (result) => {
-                  link.lineLength = result;
-                })
+              this.getLinkInfo(direction).then((data)=>{
+                this.linksInfo = links;
               })
             });
-            console.log(links)
-            setTimeout(() => {
-              this.linksInfo = links;
-            }, 1000)
           })
+      },
+      getLinkInfo(direction){
+        return new Promise((resolve, reject)=>{
+          direction.forEach((link) => {
+            this.getNodeDataD3ByLinkId(link.link_id, (result) => {
+              link.flow = result;
+              this.getNodeDataD13ByLinkId(link.link_id, (result) => {
+                link.lineLength = result;
+                resolve(direction);
+              })
+            });
+          })
+        })
       },
       getNodeDataD13ByLinkId(linkId, cb) {   //获取进道口排队长度(双向)
         this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&current=true')
