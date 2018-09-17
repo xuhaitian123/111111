@@ -4,9 +4,10 @@ import HelloWorld from '@/components/HelloWorld'
 import Layout from '../views/layout/Layout'
 import Dashboard from  '../views/Dashboard/Dashboard'
 import CongestionMap from  '../views/Dashboard/CongestionMap'
+import RoadSectionMap from  '../views/Dashboard/RoadSectionMap'
+import IntersectionsMap from  '../views/Dashboard/IntersectionsMap'
 import Map from '../views/Map/Map'
 import TrafficVideo from  '../views/TrafficVideo/TrafficVideo'
-import RoadSectionMap from  '../views/Dashboard/RoadSectionMap'
 import Login from '../views/Login/Login'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
@@ -55,6 +56,19 @@ export default new Router({
           path: 'roadSectionMap/:id',
           component: RoadSectionMap,
           name: 'RoadSectionMap'
+        }
+      ],
+    },
+    {
+      path: '/main',
+      component: Layout,
+      name: 'Layout',
+      redirect: '/main/dashboard',
+      children: [
+        {
+          path: 'intersectionsMap',
+          component: IntersectionsMap,
+          name: 'IntersectionsMap'
         }
       ],
     },

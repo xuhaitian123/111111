@@ -23,14 +23,12 @@
     },
     methods: {
       init() {
-        console.log(this.data)
         let myChart = this.$echarts.init(document.getElementById('main'));
 
         let option = {
           tooltip: {
             formatter: "{a} <br/>{b} : {c}%"
           },
-
           series: [
             {
               type: 'gauge',
@@ -44,7 +42,7 @@
               detail: {
                 show: false,
               },
-              data: [{value: this.data, name: String(this.data)}],
+              data: [{value: this.data, name: String(this.data.toFixed(0))}],
               title: {
                 show: true,
                 offsetCenter: [0, -10],
@@ -59,7 +57,7 @@
               axisLine: {
                 show: true,
                 lineStyle: {
-                  color: [[this.data / 1, this.color], [1, '#fff']],
+                  color: [[this.data / 100, this.color], [1, '#fff']],
                   width: 2,
                   shadowBlur: 15,
                   shadowColor: '#e2ea73',
