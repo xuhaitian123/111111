@@ -1,5 +1,5 @@
 <template>
-  <div class="timeLine-container" v-bind:style="{width: timeLineWidth+50+'px'}" @mousemove="changeTimer" @mouseup='stopChange' @mouseleave="stopChange">
+  <div class="timeLine-container"  @mousemove="changeTimer" @mouseup='stopChange' @mouseleave="stopChange">
     <div class="timeLine-day-container">
       <el-select v-model="checkedYear" placeholder="请选择">
         <el-option
@@ -31,7 +31,7 @@
         </el-option>
       </el-select>
       日
-      <el-button @click="restart"> 确定</el-button>
+      <img @click="restart"  class="timeLine-time-reset"  src="/static/timeLine/19.png">
     </div>
     <canvas id="timeLine-line"  height="100">
     </canvas>
@@ -43,12 +43,14 @@
 
 <style scoped>
   .timeLine-container {
-    /*width: 1440px;*/
+    width: 1574px;
     margin: auto;
     box-shadow: 5px 5px 5px #111;
     height: 100px;
     position: relative;
     background: rgb(54, 54, 66);
+    box-sizing: border-box;
+    text-align: center  ;
   }
 
   .timeLine-day-container {
@@ -57,6 +59,10 @@
     right: 30px;
     z-index: 99;
     color: #ffffff;
+    display: flex;
+    align-items: center;
+    width: 440px;
+    justify-content: space-between;
   }
 
   .timeLine-current-line {
@@ -68,7 +74,8 @@
     /*background-origin: 0.5;*/
     overflow: visible;
     z-index: 70;
-    background: url("../../../static/timeLine/line.jpg") center ;
+    background: url("../../../static/timeLine/line.png") center ;
+    background-size: 16px 100%;
   }
 
   .timeLine-current-line image {
@@ -87,6 +94,10 @@
     border-right: 10px solid transparent;
     border-bottom: 10px solid red;
   }
+  .timeLine-time-reset{
+    width: 25px;
+    height: 25px;
+  }
 
 </style>
 
@@ -103,7 +114,7 @@
       },
       space:{
         type: Number,
-        default:  (document.body.clientWidth - 300)/288,
+        default:  (1460)/288,
       }
     },
     data() {
@@ -115,7 +126,7 @@
         timer :'',
         left: -10,
         scale: 0,
-        timeLineWidth: document.body.clientWidth - 300,
+        timeLineWidth: 1460,
         yearList: [{value: 2018, disable: true}, {value: 2017, disable: true}, {value: 2016, disable: true}],
         monthList: function (currentMonth) {
           return that.getMonthList(new Date().getMonth() + 1)
@@ -131,7 +142,7 @@
       }
     },
     mounted() {
-      document.getElementById('timeLine-line').width = this.timeLineWidth+20;
+      document.getElementById('timeLine-line').width = this.timeLineWidth+50;
       this.initPosition();
       this.init();
       this.start()

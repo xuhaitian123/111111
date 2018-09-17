@@ -31,13 +31,13 @@
 
   }
   .layout-left{
-    width: 200px;
+    width: 260px;
     position: absolute;
 
   }
   .layout-right{
     flex-grow:1;
-    margin-left:200px;
+    margin-left:260px;
     /*border: 1px solid #999999;*/
     /*background: #999999;*/
     height: 100%;
