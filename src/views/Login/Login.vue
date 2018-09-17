@@ -66,18 +66,16 @@ import { Message } from 'element-ui';
         var self =this
         var username =$(".user-text").val();
         var password = $('.passward-text').val()
-        console.log(username)
         $.ajax( {
-          url:'/',
+          url:'/login', 
           data:{
             Username:username,
             Password:password,
           },
-          type:'post',
+          type:"get",
           dataType:'json',
           success:function(data) {
             if(self.checked == true){
-              console.log(self.checked)
               window.localStorage.setItem("username",username)
             }
             self.$message({
