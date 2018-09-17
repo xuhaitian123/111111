@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="" style="height: 980px;position: relative">
-            <div id="bigMap" style="height: 980px"></div>
+            <road-net-map style="width: 100%"></road-net-map>
 
             <div style="position: absolute;top: 15px;width: 100%;text-align: center">
               <el-row
@@ -46,7 +46,7 @@
 
                 <el-row class="">
                   <el-col :span="12">
-                    <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
@@ -99,11 +99,8 @@
                 </el-row>
               </div>
 
-              <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.8);margin-top: 10px;float: right">
-                <div
-                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
-                  图例
-                </div>
+              <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">图例</div>
 
                 <ul class="CongestionMap_Legend">
                   <li>
@@ -145,6 +142,7 @@
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import TimeLine from '../../components/TimeLine/TimeLine'
   import AreaSelect from '../../components/Area/Area'
+  import RoadNetMap from '../../components/Map/Map'
 
   export default {
     name: "congestion-map",
@@ -152,6 +150,7 @@
       AreaSelect,
       RoadGauge,
       TimeLine,
+      RoadNetMap,
     },
     data() {
       return {
@@ -195,46 +194,29 @@
         this.getAllData();
         let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
       },
-      initMap() {
-        let map = new window.BMap.Map("bigMap");    // 创建Map实例
-        map.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);  // 初始化地图,设置中心点坐标和地图级别
-        map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-        map.setMinZoom(12);
-        map.setMaxZoom(16);
-        map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-        let b = new window.BMap.Bounds(new window.BMap.Point(118.19214, 32.717855), new window.BMap.Point(119.648976, 34.184862));
-        try {
-          BMapLib.AreaRestriction.setBounds(map, b);
-        } catch (e) {
-        }
-
-        window.congestionMap = map;
-      },
       getAllData() {
-        this.getTrafficCongestionCongestionPercent();
-        this.getTrafficCongestionRoadNetCongestionScore();
-        this.getTrafficCongestionAllNodeCongestionAlarm();
-
-        this.initMap();
+        this.getCongestionPercent();
+        this.getRoadNetCongestionScore();
+        this.getAllNodeCongestionAlarm();
       },
       jumpPage(key) {
         this.$router.push(key);
       },
-      getTrafficCongestionCongestionPercent() { //拥堵里程比例
+      getCongestionPercent() { //拥堵里程比例
         this.$http
           .get('/trafficCongestion/congestionPercent?current=true')
           .then((response) => {
             this.congestionPercent = response.data.value;
           })
       },
-      getTrafficCongestionRoadNetCongestionScore() { //路网拥堵评分
+      getRoadNetCongestionScore() { //路网拥堵评分
         this.$http
           .get('/trafficCongestion/roadNetCongestionScore?current=true')
           .then((response) => {
             this.roadNetCongestionScore = response.data.value;
           })
       },
-      getTrafficCongestionAllNodeCongestionAlarm() {  //交叉口报警信息
+      getAllNodeCongestionAlarm() {  //交叉口报警信息
         this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
             this.allNodeAlarmInfo = response.data;
@@ -247,7 +229,7 @@
             cb();
           })
       },
-      getNodeDataGetAllNodeD12s(cb) {  //所有交叉口延误数据
+      getAllNodeD12s(cb) {  //所有交叉口延误数据
         this.$http.get('/nodeData/getAllNodeD12s?current=true')
           .then((response) => {
             this.allNodeDelay = response.data.values;
@@ -257,54 +239,61 @@
 
       setRoadNetStatus(is) {
         this.currentRoadNet = is;
-        this.getTrafficCongestionRoadAvgDelay(() => {
-          for (let i = 0; i < this.allLinksDelay.length; i++) {
-            let pois = this.allLinksDelay[i].link.link_nodes.map((node) => {
-              return new BMap.Point(node[0], node[1])
-            });
-            let polyline = new window.BMap.Polyline(pois, {
-              id: this.allLinksDelay[i].link_id,
-              enableEditing: false,//是否启用线编辑，默认为false
-              enableClicking: true,//是否响应点击事件，默认为true
-              strokeWeight: '1',//折线的宽度，以像素为单位
-              strokeOpacity: 0.8,//折线的透明度，取值范围0 - 1
-              strokeColor: this.getRoadAvgDelayColor(this.allLinksDelay[i].value) //折线颜色
-            });
-            console.log(this.allLinksDelay[i])
-            polyline.addEventListener('click', function (pt) {
-              console.log(pt)
-            });
-            window.congestionMap.addOverlay(polyline);          //增加折线
-          }
-        });
-        this.getNodeDataGetAllNodeD12s(() => {
 
-          for (let i = 0; i < this.allNodeDelay.length; i++) {
-            console.log(this.allNodeDelay[i])
-            let pt = new window.BMap.Point(this.allNodeDelay[i].node.long, this.allNodeDelay[i].node.lat);
-            let opts = {
-              position: pt,    // 指定文本标注所在的地理位置
-              offset: new BMap.Size(-70, -70)    //设置文本偏移量
-            };
-            let label = new BMap.Label(this.allNodeDelay[i].node.node_name + "<br>交叉口延误时间 " + this.allNodeDelay[i].value.toFixed(0) + "s", opts);  // 创建文本标注对象
-            label.setStyle({
-              color: "#fff",
-              fontSize: "14px",
-              background: this.getRoadAvgDelayColor(this.allNodeDelay[i].value),
-              height: "40px",
-              border: 0,
-              boxShadow: "5px 5px 5px #111",
-              padding: "5px",
-              lineHeight: "20px",
-            });
-            window.congestionMap.addOverlay(label);
+        window.congestionMap.clearOverlays();
+        if (is) {
+          this.getTrafficCongestionRoadAvgDelay(() => {
+            this.addPloyLine();
+          });
+          this.getAllNodeD12s(() => {
+            // this.addMarkerAndLabel();
+          });
+        }
+      },
+      addMarkerAndLabel() {
+        for (let i = 0; i < this.allNodeDelay.length; i++) {
+          console.log(this.allNodeDelay[i])
+          let pt = new window.BMap.Point(this.allNodeDelay[i].node.long, this.allNodeDelay[i].node.lat);
+          let opts = {position: pt, offset: new BMap.Size(-70, -70)};
+          let label = new BMap.Label(this.allNodeDelay[i].node.node_name + "<br>交叉口延误时间 " + this.allNodeDelay[i].value.toFixed(0) + "s", opts);  // 创建文本标注对象
+          label.setStyle({
+            color: "#fff",
+            fontSize: "14px",
+            background: this.getRoadAvgDelayColor(this.allNodeDelay[i].value),
+            height: "40px",
+            border: 0,
+            boxShadow: "5px 5px 5px #111",
+            padding: "5px",
+            lineHeight: "20px",
+          });
 
+          let myIcon = new window.BMap.Icon(this.getNodeDelayImg(this.allNodeDelay[i].value), new window.BMap.Size(168, 167));
+          let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
 
-            let myIcon = new window.BMap.Icon(this.getNodeDelayImg(this.allNodeDelay[i].value), new window.BMap.Size(168, 167));
-            let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
-            window.congestionMap.addOverlay(marker);
-          }
-        });
+          window.congestionMap.addOverlay(label);
+          window.congestionMap.addOverlay(marker);
+        }
+      },
+      addPloyLine() {
+        for (let i = 0; i < this.allLinksDelay.length; i++) {
+          let pois = this.allLinksDelay[i].link.link_nodes.map((node) => {
+            return new BMap.Point(node[0], node[1])
+          });
+          let polyline = new window.BMap.Polyline(pois, {
+            enableEditing: false,//是否启用线编辑，默认为false
+            enableClicking: true,//是否响应点击事件，默认为true
+            strokeWeight: '1',//折线的宽度，以像素为单位
+            strokeOpacity: 0.8,//折线的透明度，取值范围0 - 1
+            strokeColor: this.getRoadAvgDelayColor(this.allLinksDelay[i].value) //折线颜色
+          });
+          polyline.id= this.allLinksDelay[i].link_id;
+          console.log(this.allLinksDelay[i])
+          polyline.addEventListener('click',  (pt)=> {
+            console.log(pt.currentTarget.id)
+            this.jumpPage('/main/RoadSectionMap/'+pt.currentTarget.id);
+          });
+          window.congestionMap.addOverlay(polyline);          //增加折线
+        }
       },
       getRoadAvgDelayColor(num) {
         if (num < 30) {
@@ -340,10 +329,6 @@
     margin-bottom: -70px
   }
 
-  .CongestionMap_Legend i {
-    margin-right: 5px;
-  }
-
   .CongestionMap_Status {
     width: 100px;
     height: 30px;
@@ -351,6 +336,9 @@
     border-radius: 40px;
     line-height: 30px;
     margin-left: 15px;
+  }
+  .CongestionMap_Legend i {
+    margin-right: 5px;
   }
 
   .CongestionMap_Legend i, .CongestionMap_Legend span {

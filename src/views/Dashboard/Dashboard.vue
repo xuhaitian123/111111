@@ -1,7 +1,9 @@
 <template>
 
   <div>
+
     <area-select></area-select>
+
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
@@ -57,7 +59,7 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">拥堵里程比例</div>
-                <RoadGauge class="Dashboard_card_roadGauge" :data="congestionPercent"></RoadGauge>
+                <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="item in allNodeScore" :key="item.node_id">
@@ -129,7 +131,7 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <MixLineBar :trafficLightData="trafficLightData"></MixLineBar>
+            <mix-line-bar :trafficLightData="trafficLightData"></mix-line-bar>
           </div>
         </el-card>
       </el-col>
@@ -141,10 +143,10 @@
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
-              <PieDoughnut id="pieDoughnut" title="优化前"></PieDoughnut>
+              <pie-doughnut id="pieDoughnut" title="优化前"></pie-doughnut>
             </div>
             <div style="width: 50%;height: 80%;display: inline-block" class="fr">
-              <PieDoughnut id="PieDoughnut" title="优化后"></PieDoughnut>
+              <pie-doughnut id="PieDoughnut" title="优化后"></pie-doughnut>
             </div>
           </div>
         </el-card>
@@ -157,7 +159,7 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <SmoothBarLine></SmoothBarLine>
+            <smooth-bar-line></smooth-bar-line>
           </div>
         </el-card>
       </el-col>
@@ -285,6 +287,11 @@
     width: 100%;
     height: 400px;
   }
+
+  li {
+    margin: 5px 0;
+  }
+
 
   .Dashboard_box_card {
     border-radius: 1px;
@@ -435,7 +442,6 @@
   }
 </style>
 <script>
-  import TimeLine from '../../components/TimeLine/TimeLine'
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import MixLineBar from '../../components/ECharts/MixLineBarItem'
   import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
@@ -445,11 +451,10 @@
   export default {
     components: {
       AreaSelect,
-      TimeLine,
       RoadGauge,
       MixLineBar,
       PieDoughnut,
-      SmoothBarLine,
+      // SmoothBarLine,
     },
     data() {
       let data = []
@@ -493,7 +498,12 @@
         firstVehicle: [],
         allNodeScore: [],
         allNodeAlarmInfo: [],
-        trafficLightData: {},
+        trafficLightData: {
+          afterDelay:[],
+          beforeDelay:[],
+          afterAlarm:[],
+          beforeAlarm:[],
+        },
         radio: 3,
         radio1: 3,
         radio2: 3,
@@ -539,17 +549,17 @@
       }
     },
     mounted() {
-      let map = new window.BMap.Map("map");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
-      map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      map.setMinZoom(10);
-      map.setMaxZoom(16);
-      map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
-      try {
-        BMapLib.AreaRestriction.setBounds(map, b);
-      } catch (e) {
-      }
+      // let map = new window.BMap.Map("map");    // 创建Map实例
+      // map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
+      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      // map.setMinZoom(10);
+      // map.setMaxZoom(16);
+      // map.addControl(new window.BMap.NavigationControl());   //缩放按钮
+      // let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
+      // try {
+      //   BMapLib.AreaRestriction.setBounds(map, b);
+      // } catch (e) {
+      // }
 
       this.init()
     },
@@ -559,43 +569,43 @@
         let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
       },
       getAllData() {
-        this.getTrafficCongestionRoadNetAllFlow();
-        this.getTrafficCongestionRoadNetCongestionScore();
-        this.getTrafficCongestionCongestionPercent();
-        this.getTrafficCongestionNodeCongestionSource();
-        this.getTrafficCongestionAllNodeCongestionAlarm();
+        this.getRoadNetAllFlow();
+        this.getRoadNetCongestionScore();
+        this.getCongestionPercent();
+        this.getNodeCongestionSource();
+        this.getAllNodeCongestionAlarm();
         this.getHistoryTrafficLightOptimizeDelay();
         this.getHistoryTrafficLightOptimizeAlarmTimes();
       },
-      getTrafficCongestionCongestionPercent() { //拥堵里程比例
+      getCongestionPercent() { //拥堵里程比例
         this.$http
-          .get('/trafficCongestion/congestionPercent?current=true')
+          .get('/TrafficCongestion/congestionPercent?current=true')
           .then((response) => {
             this.congestionPercent = response.data.value;
           })
       },
-      getTrafficCongestionRoadNetAllFlow() { //路网总流量
+      getRoadNetAllFlow() { //路网总流量
         this.$http
-          .get('/trafficCongestion/roadNetAllFlow?&current=true')
+          .get('/TrafficCongestion/roadNetAllFlow?&current=true')
           .then((response) => {
             this.allRoadFlow = response.data;
           })
       },
-      getTrafficCongestionRoadNetCongestionScore() { //路网拥堵评分
+      getRoadNetCongestionScore() { //路网拥堵评分
         this.$http
-          .get('/trafficCongestion/roadNetCongestionScore?current=true')
+          .get('/TrafficCongestion/roadNetCongestionScore?current=true')
           .then((response) => {
             this.roadNetCongestionScore = response.data.value;
           })
       },
-      getTrafficCongestionNodeCongestionSource() {  //所有交叉口拥堵评分
-        this.$http.get('/trafficCongestion/allNodeCongestionSource?current=true')
+      getNodeCongestionSource() {  //所有交叉口拥堵评分
+        this.$http.get('/TrafficCongestion/allNodeCongestionSource?current=true')
           .then((response) => {
             this.allNodeScore = response.data;
           })
       },
-      getTrafficCongestionAllNodeCongestionAlarm() {  //交叉口报警信息
-        this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
+      getAllNodeCongestionAlarm() {  //交叉口报警信息
+        this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
             this.allNodeAlarmInfo = response.data;
           })
@@ -603,6 +613,7 @@
       getHistoryTrafficLightOptimizeDelay() {  //信号灯优化前后平均延误
         this.$http.get('/history/trafficLightOptimizeDelay?[\'\']')
           .then((response) => {
+            console.log(response)
             this.trafficLightData.afterDelay = response.data.after;
             this.trafficLightData.beforeDelay = response.data.before;
           })

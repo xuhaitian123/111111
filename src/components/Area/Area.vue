@@ -2,7 +2,9 @@
   <div>
     <div class="area_titleCascader">
       <span>省
-        <el-select v-model="currentProvince" size="mini" class="area_titleSelect" placeholder="请选择">
+
+        <el-select v-model="currentProvince" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+
           <el-option
             v-for="item in provinceList"
             :key="item.value"
@@ -13,7 +15,8 @@
       </span>
 
       <span>城市
-        <el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="请选择">
+
+        <el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
           <el-option
             v-for="item in cityList"
             :key="item.value"
@@ -24,7 +27,9 @@
       </span>
 
       <span>地区
-        <el-select v-model="currentArea" size="mini" class="area_titleSelect" placeholder="请选择">
+
+        <el-select v-model="currentArea" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+
           <el-option class="selectColor"
                      v-for="item in areaList"
                      :key="item.value"
