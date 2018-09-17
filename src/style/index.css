@@ -34,3 +34,8 @@ body {
 .font16{
   font-size: 1em;
 }
+
+::-webkit-scrollbar { width: 0 !important }
+*{
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;}

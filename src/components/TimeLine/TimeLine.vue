@@ -41,7 +41,7 @@
 
 </template>
 
-<style>
+<style scoped>
   .timeLine-container {
     /*width: 1440px;*/
     margin: auto;

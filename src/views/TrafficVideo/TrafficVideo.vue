@@ -5,7 +5,7 @@
 
     </div>
     <div class="trafficVideo-container" >
-      <div class="trafficVideo-container-left"  v-loading="loading">
+      <div class="trafficVideo-container-left"  v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="trafficVideo-video-header">
           <div class="trafficVideo-video-header-left font16">人民路-南京路监控视频</div>
           <div class="trafficVideo-video-header-right">
@@ -80,7 +80,6 @@
 
           <div class="trafficVideo-table">
             <div class="trafficVideo-title">
-
             </div>
 
             <div class="trafficVideo-row">
@@ -140,11 +139,10 @@
             </div>
           </div>
 
-
         </div>
       </div>
     </div>
-    <!--<TimeLine></TimeLine>-->
+    <TimeLine></TimeLine>
   </div>
 
 </template>
@@ -395,10 +393,10 @@
   .trafficVideo-video-header {
     width: 100%;
     height: 30px;
-    /*position: absolute;*/
+    position: relative;
     left: 0;
     top: 0;
-    z-index: 99;
+    z-index: 3000;
     background: rgb(31, 31, 44);
     display: flex;
     align-items: center;
