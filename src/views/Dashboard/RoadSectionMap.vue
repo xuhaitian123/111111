@@ -27,26 +27,48 @@
                     <ul style="line-height: 30px;margin-left: 30px">
                       <li>
                         <div style="float: left;">←</div>
-                        <div
-                          style="width: 17px;height: 17px;background: green;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
-                        <div
-                          style="width: 17px;height: 17px;background: #e7c936;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
-                        <div
-                          style="width: 17px;height: 17px;background: darkorange;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
-                        <div
-                          style="width: 17px;height: 17px;background: red;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
+                        <div class="Road_border" :style="{border: linkData.data.value <30 ? '1px solid green' :'0' }">
+                          <div class="Road_circle"
+                               style="background: green;"></div>
+                        </div>
+                        <div class="Road_border">
+                          <div class="Road_circle"
+                               :style="{border: linkData.data.value <50&&linkData.data.value >30 ? '1px solid #e7c936' :'0' }"
+                               style="background: #e7c936;"></div>
+                        </div>
+                        <div class="Road_border"
+                             :style="{border: linkData.data.value <60&&linkData.data.value >50 ? '1px solid darkorange' :'0' }">
+                          <div class="Road_circle"
+                               style="background: darkorange;"></div>
+                        </div>
+                        <div class="Road_border" :style="{border: linkData.data.value >60 ? '1px solid red' :'0' }">
+                          <div class="Road_circle"
+                               style="background: red;"></div>
+                        </div>
                         <div style="float: left;">←</div>
                       </li>
                       <li>
                         <div style="float: left;">→</div>
-                        <div
-                          style="width: 17px;height: 17px;background: green;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
-                        <div
-                          style="width: 17px;height: 17px;background: #e7c936;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
-                        <div
-                          style="width: 17px;height: 17px;background: darkorange;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
-                        <div
-                          style="width: 17px;height: 17px;background: red;float: left;border-radius: 50%;margin: 7px 10px 0 10px"></div>
+                        <div class="Road_border"
+                             :style="{border: linkData.related_data.value < 30 ? '1px solid green' :'0' }">
+                          <div class="Road_circle"
+                               style="background: green;"></div>
+                        </div>
+                        <div class="Road_border">
+                          <div class="Road_circle"
+                               :style="{border: linkData.related_data.value <50&&linkData.related_data.value >30 ? '1px solid #e7c936' :'0' }"
+                               style="background: #e7c936;"></div>
+                        </div>
+                        <div class="Road_border"
+                             :style="{border: linkData.related_data.value <60&&linkData.related_data.value >50 ? '1px solid darkorange' :'0' }">
+                          <div class="Road_circle"
+                               style="background: darkorange;"></div>
+                        </div>
+                        <div class="Road_border"
+                             :style="{border: linkData.related_data.value >60 ? '1px solid red' :'0' }">
+                          <div class="Road_circle"
+                               style="background: red;"></div>
+                        </div>
                         <div style="float: left;">→</div>
                       </li>
                     </ul>
@@ -89,35 +111,49 @@
 
               <el-row class="Road_right_link">
                 <el-col :span="8">
-                  <div class="" style="width: 50%;float: left;color: #c9c9cc;">
-                    <div> > 150 100 50 <</div>
-                    <div>
-                      <div class="Road_chart_line">| | | | |</div>
+                  <div>
+                    <div class="Road_fl"> > 150 100 50 <</div>
+                    <div class="Road_fr"> < 150 100 50 ></div>
+                    <div style="position: relative">
+                      <div class="Road_chart_line Road_fl">| | | | |</div>
+                      <div style="width: 1%;background: #c9c9cc;;position: absolute;left: 50%;margin-top: 20px"
+                           :style="{height: 85 * linksInfo[0].length+'px'}"></div>
+                      <div class="Road_chart_line Road_fr">| | | | |</div>
+                      <!--<div style="border-bottom: 1px solid;width: 100%;float: right;">-->
+                      <!--<div style="width: 10px;height: 65px;background: #43af7e;float: right;"></div>-->
+                      <!--</div>-->
 
-                      <div style="border-bottom: 1px solid;width: 100%;float: right;">
-                        <div style="width: 10px;height: 65px;background: #43af7e;float: right;"></div>
+                      <div class="Road_fl">
+                        <div v-for="link in linksInfo[0]" :key="link.link_id+'link'"
+                             style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden;">
+                          <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                               style="height: 65px;float: right;"></div>
+                        </div>
+                      </div>
+
+                      <div class="Road_fr">
+                        <div v-for="link in linksInfo[1]" :key="link.link_id"
+                             style="border-bottom: 1px solid;overflow: hidden;">
+                          <div :style="{width: getFlowNum(link) + 'px',background: getFlowColor(link.flow)}"
+                               style="height: 65px;"></div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <!--<div class="" style="width: 49%;float: right;color: #c9c9cc;">-->
+                  <!--<div style="">-->
+                  <!---->
+                  <!--</div>-->
+                  <!--</div>-->
 
-                  <div class="" style="width: 50%;float: right;color: #c9c9cc;">
-                    <div> < 150 100 50 ></div>
-                    <div style="border-left: 2px solid #c9c9cc;padding-bottom: 20px">
-                      <div class="Road_chart_line">| | | | |</div>
-
-                      <div style="border-bottom: 1px solid">
-                        <div style="width: 30px;height: 65px;background: #f98d21;"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="Road_chart_bottom"><span>↑</span> 人民路 <span>↓</span></div>
+                  <div class="Road_chart_bottom"><span>↑</span> {{allLinkId.link_name}} <span>↓</span></div>
 
                 </el-col>
                 <el-col :span="3">
-                  <div class="" style="margin-top: 35px">
-                    <div style="padding-bottom: 48px">南京路</div>
-                    <div style="padding-bottom: 48px">南京路</div>
+                  <div class="" style="margin-top: 10px">
+                    <div v-for="name in linksInfo[0]" :key="name.link_id" style="padding: 24px 0">
+                      {{name.link_name}}
+                    </div>
                   </div>
                 </el-col>
                 <el-col :span="7">
@@ -127,25 +163,28 @@
                       <div>
                         <div class="Road_chart_line">| | | |</div>
 
-                        <div style="border-bottom: 1px solid;width: 100%;float: right;">
-                          <div style="width: 10px;height: 65px;background: #43af7e;float: right;"></div>
+                        <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
+                          <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                               style="height: 65px;float: right;"></div>
                         </div>
 
                       </div>
                     </div>
-
-                    <div class="" style="width: 50%;float: right;color: #c9c9cc;">
+                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;"
+                         :style="{height: 85 * linksInfo[0].length+'px'}"></div>
+                    <div class="" style="width: 49%;float: right;color: #c9c9cc;">
                       <div> 0 12 25 ></div>
-                      <div style="border-left: 2px solid #c9c9cc;padding-bottom: 20px">
+                      <div style="">
                         <div class="Road_chart_line">| | | |</div>
 
-                        <div style="border-bottom: 1px solid">
-                          <div style="width: 30px;height: 65px;background: #f98d21;"></div>
+                        <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
+                          <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                               style="width: 30px;height: 65px;"></div>
                         </div>
                       </div>
                     </div>
 
-                    <div class="Road_chart_bottom"><span>↑</span> 人民路 <span>↓</span></div>
+                    <div class="Road_chart_bottom"><span>↑</span> {{allLinkId.link_name}} <span>↓</span></div>
                   </div>
                 </el-col>
                 <el-col :span="5">
@@ -211,12 +250,14 @@
                     <el-col :span="10">
                       <div class="">
                         <div style="float: left;line-height: 50px;font-size: 12px">57.4%</div>
-                        <concise-pie id="test" direction="left" style="width: 50px;height: 50px;margin: auto"></concise-pie>
+                        <concise-pie id="test" direction="left"
+                                     style="width: 50px;height: 50px;margin: auto"></concise-pie>
                       </div>
                     </el-col>
                     <el-col :span="4">
                       <div class="">
-                        <div style="width: 14px;height: 14px;border-radius: 50%;border: 1px solid #f98d21;margin: auto;position: relative"></div>
+                        <div
+                          style="width: 14px;height: 14px;border-radius: 50%;border: 1px solid #f98d21;margin: auto;position: relative"></div>
                         <div style="font-size: 12px;position: absolute;top: -17px;margin-left: 25px;">人民路</div>
                         <div style="height: 20px;width: 1px;background: #f98d21;margin: auto"></div>
                       </div>
@@ -224,7 +265,8 @@
                     <el-col :span="10">
                       <div class="">
                         <div style="float: right;line-height: 50px;font-size: 12px">57.4%</div>
-                        <concise-pie id="test1" direction="left" style="width: 50px;height: 50px;margin: auto"></concise-pie>
+                        <concise-pie id="test1" direction="left"
+                                     style="width: 50px;height: 50px;margin: auto"></concise-pie>
                       </div>
                     </el-col>
                   </el-row>
@@ -263,6 +305,10 @@
           data: {link: {}},
           related_data: {}
         },
+        allLinkId: {},
+        linksInfo: [
+          [], []
+        ],
       }
     },
     mounted() {
@@ -270,46 +316,96 @@
     },
     methods: {
       init() {
+        this.getAllLinkId();
         this.getLinkDelayDoubleDirection();
-        this.getNodeDataD3ByLinkId();
-        this.getNodeDataD13ByLinkId();
-        this.getNodeDataD18ByLinkId();
+        // this.getNodeDataD18ByLinkId();
       },
       getLinkDelayDoubleDirection() {  //路段双向延误(双向)
-        this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id+ '&current=true')
+        this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&current=true')
           .then((response) => {
-            // console.log(response)
+            console.log(response)
             this.linkData = response.data
           })
       },
-      getNodeDataD3ByLinkId() {  //进道口机动车流量 + 非机动车流量
-        this.$http.get('/nodeData/getNodeDataD3ByLinkId?linkId='+ this.$route.params.id +'&current=true')
+      getNodeDataD3ByLinkId(linkId, cb) {  //进道口机动车流量 + 非机动车流量
+        this.$http.get('/nodeData/getNodeDataD3ByLinkId?linkId=' + linkId + '&current=true')
           .then((response) => {
-            this.$http.get('/nodeData/getNodeDataD4ByLinkId?linkId='+ this.$route.params.id +'&current=true')
+            this.$http.get('/nodeData/getNodeDataD4ByLinkId?linkId=' + linkId + '&current=true')
               .then((result) => {
-                console.log(response.data.value+result.data.value)
+                cb(response.data.value + result.data.value)
               })
           })
       },
-      getNodeDataD13ByLinkId() {   //获取进道口排队长度(双向)
-        this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?linkId='+ this.$route.params.id +'&current=true')
+      getAllLinkId() {  //获取全部linkid
+        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=' + this.$route.params.id)
           .then((response) => {
-            console.log(response)
+            this.allLinkId = response.data;
+            let links = Object.values(response.data.links);
+            links.forEach((direction) => {
+              direction.forEach((link) => {
+                this.getNodeDataD3ByLinkId(link.link_id, (result) => {
+                  link.flow = result;
+                });
+                this.getNodeDataD13ByLinkId(link.link_id, (result) => {
+                  link.lineLength = result;
+                })
+              })
+            });
+            console.log(links)
+            setTimeout(() => {
+              this.linksInfo = links;
+            }, 1000)
           })
-        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=201')
+      },
+      getNodeDataD13ByLinkId(linkId, cb) {   //获取进道口排队长度(双向)
+        this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&current=true')
           .then((response) => {
-            // console.log(response)
+            cb(response.data.total)
           })
       },
 
       getNodeDataD18ByLinkId() {  //进道口绿灯到达率
-        this.$http.get('/nodeData/getNodeDataD18ByLinkId?linkId='+ this.$route.params.id +'&current=true')
+        this.$http.get('/nodeData/getNodeDataD18ByLinkId?linkId=' + this.$route.params.id + '&current=true')
           .then((response) => {
             // console.log(response)
           })
-      }
+      },
 
       //道路绿灯达到比例
+
+      getFlowNum(link) {
+        console.log(link.flow);
+        return link.flow / 12
+      },
+
+      getFlowColor(num) {
+        num = num / 12
+        if (num < 30) {
+          return "#green"
+        } else if (num > 30 && num < 50) {
+          return "#e7c936"
+        } else if (num > 50 && num < 60) {
+          return "darkorange"
+        } else if (num > 60) {
+          return "red"
+        } else {
+          return "#c9c9cc"
+        }
+      },
+
+      getRoadAvgDelayColor(num) {
+        if (num < 30) {
+          return "#green"
+        } else if (num > 30 && num < 50) {
+          return "#e7c936"
+        } else if (num > 50 && num < 60) {
+          return "darkorange"
+        } else if (num > 60) {
+          return "red"
+        } else {
+          return "#c9c9cc"
+        }
+      },
     }
   }
 </script>
@@ -442,7 +538,7 @@
     margin-top: 25px;
     text-align: center;
     font-size: 14px;
-    color: #c9c9c9
+    color: #c9c9cc
   }
 
   .Road_right_link {
@@ -469,5 +565,32 @@
   .Road_chart_bottom span {
     font-size: 20px;
     margin: 0 10px;
+  }
+
+  .Road_fl {
+    width: 50%;
+    float: left;
+    color: #c9c9cc;
+  }
+
+  .Road_fr {
+    width: 49%;
+    float: right;
+    color: #c9c9cc;
+  }
+
+  .Road_border {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    float: left;
+    margin: 7px 10px 0 10px;
+  }
+
+  .Road_circle {
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    margin: 1px 0 0 1px
   }
 </style>
