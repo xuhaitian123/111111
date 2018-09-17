@@ -18,6 +18,7 @@ body{
   margin: 0;
   padding: 0;
   background: rgb(41,41,53);
+
   /*min-width: 1640px;*/
   color: #ffffff;
   overflow: hidden;
@@ -34,3 +35,8 @@ body {
 .font16{
   font-size: 1em;
 }
+
+::-webkit-scrollbar { width: 0 !important }
+*{
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;}

@@ -2,6 +2,7 @@
   text-align: left;
   background-color: rgb(41,41,53);
   color: rgb(136,136,143);
+  border-right: none;
 }
 .el-submenu__title:hover {
   background: rgb(41,41,53);
@@ -157,6 +158,10 @@
   background: #353644;
 }
 
+.el-card{
+  background: #1f1f2c;
+}
+
 .el-select-dropdown__item.selected span {
   font-size: 12px !important;
 }
@@ -175,4 +180,7 @@
 
 .el-select .el-input__icon {
   line-height: 20px;
+}
+.el-card{
+  border: none;
 }

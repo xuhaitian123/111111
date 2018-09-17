@@ -5,10 +5,6 @@
       <Header/>
     </div>
     <div class="layout-main">
-
-      <div class="layout-left" v-if="showSidebar">
-        <Sidebar/>
-      </div>
       <div class="layout-right">
         <router-view />
       </div>
@@ -37,16 +33,15 @@
   }
   .layout-right{
     flex-grow:1;
-    margin-left:260px;
+    /*margin-left:260px;*/
     /*border: 1px solid #999999;*/
     /*background: #999999;*/
     height: 100%;
     overflow: auto;
     border: 1px solid #171821;
     background: #171821;
-    padding-bottom: 200px;
     box-sizing: border-box;
-/*>>>>>>> b60977901cf5ea393febf42f78edb4226d0209e2*/
+    /*>>>>>>> b60977901cf5ea393febf42f78edb4226d0209e2*/
   }
 </style>
 <script>
@@ -69,7 +64,7 @@
       key() {
         return this.$route.fullPath
       }
-      },
+    },
     mounted(){
 
     },

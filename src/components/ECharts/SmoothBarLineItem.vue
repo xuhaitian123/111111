@@ -12,10 +12,7 @@
     mounted() {
 
       let myChart = this.$echarts.init(document.getElementById('SmoothBarLine'));
-
-      let app = {};
-      let option = null;
-      app.title = '多 X 轴示例';
+      let option = {};
 
       let colors = ['#5ebfba','#ff8539','#b14671'];
 
@@ -23,9 +20,6 @@
       option = {
         color: colors,
 
-        tooltip: {
-
-        },
         legend: {
           data:[ '']
         },

@@ -17,8 +17,8 @@
         <!--<el-menu-item-group>-->
 
           <el-menu-item index="/main/congestionMap">拥堵地图<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/main/RoadSectionMap/201">道路数据展示<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="1-3">交叉口数据展示<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/main/roadSectionMap/201">道路数据展示<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/main/intersectionsMap">交叉口数据展示<div class="active-item"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
       <el-submenu index="2">
@@ -31,13 +31,13 @@
           <el-menu-item index="2-2">拥堵情况变化趋势<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
-      <el-submenu index="3">
+      <el-submenu index="">
         <template slot="title">
           <span>监控视频</span>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="/main/trafficVideo">实时监控<div class="active-item"></div></el-menu-item>
-          <el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>
+          <el-menu-item index="/main/trafficVideo">监控视频 <div class="active-item"></div></el-menu-item>
+          <!--<el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>-->
         <!--</el-menu-item-group>-->
       </el-submenu>
       <el-submenu index="4">

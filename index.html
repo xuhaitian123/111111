@@ -12,7 +12,7 @@
   </head>
   <body>
     <div id="container  ">
-      <div id="app" style=""></div>
+      <div id="app"></div>
     </div>
 
 
@@ -23,15 +23,16 @@
       const scale = window.document.body.clientWidth / 1920;
       document.getElementById('app').style.transform =  'scale('+  scale +')';
       document.body.style.height =  window.screen.availHeight+"px";
-      document.getElementsByClassName('layout-right')[0].style.height =   (window.screen.availHeight)/ scale + 'px'
+      document.getElementById('app').style.height =   (window.screen.availHeight)/ scale + 'px'
     }
 
     // 初始化
-    setRem()
-    // 改变窗口大小时重新设置 rem
-    window.onresize = function () {
       setRem()
-    }
+      // 改变窗口大小时重新设置 rem
+      window.onresize = function () {
+        setRem()
+      }
+
 
   </script>
 

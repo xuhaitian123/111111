@@ -5,7 +5,7 @@
 
     </div>
     <div class="trafficVideo-container" >
-      <div class="trafficVideo-container-left"  v-loading="loading">
+      <div class="trafficVideo-container-left"  v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="trafficVideo-video-header">
           <div class="trafficVideo-video-header-left font16">人民路-南京路监控视频</div>
           <div class="trafficVideo-video-header-right">
@@ -80,7 +80,6 @@
 
           <div class="trafficVideo-table">
             <div class="trafficVideo-title">
-
             </div>
 
             <div class="trafficVideo-row">
@@ -140,11 +139,10 @@
             </div>
           </div>
 
-
         </div>
       </div>
     </div>
-    <!--<TimeLine></TimeLine>-->
+    <TimeLine @newTime="updataVideo"></TimeLine>
   </div>
 
 </template>
@@ -192,44 +190,50 @@
       Area,
     },
     mounted() {
+      this.getNodeLineLish(2)
+      this.getlikeByNodeId()
+      // this.init()
 
-      this.init()
     },
     beforeDestroy() {
       clearInterval(this.timer)
     },
     methods: {
-      init() {
+      updataVideo(time) {
         let i = 0;
         var j = 0;
-        this.timer = setInterval(() => {
-          i++;
-          j++
+        // this.timer = setInterval(() => {
+        //   i++;
+        //   j++
 
-          let currentTime = new Date();
-          let millSecond = currentTime.getMilliseconds();
-          currentTime.setMilliseconds(0);
-          let startTime = currentTime.getTime() - this.delay_show;
+
+          let millSecond = time%1000;
+
+          // currentTime.setMilliseconds(0);
+          let startTime = time - this.delay_show;
 
 
           // if(j>100) return
-          if (i % 10 === 0) {
-            console.log(this.imageList)
+          if (time % 1000 === 0) {
+            console.log(new Date())
+            // console.log(this.imageList)
             this.loadImage(startTime);
-            i = 0;
+
           }
-          this.showImage(startTime - 10000, millSecond)
-        }, 100)
+
+          this.showImage(parseInt((startTime - 8000)/1000)*1000, millSecond)
+        // }, 100)
       },
       showImage(startTime, millSecond) {
         var prevloadingTime = startTime + this.prevloading;
-
         for (var time = startTime; time < prevloadingTime; time += 1000) {
-          // console.log(this.imageList[time])
           if (!this.imageList[time] || !this.imageList[time].isLoading) {
             return this.loading = true
           }
         }
+        // console.log('==hadloading')
+
+
 
 
         if (this.imageList[startTime] && this.imageList[startTime].index !== 0) {
@@ -242,84 +246,89 @@
             this.addImage(startTime + 1000)
           }
           this.addImage(startTime + 2000);
-
           window.current = startTime;
         }
 
-
         let images = this.imageList[startTime].imageList;
         let index = this.imageList[startTime].index;
+        // console.log('============='+millSecond)
         if (!images[index]) return;
+
         if (images[index].timestamp % 1000 > millSecond) return;
-
-
         if (this.imageList[startTime].isLoading && index < images.length) {
-          this.loading = false
+          this.loading = false;
           this.changeImage(startTime, index);
+          // console.log(images.length)
           if (index + 1 === images.length) return;
           this.imageList[startTime].index += 1
+          // console.log(this.imageList[startTime])
         }
       },
 
       loadImage(endTime) {
 
         var startTime = endTime - 1000;
+
         this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0};
-        this.$http.get('http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
-          (images) => {
-            if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
-            images = images.data.map(item => {
-              item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
-              return item
-            })
+        this.getCountOfNode(endTime).then((count)=>{
+          this.$http.get('http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
+            (images) => {
+              if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
+              images = images.data.map(item => {
+                item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
+                return item
+              })
 
-            let allPromise = images.map((item) => {
-              return new Promise(function (resolve) {
-                let imgObj = new Image(); // 创建图片对象
-                imgObj.src = item.url;
+              let allPromise = images.map((item) => {
+                return new Promise(function (resolve) {
+                  let imgObj = new Image(); // 创建图片对象
+                  imgObj.src = item.url;
 
-                imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
-                  resolve(imgObj)
-                }, false);
+                  imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+                    resolve(imgObj)
+                  }, false);
+                })
               })
-            })
-            let allPromise1 = images.map((item) => {
-              return new Promise(function (resolve) {
-                let imgObj = new Image(); // 创建图片对象
-                imgObj.src = item.url.replace('img/', 'mask/').replace('jpg', 'png');
-                imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
-                  resolve(imgObj)
-                }, false);
+              let allPromise1 = images.map((item) => {
+                return new Promise(function (resolve) {
+                  let imgObj = new Image(); // 创建图片对象
+                  imgObj.src = item.url.replace('img/', 'mask/').replace('jpg', 'png');
+                  imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+                    resolve(imgObj)
+                  }, false);
+                })
               })
-            })
-            let allPromise2 = images.map((item) => {
-              return new Promise(function (resolve) {
-                let imgObj = new Image(); // 创建图片对象
-                imgObj.src = item.url.replace('img/', 'mask2/').replace('jpg', 'png');
-                imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
-                  resolve(imgObj)
-                }, false);
+              let allPromise2 = images.map((item) => {
+                return new Promise(function (resolve) {
+                  let imgObj = new Image(); // 创建图片对象
+                  imgObj.src = item.url.replace('img/', 'mask2/').replace('jpg', 'png');
+                  imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+                    resolve(imgObj)
+                  }, false);
+                })
               })
-            })
-            let allPromise3 = images.map((item) => {
-              return new Promise(function (resolve) {
-                let imgObj = new Image(); // 创建图片对象
-                imgObj.src = item.url.replace('img/', 'mask3/').replace('jpg', 'png');
-                imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
-                  resolve(imgObj)
-                }, false);
+              let allPromise3 = images.map((item) => {
+                return new Promise(function (resolve) {
+                  let imgObj = new Image(); // 创建图片对象
+                  imgObj.src = item.url.replace('img/', 'mask3/').replace('jpg', 'png');
+                  imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+                    resolve(imgObj)
+                  }, false);
+                })
               })
-            })
 
-            Promise.all([[Promise.all(allPromise)], [Promise.all(allPromise1)], [Promise.all(allPromise2)], [Promise.all(allPromise3)]]).then((image) => {
-              this.imageList[startTime] = {
-                isLoading: 1,
-                imageList: images,
-                index: 0,
-                preImage: [image[0], image[1], image[2], image[3]]
-              }
+              Promise.all([[Promise.all(allPromise)], [Promise.all(allPromise1)], [Promise.all(allPromise2)], [Promise.all(allPromise3)]]).then((image) => {
+                this.imageList[startTime] = {
+                  isLoading: 1,
+                  imageList: images,
+                  index: 0,
+                  preImage: [image[0], image[1], image[2], image[3]],
+                  count: count,
+                }
+              })
             })
-          })
+        })
+
       },
       addImage(time) {
         this.typeList.forEach(type => {
@@ -329,7 +338,7 @@
             let url = image.url;
             if (this.typeMap[type]) {
               url = url.replace('img/', '' + this.typeMap[type] + '/').replace('jpg', 'png')
-              console.log(url)
+              // console.log(url)
             }
             string += "<img src='" + url + "'>"
           });
@@ -362,6 +371,28 @@
       },
       countNumber(type){
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
+      },
+      getCountOfNode(endTime){
+        return new Promise(resolve => {
+          var startTime = endTime - 1000;
+          this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
+            resolve(result.data)
+          })
+        });
+      },
+      getNodeLineLish(nodeId){
+        return new Promise(resolve => {
+          this.$http.get('http://localhost:3000/nodeData/getCameraNode?nodeId='+nodeId).then((result)=>{
+            resolve(result.data)
+          })
+        });
+      },
+      getlikeByNodeId(){
+        return new Promise(resolve => {
+          this.$http.get('http://localhost:3000/index/nodes').then((result)=>{
+            resolve(result.data)
+          })
+        });
       }
 
     }
@@ -395,10 +426,10 @@
   .trafficVideo-video-header {
     width: 100%;
     height: 30px;
-    /*position: absolute;*/
+    position: relative;
     left: 0;
     top: 0;
-    z-index: 99;
+    z-index: 3000;
     background: rgb(31, 31, 44);
     display: flex;
     align-items: center;

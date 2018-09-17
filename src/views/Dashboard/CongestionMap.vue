@@ -277,7 +277,7 @@
       addPloyLine() {
         for (let i = 0; i < this.allLinksDelay.length; i++) {
           let pois = this.allLinksDelay[i].link.link_nodes.map((node) => {
-            return new BMap.Point(node[0], node[1])
+            return new window.BMap.Point(node[0], node[1])
           });
           let polyline = new window.BMap.Polyline(pois, {
             enableEditing: false,//是否启用线编辑，默认为false
