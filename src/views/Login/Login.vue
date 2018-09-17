@@ -1,24 +1,24 @@
 <template>
   <div class="container-login">
     <div class="nav">
-      <img src="../image/1.png" class="logo">
+      <img src="../../../static/image/login/logo.png" class="logo">
       <span class="text-image">交通数据平台系统</span>
     </div>
   <div class="container">
     <div class="content">
       <div class="content-img">
-<img src="../image/1.png" class="login-logo">
+<img src="../../../static/image/login/logo.png" class="login-logo">
       </div>
       <div class="user">
         <div class="user-input">
-          <img src="../image/user.png" class="user-img">
+          <img src="../../../static/image/login/user.png" class="user-img">
           <input class="user-text" type="text"/>
         </div>
         <div class="user-name">用户名</div>
       </div>
       <div class="passward">
         <div class="passward-input">
-          <img src="../image/user.png" class="user-img">
+          <img src="../../../static/image/login/user.png" class="user-img">
           <input class="passward-text" type="password"/>
         </div>
         <div class="passward-name">密码</div>
@@ -77,7 +77,7 @@ import $ from 'jquery'
   .container-login {
     width: 100%;
     height: 1080px;
-    background-image: url("../image/2.png");
+    background-image: url("../../../static/image/login/bkg.png");
     background-size: 100% 1080px;
   }
   .nav {
