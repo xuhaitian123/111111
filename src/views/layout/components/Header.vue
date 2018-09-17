@@ -7,12 +7,27 @@
 
      </div>
     <div class="logo-nav">
-      <img class="logo-nav-img" src="/static/image/header/11.png">
-      <div>李警官</div>
+      <div class="logo-nav-action" @click="logout">
+        <img class="logo-nav-img" src="/static/image/header/11.png">
+        <div>李警官</div>
+      </div>
+
 
     </div>
   </div>
 </template>
+<script>
+  export  default {
+    data(){
+      return {}
+    },
+    methods:{
+      logout(){
+        this.$router.push('/login');
+      }
+    }
+  }
+</script>
 
 <style>
 
@@ -46,11 +61,16 @@
     color: #94949a
 
   }
+  .logo-nav-action{
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+  }
   .logo-nav{
     width: 400px;
     display: flex;
     justify-content: flex-end;
-    align-items: end;
+    align-items: center;
   }
   .logo-nav-img{
     width: 20px;

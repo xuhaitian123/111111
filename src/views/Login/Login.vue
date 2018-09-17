@@ -25,7 +25,7 @@
       </div>
       <div class="save_password">
         <div  class="save_password_el">
-          <input type="checkbox" class="square" @change="save_password" /><span style="color: #ffffff;font-size: 13px">保存密码</span>
+          <input type="checkbox"  class="square" @change="save_password" /><span style="color: #ffffff;font-size: 13px">保存密码</span>
         </div>
       </div>
       <button class="login-button" @click="login">登录</button>
@@ -35,32 +35,75 @@
     </div>
 </template>
 import $ from 'jquery'
+import { Message } from 'element-ui';
 <script>
   export default {
     name: "login",
     data() {
       return {
-        checked: 1
+        checked: false,
+        message:""
       }
     },
+    mounted:function () {
+      this.get_username()
+    },
     methods: {
+      get_username(){
+        this.checked =false
+        console.log(this.checked)
+        var username = window.localStorage.getItem("username")|| ""
+        $(".user-text").val(username)
+      },
       save_password() {
-        console.log($(".login-button").html())
+        if(this.checked ==true){
+          this.checked = false
+        }else {
+          this.checked =true
+        }
       },
       login(){
+        var self =this
         var username =$(".user-text").val();
         var password = $('.passward-text').val()
-        // $.ajax(){
-        //
-        // }
+        console.log(username)
+        $.ajax( {
+          url:'/',
+          data:{
+            Username:username,
+            Password:password,
+          },
+          type:'post',
+          dataType:'json',
+          success:function(data) {
+            if(self.checked == true){
+              console.log(self.checked)
+              window.localStorage.setItem("username",username)
+            }
+            self.$message({
+              message: '恭喜你,登陆成功',
+              type: 'success',
+              duration:2000
+            });
+              console.log("登录成功")
+              self.$router.push({path: '/'});
+          },
+          error : function(res) {
+            console.log("登录失败")
+            if(self.checked == true){
+              console.log(self.checked)
+              window.localStorage.setItem("username",username)
+            }
+            self.$message.error('用户名或密码错误');
+          }
+        });
         console.log(username+password)
-
       }
     }
   }
 </script>
 
-<style >
+<style  scoped>
   .container {
     height: 420px;
     width: 400px;
@@ -119,11 +162,11 @@ import $ from 'jquery'
     border:none;
     display: block;
     height: 20px;
-    margin-left: 10px;
     background-color:#353D4F;
-    width: 280px;
-    outline:none;
-    color: #ffffff;
+    width: 240px;
+      outline:none;
+    margin-left: 20px;
+    color: #ffffff !important;
     font-size: 20px;
   }
 
@@ -173,5 +216,11 @@ import $ from 'jquery'
     background-color: #000;
     border: 1px solid white;
     margin: 0;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #353D4F inset;
+    -webkit-text-fill-color: #ffffff;
+    outline: 0 !important;
+    border:none !important;
   }
 </style>
