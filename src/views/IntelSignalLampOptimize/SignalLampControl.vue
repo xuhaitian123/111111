@@ -99,9 +99,9 @@
                   <div class="use-text-left">启用智能控制</div>
                 </div>
               </div>
-              <div id="day-chart-line">
-
+              <div id="day_chart_line">
               </div>
+              <div class="chart-title">周一</div>
             </div>
           </div>
         </el-card>
@@ -202,7 +202,7 @@
             },
             grid: {
               left: '-0.1%',
-              right: '0%',
+              right: '5%',
               bottom: '0%',
               top:'0%',
               containLabel: false
@@ -218,7 +218,12 @@
               type: 'category', //纵向柱状图，若需要为横向，则此处值为'value'， 下面 yAxis 的type值为'category'
               splitLine:{show: false},
               splitArea : {show : false},//保留网格区域
-              data: axisLabel
+              data: axisLabel,
+              axisLine: {
+                lineStyle: {
+                  width:'0'//坐标线的宽度
+                }
+              },
             }],
             label: {
               normal: { //显示bar数据
@@ -232,6 +237,85 @@
           echart.setOption(option);
         },
         showDayLineChart:function () {
+          this.buildDayData();
+        },
+        buildDayData:function () {
+          var legendData = ['', ''];
+          var bgColorList = ['#ba4c48','#62ac82'];
+          var axisLabel = ['00:00', '06:00', '12:00', '18:00', '24:00'];
+          var seriesValue = [];
+          for (var i = 0; i < legendData.length; i++) {
+            var arrData = [];
+            var seriesDataVal = null;
+            for (var j = 0; j < axisLabel.length; j++) {
+              arrData.push(Math.floor(Math.random() * 100));
+            }
+            seriesDataVal = {
+              type: 'line',
+              showAllSymbol: true,
+              itemStyle: {
+                normal: {
+                  color: bgColorList[i],
+                  backgroundColor:bgColorList[i],
+                  lineStyle: {
+                    color: bgColorList[i]
+                  }
+                }
+              },
+              data:arrData
+            };
+            seriesValue.push(seriesDataVal);
+          }
+          this.drawDayLine(legendData, axisLabel, seriesValue);
+        },
+        drawDayLine:function(legendData, axisLabel, seriesValue) {
+          var myLineChart = echarts.init(document.getElementById('day_chart_line'));
+          var option = {
+            tooltip: {
+              trigger: 'axis',
+              type: 'line'
+            },
+            legend: {
+              data: legendData,
+              y: 'bottom',//图例说明文字设置
+            },
+            grid: {
+              left: '0%',
+              right: '5%',
+              bottom: '0%',
+              top:'5%',
+              containLabel: true
+            },
+            xAxis: [{
+              type: 'category',
+              boundaryGap:false,
+              data:axisLabel,
+              axisLabel: {
+                color: '#c9c9cc' //刻度线标签颜色
+              },
+              axisLine: {
+                lineStyle: {
+                  type: 'solid',
+                  color: '#c9c9cc',//左边线的颜色
+                  width:'1'//坐标线的宽度
+                }
+              },
+            }],
+            yAxis: [{
+              type: 'value',
+              axisLabel: {
+                color: '#c9c9cc' //刻度线标签颜色
+              },
+              axisLine: {
+                lineStyle: {
+                  width:'0'//坐标线的宽度
+                }
+              },
+            }],
+            series: seriesValue
+          };
+
+          myLineChart.setOption(option);
 
         }
       }
@@ -434,9 +518,16 @@
     height: 100%;
     margin-left: 20px;
   }
-  #day-chart-line{
-    width: 260px;
+  #day_chart_line{
+    width: 300px;
     height: 150px;
+    margin: 36px auto;
+  }
+  .chart-title{
+    width: 45px;
+    height: 20px;
+    margin: 0 auto;
+    color: #c9c9cc;
   }
 
  .contrast-line-chart{
