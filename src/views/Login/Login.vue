@@ -25,7 +25,7 @@
       </div>
       <div class="save_password">
         <div  class="save_password_el">
-          <input type="checkbox" class="square" @change="save_password" /><span style="color: #ffffff;font-size: 13px">保存密码</span>
+          <input type="checkbox"  class="square" @change="save_password" /><span style="color: #ffffff;font-size: 13px">保存密码</span>
         </div>
       </div>
       <button class="login-button" @click="login">登录</button>
@@ -40,21 +40,52 @@ import $ from 'jquery'
     name: "login",
     data() {
       return {
-        checked: 1
+        checked: false
       }
     },
+    mounted:function () {
+      this.get_username()
+    },
     methods: {
+      get_username(){
+        this.checked =false
+        console.log(this.checked)
+        var username = window.localStorage.getItem("username")|| ""
+        $(".user-text").val(username)
+      },
       save_password() {
-        console.log($(".login-button").html())
+        if(this.checked ==true){
+          this.checked = false
+        }else {
+          this.checked =true
+        }
       },
       login(){
+        var self =this
         var username =$(".user-text").val();
         var password = $('.passward-text').val()
-        // $.ajax(){
-        //
-        // }
+        console.log(username)
+        $.ajax( {
+          url:'/',
+          data:{
+            Username:username,
+            Password:password,
+          },
+          type:'post',
+          dataType:'json',
+          success:function(data) {
+            if(self.checked = true){
+              console.log(self.checked)
+              window.localStorage.setItem("username",username)
+            }
+              console.log("登录成功")
+              self.$router.push({path: '/'});
+          },
+          error : function(res) {
+            console.log("登录失败")
+          }
+        });
         console.log(username+password)
-
       }
     }
   }
@@ -119,11 +150,11 @@ import $ from 'jquery'
     border:none;
     display: block;
     height: 20px;
-    margin-left: 10px;
     background-color:#353D4F;
-    width: 280px;
+    width: 260px;
     outline:none;
-    color: #ffffff;
+    margin-left: 20px;
+    color: #ffffff !important;
     font-size: 20px;
   }
 
