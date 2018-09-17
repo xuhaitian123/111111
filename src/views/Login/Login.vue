@@ -35,12 +35,14 @@
     </div>
 </template>
 import $ from 'jquery'
+import { Message } from 'element-ui';
 <script>
   export default {
     name: "login",
     data() {
       return {
-        checked: false
+        checked: false,
+        message:""
       }
     },
     mounted:function () {
@@ -74,15 +76,25 @@ import $ from 'jquery'
           type:'post',
           dataType:'json',
           success:function(data) {
-            if(self.checked = true){
+            if(self.checked == true){
               console.log(self.checked)
               window.localStorage.setItem("username",username)
             }
+            self.$message({
+              message: '恭喜你,登陆成功',
+              type: 'success',
+              duration:2000
+            });
               console.log("登录成功")
               self.$router.push({path: '/'});
           },
           error : function(res) {
             console.log("登录失败")
+            if(self.checked == true){
+              console.log(self.checked)
+              window.localStorage.setItem("username",username)
+            }
+            self.$message.error('用户名或密码错误');
           }
         });
         console.log(username+password)
@@ -91,7 +103,7 @@ import $ from 'jquery'
   }
 </script>
 
-<style >
+<style  scoped>
   .container {
     height: 420px;
     width: 400px;
@@ -151,8 +163,8 @@ import $ from 'jquery'
     display: block;
     height: 20px;
     background-color:#353D4F;
-    width: 260px;
-    outline:none;
+    width: 240px;
+      outline:none;
     margin-left: 20px;
     color: #ffffff !important;
     font-size: 20px;
@@ -204,5 +216,11 @@ import $ from 'jquery'
     background-color: #000;
     border: 1px solid white;
     margin: 0;
+  }
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #353D4F inset;
+    -webkit-text-fill-color: #ffffff;
+    outline: 0 !important;
+    border:none !important;
   }
 </style>
