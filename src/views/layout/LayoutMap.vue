@@ -40,7 +40,6 @@
     overflow: auto;
     border: 1px solid #171821;
     background: #171821;
-    padding-bottom: 200px;
     box-sizing: border-box;
     /*>>>>>>> b60977901cf5ea393febf42f78edb4226d0209e2*/
   }
