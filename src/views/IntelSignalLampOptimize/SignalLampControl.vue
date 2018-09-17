@@ -99,6 +99,9 @@
                   <div class="use-text-left">启用智能控制</div>
                 </div>
               </div>
+              <div id="day-chart-line">
+
+              </div>
             </div>
           </div>
         </el-card>
@@ -257,9 +260,10 @@
     background: rgba(41,41,54,0.7);
     position: absolute;
     width: 530px;
-    height: 875px;
+    height: 960px;
     top: 10px;
     right: 15px;
+    bottom: 10px;
   }
   .road-select{
     margin: 15px 0 34px 57px;
@@ -425,6 +429,10 @@
     width: 340px;
     height: 100%;
     margin-left: 20px;
+  }
+  #day-chart-line{
+    width: 260px;
+    height: 150px;
   }
 
  .contrast-line-chart{
