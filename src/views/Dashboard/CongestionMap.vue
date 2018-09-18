@@ -246,7 +246,7 @@
             this.addPloyLine();
           });
           this.getAllNodeD12s(() => {
-            // this.addMarkerAndLabel();
+            this.addMarkerAndLabel();
           });
         }
       },
@@ -254,7 +254,7 @@
         for (let i = 0; i < this.allNodeDelay.length; i++) {
           console.log(this.allNodeDelay[i])
           let pt = new window.BMap.Point(this.allNodeDelay[i].node.long, this.allNodeDelay[i].node.lat);
-          let opts = {position: pt, offset: new BMap.Size(-70, -70)};
+          let opts = {position: pt, offset: new BMap.Size(-130, -120)};
           let label = new BMap.Label(this.allNodeDelay[i].node.node_name + "<br>交叉口延误时间 " + this.allNodeDelay[i].value.toFixed(0) + "s", opts);  // 创建文本标注对象
           label.setStyle({
             color: "#fff",
@@ -310,13 +310,17 @@
       },
       getNodeDelayImg(num) {
         if (num < 30) {
-          return "/static/50.png"
+          // return "/static/50.png"
+          return "/static/image/map/green.jpg"
         } else if (num > 30 && num < 50) {
-          return "/static/53.png"
+          // return "/static/53.png"
+          return "/static/image/map/yellow.jpg"
         } else if (num > 50 && num < 60) {
-          return "/static/52.png"
+          // return "/static/52.png"
+          return "/static/image/map/orange.jpg"
         } else if (num > 60) {
-          return "/static/51.png"
+          // return "/static/51.png"
+          return "/static/image/map/red.jpg"
         }
       },
     }

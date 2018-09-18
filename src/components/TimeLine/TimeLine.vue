@@ -204,6 +204,7 @@
         time.setMinutes(minuth)
         time.setSeconds(second)
         time.setMilliseconds(milliseconds * 100)
+
         this.$emit('newTime', time.getTime())
       },
 
