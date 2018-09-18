@@ -7,8 +7,6 @@
           <div class="Dashboard_clearfix">
             <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPageToMain()"></i>拥堵地图</span>
             <div class="nav-right-style">
-              <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
-              <i class="iconfont icon-shuxian"></i>
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
@@ -18,15 +16,6 @@
             <div class="right-container">
               <div class="road-select">
                 <span>路口</span><!--el-icon-caret-right-->
-                <!--<select class="select-road-style" value="珠海路-南京路"  v-model="road_value">-->
-                  <!--<option-->
-                    <!--v-for="item in load_options"-->
-                    <!--:key="item.value"-->
-                    <!--:label="item.label"-->
-                    <!--:value="item.value">-->
-                  <!--</option>-->
-                <!--</select>-->
-
                 <el-select class="select-road-style" v-model="road_value" placeholder="请选择">
                   <el-option
                     v-for="item in load_options"
@@ -43,7 +32,7 @@
                   <div class="use-intel-score-text">未启用智能控制评分</div>
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number red-text-color">60</div>
+                      <div class="intel-score-number red-text-color">{{unuse_intel_score}}</div>
                     </div>
                   </div>
                 </div>
@@ -51,7 +40,7 @@
                   <div class="use-intel-score-text text-color">启用智能控制评分</div>
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number green-text-color">90</div>
+                      <div class="intel-score-number green-text-color">{{use_intel_score}}</div>
                     </div>
                   </div>
                 </div>
@@ -122,8 +111,10 @@
       },
       data() {
         return {
-          road_value:"珠-南京路",
-          load_options:[]
+          road_value:"珠海路-南京路",
+          load_options:[],
+          unuse_intel_score:0,
+          use_intel_score:0
         }
       },
       mounted: function () {
@@ -138,6 +129,7 @@
         closeScoreInfo: function () {
           console.log("关闭评分页面");
         },
+        //每周的数据展示柱状图
         showEchartColumn:function () {
           /*ECharts图表*/
           this.buildWeekData()
@@ -236,6 +228,7 @@
 
           echart.setOption(option);
         },
+        //每天的数据展示柱状图
         showDayLineChart:function () {
           this.buildDayData();
         },
@@ -256,7 +249,6 @@
               itemStyle: {
                 normal: {
                   color: bgColorList[i],
-                  backgroundColor:bgColorList[i],
                   lineStyle: {
                     color: bgColorList[i]
                   }
@@ -332,6 +324,9 @@
     line-height: 30px;
     text-align: center;
   }
+  .Signal_lamp_lineRow{
+    margin: 0 5px !important;
+  }
   .signal-lamp-container
   {
     height: 980px;
@@ -356,22 +351,8 @@
   .road-select{
     margin: 15px 0 34px 57px;
   }
-  select {
-    /*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
-    border: solid 1px #000;
-
-    /*很关键：将默认的select选择框样式清除*/
-    appearance:none;
-    -moz-appearance:none;
-    -webkit-appearance:none;
-
-    /*在选择框的最右侧中间显示小箭头图片*/
-    background: url("https://raw.githubusercontent.com/ourjs/static/gh-pages/2015/arrow.png") no-repeat scroll right center transparent;
-    /*为下拉小箭头留出一点位置，避免被文字覆盖*/
-    padding-right: 14px;
-  }
   .select-road-style{
-    width: 130px;
+    width: 140px;
     height: 22px !important;
     line-height: 22px;
     font-size: 18px;
