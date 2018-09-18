@@ -100,7 +100,10 @@
               </div>
 
               <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
-                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">图例</div>
+                <div
+                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+                  图例
+                </div>
 
                 <ul class="CongestionMap_Legend">
                   <li>
@@ -198,6 +201,7 @@
         this.getCongestionPercent();
         this.getRoadNetCongestionScore();
         this.getAllNodeCongestionAlarm();
+        this.getAllNode();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -229,6 +233,40 @@
             cb();
           })
       },
+
+      getAllNode() { //所有交叉口
+        this.$http.get('/nodeData/getNodes')
+          .then((response) => {
+            console.log(response.data)
+            let num = 0;
+            this.getAllNodeDelay(response.data, num);
+          })
+      },
+
+      getAllNodeDelay(response, num) {
+        let allData = [];
+        console.log(response[num].id)
+        this.getNodeDataD12ByNodeId(response[num].id).then((result) => {
+          allData.push(result);
+
+          if (num === response.length - 1) {
+            console.log(allData)
+          } else {
+            num += 1;
+            this.getAllNodeDelay(response, num);
+          }
+        })
+      },
+
+      getNodeDataD12ByNodeId(id) {  //交叉口延误数据
+        return new Promise((resolve, reject) => {
+          this.$http.get('/nodeData/getNodeDataD12ByNodeId?nodeId=' + id + '&current=true')
+            .then((response) => {
+              console.log(response)
+              resolve(response.data);
+            })
+        })
+      },
       getAllNodeD12s(cb) {  //所有交叉口延误数据
         this.$http.get('/nodeData/getAllNodeD12s?current=true')
           .then((response) => {
@@ -246,7 +284,7 @@
             this.addPloyLine();
           });
           this.getAllNodeD12s(() => {
-            // this.addMarkerAndLabel();
+            this.addMarkerAndLabel();
           });
         }
       },
@@ -267,7 +305,7 @@
             lineHeight: "20px",
           });
 
-          let myIcon = new window.BMap.Icon(this.getNodeDelayImg(this.allNodeDelay[i].value), new window.BMap.Size(168, 167));
+          let myIcon = new window.BMap.Icon(this.getNodeDelayImg(this.allNodeDelay[i].value), new window.BMap.Size(52, 51));
           let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
 
           window.congestionMap.addOverlay(label);
@@ -286,11 +324,11 @@
             strokeOpacity: 0.8,//折线的透明度，取值范围0 - 1
             strokeColor: this.getRoadAvgDelayColor(this.allLinksDelay[i].value) //折线颜色
           });
-          polyline.id= this.allLinksDelay[i].link_id;
+          polyline.id = this.allLinksDelay[i].link_id;
           console.log(this.allLinksDelay[i])
-          polyline.addEventListener('click',  (pt)=> {
+          polyline.addEventListener('click', (pt) => {
             console.log(pt.currentTarget.id)
-            this.jumpPage('/main/RoadSectionMap/'+pt.currentTarget.id);
+            this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id);
           });
           window.congestionMap.addOverlay(polyline);          //增加折线
         }
@@ -310,13 +348,17 @@
       },
       getNodeDelayImg(num) {
         if (num < 30) {
-          return "/static/50.png"
+          // return "/static/50.png"
+          return "/static/image/map/green.jpg"
         } else if (num > 30 && num < 50) {
-          return "/static/53.png"
+          // return "/static/53.png"
+          return "/static/image/map/yellow.jpg"
         } else if (num > 50 && num < 60) {
-          return "/static/52.png"
+          // return "/static/52.png"
+          return "/static/image/map/orange.jpg"
         } else if (num > 60) {
-          return "/static/51.png"
+          // return "/static/51.png"
+          return "/static/image/map/red.jpg"
         }
       },
     }
@@ -337,6 +379,7 @@
     line-height: 30px;
     margin-left: 15px;
   }
+
   .CongestionMap_Legend i {
     margin-right: 5px;
   }
