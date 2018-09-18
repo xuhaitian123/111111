@@ -113,7 +113,7 @@
                 <el-col :span="8">
                   <div class="">
                     <div class="" style="width: 50%;float: left;color: #c9c9cc;">
-                      <div> > 150 100 50 < </div>
+                      <div> > 150 100 50 <</div>
                       <div class="Road_chart_line">| | | |</div>
 
                       <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
@@ -126,7 +126,7 @@
                          :style="{height: 85 * linksInfo[0].length+'px'}"></div>
 
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
-                      <div> < 150 100 50 > </div>
+                      <div> < 50 100 150 ></div>
                       <div class="Road_chart_line">| | | | |</div>
 
                       <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
@@ -153,8 +153,9 @@
                       <div class="Road_chart_line">| | | | |</div>
 
                       <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
-                        <div :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
-                             style="height: 65px;float: right;"></div>
+                        <div
+                          :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
+                          style="height: 65px;float: right;"></div>
                       </div>
 
                     </div>
@@ -166,8 +167,9 @@
                       <div class="Road_chart_line">| | | |</div>
 
                       <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
-                        <div :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
-                             style="width: 30px;height: 65px;"></div>
+                        <div
+                          :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
+                          style="width: 30px;height: 65px;"></div>
                       </div>
 
                     </div>
@@ -311,7 +313,6 @@
       getLinkDelayDoubleDirection() {  //路段双向延误(双向)
         this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&current=true')
           .then((response) => {
-            console.log(response)
             this.linkData = response.data
           })
       },
@@ -330,25 +331,41 @@
             this.allLinkId = response.data;
             let links = Object.values(response.data.links);
 
-            links.forEach((direction) => {
-              this.getLinkInfo(direction).then((data)=>{
-                this.linksInfo = links;
-              })
-            });
+
+            this.getLinksData(links, 0);
+
           })
       },
-      getLinkInfo(direction){
-        return new Promise((resolve, reject)=>{
-          direction.forEach((link) => {
-            this.getNodeDataD3ByLinkId(link.link_id, (result) => {
-              link.flow = result;
-              this.getNodeDataD13ByLinkId(link.link_id, (result) => {
-                link.lineLength = result;
-                resolve(direction);
-              })
-            });
-          })
+      getLinksData(links, num) {
+        this.getLinkFlowAndLength(links[num]).then((data) => {
+          if (num === links.length - 1) {
+            this.linksInfo = links;
+          } else {
+            num += 1;
+            this.getLinksData(links, num)
+          }
+
         })
+      },
+      getLinkFlowAndLength(direction) {
+        return new Promise((resolve, reject) => {
+          let num = 0;
+          this.getLink(direction, num, resolve);
+        })
+      },
+      getLink(direction, i, resolve) {
+        this.getNodeDataD3ByLinkId(direction[i].link_id, (result) => {
+          direction[i].flow = result;
+          this.getNodeDataD13ByLinkId(direction[i].link_id, (result) => {
+            direction[i].lineLength = result;
+            if (i === direction.length - 1) {
+              resolve(direction);
+            } else {
+              i += 1;
+              this.getLink(direction, i, resolve);
+            }
+          })
+        });
       },
       getNodeDataD13ByLinkId(linkId, cb) {   //获取进道口排队长度(双向)
         this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&current=true')
