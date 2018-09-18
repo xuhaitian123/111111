@@ -311,16 +311,16 @@
       getNodeDelayImg(num) {
         if (num < 30) {
           // return "/static/50.png"
-          return "/static/green.jpg"
+          return "/static/image/map/green.jpg"
         } else if (num > 30 && num < 50) {
           // return "/static/53.png"
-          return "/static/yellow.jpg"
+          return "/static/image/map/yellow.jpg"
         } else if (num > 50 && num < 60) {
           // return "/static/52.png"
-          return "/static/orange.jpg"
+          return "/static/image/map/orange.jpg"
         } else if (num > 60) {
           // return "/static/51.png"
-          return "/static/red.jpg"
+          return "/static/image/map/red.jpg"
         }
       },
     }
