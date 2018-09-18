@@ -22,19 +22,12 @@
         </div>
         <div class="map-area-container-header-title">
           <div class="Country">{{Country}} </div>
-          <div class="province_isShow">
           <img class="image_next" src="/static/map/right.png">
-          <div class="province">{{Province}}</div>
-          </div>
-          <div class="city_isShow">
+          <div class="province">{{map_info.Province}}</div>
           <img class="image_next" src="/static/map/right.png">
-          <div class="city">{{city}}</div>
-        </div>
-          <div class="county_isShow">
-
-          <img class="image_next" src="/static/map/right.png">
-          <div class="county">{{county}}</div>
-        </div>
+          <div class="city">{{map_info.city}}</div>
+          <img class="image_next_county" src="/static/map/right.png">
+          <div class="county">{{map_info.county}}</div>
         </div>
 
       </div>
@@ -42,31 +35,31 @@
         <div class="lift">
           <div class="people-squre">
             <div class="people_countent" >总人口</div>
-            <div class="people-data" ><span class="count-size">{{count}}</span><span class="unit">人</span></div>
+            <div class="people-data" ><span class="count-size">{{map_info.people_count}}</span><span class="unit">人</span></div>
           </div>
           <div class="data">
             <div class="squre" >总面积</div>
-            <div class="squre-data" ><span class="squre-size">{{squre}}</span><span class="unit">平方千米</span></div>
+            <div class="squre-data" ><span class="squre-size">{{map_info.squre}}</span><span class="unit">平方千米</span></div>
           </div>
         </div>
         <div class="countent">
           <div class="count">
             <div class="car-count" >汽车保有量</div>
-            <div class="car-data" ><span class="count-size">{{count}}</span><span class="unit">辆</span></div>
+            <div class="car-data" ><span class="count-size">{{map_info.car_count}}</span><span class="unit">辆</span></div>
           </div>
           <div class="monitor">
             <div class="monitor-count" >监控数量</div>
-            <div class=" monitor-data"><span class="count-size">{{squre}}</span><span class="unit">个</span></div>
+            <div class=" monitor-data"><span class="count-size">{{map_info.monitor_count}}</span><span class="unit">个</span></div>
           </div>
         </div>
         <div class="license-score">
           <div class="license">
             <div class="license-number" >车牌代码</div>
-            <div class="license-data count-size">{{count}}</div>
+            <div class="license-data count-size">{{map_info.license_number}}</div>
           </div>
           <div class="score">
             <div class="all-score" >总体评分</div>
-            <div class="score-data" ><span class="score-size">{{squre}}</span><span class="unit">分</span></div>
+            <div class="score-data" ><span class="score-size">{{map_info.all_score}}</span><span class="unit">分</span></div>
           </div>
       </div>
     </div>
@@ -140,6 +133,11 @@
   .image_next{
     width: 14px;
     height: 16px;
+  }
+  .image_next_county{
+    width: 14px;
+    height: 16px;
+    display: none;
   }
   .container{
     margin: auto;
@@ -216,12 +214,14 @@
 .county{
   padding: 0 10px;
   line-height: 15px;
+  display: none;
 }
 .province_isShow,
 .city_isShow,
 .county_isShow{
   display: flex;
   align-items: center;
+  /*display: none;*/
 }
   /*.next,*/
   /*.pre,*/
@@ -312,11 +312,17 @@
       return {
         marginTop: 0,
         Country:"中国",
-        Province:"江苏省",
-        city:"淮安市",
-        county:"淮阴区",
-        count:44444,
-        squre:1.007
+        map_info:{
+          Province:"江苏省",
+          city:"淮安市",
+          county:"淮阴区",
+          people_count:50000,
+          car_count:25555,
+          monitor_count:"100",
+          license_number:"京Ａ88888",
+          all_score:"100",
+          squre:1.007
+        }
       }
     },
     methods: {
@@ -331,9 +337,22 @@
         })
       },
       test2(){
+        var self = this
         $('.map-contaienr1').animate({width:'200%', height:'200%', left:'-50%','top':'-50%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr1').animate({opacity: '0'},300, function(){
-
+            $(".map-area-container,.image_next_county,.county").show()
+            var map_info = {
+              Province:"河南省",
+                city:"河南市",
+                county:"河南区",
+                people_count:1000,
+                car_count:1452,
+                monitor_count:"2529",
+                license_number:"京A00001",
+                all_score:"88",
+                squre:58.0002
+            }
+            self.map_info = map_info
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr2').animate({opacity: '1'},1000)
