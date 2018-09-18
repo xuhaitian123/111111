@@ -17,7 +17,7 @@
     </div>
     <div class="map-area-container">
       <div class="map-area-container-header">
-        <div class="map-area-container-header-action">
+        <div class="map-area-container-header-action" v-on:click="back">
           <img  src="/static/map/left.png"/>
         </div>
         <div class="map-area-container-header-title">
@@ -61,8 +61,8 @@
             <div class="all-score" >总体评分</div>
             <div class="score-data" ><span class="score-size">{{map_info.all_score}}</span><span class="unit">分</span></div>
           </div>
+        </div>
       </div>
-    </div>
     </div>
   </div>
 
@@ -196,44 +196,44 @@
     position: absolute;
     /*display: none;*/
   }
-.Country{
-  width: 40px;
-  padding-left: 12px;
-  border-left: 1px solid #94949a;
-  line-height: 15px;
-}
-.province{
-  padding: 0 10px;
-  line-height: 15px;
+  .Country{
+    width: 40px;
+    padding-left: 12px;
+    border-left: 1px solid #94949a;
+    line-height: 15px;
+  }
+  .province{
+    padding: 0 10px;
+    line-height: 15px;
 
-}
-.city{
-  padding: 0 10px;
-  line-height: 15px;
-}
-.county{
-  padding: 0 10px;
-  line-height: 15px;
-  display: none;
-}
-.province_isShow,
-.city_isShow,
-.county_isShow{
-  display: flex;
-  align-items: center;
-  /*display: none;*/
-}
+  }
+  .city{
+    padding: 0 10px;
+    line-height: 15px;
+  }
+  .county{
+    padding: 0 10px;
+    line-height: 15px;
+    display: none;
+  }
+  .province_isShow,
+  .city_isShow,
+  .county_isShow{
+    display: flex;
+    align-items: center;
+    /*display: none;*/
+  }
   /*.next,*/
   /*.pre,*/
   /*.current{*/
-    /*position: absolute;*/
-    /*left: 0;*/
-    /*top: 0;*/
+  /*position: absolute;*/
+  /*left: 0;*/
+  /*top: 0;*/
   /*}*/
   /*.next,*/
   /*.pre{*/
-    /*width: 0;*/
-    /*opacity: 0;*/
+  /*width: 0;*/
+  /*opacity: 0;*/
   /*}*/
   .current{
     width: 100%;
@@ -326,11 +326,49 @@
       }
     },
     methods: {
+      county_map_info_handler(){
+        var county ={
+          Province:"江苏省",
+          city:"淮安市",
+          county:"淮阴区",
+          people_count:50000,
+          car_count:25555,
+          monitor_count:"100",
+          license_number:"京Ａ99999",
+          all_score:"100",
+          squre:1.007
+        }
+        return county
+      },
+      city_map_info_handler(){
+        var city ={
+          Province:"江苏省",
+          city:"淮安市",
+          county:"淮阴区",
+          people_count:669985,
+          car_count:3333333,
+          monitor_count:"45878",
+          license_number:"京Ａ77777",
+          all_score:"95",
+          squre:1.007
+        }
+        return city
+      },
+
+      back(){
+        if($(".county").is(':hidden')){
+          this.test4()
+        }else {
+          this.test3()
+        }
+      },
       test1(){
+        var self = this
         $('.map-contaienr').animate({width:'500%', height:'500%', left:'-340%','top':'-240%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr').animate({opacity: '0'},500,function(){
-              $(".map-area-container").show()
-              $('.map-contaienr').animate({width:'100%', height:'100%', left:'0','top':'0'})
+            $(".map-area-container").show()
+            self.map_info = self.city_map_info_handler()
+            $('.map-contaienr').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr1').animate({opacity: '1'},500)
           // this.test2()
@@ -341,18 +379,19 @@
         $('.map-contaienr1').animate({width:'200%', height:'200%', left:'-50%','top':'-50%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr1').animate({opacity: '0'},300, function(){
             $(".map-area-container,.image_next_county,.county").show()
-            var map_info = {
-              Province:"河南省",
-                city:"河南市",
-                county:"河南区",
-                people_count:1000,
-                car_count:1452,
-                monitor_count:"2529",
-                license_number:"京A00001",
-                all_score:"88",
-                squre:58.0002
-            }
-            self.map_info = map_info
+            // var map_info = {
+            //   Province:"河南省",
+            //     city:"河南市",
+            //     county:"河南区",
+            //     people_count:1000,
+            //     car_count:1452,
+            //     monitor_count:"2529",
+            //     license_number:"京A00001",
+            //     all_score:"88",
+            //     squre:58.0002
+            // }
+            // self.map_info = map_info
+            self.map_info = self.county_map_info_handler()
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr2').animate({opacity: '1'},1000)
@@ -361,8 +400,12 @@
       },
 
       test3(){
+        var self = this
         $('.map-contaienr2').animate({width:'50%', height:'50%', left:'25%','top':'25%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr2').animate({opacity: '0'},500,function(){
+            $(".map-area-container").show()
+            $(".county,.image_next_county").hide()
+            self.map_info = self.city_map_info_handler()
             $('.map-contaienr2').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr1').animate({opacity: '1'},500)
@@ -372,6 +415,7 @@
       test4(){
         $('.map-contaienr1').animate({width:'20%', height:'20%', left:'68%','top':'52%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr1').animate({opacity: '0'},500,function(){
+            $(".map-area-container").hide()
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr').animate({opacity: '1'},500)
@@ -381,6 +425,7 @@
       home(){
         $('.map-contaienr2').animate({width:'10%', height:'10%', left:'73%','top':'58%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr2').animate({opacity: '0'},500,function(){
+            $(".map-area-container").hide()
             $('.map-contaienr2').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr').animate({opacity: '1'},500)
@@ -391,7 +436,7 @@
         this.$router.push('/main/dashboard')
       }
 
-  },
+    },
     mounted() {
 
       // setTimeout(this.test1, 3000)
