@@ -62,9 +62,13 @@
             <div class="score-data" ><span class="score-size">{{map_info.all_score}}</span><span class="unit">分</span></div>
           </div>
       </div>
+      </div>
+      <div class="toMianPage_bag">
+      <img  class="toMianPage" src="../../../static/image/map/toMianPage.png" v-on:click="enter"/>
+      </div>
     </div>
     </div>
-  </div>
+
 
 
 </template>
@@ -110,6 +114,14 @@
     left: 30px;
     top: 30px;
     background: rgb(56,58,71);
+    display: none;
+  }
+  .toMianPage_bag{
+    position: absolute;
+    width: 340px;
+    height: 60px;
+    left: 0;
+    top: 330px;
     display: none;
   }
   .map-area-container-header{
@@ -243,6 +255,7 @@
     padding: 16px 20px 20px 20px;
     height: 244px;
   }
+
   .lift{
     border-bottom: 1px solid #94949a;
     height: 74px;
@@ -301,6 +314,10 @@
     margin-left: 5px;
     display: block;
   }
+  .toMianPage{
+    height: 60px;
+    width: 340px;
+  }
 </style>
 <script>
 
@@ -326,6 +343,7 @@
       }
     },
     methods: {
+
       test1(){
         $('.map-contaienr').animate({width:'500%', height:'500%', left:'-340%','top':'-240%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr').animate({opacity: '0'},500,function(){
@@ -353,6 +371,7 @@
                 squre:58.0002
             }
             self.map_info = map_info
+            $('.toMianPage_bag').show()
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr2').animate({opacity: '1'},1000)
