@@ -4,8 +4,8 @@
     <div class="trafficVideo-container-header">
 
     </div>
-    <div class="trafficVideo-container" >
-      <div class="trafficVideo-container-left"  v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <div class="trafficVideo-container">
+      <div class="trafficVideo-container-left" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="trafficVideo-video-header">
           <div class="trafficVideo-video-header-left font16">人民路-南京路监控视频</div>
           <div class="trafficVideo-video-header-right">
@@ -14,14 +14,15 @@
           </div>
 
         </div>
-        <div class="trafficVideo" id="trafficVideo_origin">
-        </div>
-        <div class="trafficVideo" id="trafficVideo_car">
-        </div>
-        <div class="trafficVideo" id="trafficVideo_bus">
-        </div>
-        <div class="trafficVideo" id="trafficVideo_bike">
-        </div>
+        <!--<canvas width="1080" height="680" id="mycanvas"></canvas>-->
+        <canvas class="trafficVideo"  width="1080" height="680"  id="trafficVideo_origin">
+        </canvas>
+        <canvas class="trafficVideo" width="1080" height="680"  id="trafficVideo_car">
+        </canvas>
+        <canvas class="trafficVideo" width="1080" height="680"  id="trafficVideo_bus">
+        </canvas>
+        <canvas class="trafficVideo" width="1080" height="680"  id="trafficVideo_bike">
+        </canvas>
       </div>
       <div class="trafficVideo-container-right">
 
@@ -66,8 +67,6 @@
             </div>
 
 
-
-
           </div>
 
         </div>
@@ -91,39 +90,63 @@
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
                 机动车
-              <img  @click="countNumber('car')" v-if="numberOfCarModal.numberOfModal.car.status" class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
-                <img @click="countNumber('car')" v-if="!numberOfCarModal.numberOfModal.car.status" class="trafficVideo-action-img" src="/static/image/trafficVideo/26.png">
+                <img @click="countNumber('car')" v-if="numberOfCarModal.numberOfModal.car.status"
+                     class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
+                <img @click="countNumber('car')" v-if="!numberOfCarModal.numberOfModal.car.status"
+                     class="trafficVideo-action-img" src="/static/image/trafficVideo/26.png">
               </div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.car.status ? numberOfCarModal.numberOfModal.car.left: '-'}}</div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.car.status ? numberOfCarModal.numberOfModal.car.straight: '-'}}</div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.car.status ? numberOfCarModal.numberOfModal.car.right: '-'}}</div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.car.status ?
+                numberOfCarModal.numberOfModal.car.left: '-'}}
+              </div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.car.status ?
+                numberOfCarModal.numberOfModal.car.straight: '-'}}
+              </div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.car.status ?
+                numberOfCarModal.numberOfModal.car.right: '-'}}
+              </div>
 
             </div>
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
                 非机动车
-                <img  @click="countNumber('bus')" v-if="numberOfCarModal.numberOfModal.bus.status" class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
-                <img @click="countNumber('bus')" v-if="!numberOfCarModal.numberOfModal.bus.status" class="trafficVideo-action-img" src="/static/image/trafficVideo/26.png">
+                <img @click="countNumber('bus')" v-if="numberOfCarModal.numberOfModal.bus.status"
+                     class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
+                <img @click="countNumber('bus')" v-if="!numberOfCarModal.numberOfModal.bus.status"
+                     class="trafficVideo-action-img" src="/static/image/trafficVideo/26.png">
 
               </div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bus.status ? numberOfCarModal.numberOfModal.bus.left: '-'}}</div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bus.status ? numberOfCarModal.numberOfModal.bus.straight: '-'}}</div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bus.status ? numberOfCarModal.numberOfModal.bus.right: '-'}}</div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bus.status ?
+                numberOfCarModal.numberOfModal.bus.left: '-'}}
+              </div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bus.status ?
+                numberOfCarModal.numberOfModal.bus.straight: '-'}}
+              </div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bus.status ?
+                numberOfCarModal.numberOfModal.bus.right: '-'}}
+              </div>
 
             </div>
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
                 行人
-                <img  @click="countNumber('bike')" v-if="numberOfCarModal.numberOfModal.bike.status" class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
-                <img @click="countNumber('bike')" v-if="!numberOfCarModal.numberOfModal.bike.status" class="trafficVideo-action-img" src="/static/image/trafficVideo/26.png">
+                <img @click="countNumber('bike')" v-if="numberOfCarModal.numberOfModal.bike.status"
+                     class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
+                <img @click="countNumber('bike')" v-if="!numberOfCarModal.numberOfModal.bike.status"
+                     class="trafficVideo-action-img" src="/static/image/trafficVideo/26.png">
 
               </div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bike.status ? numberOfCarModal.numberOfModal.bike.left: '-'}}</div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bike.status ? numberOfCarModal.numberOfModal.bike.straight: '-'}}</div>
-              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bike.status ? numberOfCarModal.numberOfModal.bike.right: '-'}}</div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bike.status ?
+                numberOfCarModal.numberOfModal.bike.left: '-'}}
+              </div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bike.status ?
+                numberOfCarModal.numberOfModal.bike.straight: '-'}}
+              </div>
+              <div class="trafficVideo-li">{{numberOfCarModal.numberOfModal.bike.status ?
+                numberOfCarModal.numberOfModal.bike.right: '-'}}
+              </div>
 
             </div>
-            <div >
+            <div>
               <div class="trafficVideo-line-title">
                 交叉口重型车比例
               </div>
@@ -156,23 +179,29 @@
       return {
         timer: "",
         imageList: {},
-        currentIndex: 0,
+        currentIndex: -1,
         delay: 10000,
         delay_show: 5000,
-        prevloading: 3000,
+        prevloading: 2000,
         isShowCar: 0,
         isShowBus: 0,
         isShowBike: 0,
         loading: true,
         typeList: ['origin', 'car', 'bus', 'bike'],
+        ctx: {},
+        trafficVideo_origin_ctx:{},
+        trafficVideo_car_ctx:{},
+        trafficVideo_bus_ctx:{},
+        trafficVideo_bike_ctx:{},
+
         ratio: 10,
         // typeList: ['origin','car'],
-        numberOfCarModal:{
+        numberOfCarModal: {
           startTime: 0,
-          numberOfModal:{
-            car:{startTime:0,endTime:0, left:0,right:0, straight:0, status: 0 },
-            bus:{startTime:0,endTime:0, left:0,right:0, straight:0, status: 0 },
-            bike:{startTime:0,endTime:0, left:0,right:0, straight:0, status: 0 }
+          numberOfModal: {
+            car: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: 0},
+            bus: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: 0},
+            bike: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: 0}
           },
           endTime: 0,
         },
@@ -190,10 +219,27 @@
       Area,
     },
     mounted() {
-      this.getNodeLineLish(2)
-      this.getlikeByNodeId()
-      // this.init()
 
+      Promise.all([this.getAllMovementsByNodeId(2),this.getNodeCameraLish(2),this.getAllLinksByNodeId(2)]).then(result=>{
+        var linkInfo = result[2].links.map(link=>{
+          link.movementList = result[0].movements.filter(movement=>{
+            return movement.link_id === link.link_id
+          })
+          link.taskId = result[1].find(movement=>{
+            return movement.camera_name.substr(-1,1) === link.link_direction
+          }).camera_id;
+          return link
+        });
+
+        this.nodeInfo =  linkInfo;
+      })
+
+
+
+      this.trafficVideo_origin_ctx=  document.getElementById("trafficVideo_origin").getContext("2d");
+      this.trafficVideo_car_ctx=  document.getElementById("trafficVideo_car").getContext("2d");
+      this.trafficVideo_bus_ctx=  document.getElementById("trafficVideo_bus").getContext("2d");
+      this.trafficVideo_bike_ctx=  document.getElementById("trafficVideo_bike").getContext("2d");
     },
     beforeDestroy() {
       clearInterval(this.timer)
@@ -202,65 +248,48 @@
       updataVideo(time) {
         let i = 0;
         var j = 0;
-        // this.timer = setInterval(() => {
-        //   i++;
-        //   j++
 
+        let millSecond = time % 1000;
 
-          let millSecond = time%1000;
+        let startTime = time - this.delay_show;
 
-          // currentTime.setMilliseconds(0);
-          let startTime = time - this.delay_show;
-
-
-          // if(j>100) return
-          if (time % 1000 === 0) {
-            this.loadImage(startTime);
-
-          }
-
-          this.showImage(parseInt((startTime - 8000)/1000)*1000, millSecond)
-        // }, 100)
+        if (time % 1000 === 0) {
+          this.loadImage(startTime);
+        }
+        this.showImage(Math.floor((startTime - this.delay_show-2000)/1000)*1000 , millSecond)
       },
       showImage(startTime, millSecond) {
+
         var prevloadingTime = startTime + this.prevloading;
         for (var time = startTime; time < prevloadingTime; time += 1000) {
-          if (!this.imageList[time] || !this.imageList[time].isLoading) {
+          if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
             return this.loading = true
           }
         }
-        // console.log('==hadloading')
 
-
-
-
-        if (this.imageList[startTime] && this.imageList[startTime].index !== 0) {
+        if (this.imageList[startTime] && this.imageList[startTime].index !== -1) {
           this.removeImage(startTime)
         }
-
-        if (window.current !== startTime) {
-          if (!window.current) {
-            this.addImage(startTime);
-            this.addImage(startTime + 1000)
-          }
-          this.addImage(startTime + 2000);
-          window.current = startTime;
-        }
-
         let images = this.imageList[startTime].imageList;
         let index = this.imageList[startTime].index;
-        // console.log('============='+millSecond)
-        if (!images[index]) return;
 
-        if (images[index].timestamp % 1000 > millSecond) return;
-        if (this.imageList[startTime].isLoading && index < images.length) {
-          this.loading = false;
-          this.changeImage(startTime, index);
-          // console.log(images.length)
-          if (index + 1 === images.length) return;
-          this.imageList[startTime].index += 1
-          // console.log(this.imageList[startTime])
-        }
+        var nextIndex = this.getImageIndex(images, index, millSecond, startTime)
+        this.loading = false;
+
+        if (nextIndex >= images.length) return;
+
+        this.changeImage(startTime, nextIndex);
+
+
+        this.imageList[startTime].index  =  nextIndex
+
+
+      },
+      getImageIndex(images, index, millSecond, startTime){
+        var count = images.length;
+        var index = index;
+        var current = Math.ceil((millSecond/100)/count);
+        return current;
       },
 
       loadImage(endTime) {
@@ -268,7 +297,7 @@
         var startTime = endTime - 1000;
 
         this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0};
-        this.getCountOfNode(endTime).then((count)=>{
+        this.getCountOfNode(endTime).then((count) => {
           this.$http.get('http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
             (images) => {
               if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
@@ -315,12 +344,35 @@
                 })
               })
 
-              Promise.all([[Promise.all(allPromise)], [Promise.all(allPromise1)], [Promise.all(allPromise2)], [Promise.all(allPromise3)]]).then((image) => {
+              var loading_origin = new Promise(resolve => {
+                Promise.all(allPromise).then(image=>{
+                  resolve(image)
+                })
+              })
+
+              var loading_car = new Promise(resolve => {
+                Promise.all(allPromise1).then(image=>{
+                  resolve(image)
+                })
+              })
+              var loading_bus = new Promise(resolve => {
+                Promise.all(allPromise2).then(image=>{
+                  resolve(image)
+                })
+              })
+              var loading_bike = new Promise(resolve => {
+                Promise.all(allPromise3).then(image=>{
+                  resolve(image)
+                })
+              })
+
+              Promise.all([loading_origin,loading_bus,loading_car,loading_bike]).then((image) => {
                 this.imageList[startTime] = {
                   isLoading: 1,
                   imageList: images,
-                  index: 0,
-                  preImage: [image[0], image[1], image[2], image[3]],
+
+                  index: -1,
+                  preImage: image,
                   count: count,
                 }
               })
@@ -351,47 +403,62 @@
             delete  this.imageList[time]
           }
         }
-        this.typeList.forEach(type => {
-          $('#' + prevTime + "_" + type).nextAll().remove();
-        });
       },
       changeImage(currentTime, index) {
-        $('#' + currentTime + "_origin img").eq(index).addClass('show')
-        if (this.numberOfCarModal.numberOfModal.car.status) {
-          $('#' + currentTime + "_car img").eq(index).addClass('show').prevAll().removeClass('show')
+        var img = this.imageList[currentTime].preImage;
+        this.trafficVideo_origin_ctx.drawImage(img[0][index], 0, 0,1280, 720, 0, 0, 1080, 680);
+        if(this.numberOfCarModal.numberOfModal.car.status){
+          this.trafficVideo_car_ctx.clearRect(0, 0, 1080, 680)
+          this.trafficVideo_car_ctx.drawImage(img[1][index], 0, 0, 640, 360, 0, 0, 1080, 680);
         }
-        if (this.numberOfCarModal.numberOfModal.bus.status) {
-          $('#' + currentTime + "_bus img").eq(index).addClass('show').prevAll().removeClass('show')
+        if(this.numberOfCarModal.numberOfModal.bus.status){
+          this.trafficVideo_bus_ctx.clearRect(0, 0, 1080, 680)
+          this.trafficVideo_bus_ctx.drawImage(img[2][index], 0, 0, 640, 360, 0, 0, 1080, 680);
+
         }
-        if (this.numberOfCarModal.numberOfModal.bike.status) {
-          $('#' + currentTime + "_bike img").eq(index).addClass('show').prevAll().removeClass('show')
+        if(this.numberOfCarModal.numberOfModal.bike.status){
+          this.trafficVideo_bike_ctx.clearRect(0, 0, 1080, 680)
+          this.trafficVideo_bike_ctx.drawImage(img[3][index], 0, 0,640, 360, 0, 0, 1080, 680);
+
         }
+
+
       },
-      countNumber(type){
+      countNumber(type) {
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
+        this['trafficVideo_'+ type+'_ctx'].clearRect(0, 0, 1080, 680)
+
       },
-      getCountOfNode(endTime){
+      getCountOfNode(endTime) {
         return new Promise(resolve => {
-          var startTime = endTime - 1000;
-          this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
+          // var startTime = endTime - 1000;
+          // this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
+          //   resolve(result.data)
+          // })
+          resolve([])
+        });
+      },
+      getNodeCameraLish(nodeId) {
+        return new Promise(resolve => {
+          this.$http.get('/nodeData/getCameraNode?nodeId=' + nodeId).then((result) => {
             resolve(result.data)
           })
         });
       },
-      getNodeLineLish(nodeId){
+      getAllMovementsByNodeId(id) {
         return new Promise(resolve => {
-          this.$http.get('http://localhost:3000/nodeData/getCameraNode?nodeId='+nodeId).then((result)=>{
+          this.$http.get('/index/getAllMovementsByNodeId?nodeId='+ id).then((result) => {
             resolve(result.data)
           })
         });
       },
-      getlikeByNodeId(){
+      getAllLinksByNodeId(id){
         return new Promise(resolve => {
-          this.$http.get('http://localhost:3000/index/nodes').then((result)=>{
+          this.$http.get('/index/getAllLinksByNodeId?nodeId='+ id).then((result) => {
             resolve(result.data)
           })
         });
-      }
+      },
 
     }
   }
@@ -411,8 +478,8 @@
   .trafficVideo-container-header {
     /*width: 100%;*/
     height: 40px;
-    margin: 10px 10px ;
-    background: rgb(53,54,68);
+    margin: 10px 10px;
+    background: rgb(53, 54, 68);
   }
 
   .trafficVideo-container-left {
@@ -487,12 +554,14 @@
     background: rgb(53, 54, 68);
     margin-top: 10px;
   }
-  .trafficVideo-table{
-    padding:  20px;
+
+  .trafficVideo-table {
+    padding: 20px;
     box-sizing: border-box;
 
   }
-  .trafficVideo-row{
+
+  .trafficVideo-row {
     display: flex;
     margin-bottom: 10px;
     justify-content: space-between;
@@ -501,16 +570,20 @@
     line-height: 30px;
     color: #fff;
   }
-  .trafficVideo-row:nth-child(3) .trafficVideo-li{
+
+  .trafficVideo-row:nth-child(3) .trafficVideo-li {
     background: rgb(67, 175, 126);
   }
-  .trafficVideo-row:nth-child(4) .trafficVideo-li{
+
+  .trafficVideo-row:nth-child(4) .trafficVideo-li {
     background: rgb(208, 78, 128);
   }
-  .trafficVideo-row:nth-child(5) .trafficVideo-li{
+
+  .trafficVideo-row:nth-child(5) .trafficVideo-li {
     background: rgb(247, 144, 33);
   }
-  .trafficVideo-li{
+
+  .trafficVideo-li {
     flex-basis: 100px;
     flex-grow: 0;
     flex-shrink: 0;
@@ -520,41 +593,48 @@
     align-items: center;
     justify-content: space-between;
 
-    background: rgb(83,87,104);
+    background: rgb(83, 87, 104);
   }
-  .trafficVideo-li:first-child{
+
+  .trafficVideo-li:first-child {
     width: 150px;
   }
-  .trafficVideo-action-img{
+
+  .trafficVideo-action-img {
     width: 20px;
     height: 20px;
   }
-  .trafficVideo-line-title{
+
+  .trafficVideo-line-title {
 
     color: #fff;
     padding-bottom: 10px;
   }
-  .trafficVideo-line-container{
+
+  .trafficVideo-line-container {
     align-items: center;
     display: flex;
   }
-  .trafficVideo-line{
+
+  .trafficVideo-line {
     height: 10px;
     width: 80%;
-    background: rgb(41,41,54);
+    background: rgb(41, 41, 54);
   }
-  .trafficVideo-process{
+
+  .trafficVideo-process {
     height: 10px;
     background: rgb(67, 175, 126);
   }
-  .trafficVideo-ratio{
+
+  .trafficVideo-ratio {
     width: 20%;
     font-size: 1.05em;
     text-align: center;
     color: #fff;
   }
 
-  .trafficVideo-select-node-contaienr{
+  .trafficVideo-select-node-contaienr {
     width: 350px;
     height: 350px;
     margin: 30px auto;
@@ -562,42 +642,45 @@
   }
 
   .trafficVideo-select-node-top,
-  .trafficVideo-select-node-bottom{
+  .trafficVideo-select-node-bottom {
     height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  .trafficVideo-select-node-action{
+
+  .trafficVideo-select-node-action {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    background: rgb(113,114,124 );
+    background: rgb(113, 114, 124);
     margin: 5px auto;
     color: #fff;
     text-align: center;
     line-height: 35px;
   }
-  .trafficVideo-select-node-action.action{
+
+  .trafficVideo-select-node-action.action {
     background: rgb(247, 144, 33);
   }
 
-
-  .trafficVideo-select-node-middle{
+  .trafficVideo-select-node-middle {
     display: flex;
     height: 186px;
     align-items: center;
     justify-content: space-between;
   }
-  .trafficVideo-select-node-center{
+
+  .trafficVideo-select-node-center {
     width: 186px;
     height: 186px;
-    border: 1px solid rgb(41, 41 ,54);
+    border: 1px solid rgb(41, 41, 54);
     flex-shrink: 0;
     flex-grow: 0;
   }
+
   .trafficVideo-select-node-left,
-  .trafficVideo-select-node-right{
+  .trafficVideo-select-node-right {
     width: 80px;
     display: flex;
     align-items: center;

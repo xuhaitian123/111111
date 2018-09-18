@@ -1,7 +1,7 @@
 <template>
   <div class='timeLine-main'>
 
-    <div class="timeLine-container"  @mousemove="changeTimer" @mouseup='stopChange' @mouseleave="stopChange">
+    <div class="timeLine-container" @mousemove="changeTimer" @mouseup='stopChange' @mouseleave="stopChange">
       <div class="timeLine-day-container">
         <el-select v-model="checkedYear" placeholder="请选择">
           <el-option
@@ -33,11 +33,11 @@
           </el-option>
         </el-select>
         日
-        <img @click="restart"  class="timeLine-time-reset"  src="/static/timeLine/19.png">
+        <img @click="restart" class="timeLine-time-reset" src="/static/timeLine/19.png">
       </div>
-      <canvas id="timeLine-line"  height="100">
+      <canvas id="timeLine-line" height="100">
       </canvas>
-      <div class="timeLine-current-line"   id='timeLine_line' @mousedown="stop"   v-bind:style="{left: left+'px'}">
+      <div class="timeLine-current-line" id='timeLine_line' @mousedown="stop" v-bind:style="{left: left+'px'}">
       </div>
     </div>
 
@@ -47,7 +47,7 @@
 </template>
 
 <style scoped>
-  .timeLine-main{
+  .timeLine-main {
     width: 1574px;
     margin: auto;
     box-shadow: 5px 5px 5px #111;
@@ -56,6 +56,7 @@
     background: rgb(54, 54, 66);
     box-sizing: border-box;
   }
+
   .timeLine-container {
     width: 1474px;
     margin: auto;
@@ -87,7 +88,7 @@
     /*background-origin: 0.5;*/
     overflow: visible;
     z-index: 70;
-    background: url("../../../static/timeLine/line.png") center ;
+    background: url("../../../static/timeLine/line.png") center;
     background-size: 16px 100%;
   }
 
@@ -107,7 +108,8 @@
     border-right: 10px solid transparent;
     border-bottom: 10px solid red;
   }
-  .timeLine-time-reset{
+
+  .timeLine-time-reset {
     width: 25px;
     height: 25px;
   }
@@ -116,30 +118,25 @@
 
 <script>
   export default {
-    props:{
-      isRealTime:{
-        type:Boolean,
+    props: {
+      isRealTime: {
+        type: Boolean,
         default: true
-      },
-      rate:{
-        type: Number,
-        default: 100
-      },
-      space:{
-        type: Number,
-        default:  (1460)/288,
       }
     },
     data() {
       var that = this;
       return {
-        startPosition:0,
-        endPosition:0,
-        isChangeTime:false,
-        timer :'',
+        space: 5.1,
+        timeLineWidth: 1468.8,
+        minSpace: 0.0017 ,
+        startPosition: 0,
+        endPosition: 0,
+        isChangeTime: false,
+        timer: '',
         left: -10,
+        rate: 100,
         scale: 0,
-        timeLineWidth: 1460,
         yearList: [{value: 2018, disable: true}, {value: 2017, disable: true}, {value: 2016, disable: true}],
         monthList: function (currentMonth) {
           return that.getMonthList(new Date().getMonth() + 1)
@@ -155,83 +152,74 @@
       }
     },
     mounted() {
-      document.getElementById('timeLine-line').width = this.timeLineWidth+50;
+      document.getElementById('timeLine-line').width = this.timeLineWidth + 50;
       this.initPosition();
       this.init();
       this.start()
     },
     methods: {
-      restart(){
+      restart() {
         clearInterval(this.timer);
         this.left = -10;
         this.start()
       },
-      stopChange(){
+      stopChange() {
         this.isChangeTime = false
       },
       start(e) {
-        this.isChangeTime =  false;
-        this.timer =  setInterval(() => {
+        this.isChangeTime = false;
+        this.timer = setInterval(() => {
           this.changePosition()
         }, this.rate)
       },
-      changePosition(){
-        if(this.isChangeTime|| this.left>= this.timeLineWidth-10) return;
-        if(this.endPosition && this.startPosition){
-          let left =this.left +  this.endPosition-this.startPosition;
-          this.left = parseInt(left/(this.space))*(this.space)
+      changePosition() {
+        if (this.isChangeTime || this.left >= this.timeLineWidth - 10) return;
+        if (this.endPosition && this.startPosition) {
+          let left = this.left + this.endPosition - this.startPosition;
+          this.left = parseInt(left / (this.space)) * (this.space)
           this.endPosition = 0;
-          this.startPosition=0;
+          this.startPosition = 0;
         }
 
-        this.left += this.space/ (5*60*1000/this.rate);
+        this.left += this.minSpace;
         this.getTimer()
 
       },
-      stop(e){
-        this.isChangeTime =  true;
-        this.startPosition =  e.clientX;
+      stop(e) {
+        this.isChangeTime = true;
+        this.startPosition = e.clientX;
       },
-      getTimer(){
-        var seconds = (this.left+10) / (this.space)*5*60*10;
-        var hour = parseInt(seconds/60/60/10);
-        var minuth = Math.floor(seconds/60/10%60);
-        // if(this.rate === 5000){
+      getTimer() {
+        var seconds = (this.left + 10) / this.minSpace;
 
-          var second =  Math.round(seconds/10%60);
-          var milliseconds =  Math.round(seconds%10);
+        var hour = parseInt(seconds / 60 / 60 / 10);
+        var minuth = Math.floor(seconds / 60 / 10 % 60);
 
 
-        // }else{
-        //   var second = 0
-        // }
+        var second = Math.floor(seconds / 10 % 60);
+        var milliseconds = Math.floor(seconds % 10)
 
-        var time =  new Date(this.checkedYear+'-'+this.checkedMonth+'-'+this.checkedDay)
+        var time = new Date(this.checkedYear + '-' + this.checkedMonth + '-' + this.checkedDay)
         time.setHours(hour)
         time.setMinutes(minuth)
         time.setSeconds(second)
-        time.setMilliseconds(milliseconds*100)
+        time.setMilliseconds(milliseconds * 100)
         this.$emit('newTime', time.getTime())
       },
 
 
-      changeTimer(e){
+      changeTimer(e) {
 
-        if(!this.isChangeTime) return;
-        this.endPosition =  e.clientX;
-        document.getElementById('timeLine_line').style.left = this.left + this.endPosition-this.startPosition  + 'px'
+        if (!this.isChangeTime) return;
+        this.endPosition = e.clientX;
+        document.getElementById('timeLine_line').style.left = this.left + this.endPosition - this.startPosition + 'px'
 
       },
-      initPosition(){
+      initPosition() {
         var currentTime = new Date();
 
-        var minTime =   this.space/ (5*60*1000/this.rate)
 
-        if(this.rate > 59999){
-          return this.left = -10 + parseInt((currentTime.getHours()*60 + currentTime.getMinutes()) /5 )* this.space
-        }
-
-        this.left =  -10 + parseInt((currentTime.getHours()*60*60 + currentTime.getMinutes()*60 + currentTime.getSeconds())/(this.rate/1000)) * minTime
+        this.left = -10 + parseInt((currentTime.getHours() * 60 * 60 + currentTime.getMinutes() * 60 + currentTime.getSeconds()) / (this.rate / 1000)) * this.minSpace
 
       },
       init() {
@@ -297,7 +285,7 @@
         var dayList = [];
         for (var i = 1; i <= maxDay; i++) {
           var dayInfo = {value: i, disable: false};
-          if (day && day <i) {
+          if (day && day < i) {
             dayInfo.disable = true
           }
           dayList.push(dayInfo)
