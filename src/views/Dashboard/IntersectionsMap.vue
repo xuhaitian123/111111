@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="" style="position: relative;background: #1f1f2c">
-            <road-net-map style="width: 65%"></road-net-map>
+            <div style="width: 65%;height: 720px"></div>
 
             <div class="Road_row_link">
               <el-row type="flex" justify="space-around">
@@ -48,15 +48,103 @@
             </div>
 
             <div class="Node_right_top">
-              <el-tabs type="border-card">
-                <el-tab-pane label="当前信号灯配时方案">当前信号灯配时方案</el-tab-pane>
-                <el-tab-pane label="交叉口饱和度/排队长度数据展示">交叉口饱和度/排队长度数据展示</el-tab-pane>
+              <el-tabs type="border-card" style="height: 420px;background: #353644">
+                <el-tab-pane label="当前信号灯配时方案">
+                  <el-row style="padding: 40px 20px 0 20px;text-align: center">
+                    <el-col :span="3">
+                      <div class="" style="margin-bottom: 5px">东</div>
+                      <div style="height: 86px;border-radius: 10px;width: 30px;background: #2a2b36;margin: auto">
+                        <ul class="Node_signal_lamp">
+                          <li></li>
+                          <li></li>
+                          <li></li>
+                        </ul>
+                      </div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="">西</div>
+                    </el-col>
+                    <el-col :span="3">
+                      <div class="">南</div>
+                    </el-col>
+                  </el-row>
+                </el-tab-pane>
+                <el-tab-pane label="交叉口饱和度/排队长度数据展示">
+                  <el-row>
+                    <el-col :span="6" style="padding: 20px 10px ">
+                      <div class="Node_row_list">
+                        <div class="Node_row_list_title">排队长度 / 米</div>
+                        <ul class="">
+                          <li>0-12 <span>--</span></li>
+                          <li>12-25 <span>--</span></li>
+                          <li>25-37 <span>--</span></li>
+                          <li>>50 <span>--</span></li>
+                        </ul>
+
+                        <div style="padding: 10px 15px;color: #c9c9cc">
+                          <div style="text-align: left;font-size: 12px">
+                            饱和度
+                          </div>
+                          <div class="Node_div_list">
+                            <div style="background: #c94343;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                            <div style="font-size: 12px;">已饱和</div>
+                          </div>
+                          <div class="Node_div_list">
+                            <div style="background: #f98d21;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                            <div style="font-size: 12px;">50 - 75%</div>
+                          </div>
+                          <div class="Node_div_list">
+                            <div style="background: #eacc36;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                            <div style="font-size: 12px;">25 - 50%</div>
+                          </div>
+                          <div class="Node_div_list">
+                            <div style="background: #43af7e;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                            <div style="font-size: 12px;">< 25%</div>
+                          </div>
+                        </div>
+                      </div>
+                    </el-col>
+                    <el-col :span="18">
+                      <div class="grid-content bg-purple-light">
+                        123
+                      </div>
+                    </el-col>
+                  </el-row>
+                </el-tab-pane>
+              </el-tabs>
+
+              <el-tabs type="border-card" style="height: 290px;margin-top: 10px;background: #353644">
+                <el-tab-pane label="交叉口机动车/非机动车流量">交叉口延误数据</el-tab-pane>
+                <el-tab-pane label="交叉口延误数据">
+                  <el-row>
+                    <el-col :span="16">
+                      <div class="grid-content bg-purple">123</div>
+                    </el-col>
+                    <el-col :span="8" style="padding: 50px 0 0 20px">
+                      <div class="">
+                        <ul class="Node_delay_time">
+                          <li>
+                            <span>延误时间 < 30秒</span>
+                          </li>
+                          <li>
+                            <span>延误时间 30-50秒</span>
+                          </li>
+                          <li>
+                            <span>延误时间 50-60秒</span>
+                          </li>
+                          <li>
+                            <span>延误时间 > 60秒</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </el-col>
+                  </el-row>
+                </el-tab-pane>
               </el-tabs>
             </div>
-
-            <div style="position:absolute;bottom: 80px;width: 100%">
-              <time-line></time-line>
-            </div>
+          </div>
+          <div style="width: 100%;margin-top: 20px;margin-bottom: 30px">
+            <time-line></time-line>
           </div>
         </el-card>
       </el-col>
@@ -163,11 +251,53 @@
   .Node_right_top {
     position: absolute;
     width: 35%;
-    height: 420px;
-    background: #353644;
+    background: #1f1f2c;
     top: -1px;
     right: 0
   }
 
+  .Node_signal_lamp {
+    padding-top: 2px;
+  }
+
+  .Node_signal_lamp li {
+    width: 21px;
+    height: 21px;
+    margin: 5px auto;
+    border-radius: 50%;
+    background: #21222b;
+  }
+
+  .Node_row_list {
+    text-align: center;
+  }
+
+  .Node_row_list ul {
+    padding-bottom: 10px;
+    margin: 0 5px;
+    border-bottom: 2px solid #494a56;
+  }
+
+  .Node_row_list span {
+    position: absolute;
+    left: 35px;
+    line-height: 10px;
+  }
+
+  .Node_row_list li {
+    font-size: 12px;
+    color: #c9c9cc;
+    margin: 10px 0;
+  }
+
+  .Node_div_list {
+    margin: 20px 0;
+  }
+
+  .Node_delay_time li{
+    color: #c9c9cc;
+    padding: 10px 0;
+    font-size: 12px;
+  }
 
 </style>
