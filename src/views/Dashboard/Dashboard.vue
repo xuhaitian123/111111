@@ -131,7 +131,7 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <mix-line-bar :trafficLightData="trafficLightData"></mix-line-bar>
+            <mix-line-bar :trafficLightData="trafficLightData" :nodeName="nodeName"></mix-line-bar>
           </div>
         </el-card>
       </el-col>
@@ -291,7 +291,6 @@
   li {
     margin: 5px 0;
   }
-
 
   .Dashboard_box_card {
     border-radius: 1px;
@@ -499,10 +498,10 @@
         allNodeScore: [],
         allNodeAlarmInfo: [],
         trafficLightData: {
-          afterDelay:[],
-          beforeDelay:[],
-          afterAlarm:[],
-          beforeAlarm:[],
+          afterDelay: [],
+          beforeDelay: [],
+          afterAlarm: [],
+          beforeAlarm: [],
         },
         radio: 3,
         radio1: 3,
@@ -510,6 +509,7 @@
         radio3: 3,
         radio4: 2,
         radioLine: 1,
+        nodeName: [],
 
 
         polar: {
@@ -550,12 +550,14 @@
     },
     mounted() {
       let map = new window.BMap.Map("map");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.020306, 33.625408), 10);  // 初始化地图,设置中心点坐标和地图级别
+      map.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);  // 初始化地图,设置中心点坐标和地图级别
       map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      map.setMinZoom(10);
-      map.setMaxZoom(16);
-      map.addControl(new window.BMap.NavigationControl());   //缩放按钮
-      let b = new window.BMap.Bounds(new window.BMap.Point(117.898377, 34.232956), new BMap.Point(120.414208, 32.657899));
+      map.setMinZoom(12);
+      map.setMaxZoom(18);
+      map.addControl(new window.BMap.NavigationControl({
+        offset: new BMap.Size(10, 60)
+      }));   //缩放按钮
+      let b = new window.BMap.Bounds(new window.BMap.Point(118.19214, 32.717855), new window.BMap.Point(119.648976, 34.184862));
       try {
         BMapLib.AreaRestriction.setBounds(map, b);
       } catch (e) {
@@ -572,10 +574,10 @@
         this.getRoadNetAllFlow();
         this.getRoadNetCongestionScore();
         this.getCongestionPercent();
+        this.getNodes();
         this.getNodeCongestionSource();
         this.getAllNodeCongestionAlarm();
-        this.getHistoryTrafficLightOptimizeDelay();
-        this.getHistoryTrafficLightOptimizeAlarmTimes();
+        this.getTrafficLightData();
       },
       getCongestionPercent() { //拥堵里程比例
         this.$http
@@ -610,19 +612,41 @@
             this.allNodeAlarmInfo = response.data;
           })
       },
-      getHistoryTrafficLightOptimizeDelay() {  //信号灯优化前后平均延误
-        this.$http.get('/history/trafficLightOptimizeDelay?[\'\']')
+      getNodes() {
+        this.$http.get('/nodeData/getNodes')
           .then((response) => {
-            this.trafficLightData.afterDelay = response.data.after;
-            this.trafficLightData.beforeDelay = response.data.before;
+            this.nodeName = response.data.map((node) => {
+              if (node.name) return node.name;
+            }).filter((val) => {
+              return val !== undefined
+            });
           })
       },
-      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后平均延误
-        this.$http.get('/history/trafficLightOptimizeAlarmTimes')
-          .then((response) => {
-            this.trafficLightData.afterAlarm = response.data.after;
-            this.trafficLightData.beforeAlarm = response.data.before;
+      getTrafficLightData() {
+        this.getHistoryTrafficLightOptimizeDelay().then((delayData) => {
+          this.getHistoryTrafficLightOptimizeAlarmTimes().then((alarmData) => {
+            this.trafficLightData.afterDelay = delayData.data.after;
+            this.trafficLightData.beforeDelay = delayData.data.before;
+            this.trafficLightData.afterAlarm = alarmData.data.after;
+            this.trafficLightData.beforeAlarm = alarmData.data.before;
           })
+        })
+      },
+      getHistoryTrafficLightOptimizeDelay() {  //信号灯优化前后平均延误
+        return new Promise((resolve, reject) => {
+          this.$http.get('/history/trafficLightOptimizeDelay?[\'\']')
+            .then((response) => {
+              resolve(response);
+            })
+        })
+      },
+      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后平均延误
+        return new Promise((resolve, reject) => {
+          this.$http.get('/history/trafficLightOptimizeAlarmTimes')
+            .then((response) => {
+              resolve(response);
+            })
+        });
       },
       jumpPage(key) {
         this.$router.push(key);

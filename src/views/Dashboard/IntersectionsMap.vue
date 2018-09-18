@@ -105,8 +105,7 @@
                       </div>
                     </el-col>
                     <el-col :span="18">
-                      <div class="grid-content bg-purple-light">
-                        123
+                      <div>
                       </div>
                     </el-col>
                   </el-row>
@@ -114,7 +113,9 @@
               </el-tabs>
 
               <el-tabs type="border-card" style="height: 290px;margin-top: 10px;background: #353644">
-                <el-tab-pane label="交叉口机动车/非机动车流量">交叉口延误数据</el-tab-pane>
+                <el-tab-pane label="交叉口机动车/非机动车流量">
+                  <img src="/static/image/map/5ba0ac52af4ac.svg" style="width: 30px;height: 30px"/>
+                </el-tab-pane>
                 <el-tab-pane label="交叉口延误数据">
                   <el-row>
                     <el-col :span="16">
@@ -208,7 +209,7 @@
           .then((response) => {
             console.log(response)
           })
-      }
+      },
     },
   }
 </script>
@@ -294,7 +295,7 @@
     margin: 20px 0;
   }
 
-  .Node_delay_time li{
+  .Node_delay_time li {
     color: #c9c9cc;
     padding: 10px 0;
     font-size: 12px;
