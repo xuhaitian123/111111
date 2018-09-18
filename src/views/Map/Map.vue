@@ -343,25 +343,13 @@
     methods: {
       county_map_info_handler(){
         // var self = this
-        // this.$http.get('/dataB/getDataB')
-        //   .then(function (data) {
-        //     var county ={
-        //       Province:"江苏省",
-        //       city:"淮安市",
-        //       county:"淮阴区",
-        //       people_count:50000,
-        //       car_count:25555,
-        //       monitor_count:"100",
-        //       license_number:"京Ａ99999",
-        //       all_score:"100",
-        //       squre:1.007
-        //     }
-        //     self.map_info = county
-        //     console.log(data);
-        //   })
-        //   .catch(function (data) {
-        //     console.log(data);
-        //   });
+        this.$http.get('/dataB/getDataB')
+          .then(function (data) {
+            console.log(data);
+          })
+          .catch(function (data) {
+            console.log(data);
+          });
         var county ={
           Province:"江苏省",
           city:"淮安市",
