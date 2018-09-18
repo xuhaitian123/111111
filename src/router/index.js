@@ -81,7 +81,7 @@ export default new Router({
       name: 'Layout',
       children: [
         {
-          path: 'intersectionsMap',
+          path: 'intersectionsMap/:id',
           component: IntersectionsMap,
           name: 'IntersectionsMap'
         }
