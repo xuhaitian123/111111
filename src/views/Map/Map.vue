@@ -63,9 +63,11 @@
           </div>
         </div>
       </div>
+      </div>
+      <div class="toMianPage_bag">
+      <img  class="toMianPage" src="../../../static/image/map/toMianPage.png" v-on:click="enter"/>
+      </div>
     </div>
-  </div>
-
 
 </template>
 <style scoped>
@@ -110,6 +112,14 @@
     left: 30px;
     top: 30px;
     background: rgb(56,58,71);
+    display: none;
+  }
+  .toMianPage_bag{
+    position: absolute;
+    width: 340px;
+    height: 60px;
+    left: 30px;
+    top: 360px;
     display: none;
   }
   .map-area-container-header{
@@ -243,6 +253,7 @@
     padding: 16px 20px 20px 20px;
     height: 244px;
   }
+
   .lift{
     border-bottom: 1px solid #94949a;
     height: 74px;
@@ -300,6 +311,10 @@
   .unit{
     margin-left: 5px;
     display: block;
+  }
+  .toMianPage{
+    height: 60px;
+    width: 340px;
   }
 </style>
 <script>
@@ -378,20 +393,9 @@
         var self = this
         $('.map-contaienr1').animate({width:'200%', height:'200%', left:'-50%','top':'-50%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr1').animate({opacity: '0'},300, function(){
-            $(".map-area-container,.image_next_county,.county").show()
-            // var map_info = {
-            //   Province:"河南省",
-            //     city:"河南市",
-            //     county:"河南区",
-            //     people_count:1000,
-            //     car_count:1452,
-            //     monitor_count:"2529",
-            //     license_number:"京A00001",
-            //     all_score:"88",
-            //     squre:58.0002
-            // }
-            // self.map_info = map_info
+            $(".map-area-container,.image_next_county,.county,.toMianPage_bag").show()
             self.map_info = self.county_map_info_handler()
+
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr2').animate({opacity: '1'},1000)
@@ -404,7 +408,7 @@
         $('.map-contaienr2').animate({width:'50%', height:'50%', left:'25%','top':'25%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr2').animate({opacity: '0'},500,function(){
             $(".map-area-container").show()
-            $(".county,.image_next_county").hide()
+            $(".county,.image_next_county,.toMianPage_bag").hide()
             self.map_info = self.city_map_info_handler()
             $('.map-contaienr2').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
@@ -415,7 +419,7 @@
       test4(){
         $('.map-contaienr1').animate({width:'20%', height:'20%', left:'68%','top':'52%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr1').animate({opacity: '0'},500,function(){
-            $(".map-area-container").hide()
+            $(".map-area-container,toMianPage_bag").hide()
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr').animate({opacity: '1'},500)
