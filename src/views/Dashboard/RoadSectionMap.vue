@@ -117,7 +117,7 @@
                       <div class="Road_chart_line">| | | |</div>
 
                       <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
-                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                        <div :style="{width: getFlowNum(link.flow)+'px',background: getFlowColor(link.flow)}"
                              style="height: 65px;float: right;"></div>
                       </div>
 
@@ -130,7 +130,7 @@
                       <div class="Road_chart_line">| | | | |</div>
 
                       <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
-                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                        <div :style="{width: getFlowNum(link.flow)+'px',background: getFlowColor(link.flow)}"
                              style="width: 30px;height: 65px;"></div>
                       </div>
 
@@ -153,7 +153,7 @@
                       <div class="Road_chart_line">| | | | |</div>
 
                       <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
-                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                        <div :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
                              style="height: 65px;float: right;"></div>
                       </div>
 
@@ -166,7 +166,7 @@
                       <div class="Road_chart_line">| | | |</div>
 
                       <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
-                        <div :style="{width: getFlowNum(link)+'px',background: getFlowColor(link.flow)}"
+                        <div :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
                              style="width: 30px;height: 65px;"></div>
                       </div>
 
@@ -367,8 +367,8 @@
       //道路绿灯达到比例
 
       getFlowNum(link) {
-        console.log(link.flow);
-        return link.flow / 12
+        // console.log(link.flow);
+        return link / 12
       },
 
       getFlowColor(num) {
