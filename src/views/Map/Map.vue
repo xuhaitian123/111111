@@ -17,9 +17,24 @@
     </div>
     <div class="map-area-container">
       <div class="map-area-container-header">
-        <div class="map-area-container-header-action"><img  src="/static/map/left.png"/></div>
+        <div class="map-area-container-header-action">
+          <img  src="/static/map/left.png"/>
+        </div>
         <div class="map-area-container-header-title">
-          <div>中国 </div><img src="/static/map/right.png"> 江苏省 > 淮安市
+          <div class="Country">{{Country}} </div>
+          <div class="province_isShow">
+          <img class="image_next" src="/static/map/right.png">
+          <div class="province">{{Province}}</div>
+          </div>
+          <div class="city_isShow">
+          <img class="image_next" src="/static/map/right.png">
+          <div class="city">{{city}}</div>
+        </div>
+          <div class="county_isShow">
+
+          <img class="image_next" src="/static/map/right.png">
+          <div class="county">{{county}}</div>
+        </div>
         </div>
 
       </div>
@@ -68,19 +83,21 @@
   }
   .map-area-container{
     position: absolute;
-    width: 320px;
+    width: 340px;
     height: 320px;
     left: 30px;
     top: 30px;
     background: rgb(56,58,71);
+    display: none;
   }
   .map-area-container-header{
     height: 40px;
     background: rgb(39,39,53);
     display: flex;
     align-items: center;
-    padding: 0 16px;
+    padding-left: 14px;
   }
+
   .map-area-container-header-action img{
     width: 22px;
     height: 14px;
@@ -88,15 +105,13 @@
   .map-area-container-header-title{
     display: flex;
     align-items: center;
+    padding-left: 12px;
+    line-height: 14px;
   }
-  .map-area-container-header-title img{
-    width: 16px;
+  .image_next{
+    width: 14px;
     height: 16px;
   }
-  .map-area-container-header-title{
-    padding-left: 12px;
-  }
-
   .container{
     margin: auto;
   }
@@ -154,7 +169,31 @@
     position: absolute;
     /*display: none;*/
   }
+.Country{
+  width: 40px;
+  padding-left: 12px;
+  border-left: 1px solid #94949a;
+  line-height: 15px;
+}
+.province{
+  padding: 0 10px;
+  line-height: 15px;
 
+}
+.city{
+  padding: 0 10px;
+  line-height: 15px;
+}
+.county{
+  padding: 0 10px;
+  line-height: 15px;
+}
+.province_isShow,
+.city_isShow,
+.county_isShow{
+  display: flex;
+  align-items: center;
+}
   /*.next,*/
   /*.pre,*/
   /*.current{*/
@@ -181,14 +220,18 @@
     },
     data() {
       return {
-        marginTop: 0
+        marginTop: 0,
+        Country:"中国",
+        Province:"江苏省",
+        city:"淮安市",
+        county:"淮阴区"
       }
     },
     methods: {
       test1(){
         $('.map-contaienr').animate({width:'500%', height:'500%', left:'-340%','top':'-240%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr').animate({opacity: '0'},500,function(){
-
+              $(".map-area-container").show()
               $('.map-contaienr').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr1').animate({opacity: '1'},500)
