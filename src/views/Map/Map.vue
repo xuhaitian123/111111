@@ -24,8 +24,37 @@
 
       </div>
       <div class="map-area-container-main">
-
+        <div class="lift">
+          <div class="people-squre">
+            <div class="people_countent" >总人口</div>
+            <div class="people-data" ><span class="count-size">{{count}}</span><span class="unit">人</span></div>
+          </div>
+          <div class="data">
+            <div class="squre" >总面积</div>
+            <div class="squre-data" ><span class="squre-size">{{squre}}</span><span class="unit">平方千米</span></div>
+          </div>
+        </div>
+        <div class="countent">
+          <div class="count">
+            <div class="car-count" >汽车保有量</div>
+            <div class="car-data" ><span class="count-size">{{count}}</span><span class="unit">辆</span></div>
+          </div>
+          <div class="monitor">
+            <div class="monitor-count" >监控数量</div>
+            <div class=" monitor-data"><span class="count-size">{{squre}}</span><span class="unit">个</span></div>
+          </div>
+        </div>
+        <div class="license-score">
+          <div class="license">
+            <div class="license-number" >车牌代码</div>
+            <div class="license-data count-size">{{count}}</div>
+          </div>
+          <div class="score">
+            <div class="all-score" >总体评分</div>
+            <div class="score-data" ><span class="score-size">{{squre}}</span><span class="unit">分</span></div>
+          </div>
       </div>
+    </div>
     </div>
   </div>
 
@@ -171,7 +200,68 @@
     width: 100%;
     opacity: 1;
   }
-
+  .map-area-container-main{
+    padding: 16px 20px 20px 20px;
+    height: 244px;
+  }
+  .lift{
+    border-bottom: 1px solid #94949a;
+    height: 74px;
+    display: flex;
+    flex-direction: row;
+  }
+  .countent{
+    border-bottom: 1px solid #94949a;
+    height: 90px;
+    display: flex;
+    flex-direction: row;
+  }
+  .license-score{
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+  }
+  .people-squre{
+    width: 150px;
+  }
+  .count{
+    width: 150px;
+  }
+  .license{
+    width: 150px;
+  }
+  .count-size,
+  .squre-size{
+    font-size: 22px;
+    color: #f98c21;
+    display: block;
+  }
+  .score-size{
+    font-size: 22px;
+    color: #43af7e;
+    display: block;
+  }
+  .people-data,
+  .squre-data,
+  .car-data,
+  .monitor-data,
+  .license-data,
+  .score-data{
+    margin-top: 20px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+  }
+  .car-count,
+  .license,
+  .monitor,
+  .score{
+    margin-top: 16px;
+  }
+  .unit{
+    margin-left: 5px;
+    display: block;
+  }
 </style>
 <script>
 
@@ -181,7 +271,9 @@
     },
     data() {
       return {
-        marginTop: 0
+        marginTop: 0,
+        count:44444,
+        squre:1.007
       }
     },
     methods: {
