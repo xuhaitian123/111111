@@ -209,7 +209,6 @@
 
               option.yAxis[1].max= alarmMax;
               option.yAxis[1].interval= alarmMax/5;
-              console.log(option)
 
               this.myChart.setOption(option);
             }
