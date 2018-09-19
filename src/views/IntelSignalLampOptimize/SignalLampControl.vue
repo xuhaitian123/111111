@@ -40,7 +40,7 @@
                   <div class="use-intel-score-text text-color">启用智能控制评分</div>
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number green-text-color">{{use_intel_score}}</div>
+                      <div class="intel-score-number #43af7e-text-color">{{use_intel_score}}</div>
                     </div>
                   </div>
                 </div>
@@ -60,13 +60,13 @@
               </div>
               <div class="week-contrast">
                 <div class="week-show">
-                  <div class="week-day">周一</div>
-                  <div class="week-day">周二</div>
-                  <div class="week-day">周三</div>
-                  <div class="week-day">周四</div>
-                  <div class="week-day">周五</div>
-                  <div class="week-day">周六</div>
-                  <div class="week-day">周日</div>
+                  <div class="week-day" id="monday" @click="get_week_day_data('monday',1)">周一</div>
+                  <div class="week-day" id="tuesday" @click="get_week_day_data('tuesday',2)">周二</div>
+                  <div class="week-day" id="wednesday" @click="get_week_day_data('wednesday',3)">周三</div>
+                  <div class="week-day" id="thursday" @click="get_week_day_data('thursday',4)">周四</div>
+                  <div class="week-day" id="friday" @click="get_week_day_data('friday',5)">周五</div>
+                  <div class="week-day" id="saturday" @click="get_week_day_data('saturday',6)">周六</div>
+                  <div class="week-day" id="sunday" @click="get_week_day_data('sunday',7)">周日</div>
                 </div>
                 <div class="week-line"></div>
                 <div id="week_echart">
@@ -120,9 +120,23 @@
       mounted: function () {
         this.showEchartColumn();
         this.showDayLineChart();
-
       },
       methods:{
+        remove_week_background:function(){
+          $("#monday").removeClass("week-day-background-color");
+          $("#tuesday").removeClass("week-day-background-color");
+          $("#wednesday").removeClass("week-day-background-color");
+          $("#thursday").removeClass("week-day-background-color");
+          $("#friday").removeClass("week-day-background-color");
+          $("#saturday").removeClass("week-day-background-color");
+          $("#sunday").removeClass("week-day-background-color");
+
+        },
+        get_week_day_data:function(week_day_id,index){
+          this.remove_week_background();
+          $("#"+week_day_id).addClass("week-day-background-color");
+          this.showDayLineChart();
+        },
         jumpPageToMain: function () {
 
         },
@@ -424,7 +438,7 @@
     font-family: "Arial Rounded MT Bold";
     line-height: 100%;
   }
-  .green-text-color{
+  .#43af7e-text-color{
     color: #62ac82;
   }
   .red-text-color{
@@ -476,12 +490,14 @@
     width: 60px;
     height: 100%;
   }
+  .week-day-background-color{
+    background-color: #535766;
+  }
   .week-day{
     width: 45px;
     height: 20px;
     float: left;
     line-height: 20px;
-    /*background-color: #535766;*/
     text-align: center;
     font-size: 12px;
     color: #c9c9cc;

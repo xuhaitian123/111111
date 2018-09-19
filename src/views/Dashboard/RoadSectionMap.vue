@@ -27,9 +27,9 @@
                     <ul style="line-height: 30px;margin-left: 30px">
                       <li>
                         <div style="float: left;">←</div>
-                        <div class="Road_border" :style="{border: linkData.data.value <30 ? '1px solid green' :'0' }">
+                        <div class="Road_border" :style="{border: linkData.data.value <30 ? '1px solid #43af7e' :'0' }">
                           <div class="Road_circle"
-                               style="background: green;"></div>
+                               style="background: #43af7e;"></div>
                         </div>
                         <div class="Road_border">
                           <div class="Road_circle"
@@ -50,9 +50,9 @@
                       <li>
                         <div style="float: left;">→</div>
                         <div class="Road_border"
-                             :style="{border: linkData.related_data.value < 30 ? '1px solid green' :'0' }">
+                             :style="{border: linkData.related_data.value < 30 ? '1px solid #43af7e' :'0' }">
                           <div class="Road_circle"
-                               style="background: green;"></div>
+                               style="background: #43af7e;"></div>
                         </div>
                         <div class="Road_border">
                           <div class="Road_circle"
@@ -84,7 +84,7 @@
 
               <ul class="CongestionMap_Legend">
                 <li>
-                  <i class="icon-yuan iconfont" style="color: green"></i>
+                  <i class="icon-yuan iconfont" style="color: #43af7e"></i>
                   <span>延误时间 < 30秒</span>
                 </li>
                 <li>
@@ -391,7 +391,7 @@
       getFlowColor(num) {
         num = num / 12
         if (num < 30) {
-          return "#green"
+          return "##43af7e"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {
@@ -405,7 +405,7 @@
 
       getRoadAvgDelayColor(num) {
         if (num < 30) {
-          return "#green"
+          return "##43af7e"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {
