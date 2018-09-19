@@ -7,8 +7,6 @@
           <div class="Dashboard_clearfix">
             <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPageToMain()"></i>拥堵地图</span>
             <div class="nav-right-style">
-              <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
-              <i class="iconfont icon-shuxian"></i>
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
