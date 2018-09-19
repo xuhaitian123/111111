@@ -40,7 +40,7 @@
                   <div class="use-intel-score-text text-color">启用智能控制评分</div>
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number #43af7e-text-color">{{use_intel_score}}</div>
+                      <div class="intel-score-number green-text-color">{{use_intel_score}}</div>
                     </div>
                   </div>
                 </div>
@@ -438,7 +438,7 @@
     font-family: "Arial Rounded MT Bold";
     line-height: 100%;
   }
-  .#43af7e-text-color{
+  .green-text-color{
     color: #62ac82;
   }
   .red-text-color{

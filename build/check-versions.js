@@ -33,7 +33,7 @@ module.exports = function () {
     if (!semver.satisfies(mod.currentVersion, mod.versionRequirement)) {
       warnings.push(mod.name + ': ' +
         chalk.red(mod.currentVersion) + ' should be ' +
-        chalk.#43af7e(mod.versionRequirement)
+        chalk.green(mod.versionRequirement)
       )
     }
   }

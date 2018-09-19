@@ -26,9 +26,9 @@
                     交叉口拥堵水平
                     <ul style="line-height: 30px;margin-left: 30px">
                       <li>
-                        <div class="Road_border" :style="{border: nodeData.value <30 ? '1px solid #43af7e' :'0' }">
+                        <div class="Road_border" :style="{border: nodeData.value <30 ? '1px solid green' :'0' }">
                           <div class="Road_circle"
-                               style="background: #43af7e;"></div>
+                               style="background: green;"></div>
                         </div>
                         <div class="Road_border"
                              :style="{border: nodeData.value <50&&nodeData.value >30 ? '1px solid #e7c936' :'0' }">
@@ -67,7 +67,7 @@
                         <ul class="Node_signal_lamp">
                           <li :style="{background : value.value === 'Red' ? 'red':''}"></li>
                           <li :style="{background : value.value === 'Yellow' ? 'yellow':''}"></li>
-                          <li :style="{background : value.value === '#43af7e' ? '#43af7e':''}"></li>
+                          <li :style="{background : value.value === 'Green' ? 'green':''}"></li>
                         </ul>
                       </div>
                     </el-col>
@@ -83,7 +83,7 @@
                                 style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
                               <div>↑ 02(R)</div>
 
-                              <div style="height: 12px;background: #43af7e;width: 90%;float: left">71s</div>
+                              <div style="height: 12px;background: green;width: 90%;float: left">71s</div>
                               <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                             </div>
                           </div>
@@ -92,7 +92,7 @@
                           <div>
                             <div>→ 02</div>
 
-                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">35s</div>
+                            <div style="height: 12px;background: green;width: 90%;float: left">35s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -100,7 +100,7 @@
                           <div>
                             <div>→ 02</div>
 
-                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">27s</div>
+                            <div style="height: 12px;background: green;width: 90%;float: left">27s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -108,7 +108,7 @@
                           <div>
                             <div>↓ 02</div>
 
-                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">20s</div>
+                            <div style="height: 12px;background: green;width: 90%;float: left">20s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -122,7 +122,7 @@
                                 style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
                               <div>↑ 02(R)</div>
 
-                              <div style="height: 12px;background: #43af7e;width: 90%;float: left">71s</div>
+                              <div style="height: 12px;background: green;width: 90%;float: left">71s</div>
                               <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                             </div>
                           </div>
@@ -131,7 +131,7 @@
                           <div>
                             <div>← 02</div>
 
-                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">35s</div>
+                            <div style="height: 12px;background: green;width: 90%;float: left">35s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -145,7 +145,7 @@
                                 style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
                               <div>↑ 02</div>
 
-                              <div style="height: 12px;background: #43af7e;width: 90%;float: left">20s</div>
+                              <div style="height: 12px;background: green;width: 90%;float: left">20s</div>
                               <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                             </div>
                           </div>
@@ -154,7 +154,7 @@
                           <div>
                             <div>→ 02</div>
 
-                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">86s</div>
+                            <div style="height: 12px;background: green;width: 90%;float: left">86s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -162,7 +162,7 @@
                           <div>
                             <div>→ 02</div>
 
-                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">47s</div>
+                            <div style="height: 12px;background: green;width: 90%;float: left">47s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -199,7 +199,7 @@
                             <div style="font-size: 12px;">25 - 50%</div>
                           </div>
                           <div class="Node_div_list">
-                            <div style="background: #43af7e;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                            <div style="background: green;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
                             <div style="font-size: 12px;">< 25%</div>
                           </div>
                         </div>
@@ -219,7 +219,8 @@
                           <div style="letter-spacing: 10px"> | | | |</div>
                         </div>
                         <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc;position:relative;">
-                          <div style="background: #5c473d;width: 100%;height: 10px;position: absolute;bottom: 0"></div>
+                          <div :style="{height: nodeLength.values[3].value+'px',background: getSaturationColor(nodeLength.values[3].value)}"
+                               style="width: 100%;position: absolute;bottom: 0"></div>
                         </div>
                         <div class="block">
                           <div class="Node_length_list Node_length_list_right">
@@ -232,11 +233,13 @@
                           </div>
                         </div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
-                          <div style="background: #5c473d;width: 10px;height: 100%;float: right"></div>
+                          <div :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor(nodeLength.values[2].value)}"
+                               style="height: 100%;float: right"></div>
                         </div>
                         <div class="block" style="border: 3px solid #c9c9cc;"></div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
-                          <div style="background: #5c473d;width: 10px;height: 100%;"></div>
+                          <div :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor(nodeLength.values[0].value)}"
+                               style="height: 100%;"></div>
                         </div>
                         <div class="block">
                           <div class="Node_length_list Node_length_list_left" style="text-align: right">
@@ -249,7 +252,8 @@
                           </div>
                         </div>
                         <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc">
-                          <div style="background: #5c473d;width: 100%;border-bottom: 10px solid #5c473d"></div>
+                          <div :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor(nodeLength.values[1].value)}"
+                               style="width: 100%;"></div>
                         </div>
                         <div class="block" style="padding-left: 15px">
                           <div style="letter-spacing: 10px"> | | | |</div>
@@ -335,7 +339,12 @@
         nodeData: {
           node: {}
         },
-        currentSignal: []
+        currentSignal: [],
+        nodeLength:{
+          values:[
+            {},{},{},{}
+          ]
+        },
       }
     },
     mounted() {
@@ -346,7 +355,7 @@
         this.getNodeCongestionSource();
         this.getRoadNetCongestionScore();
         this.getCurrentSignalByNodeId();
-        this.getNodeDataD16ByNodeId();
+        this.getNodeAllDataD13ByNodeId();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -381,7 +390,8 @@
       getCurrentSignalByNodeId() {  //实时红绿灯
         this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id)
           .then((response) => {
-            this.currentSignal = response.data.values;
+            console.log(response)
+            this.currentSignal = response.data.values.filter((val)=>{return val.value!==null});
           });
 
         this.$http.get('/signal/currentSignalByLinkId?linkId=201')
@@ -394,12 +404,26 @@
             console.log(response)
           })
       },
-      getNodeDataD16ByNodeId() {
-        this.$http.get('/nodeData/getNodeDataD16ByNodeId?nodeId=2&current=true')
+      getNodeAllDataD13ByNodeId() {  //交叉口排队长度
+        this.$http.get('/nodeData/getNodeAllDataD13ByNodeId?nodeId='+ this.$route.params.id +'&current=true')
           .then((response) => {
+            this.nodeLength = response.data;
             console.log(response)
           })
-      }
+      },
+      getSaturationColor(num) {
+        if (num < 30) {
+          return "#green"
+        } else if (num > 30 && num < 50) {
+          return "#e7c936"
+        } else if (num > 50 && num < 60) {
+          return "darkorange"
+        } else if (num > 60) {
+          return "red"
+        } else {
+          return "#c9c9cc"
+        }
+      },
     },
   }
 </script>
