@@ -342,6 +342,14 @@
     },
     methods: {
       county_map_info_handler(){
+        // var self = this
+        this.$http.get('/dataB/getDataB')
+          .then(function (data) {
+            console.log(data);
+          })
+          .catch(function (data) {
+            console.log(data);
+          });
         var county ={
           Province:"江苏省",
           city:"淮安市",
@@ -356,6 +364,26 @@
         return county
       },
       city_map_info_handler(){
+        // var self = this
+        // this.$http.get('/dataB/getDataB')
+        //   .then(function (data) {
+        //     var county ={
+        //       Province:"江苏省",
+        //       city:"淮安市",
+        //       county:"淮阴区",
+        //       people_count:50000,
+        //       car_count:25555,
+        //       monitor_count:"100",
+        //       license_number:"京Ａ99999",
+        //       all_score:"100",
+        //       squre:1.007
+        //     }
+        //     self.map_info = county
+        //     console.log(data);
+        //   })
+        //   .catch(function (data) {
+        //     console.log(data);
+        //   });
         var city ={
           Province:"江苏省",
           city:"淮安市",
@@ -395,7 +423,6 @@
           $('.map-contaienr1').animate({opacity: '0'},300, function(){
             $(".map-area-container,.image_next_county,.county,.toMianPage_bag").show()
             self.map_info = self.county_map_info_handler()
-
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr2').animate({opacity: '1'},1000)

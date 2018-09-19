@@ -26,7 +26,7 @@ axios.defaults.baseURL = 'http://47.52.57.26:3000/';
 Vue.config.productionTip = false;
 
 Vue.prototype.$echarts = echarts;
-Vue.prototype.$https = axios;
+  Vue.prototype.$https = axios;
 
 Vue.prototype.formatDate = function (date, fmt) {
   if (/(y+)/.test(fmt)) {

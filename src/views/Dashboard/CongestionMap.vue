@@ -100,7 +100,10 @@
               </div>
 
               <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
-                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">图例</div>
+                <div
+                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+                  图例
+                </div>
 
                 <ul class="CongestionMap_Legend">
                   <li>
@@ -184,6 +187,7 @@
         currentRoadNet: false,
         allLinksDelay: [],
         allNodeDelay: [],
+        allNode: [],
       }
     },
     mounted() {
@@ -198,6 +202,8 @@
         this.getCongestionPercent();
         this.getRoadNetCongestionScore();
         this.getAllNodeCongestionAlarm();
+        this.getAllNode();
+        this.getAllLinks();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -229,10 +235,53 @@
             cb();
           })
       },
+
+      getAllLinks() {
+        this.$http.get('/index/links')
+          .then((response) => {
+            console.log(response);
+          })
+      },
+
+      getAllNode() { //所有交叉口
+        this.$http.get('/nodeData/getNodes')
+          .then((response) => {
+            this.allNode = response.data.map((node) => {
+              if (node.name) return node;
+            }).filter((val) => {
+              return val !== undefined
+            });
+            let num = 1;
+            this.getAllNodeDelay(this.allNode, num);
+          })
+      },
+
+      getAllNodeDelay(response, num) {
+        this.getNodeDataD12ByNodeId(response[num].id).then((result) => {
+          response[num].delay = result;
+          console.log(this.allNode)
+          this.allNodeDelay = response;
+          // if (num === response.length - 1) {
+          //   console.log(allData)
+          // } else {
+          //   num += 1;
+          //   this.getAllNodeDelay(response, num);
+          // }
+        })
+      },
+
+      getNodeDataD12ByNodeId(id) {  //交叉口延误数据
+        return new Promise((resolve, reject) => {
+          this.$http.get('/nodeData/getNodeDataD12ByNodeId?nodeId=' + id + '&current=true')
+            .then((response) => {
+              resolve(response.data);
+            })
+        })
+      },
       getAllNodeD12s(cb) {  //所有交叉口延误数据
         this.$http.get('/nodeData/getAllNodeD12s?current=true')
           .then((response) => {
-            this.allNodeDelay = response.data.values;
+            // this.allNodeDelay = response.data.values;
             cb();
           })
       },
@@ -252,24 +301,33 @@
       },
       addMarkerAndLabel() {
         for (let i = 0; i < this.allNodeDelay.length; i++) {
-          console.log(this.allNodeDelay[i])
-          let pt = new window.BMap.Point(this.allNodeDelay[i].node.long, this.allNodeDelay[i].node.lat);
-          let opts = {position: pt, offset: new BMap.Size(-130, -120)};
-          let label = new BMap.Label(this.allNodeDelay[i].node.node_name + "<br>交叉口延误时间 " + this.allNodeDelay[i].value.toFixed(0) + "s", opts);  // 创建文本标注对象
+          this.allNodeDelay[i].delay = this.allNodeDelay[i].delay || {};
+          let pt = new window.BMap.Point(this.allNodeDelay[i].long, this.allNodeDelay[i].lat);
+          let opts = {position: pt, offset: new BMap.Size(-70, -70)};
+          let label = new BMap.Label(this.allNodeDelay[i].name + "<br>交叉口延误时间 " + (this.allNodeDelay[i].delay.value || 0) + "s", opts);  // 创建文本标注对象
           label.setStyle({
             color: "#fff",
             fontSize: "14px",
-            background: this.getRoadAvgDelayColor(this.allNodeDelay[i].value),
+            background: this.getRoadAvgDelayColor(this.allNodeDelay[i].delay.value || 0),
             height: "40px",
             border: 0,
             boxShadow: "5px 5px 5px #111",
             padding: "5px",
             lineHeight: "20px",
           });
+          label.id = this.allNodeDelay[i].id;
 
-          let myIcon = new window.BMap.Icon(this.getNodeDelayImg(this.allNodeDelay[i].value), new window.BMap.Size(168, 167));
+          let myIcon = new window.BMap.Icon(this.getNodeDelayImg(this.allNodeDelay[i].delay.value || 0), new window.BMap.Size(52, 51));
           let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
-
+          marker.id = this.allNodeDelay[i].id;
+          marker.addEventListener('click', (pt) => {
+            console.log(pt.currentTarget.id)
+            this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
+          });
+          label.addEventListener('click', (pt) => {
+            console.log(pt.currentTarget.id)
+            this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
+          });
           window.congestionMap.addOverlay(label);
           window.congestionMap.addOverlay(marker);
         }
@@ -286,18 +344,18 @@
             strokeOpacity: 0.8,//折线的透明度，取值范围0 - 1
             strokeColor: this.getRoadAvgDelayColor(this.allLinksDelay[i].value) //折线颜色
           });
-          polyline.id= this.allLinksDelay[i].link_id;
+          polyline.id = this.allLinksDelay[i].link_id;
           console.log(this.allLinksDelay[i])
-          polyline.addEventListener('click',  (pt)=> {
+          polyline.addEventListener('click', (pt) => {
             console.log(pt.currentTarget.id)
-            this.jumpPage('/main/RoadSectionMap/'+pt.currentTarget.id);
+            this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id);
           });
           window.congestionMap.addOverlay(polyline);          //增加折线
         }
       },
       getRoadAvgDelayColor(num) {
         if (num < 30) {
-          return "#green"
+          return "green"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {
@@ -341,6 +399,7 @@
     line-height: 30px;
     margin-left: 15px;
   }
+
   .CongestionMap_Legend i {
     margin-right: 5px;
   }

@@ -66,15 +66,11 @@ import { Message } from 'element-ui';
         var self =this
         var username =$(".user-text").val();
         var password = $('.passward-text').val()
-        // $.ajax( {
-        //   url:'/login',
-        //   data:{
-        //     Username:username,
-        //     Password:password,
-        //   },
-        //   type:"get",
-        //   dataType:'json',
-        //   success:function(data) {
+        // this.$http.axios.post('/login', {
+        //   username: username,
+        //   password: password
+        // })
+        //   .then(function (success) {
         //     if(self.checked == true){
         //       window.localStorage.setItem("username",username)
         //     }
@@ -83,19 +79,20 @@ import { Message } from 'element-ui';
         //       type: 'success',
         //       duration:2000
         //     });
-        //       console.log("登录成功")
-        //       self.$router.push({path: '/'});
-        //   },
-        //   error : function(res) {
-        //     console.log("登录失败")
+        //     console.log("登录成功")
+        //     self.$router.push({path: '/'});
+        //   })
+        //   .catch(function (error) {
         //     if(self.checked == true){
         //       console.log(self.checked)
         //       window.localStorage.setItem("username",username)
         //     }
         //     self.$message.error('用户名或密码错误');
-        //   }
-        // });
+        //   });
         if(username == 123  && password== 123){
+          if(self.checked == true){
+            window.localStorage.setItem("username",username)
+          }
           self.$message({
             message: '恭喜你,登陆成功',
             type: 'success',
@@ -103,10 +100,9 @@ import { Message } from 'element-ui';
           });
           self.$router.push({path: '/main/map'});
         }
-        else {
+        else {  
           self.$message.error('用户名或密码错误');
         }
-        console.log(username+password)
       }
     }
   }

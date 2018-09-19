@@ -8,7 +8,7 @@ import CongestionMap from  '../views/Dashboard/CongestionMap'
 import RoadSectionMap from  '../views/Dashboard/RoadSectionMap'
 import IntersectionsMap from  '../views/Dashboard/IntersectionsMap'
 import Map from '../views/Map/Map'
-import TrafficVideo from  '../views/TrafficVideo/TrafficVideo'
+import TrafficVideo from  '../views/test/TrafficVideoTest' //TODO
 import Login from '../views/Login/Login'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
@@ -18,6 +18,11 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '',
+      component: Login,
+      name: 'Layout'
+    },
     {
       path: '/login',
       component: Login,
@@ -90,7 +95,7 @@ export default new Router({
       name: 'Layout',
       children: [
         {
-          path: 'intersectionsMap',
+          path: 'intersectionsMap/:id',
           component: IntersectionsMap,
           name: 'IntersectionsMap'
         }
