@@ -73,7 +73,7 @@
                   </el-col>
                 </el-row>
 
-                <el-row class="Dashboard_alarm_list" v-for="i in allNodeAlarmInfo" :key="i.node_id">
+                <el-row class="Dashboard_alarm_list" v-for="(i,index) in allNodeAlarmInfo" :key="i.node_id" v-if="index <5">
                   <el-col :span="6" :offset="1">
                     <div class=""
                          :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
@@ -259,7 +259,6 @@
       getAllNodeDelay(response, num) {
         this.getNodeDataD12ByNodeId(response[num].id).then((result) => {
           response[num].delay = result;
-          console.log(this.allNode)
           this.allNodeDelay = response;
           // if (num === response.length - 1) {
           //   console.log(allData)
@@ -463,7 +462,7 @@
     text-align: center;
     background: #353644;
     color: #a7a7ac;
-    margin-bottom: 5px
+    margin-bottom: 10px
   }
 
   .Dashboard_box_card {
