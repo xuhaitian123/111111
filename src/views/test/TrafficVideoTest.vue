@@ -33,18 +33,18 @@
           <div class="trafficVideo-select-node-contaienr">
             <div class="trafficVideo-select-node-top">
 
-              <div>
+              <div @click="changeLink(nodeInfo['北'].taskId)">
 
-                <div class="trafficVideo-select-node-action action">N</div>
-                南京路
+                <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['北'] && nodeInfo['北'].taskId===taskId}">N</div>
+                {{nodeInfo['北']?nodeInfo['北'].link_name: ''}}
               </div>
 
             </div>
             <div class="trafficVideo-select-node-middle">
               <div class="trafficVideo-select-node-left">
-                <div>
-                  南京路
-                  <div class="trafficVideo-select-node-action">W</div>
+                <div @click="changeLink(nodeInfo['西'].taskId)">
+                  {{nodeInfo['西']?nodeInfo['西'].link_name: ''}}
+                    <div class="trafficVideo-select-node-action" :class="{action: nodeInfo['西'] && nodeInfo['西'].taskId===taskId}">W</div>
                 </div>
               </div>
 
@@ -52,17 +52,17 @@
 
               </div>
               <div class="trafficVideo-select-node-right">
-                <div>
-                  南京路
-                  <div class="trafficVideo-select-node-action">E</div>
+                <div @click="changeLink(nodeInfo['东'].taskId)">
+                  {{nodeInfo['东']?nodeInfo['东'].link_name: ''}}
+                  <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['东'] &&nodeInfo['东'].taskId===taskId}">E</div>
                 </div>
               </div>
 
             </div>
             <div class="trafficVideo-select-node-bottom">
-              <div>
-                南京路
-                <div class="trafficVideo-select-node-action">S</div>
+              <div @click="changeLink(nodeInfo['南'].taskId)">
+                {{nodeInfo['南']?nodeInfo['南'].link_name: ''}}
+                <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['南'] &&nodeInfo['南'].taskId===taskId}">S</div>
               </div>
             </div>
 
@@ -182,7 +182,7 @@
         currentIndex: -1,
         delay: 10000,
         delay_show: 5000,
-        prevloading: 1000,
+          prevloading: 1000,
         isShowCar: 0,
         isShowBus: 0,
         isShowBike: 0,
@@ -193,6 +193,8 @@
         trafficVideo_car_ctx:{},
         trafficVideo_bus_ctx:{},
         trafficVideo_bike_ctx:{},
+        nodeInfo:{},
+        taskId:null,
 
         ratio: 10,
         // typeList: ['origin','car'],
@@ -230,8 +232,12 @@
           }).camera_id;
           return link
         });
-
-        this.nodeInfo =  linkInfo;
+        var nodeInfo ={}
+        linkInfo.forEach(link=>{
+          nodeInfo[link.link_direction] = link
+        });
+        this.taskId =  nodeInfo['北'].taskId
+        this.nodeInfo =  nodeInfo;
       })
 
 
@@ -248,8 +254,12 @@
       clearImage(){
         // this.imageList ={}
       },
+      changeLink(taskId){
+        this.taskId =  taskId;
+        this.imageList ={}
+      },
       updataVideo(time) {
-        console.log(time)
+
         let i = 0;
         var j = 0;
 
@@ -298,14 +308,15 @@
       },
 
       loadImage(endTime) {
-
+        if (!this.taskId) return;
         var startTime = endTime - 1000;
 
-        this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0};
+        this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0,startTime: new Date()};
         this.getCountOfNode(endTime).then((count) => {
-          this.$http.get('/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
+          // console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
+          this.$http.get('http://localhost:3000/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime).then(
             (images) => {
-              if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
+              if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
               images = images.data.map(item => {
                 item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
                 return item
@@ -372,14 +383,16 @@
               })
 
               Promise.all([loading_origin,loading_bus,loading_car,loading_bike]).then((image) => {
-                this.imageList[startTime] = {
-                  isLoading: 1,
-                  imageList: images,
+                // this.imageList[startTime] = {
 
-                  index: -1,
-                  preImage: image,
-                  count: count,
-                }
+                  this.imageList[startTime].imageList=images
+
+                  this.imageList[startTime].index=-1
+                  this.imageList[startTime].preImage=image
+                  this.imageList[startTime].count=count
+                  this.imageList[startTime].endTime=new Date()
+                this.imageList[startTime].isLoading=1
+                // }
               })
             })
         })
