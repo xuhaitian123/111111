@@ -164,7 +164,11 @@
         this.start()
       },
       stopChange() {
-        this.isChangeTime = false
+        if(this.isChangeTime ){
+          this.isChangeTime = false
+          this.$emit('changeTime')
+        }
+
       },
       start(e) {
         this.isChangeTime = false;
