@@ -86,19 +86,19 @@
                 <div class="filter-condition">
                   <div class="show-filter-item">
                     <div class="item-key-intro">日期</div>
-                    <div class="item-info-show">20180918</div>
+                    <input class="item-info-show" placeholder="选择日期" v-model="filter_date" id="date_picker" type="text"  />
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">开始时间</div>
-                    <div class="item-info-show">09：04</div>
+                    <input class="item-info-show" type="text" v-model="filter_start_time" @blur="judge_input_time_correct(filter_start_time)"/>
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">结束时间</div>
-                    <div class="item-info-show">13：45</div>
+                    <input class="item-info-show" v-model="filter_end_time" @blur="judge_input_time_correct(filter_end_time)"/>
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">路口</div>
-                    <div class="item-info-show">{{road_name}}</div>
+                    <input class="item-info-show" v-model="filter_road_name" />
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">车辆ID</div>
@@ -106,7 +106,7 @@
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">车辆类型</div>
-                    <div class="item-info-show">警卫车辆</div>
+                    <input class="item-info-show" v-model="filter_car_type" />
                   </div>
                 </div>
                 <div class="filter-input">
@@ -160,10 +160,26 @@
           filter_date:'20180918',
           filter_start_time:'09:30',
           filter_end_time:'13:30',
-          history_record_number:9
+          history_record_number:9,
+          filter_road_name:'人民路-珠海路',
+          filter_car_type:'警卫车辆',
         }
       },
+      mounted:function(){
+        this.add_date_picker_show()
+      },
       methods:{
+        add_date_picker_show:function(){
+          $( "#date_picker" ).datepicker({
+            showMonthAfterYear: true,
+            changeMonth: true,
+            changeYear: true,
+            buttonImageOnly: true,
+            dateFormat: 'yymmdd',
+            onSelect: function(dateText, inst) {
+            }
+          });
+        },
         //修改优先方式
         set_first_style_item:function (index) {
           for (var i = 0; i < this.first_setting_info.first_style.length; i ++)
@@ -209,6 +225,16 @@
         },
         filter_button_click :function () {
 
+        },
+        judge_input_type:function(data) {
+          // var reg = new RegExp('/^(d{4})(d{1,2})2(d{1,2})$/');
+          // if(!reg.test(data)) alert("日期输入的格式不合法!");
+        },
+        //判断数据事件是否合法
+        judge_input_time_correct:function(time){
+          var reg = new RegExp(/^(([01]?\d)|(2[0-3])):[0-5]\d$/);
+          //开始判断
+          if(!reg.test(time)) alert("时间输入的格式不合法!");
         }
       }
     }
