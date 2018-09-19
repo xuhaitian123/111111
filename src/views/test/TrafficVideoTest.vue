@@ -238,6 +238,7 @@
         });
         this.taskId =  nodeInfo['北'].taskId
         this.nodeInfo =  nodeInfo;
+        console.log(this.nodeInfo)
       })
 
 
@@ -252,6 +253,17 @@
     },
     methods: {
       clearImage(){
+        //重置数据
+        this.numberOfCarModal =  {
+          startTime: 0,
+            numberOfModal: {
+            car: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.car.status},
+            bus: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.bus.status},
+            bike: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.bike.status}
+          },
+          endTime: 0,
+        }
+
         // this.imageList ={}
       },
       changeLink(taskId){
@@ -277,7 +289,7 @@
         var prevloadingTime = startTime + this.prevloading;
         for (var time = startTime; time < prevloadingTime; time += 1000) {
           if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
-            console.log(this.imageList[time])
+            // console.log(this.imageList[time])
             return this.loading = Math.random()
           }
         }
@@ -313,8 +325,9 @@
 
         this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0,startTime: new Date()};
         this.getCountOfNode(endTime).then((count) => {
+          this.countAllTypeNumber(count)
           // console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
-          this.$http.get('http://localhost:3000/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime).then(
+          this.$http.get('/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime).then(
             (images) => {
               if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
               images = images.data.map(item => {
@@ -442,18 +455,57 @@
 
 
       },
+      countAllTypeNumber(result){
+        var directions = result.result;
+        var directs = ['东','北','南','西'];
+        var direct_codes = [];
+        for (var n = 0; n < directs.length; n ++)
+        {
+          if (this.nodeInfo[directs[n]].taskId == this.taskId)
+          {
+            var movementList = this.nodeInfo[directs[n]].movementList;
+            for (var j = 0; j < movementList.length; j ++)
+            {
+              direct_codes.push(movementList[j].movement_id);
+            }
+            break;
+          }
+        }
+        var types = ['car','bus','bike'];
+        var direct_types = ['car','truck','bike'];
+
+        for (var m = 0; m < directions.length; m ++)
+        {
+          for (var i = 0; i < types.length; i ++)
+          {
+            if (direct_codes.indexOf(directions[m].movement_id) != -1)
+            {
+              this.numberOfCarModal.numberOfModal[types[i]][directions[m].direction] += directions[m][direct_types[i]]
+            }
+          }
+        }
+
+      },
       countNumber(type) {
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
         this['trafficVideo_'+ type+'_ctx'].clearRect(0, 0, 1080, 680)
+        if (this.numberOfCarModal.numberOfModal[type].status == true)
+        {
+          this.numberOfCarModal.numberOfModal[type].left = 0;
+          this.numberOfCarModal.numberOfModal[type].straight = 0;
+          this.numberOfCarModal.numberOfModal[type].right = 0;
+        }
 
       },
       getCountOfNode(endTime) {
         return new Promise(resolve => {
-          // var startTime = endTime - 1000;
-          // this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
-          //   resolve(result.data)
-          // })
-          resolve([])
+          var startTime = endTime - 1000;
+          this.$http.get('http://172.16.5.82:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
+            resolve(result.data);
+          })
+          //  resolve({result:[{movement_id: 210, direction: "left", car: 1, truck: 2, bike: 3, status: false},
+          // {movement_id: 203, direction: "straight", car: 1, truck: 2, bike: 3, status: false},
+          // {movement_id: 211, direction: "right", car: 1, truck: 2, bike: 3, status: false}]})
         });
       },
       getNodeCameraLish(nodeId) {

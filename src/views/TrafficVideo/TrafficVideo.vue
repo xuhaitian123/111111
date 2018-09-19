@@ -269,7 +269,8 @@
 
         this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0};
         this.getCountOfNode(endTime).then((count)=>{
-          this.$http.get('http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
+
+          this.$http.get('/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
             (images) => {
               if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
               images = images.data.map(item => {
@@ -368,26 +369,27 @@
         }
       },
       countNumber(type){
+
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
       },
       getCountOfNode(endTime){
         return new Promise(resolve => {
           var startTime = endTime - 1000;
-          this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
+          this.$http.get('/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
             resolve(result.data)
           })
         });
       },
       getNodeLineLish(nodeId){
         return new Promise(resolve => {
-          this.$http.get('http://localhost:3000/nodeData/getCameraNode?nodeId='+nodeId).then((result)=>{
+          this.$http.get('nodeData/getCameraNode?nodeId='+nodeId).then((result)=>{
             resolve(result.data)
           })
         });
       },
       getlikeByNodeId(){
         return new Promise(resolve => {
-          this.$http.get('http://localhost:3000/index/nodes').then((result)=>{
+          this.$http.get('/index/nodes').then((result)=>{
             resolve(result.data)
           })
         });
