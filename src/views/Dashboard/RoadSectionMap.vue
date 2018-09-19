@@ -177,7 +177,7 @@
                     <div class="Road_chart_bottom"><span>↑</span> {{allLinkId.link_name}} <span>↓</span></div>
                   </div>
                 </el-col>
-                <el-col :span="5">
+                <el-col :span="4" :offset="1">
                   <div class="Road_row_list">
                     <div>流量(vph/min)</div>
                     <ul class="">
