@@ -283,6 +283,9 @@
         this.getRoadNetCongestionScore();
         this.getCurrentSignalByNodeId()
       },
+      jumpPage(key) {
+        this.$router.push(key);
+      },
       getNodeDataD5ByNodeId(nodeId) {  //机动车流量 + 非机动车流量
         return new Promise((resolve, reject) => {
           this.$http.get('/nodeData/getNodeDataD5ByNodeId?nodeId=' + nodeId + '&current=true')

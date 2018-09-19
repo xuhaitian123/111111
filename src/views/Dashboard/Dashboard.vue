@@ -33,11 +33,11 @@
                 <div class="Dashboard_card_title">路网总流量</div>
 
                 <div class="Dashboard_card_progressList Dashboard_card_progressHeight">
-                  <div v-for="item in allRoadFlow" :key="item.node_id">
+                  <div v-for="(item,i) in allRoadFlow" :key="item.node_id" v-if="i <6">
                     <div class="fl Dashboard_card_progress">
                       <div class="Dashboard_card_road">{{item.name}}</div>
                       <el-progress :percentage="item.value /100" :stroke-width="6"
-                                   :show-text="false"></el-progress>
+                                   :show-text="false" :color="getRoadFlowColor(item.value /100)"></el-progress>
                     </div>
                     <div class="fr">
                       <span class="Dashboard_card_vph">{{item.value}}vph</span>
@@ -62,7 +62,7 @@
                 <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
-                <div class="Dashboard_card_progressList_score" v-for="item in allNodeScore" :key="item.node_id">
+                <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id" v-if="i <5">
                   {{item.road_name}}<span class="fr fs20">{{item.value.toFixed(0)}}</span>
                 </div>
               </div>
@@ -93,7 +93,7 @@
                 </el-col>
               </el-row>
 
-              <el-row class="Dashboard_alarm_list" v-for="i in allNodeAlarmInfo" :key="i.node_id">
+              <el-row class="Dashboard_alarm_list" v-for="(i,index) in allNodeAlarmInfo" :key="i.node_id" v-if="index <5">
                 <el-col :span="6" :offset="1">
                   <!--#9f172b-->
                   <div class="" :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
@@ -113,7 +113,7 @@
                       {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                     <br>
                     <span :style="{color:alarmColor(i.value[1].value)}">
-                      {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
+                      {{flowText[i.value[1].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
                   </div>
                 </el-col>
               </el-row>
@@ -400,6 +400,7 @@
 
   .Dashboard_card_progress {
     width: 70%;
+    margin-bottom: 5px;
   }
 
   .Dashboard_card_alarm {
@@ -430,7 +431,7 @@
 
   .Dashboard_card_vph {
     font-size: 15px;
-    line-height: 30px;
+    line-height: 20px;
   }
 
   .Dashboard_set_col {
@@ -578,7 +579,6 @@
         this.getNodeCongestionSource();
         this.getAllNodeCongestionAlarm();
         this.getTrafficLightData();
-        this.getTrafficLightOptimizeCongestionStatus();
       },
       getCongestionPercent() { //拥堵里程比例
         this.$http
@@ -610,6 +610,7 @@
       getAllNodeCongestionAlarm() {  //交叉口报警信息
         this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
+            console.log(response)
             this.allNodeAlarmInfo = response.data;
           })
       },
@@ -641,7 +642,7 @@
             })
         })
       },
-      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后平均延误
+      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后报警次数
         return new Promise((resolve, reject) => {
           this.$http.get('/history/trafficLightOptimizeAlarmTimes')
             .then((response) => {
@@ -649,13 +650,18 @@
             })
         });
       },
-      getTrafficLightOptimizeCongestionStatus() {
-        return new Promise((resolve, reject) => {
-          this.$http.get('/history/trafficLightOptimizeAlarmTimes')
-            .then((response) => {
-              console.log(response);
-            })
-        });
+      getRoadFlowColor(num) {
+        if (num < 30) {
+          return "green"
+        } else if (num > 30 && num < 50) {
+          return "#e7c936"
+        } else if (num > 50 && num < 60) {
+          return "darkorange"
+        } else if (num > 60) {
+          return "red"
+        } else {
+          return "#c9c9cc"
+        }
       },
       jumpPage(key) {
         this.$router.push(key);
