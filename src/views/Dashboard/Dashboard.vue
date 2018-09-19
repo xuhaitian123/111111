@@ -46,7 +46,7 @@
                 </div>
 
                 <div>
-                  <div class="Dashboard_card_title mt10">路网拥堵评分</div>
+                  <div class="Dashboard_card_title mt10">拥堵里程比例</div>
                   <div class="Dashboard_card_score">
                     <span class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</span>
                   </div>
@@ -58,7 +58,7 @@
 
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
-                <div class="Dashboard_card_title">拥堵里程比例</div>
+                <div class="Dashboard_card_title">路网拥堵评分</div>
                 <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
@@ -652,7 +652,7 @@
       },
       getRoadFlowColor(num) {
         if (num < 30) {
-          return "green"
+          return "#43af7e"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {

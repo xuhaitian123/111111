@@ -73,7 +73,7 @@
                   </el-col>
                 </el-row>
 
-                <el-row class="Dashboard_alarm_list" v-for="i in allNodeAlarmInfo" :key="i.node_id">
+                <el-row class="Dashboard_alarm_list" v-for="(i,index) in allNodeAlarmInfo" :key="i.node_id" v-if="index <5">
                   <el-col :span="6" :offset="1">
                     <div class=""
                          :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
@@ -107,7 +107,7 @@
 
                 <ul class="CongestionMap_Legend">
                   <li>
-                    <i class="icon-yuan iconfont" style="color: green"></i>
+                    <i class="icon-yuan iconfont" style="color: #43af7e"></i>
                     <span>延误时间 < 30秒</span>
                   </li>
                   <li>
@@ -259,7 +259,6 @@
       getAllNodeDelay(response, num) {
         this.getNodeDataD12ByNodeId(response[num].id).then((result) => {
           response[num].delay = result;
-          console.log(this.allNode)
           this.allNodeDelay = response;
           // if (num === response.length - 1) {
           //   console.log(allData)
@@ -355,7 +354,7 @@
       },
       getRoadAvgDelayColor(num) {
         if (num < 30) {
-          return "green"
+          return "#43af7e"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {
@@ -369,7 +368,7 @@
       getNodeDelayImg(num) {
         if (num < 30) {
           // return "/static/50.png"
-          return "/static/image/map/green.jpg"
+          return "/static/image/map/#43af7e.jpg"
         } else if (num > 30 && num < 50) {
           // return "/static/53.png"
           return "/static/image/map/yellow.jpg"
@@ -463,7 +462,7 @@
     text-align: center;
     background: #353644;
     color: #a7a7ac;
-    margin-bottom: 5px
+    margin-bottom: 10px
   }
 
   .Dashboard_box_card {

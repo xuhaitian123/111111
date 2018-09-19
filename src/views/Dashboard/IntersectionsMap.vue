@@ -26,9 +26,9 @@
                     交叉口拥堵水平
                     <ul style="line-height: 30px;margin-left: 30px">
                       <li>
-                        <div class="Road_border" :style="{border: nodeData.value <30 ? '1px solid green' :'0' }">
+                        <div class="Road_border" :style="{border: nodeData.value <30 ? '1px solid #43af7e' :'0' }">
                           <div class="Road_circle"
-                               style="background: green;"></div>
+                               style="background: #43af7e;"></div>
                         </div>
                         <div class="Road_border"
                              :style="{border: nodeData.value <50&&nodeData.value >30 ? '1px solid #e7c936' :'0' }">
@@ -61,35 +61,29 @@
               <el-tabs type="border-card" style="height: 420px;background: #353644">
                 <el-tab-pane label="当前信号灯配时方案">
                   <el-row style="padding: 40px 20px 0;text-align: center">
-                    <el-col :span="3">
-                      <div class="" style="margin-bottom: 5px">东</div>
+                    <el-col :span="3" v-for="(value,index) in currentSignal" :key="index" v-if="value.value !== null">
+                      <div class="" style="margin-bottom: 5px">{{value.link_direction}}</div>
                       <div style="height: 86px;border-radius: 10px;width: 30px;background: #2a2b36;margin: auto">
                         <ul class="Node_signal_lamp">
-                          <li></li>
-                          <li></li>
-                          <li></li>
+                          <li :style="{background : value.value === 'Red' ? 'red':''}"></li>
+                          <li :style="{background : value.value === 'Yellow' ? 'yellow':''}"></li>
+                          <li :style="{background : value.value === '#43af7e' ? '#43af7e':''}"></li>
                         </ul>
                       </div>
                     </el-col>
-                    <el-col :span="3">
-                      <div class="">西</div>
-                    </el-col>
-                    <el-col :span="3">
-                      <div class="">南</div>
-                    </el-col>
                   </el-row>
-                  <div style="padding: 60px 20px 0;">
+                  <div style="padding: 80px 20px 0;">
                     <div
-                      style="border-bottom: 1px solid #c9c9cc;border-top: 1px solid #c9c9cc;font-size: 12px;padding-bottom: 10px">
+                      style="border-bottom: 1px solid #c9c9cc;border-top: 1px solid #c9c9cc;font-size: 12px;padding: 0 5px 10px;">
                       <el-row>
                         <el-col :span="10">
                           <div class="">
                             <div>
-                              <div style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;
-    margin-right: 10px;"></div>
+                              <div
+                                style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
                               <div>↑ 02(R)</div>
 
-                              <div style="height: 12px;background: green;width: 90%;float: left">71s</div>
+                              <div style="height: 12px;background: #43af7e;width: 90%;float: left">71s</div>
                               <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                             </div>
                           </div>
@@ -98,7 +92,7 @@
                           <div>
                             <div>→ 02</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">35s</div>
+                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">35s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -106,7 +100,7 @@
                           <div>
                             <div>→ 02</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">27s</div>
+                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">27s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -114,7 +108,61 @@
                           <div>
                             <div>↓ 02</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">20s</div>
+                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">20s</div>
+                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                          </div>
+                        </el-col>
+                      </el-row>
+
+                      <el-row>
+                        <el-col :span="10">
+                          <div class="">
+                            <div>
+                              <div
+                                style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
+                              <div>↑ 02(R)</div>
+
+                              <div style="height: 12px;background: #43af7e;width: 90%;float: left">71s</div>
+                              <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            </div>
+                          </div>
+                        </el-col>
+                        <el-col :span="4">
+                          <div>
+                            <div>← 02</div>
+
+                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">35s</div>
+                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                          </div>
+                        </el-col>
+                      </el-row>
+
+                      <el-row>
+                        <el-col :span="8">
+                          <div class="">
+                            <div>
+                              <div
+                                style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
+                              <div>↑ 02</div>
+
+                              <div style="height: 12px;background: #43af7e;width: 90%;float: left">20s</div>
+                              <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            </div>
+                          </div>
+                        </el-col>
+                        <el-col :span="8">
+                          <div>
+                            <div>→ 02</div>
+
+                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">86s</div>
+                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                          </div>
+                        </el-col>
+                        <el-col :span="8">
+                          <div>
+                            <div>→ 02</div>
+
+                            <div style="height: 12px;background: #43af7e;width: 90%;float: left">47s</div>
                             <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
                           </div>
                         </el-col>
@@ -170,7 +218,9 @@
                           </div>
                           <div style="letter-spacing: 10px"> | | | |</div>
                         </div>
-                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc"></div>
+                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc;position:relative;">
+                          <div style="background: #5c473d;width: 100%;height: 10px;position: absolute;bottom: 0"></div>
+                        </div>
                         <div class="block">
                           <div class="Node_length_list Node_length_list_right">
                             <ul class="">
@@ -181,9 +231,13 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc"></div>
+                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
+                          <div style="background: #5c473d;width: 10px;height: 100%;float: right"></div>
+                        </div>
                         <div class="block" style="border: 3px solid #c9c9cc;"></div>
-                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc"></div>
+                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
+                          <div style="background: #5c473d;width: 10px;height: 100%;"></div>
+                        </div>
                         <div class="block">
                           <div class="Node_length_list Node_length_list_left" style="text-align: right">
                             <ul class="">
@@ -194,7 +248,9 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc"></div>
+                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc">
+                          <div style="background: #5c473d;width: 100%;border-bottom: 10px solid #5c473d"></div>
+                        </div>
                         <div class="block" style="padding-left: 15px">
                           <div style="letter-spacing: 10px"> | | | |</div>
                           <div style="letter-spacing: 10px"><span>0</span> <span>12</span> <span>25</span>
@@ -214,12 +270,19 @@
 
               <el-tabs type="border-card" style="height: 290px;margin-top: 10px;background: #353644">
                 <el-tab-pane label="交叉口机动车/非机动车流量">
-                  <img src="/static/image/map/5ba0ac52af4ac.svg" style="width: 30px;height: 30px"/>
+                  <el-row>
+                    <el-col :span="12">
+                      <div class=""></div>
+                    </el-col>
+                    <el-col :span="12">
+                      <div class=""></div>
+                    </el-col>
+                  </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="交叉口延误数据">
                   <el-row>
                     <el-col :span="16">
-                      <div class="grid-content bg-purple">123</div>
+                      <div class="grid-content bg-purple">1</div>
                     </el-col>
                     <el-col :span="8" style="padding: 50px 0 0 20px">
                       <div class="">
@@ -272,6 +335,7 @@
         nodeData: {
           node: {}
         },
+        currentSignal: []
       }
     },
     mounted() {
@@ -281,7 +345,8 @@
       init() {
         this.getNodeCongestionSource();
         this.getRoadNetCongestionScore();
-        this.getCurrentSignalByNodeId()
+        this.getCurrentSignalByNodeId();
+        this.getNodeDataD16ByNodeId();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -314,10 +379,10 @@
           })
       },
       getCurrentSignalByNodeId() {  //实时红绿灯
-        this.$http.get('/signal/currentSignalByNodeId?nodeId=2')
+        this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id)
           .then((response) => {
-            console.log(response)
-          })
+            this.currentSignal = response.data.values;
+          });
 
         this.$http.get('/signal/currentSignalByLinkId?linkId=201')
           .then((response) => {
@@ -329,6 +394,12 @@
             console.log(response)
           })
       },
+      getNodeDataD16ByNodeId() {
+        this.$http.get('/nodeData/getNodeDataD16ByNodeId?nodeId=2&current=true')
+          .then((response) => {
+            console.log(response)
+          })
+      }
     },
   }
 </script>
