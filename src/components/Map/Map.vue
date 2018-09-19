@@ -64,11 +64,11 @@
           let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
           marker.id = allNodeDelay[i].node_id;
           marker.addEventListener('click', (pt) => {
-            console.log(pt.currentTarget.id)
+            console.log(pt.currentTarget)
             this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
           });
           label.addEventListener('click', (pt) => {
-            console.log(pt.currentTarget.id)
+            console.log(pt.currentTarget)
             this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
           });
           window.congestionMap.addOverlay(label);
@@ -89,11 +89,15 @@
           });
           polyline.id = allLinksDelay[i].link_id;
           polyline.addEventListener('click', (pt) => {
-            console.log(pt.currentTarget.id)
-            this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id);
+            console.log(pt.currentTarget)
+            // pt.currentTarget.id
+            this.jumpPage('/main/RoadSectionMap/' +'201?lng=119.170574&lat=33.513026');
           });
           window.congestionMap.addOverlay(polyline);          //增加折线
         }
+      },
+      jumpPage(key) {
+        this.$router.push(key);
       },
       getDelayColor(num) {
         if (num < 30) {
