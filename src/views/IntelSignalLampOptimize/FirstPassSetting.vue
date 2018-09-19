@@ -118,8 +118,27 @@
                 <div class="control-setting-title">优先通行车辆历史记录区间段：{{filter_date}}  {{filter_start_time}}-{{filter_end_time}}
                   <span class="right-record-number">找到记录：{{history_record_number}}</span>
                 </div>
-                <div class="show-record-title"></div>
-
+                <div class="show-record-title">
+                  <div class="record-item">时间</div>
+                  <div class="record-item">路口</div>
+                  <div class="record-item">车辆ID</div>
+                  <div class="record-item">车辆类型</div>
+                  <div class="record-item">优先级别</div>
+                  <div class="record-item">延误时间</div>
+                  <div class="record-item">平均车速</div>
+                </div>
+                <div class="record-split-line"></div>
+                <div class="show-all-record-content">
+                  <div class="show-record-item" v-for="(record, i) in filter_all_record">
+                    <div class="record-item">{{record.time}}</div>
+                    <div class="record-item">{{record.road}}</div>
+                    <div class="record-item">{{record.car_id}}</div>
+                    <div class="record-item">{{record.car_type}}</div>
+                    <div class="record-item">{{record.first_level}}</div>
+                    <div class="record-item">{{record.delay_time}}</div>
+                    <div class="record-item">{{record.avg_speed}}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -163,6 +182,72 @@
           history_record_number:9,
           filter_road_name:'人民路-珠海路',
           filter_car_type:'警卫车辆',
+          filter_all_record:[{
+            time:'9:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'10:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          }
+          ]
         }
       },
       mounted:function(){
@@ -224,11 +309,7 @@
           this.is_global = !this.is_global;
         },
         filter_button_click :function () {
-
-        },
-        judge_input_type:function(data) {
-          // var reg = new RegExp('/^(d{4})(d{1,2})2(d{1,2})$/');
-          // if(!reg.test(data)) alert("日期输入的格式不合法!");
+          this.filter_date = $("#date_picker").val()
         },
         //判断数据事件是否合法
         judge_input_time_correct:function(time){
@@ -489,14 +570,44 @@
     height: 310px;
     background: rgba(41,41,54,0.7);
     margin: 10px auto;
-    display: flex;
+    /*display: flex;*/
   }
   .right-record-number{
     float:right;
     padding-right: 20px;
   }
   .show-record-title{
-    margin-top: 20px;
-
+    margin: 20px 15px;
+    display: flex;
+    color: #c9c9cc;
   }
+  .show-record-item{
+    margin: 20px 15px;
+    display: flex;
+    color: #c9c9cc;
+    font-size: 12px;
+  }
+  .record-item{
+    width: 70px;
+    padding: 0 10px 0 0;
+    text-align: center;
+  }
+  .record-split-line{
+    width: 475px;
+    margin: 0 auto;
+    height: 1px;
+    background: #c9c9cc;
+  }
+  .show-all-record-content{
+    height: 190px;
+    overflow-y: auto;
+  }
+  /*.show-all-record-content ::-webkit-scrollbar{*/
+    /*width: 5px;*/
+    /*background: #2b2b36;*/
+  /*}*/
+  /*.show-all-record-content ::-webkit-scrollbar-track {*/
+    /*background-color: #eee;*/
+  /*}*/
+
 </style>
