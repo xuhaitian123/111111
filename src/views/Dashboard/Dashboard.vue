@@ -652,7 +652,7 @@
       },
       getRoadFlowColor(num) {
         if (num < 30) {
-          return "green"
+          return "#43af7e"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {

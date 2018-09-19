@@ -107,7 +107,7 @@
 
                 <ul class="CongestionMap_Legend">
                   <li>
-                    <i class="icon-yuan iconfont" style="color: green"></i>
+                    <i class="icon-yuan iconfont" style="color: #43af7e"></i>
                     <span>延误时间 < 30秒</span>
                   </li>
                   <li>
@@ -354,7 +354,7 @@
       },
       getRoadAvgDelayColor(num) {
         if (num < 30) {
-          return "green"
+          return "#43af7e"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {
@@ -368,7 +368,7 @@
       getNodeDelayImg(num) {
         if (num < 30) {
           // return "/static/50.png"
-          return "/static/image/map/green.jpg"
+          return "/static/image/map/#43af7e.jpg"
         } else if (num > 30 && num < 50) {
           // return "/static/53.png"
           return "/static/image/map/yellow.jpg"
