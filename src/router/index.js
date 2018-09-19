@@ -13,6 +13,8 @@ import Login from '../views/Login/Login'
 import signalOptimization from '../views/signalOptimization/signalOptimization'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
+import DataAnalyse from '../views/dataAnalyse/dataAnalyse'
+
 Vue.use(Router)
 
 export default new Router({
@@ -26,6 +28,18 @@ export default new Router({
       path: '/login',
       component: Login,
       name: 'Layout'
+    },
+    {
+      path:'/dataAnalyse',
+      component:Layout,
+      name:'dataAnalyse',
+      children:[
+        {
+          path: 'dataAnalyse',
+          component: DataAnalyse,
+          name: 'dataAnalyse'
+        }
+      ]
     },
     {
       path: '/main',
@@ -82,7 +96,7 @@ export default new Router({
       name: 'Layout',
       children: [
         {
-          path: 'intersectionsMap',
+          path: 'intersectionsMap/:id',
           component: IntersectionsMap,
           name: 'IntersectionsMap'
         }

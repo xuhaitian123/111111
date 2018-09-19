@@ -41,6 +41,7 @@
 
       <span class="area_time">{{ formatDate(new Date(),'yyyy.MM.dd hh:mm')}}</span>
     </div>
+
   </div>
 </template>
 <script>
