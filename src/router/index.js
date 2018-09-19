@@ -10,8 +10,11 @@ import IntersectionsMap from  '../views/Dashboard/IntersectionsMap'
 import Map from '../views/Map/Map'
 import TrafficVideo from  '../views/test/TrafficVideoTest' //TODO
 import Login from '../views/Login/Login'
+import signalOptimization from '../views/signalOptimization/signalOptimization'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
+import DataAnalyse from '../views/dataAnalyse/dataAnalyse'
+
 Vue.use(Router)
 
 export default new Router({
@@ -25,6 +28,18 @@ export default new Router({
       path: '/login',
       component: Login,
       name: 'Layout'
+    },
+    {
+      path:'/dataAnalyse',
+      component:Layout,
+      name:'dataAnalyse',
+      children:[
+        {
+          path: 'dataAnalyse',
+          component: DataAnalyse,
+          name: 'dataAnalyse'
+        }
+      ]
     },
     {
       path: '/main',
@@ -121,6 +136,19 @@ export default new Router({
           path: 'signalLampControl',
           component: SignalLampControl,
           name: 'SignalLampControl'
+        }
+      ],
+    },
+    {
+      path: '/signalOptimization',
+      component: Layout,
+      name: 'signalOptimization',
+      // redirect: '/signalOptimization/signalOptimization',
+      children: [
+        {
+          path: 'signalOptimization',
+          component: signalOptimization,
+          name: 'signalOptimization'
         }
       ],
     },
