@@ -165,7 +165,7 @@
         </div>
       </div>
     </div>
-    <TimeLine @newTime="updataVideo"></TimeLine>
+    <TimeLine @newTime="updataVideo" @changeTime="clearImage"></TimeLine>
   </div>
 
 </template>
@@ -182,7 +182,7 @@
         currentIndex: -1,
         delay: 10000,
         delay_show: 5000,
-        prevloading: 2000,
+        prevloading: 1000,
         isShowCar: 0,
         isShowBus: 0,
         isShowBike: 0,
@@ -245,7 +245,11 @@
       clearInterval(this.timer)
     },
     methods: {
+      clearImage(){
+        // this.imageList ={}
+      },
       updataVideo(time) {
+        console.log(time)
         let i = 0;
         var j = 0;
 
@@ -256,14 +260,15 @@
         if (time % 1000 === 0) {
           this.loadImage(startTime);
         }
-        this.showImage(Math.floor((startTime - this.delay_show-2000)/1000)*1000 , millSecond)
+        this.showImage(Math.floor((startTime - this.delay_show-5000)/1000)*1000 , millSecond)
       },
       showImage(startTime, millSecond) {
 
         var prevloadingTime = startTime + this.prevloading;
         for (var time = startTime; time < prevloadingTime; time += 1000) {
           if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
-            return this.loading = true
+            console.log(this.imageList[time])
+            return this.loading = Math.random()
           }
         }
 
@@ -298,7 +303,7 @@
 
         this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0};
         this.getCountOfNode(endTime).then((count) => {
-          this.$http.get('http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
+          this.$http.get('/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
             (images) => {
               if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
               images = images.data.map(item => {
@@ -486,6 +491,7 @@
     width: 1080px;
     height: 715px;
     position: relative;
+    overflow: hidden;
   }
 
   .trafficVideo-video-header {

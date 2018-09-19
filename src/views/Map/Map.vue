@@ -280,7 +280,7 @@
   }
   .score-size{
     font-size: 22px;
-    color: #43af7e;
+    color: green;
     display: block;
   }
   .people-data,

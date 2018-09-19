@@ -7,8 +7,6 @@
           <div class="Dashboard_clearfix">
             <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPageToMain()"></i>拥堵地图</span>
             <div class="nav-right-style">
-              <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
-              <i class="iconfont icon-shuxian"></i>
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
@@ -86,19 +84,19 @@
                 <div class="filter-condition">
                   <div class="show-filter-item">
                     <div class="item-key-intro">日期</div>
-                    <div class="item-info-show">20180918</div>
+                    <input class="item-info-show" placeholder="选择日期" v-model="filter_date" id="date_picker" type="text"  />
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">开始时间</div>
-                    <div class="item-info-show">09：04</div>
+                    <input class="item-info-show" type="text" v-model="filter_start_time" @blur="judge_input_time_correct(filter_start_time)"/>
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">结束时间</div>
-                    <div class="item-info-show">13：45</div>
+                    <input class="item-info-show" v-model="filter_end_time" @blur="judge_input_time_correct(filter_end_time)"/>
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">路口</div>
-                    <div class="item-info-show">{{road_name}}</div>
+                    <input class="item-info-show" v-model="filter_road_name" />
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">车辆ID</div>
@@ -106,7 +104,7 @@
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">车辆类型</div>
-                    <div class="item-info-show">警卫车辆</div>
+                    <input class="item-info-show" v-model="filter_car_type" />
                   </div>
                 </div>
                 <div class="filter-input">
@@ -118,8 +116,27 @@
                 <div class="control-setting-title">优先通行车辆历史记录区间段：{{filter_date}}  {{filter_start_time}}-{{filter_end_time}}
                   <span class="right-record-number">找到记录：{{history_record_number}}</span>
                 </div>
-                <div class="show-record-title"></div>
-
+                <div class="show-record-title">
+                  <div class="record-item">时间</div>
+                  <div class="record-item">路口</div>
+                  <div class="record-item">车辆ID</div>
+                  <div class="record-item">车辆类型</div>
+                  <div class="record-item">优先级别</div>
+                  <div class="record-item">延误时间</div>
+                  <div class="record-item">平均车速</div>
+                </div>
+                <div class="record-split-line"></div>
+                <div class="show-all-record-content">
+                  <div class="show-record-item" v-for="(record, i) in filter_all_record">
+                    <div class="record-item">{{record.time}}</div>
+                    <div class="record-item">{{record.road}}</div>
+                    <div class="record-item">{{record.car_id}}</div>
+                    <div class="record-item">{{record.car_type}}</div>
+                    <div class="record-item">{{record.first_level}}</div>
+                    <div class="record-item">{{record.delay_time}}</div>
+                    <div class="record-item">{{record.avg_speed}}</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -160,10 +177,92 @@
           filter_date:'20180918',
           filter_start_time:'09:30',
           filter_end_time:'13:30',
-          history_record_number:9
+          history_record_number:9,
+          filter_road_name:'人民路-珠海路',
+          filter_car_type:'警卫车辆',
+          filter_all_record:[{
+            time:'9:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'10:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          },{
+            time:'11:00',
+            road:'人民路',
+            car_id:'00005',
+            car_type:'警卫车辆',
+            first_level:'中',
+            delay_time:'10（83%）',
+            avg_speed:'50（83%）'
+          }
+          ]
         }
       },
+      mounted:function(){
+        this.add_date_picker_show()
+      },
       methods:{
+        add_date_picker_show:function(){
+          $( "#date_picker" ).datepicker({
+            showMonthAfterYear: true,
+            changeMonth: true,
+            changeYear: true,
+            buttonImageOnly: true,
+            dateFormat: 'yymmdd',
+            onSelect: function(dateText, inst) {
+            }
+          });
+        },
         //修改优先方式
         set_first_style_item:function (index) {
           for (var i = 0; i < this.first_setting_info.first_style.length; i ++)
@@ -208,7 +307,13 @@
           this.is_global = !this.is_global;
         },
         filter_button_click :function () {
-
+          this.filter_date = $("#date_picker").val()
+        },
+        //判断数据事件是否合法
+        judge_input_time_correct:function(time){
+          var reg = new RegExp(/^(([01]?\d)|(2[0-3])):[0-5]\d$/);
+          //开始判断
+          if(!reg.test(time)) alert("时间输入的格式不合法!");
         }
       }
     }
@@ -463,14 +568,44 @@
     height: 310px;
     background: rgba(41,41,54,0.7);
     margin: 10px auto;
-    display: flex;
+    /*display: flex;*/
   }
   .right-record-number{
     float:right;
     padding-right: 20px;
   }
   .show-record-title{
-    margin-top: 20px;
-
+    margin: 20px 15px;
+    display: flex;
+    color: #c9c9cc;
   }
+  .show-record-item{
+    margin: 20px 15px;
+    display: flex;
+    color: #c9c9cc;
+    font-size: 12px;
+  }
+  .record-item{
+    width: 70px;
+    padding: 0 10px 0 0;
+    text-align: center;
+  }
+  .record-split-line{
+    width: 475px;
+    margin: 0 auto;
+    height: 1px;
+    background: #c9c9cc;
+  }
+  .show-all-record-content{
+    height: 190px;
+    overflow-y: auto;
+  }
+  /*.show-all-record-content ::-webkit-scrollbar{*/
+    /*width: 5px;*/
+    /*background: #2b2b36;*/
+  /*}*/
+  /*.show-all-record-content ::-webkit-scrollbar-track {*/
+    /*background-color: #eee;*/
+  /*}*/
+
 </style>
