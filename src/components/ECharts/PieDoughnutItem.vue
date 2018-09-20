@@ -75,19 +75,13 @@
             label: {
               normal: {
                 show: false,
-                position: 'center'
+                position:'inside'
               },
               emphasis: {
                 show: true,
                 textStyle: {
-                  fontSize: '25',
-                  fontWeight: 'bold'
+                  fontSize: '12',
                 }
-              }
-            },
-            labelLine: {
-              normal: {
-                show: false
               }
             },
             data: [

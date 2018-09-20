@@ -29,7 +29,6 @@
           <img class="image_next_county" src="/static/map/right.png">
           <div class="county">{{map_info.county}}</div>
         </div>
-
       </div>
       <div class="map-area-container-main">
         <div class="lift">
@@ -226,13 +225,6 @@
     line-height: 15px;
     display: none;
   }
-  .province_isShow,
-  .city_isShow,
-  .county_isShow{
-    display: flex;
-    align-items: center;
-    /*display: none;*/
-  }
   /*.next,*/
   /*.pre,*/
   /*.current{*/
@@ -288,7 +280,7 @@
   }
   .score-size{
     font-size: 22px;
-    color: #43af7e;
+    color: green;
     display: block;
   }
   .people-data,
@@ -367,6 +359,7 @@
         // var self = this
         // this.$http.get('/dataB/getDataB')
         //   .then(function (data) {
+        //   对数据进行处理
         //     var county ={
         //       Province:"江苏省",
         //       city:"淮安市",

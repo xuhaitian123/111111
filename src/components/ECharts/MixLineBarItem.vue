@@ -202,10 +202,14 @@
                 return value.value
               }));
 
-              option.series[0].data.unshift(undefined);
-              option.series[1].data.unshift(undefined);
-              option.series[2].data.unshift(undefined);
-              option.series[3].data.unshift(undefined);
+              let delayMax= Math.max(Math.max.apply(null,option.series[0].data ),Math.max.apply(null,option.series[1].data )).toFixed(0);
+              let alarmMax= Math.max(Math.max.apply(null,option.series[2].data ),Math.max.apply(null,option.series[3].data )).toFixed(0);
+              option.yAxis[0].max= delayMax;
+              option.yAxis[0].interval= delayMax/5;
+
+              option.yAxis[1].max= alarmMax;
+              option.yAxis[1].interval= alarmMax/5;
+
               this.myChart.setOption(option);
             }
           }

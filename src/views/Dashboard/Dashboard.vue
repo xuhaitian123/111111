@@ -33,11 +33,11 @@
                 <div class="Dashboard_card_title">路网总流量</div>
 
                 <div class="Dashboard_card_progressList Dashboard_card_progressHeight">
-                  <div v-for="item in allRoadFlow" :key="item.node_id">
+                  <div v-for="(item,i) in allRoadFlow" :key="item.node_id" v-if="i <6">
                     <div class="fl Dashboard_card_progress">
                       <div class="Dashboard_card_road">{{item.name}}</div>
                       <el-progress :percentage="item.value /100" :stroke-width="6"
-                                   :show-text="false"></el-progress>
+                                   :show-text="false" :color="getRoadFlowColor(item.value /100)"></el-progress>
                     </div>
                     <div class="fr">
                       <span class="Dashboard_card_vph">{{item.value}}vph</span>
@@ -46,7 +46,7 @@
                 </div>
 
                 <div>
-                  <div class="Dashboard_card_title mt10">路网拥堵评分</div>
+                  <div class="Dashboard_card_title mt10">拥堵里程比例</div>
                   <div class="Dashboard_card_score">
                     <span class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</span>
                   </div>
@@ -58,11 +58,12 @@
 
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
-                <div class="Dashboard_card_title">拥堵里程比例</div>
+                <div class="Dashboard_card_title">路网拥堵评分</div>
                 <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
-                <div class="Dashboard_card_progressList_score" v-for="item in allNodeScore" :key="item.node_id">
+                <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id"
+                     v-if="i <5">
                   {{item.road_name}}<span class="fr fs20">{{item.value.toFixed(0)}}</span>
                 </div>
               </div>
@@ -93,7 +94,8 @@
                 </el-col>
               </el-row>
 
-              <el-row class="Dashboard_alarm_list" v-for="i in allNodeAlarmInfo" :key="i.node_id">
+              <el-row class="Dashboard_alarm_list" v-for="(i,index) in allNodeAlarmInfo" :key="i.node_id"
+                      v-if="index <5">
                 <el-col :span="6" :offset="1">
                   <!--#9f172b-->
                   <div class="" :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
@@ -113,7 +115,7 @@
                       {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                     <br>
                     <span :style="{color:alarmColor(i.value[1].value)}">
-                      {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
+                      {{flowText[i.value[1].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
                   </div>
                 </el-col>
               </el-row>
@@ -165,121 +167,121 @@
       </el-col>
     </el-row>
 
-    <!--<el-row :gutter="10" class="Dashboard_lineRow">-->
-      <!--<el-col>-->
-        <!--<el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">-->
-          <!--<div class="Dashboard_clearfix">-->
-            <!--<span>优先通行控制设置</span>-->
-            <!--<i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>-->
-          <!--</div>-->
-          <!--<div class="Dashboard_card_body_two" style="padding: 20px">-->
+    <el-row :gutter="10" class="Dashboard_lineRow">
+      <el-col>
+        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
+          <div class="Dashboard_clearfix">
+            <span>优先通行控制设置</span>
+            <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
+          </div>
+          <div class="Dashboard_card_body_two" style="padding: 20px">
 
-            <!--<el-col :span="6" class="">-->
-              <!--<div class="Dashboard_set_col" style="height: 180px;position: relative">-->
-                <!--人民路-珠海路优先通行控制设置-->
+            <el-col :span="6" class="">
+              <div class="Dashboard_set_col" style="height: 180px;position: relative">
+                人民路-珠海路优先通行控制设置
 
-                <!--<div>-->
-                  <!--<div class="fl" style="padding-left: 10px;margin: 10px 0">-->
-                    <!--<span>优先方式</span>-->
-                    <!--<ul>-->
-                      <!--<el-checkbox-group style="margin: 10px 0" v-model="firstMode">-->
-                        <!--<li>-->
-                          <!--<el-checkbox label="绿灯延长"></el-checkbox>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                          <!--<el-checkbox label="红灯提前结束"></el-checkbox>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                          <!--<el-checkbox label="调整相位顺序"></el-checkbox>-->
-                        <!--</li>-->
-                      <!--</el-checkbox-group>-->
-                    <!--</ul>-->
-                  <!--</div>-->
-                  <!--<div class="fr" style="margin: 10px 0">-->
-                    <!--<div class="fl">-->
-                      <!--<span>优先车辆和等级</span>-->
-                      <!--<ul>-->
-                        <!--<el-checkbox-group v-model="firstVehicle" style="margin: 10px 0 10px 10px">-->
-                          <!--<li>-->
-                            <!--<el-checkbox label="警卫车辆">警卫车辆</el-checkbox>-->
-                          <!--</li>-->
-                          <!--<li>-->
-                            <!--<el-checkbox label="警务车辆">警务车辆</el-checkbox>-->
-                          <!--</li>-->
-                          <!--<li>-->
-                            <!--<el-checkbox label="领导车辆">领导车辆</el-checkbox>-->
-                          <!--</li>-->
-                          <!--<li>-->
-                            <!--<el-checkbox label="救护车">救护车</el-checkbox>-->
-                          <!--</li>-->
-                          <!--<li>-->
-                            <!--<el-checkbox label="公交车">公交车</el-checkbox>-->
-                          <!--</li>-->
-                        <!--</el-checkbox-group>-->
-                      <!--</ul>-->
-                    <!--</div>-->
-                    <!--<div class="fr" style="margin-left: 5px;">-->
-                      <!--<span>高 中 低</span>-->
-                      <!--<ul style="margin: 10px 0">-->
-                        <!--<li>-->
-                          <!--<el-radio-group v-model="radio">-->
-                            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-                          <!--</el-radio-group>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                          <!--<el-radio-group v-model="radio1">-->
-                            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-                          <!--</el-radio-group>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                          <!--<el-radio-group v-model="radio2">-->
-                            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-                          <!--</el-radio-group>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                          <!--<el-radio-group v-model="radio3">-->
-                            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-                          <!--</el-radio-group>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                          <!--<el-radio-group v-model="radio4">-->
-                            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-                            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-                          <!--</el-radio-group>-->
-                        <!--</li>-->
-                      <!--</ul>-->
-                    <!--</div>-->
+                <div>
+                  <div class="fl" style="padding-left: 10px;margin: 10px 0">
+                    <span>优先方式</span>
+                    <ul>
+                      <el-checkbox-group style="margin: 10px 0" v-model="firstMode">
+                        <li>
+                          <el-checkbox label="绿灯延长"></el-checkbox>
+                        </li>
+                        <li>
+                          <el-checkbox label="红灯提前结束"></el-checkbox>
+                        </li>
+                        <li>
+                          <el-checkbox label="调整相位顺序"></el-checkbox>
+                        </li>
+                      </el-checkbox-group>
+                    </ul>
+                  </div>
+                  <div class="fr" style="margin: 10px 0">
+                    <div class="fl">
+                      <span>优先车辆和等级</span>
+                      <ul>
+                        <el-checkbox-group v-model="firstVehicle" style="margin: 10px 0 10px 10px">
+                          <li>
+                            <el-checkbox label="警卫车辆">警卫车辆</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="警务车辆">警务车辆</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="领导车辆">领导车辆</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="救护车">救护车</el-checkbox>
+                          </li>
+                          <li>
+                            <el-checkbox label="公交车">公交车</el-checkbox>
+                          </li>
+                        </el-checkbox-group>
+                      </ul>
+                    </div>
+                    <div class="fr" style="margin-left: 5px;">
+                      <span>高 中 低</span>
+                      <ul style="margin: 10px 0">
+                        <li>
+                          <el-radio-group v-model="radio">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio1">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio2">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio3">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                        <li>
+                          <el-radio-group v-model="radio4">
+                            <el-radio :label="1">&nbsp;</el-radio>
+                            <el-radio :label="2">&nbsp;</el-radio>
+                            <el-radio :label="3">&nbsp;</el-radio>
+                          </el-radio-group>
+                        </li>
+                      </ul>
+                    </div>
 
-                    <!--<div style="position: absolute;bottom: 20px;left: 30px">-->
-                      <!--启动优先通行-->
-                      <!--<el-radio v-model="radioLine" :label="1">&nbsp;</el-radio>-->
-                    <!--</div>-->
+                    <div style="position: absolute;bottom: 20px;left: 30px">
+                      启动优先通行
+                      <el-radio v-model="radioLine" :label="1">&nbsp;</el-radio>
+                    </div>
 
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</el-col>-->
-            <!--<el-col :span="6" class="">-->
-              <!--<div class="Dashboard_set_col">123</div>-->
-            <!--</el-col>-->
-            <!--<el-col :span="6" class="">-->
-              <!--<div class="Dashboard_set_col">123</div>-->
-            <!--</el-col>-->
+                  </div>
+                </div>
+              </div>
+            </el-col>
+            <el-col :span="6" class="">
+              <div class="Dashboard_set_col">123</div>
+            </el-col>
+            <el-col :span="6" class="">
+              <div class="Dashboard_set_col">123</div>
+            </el-col>
 
 
-          <!--</div>-->
-        <!--</el-card>-->
-      <!--</el-col>-->
-    <!--</el-row>-->
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 <style scoped>
@@ -400,6 +402,7 @@
 
   .Dashboard_card_progress {
     width: 70%;
+    margin-bottom: 5px;
   }
 
   .Dashboard_card_alarm {
@@ -430,7 +433,7 @@
 
   .Dashboard_card_vph {
     font-size: 15px;
-    line-height: 30px;
+    line-height: 20px;
   }
 
   .Dashboard_set_col {
@@ -641,7 +644,7 @@
             })
         })
       },
-      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后平均延误
+      getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后报警次数
         return new Promise((resolve, reject) => {
           this.$http.get('/history/trafficLightOptimizeAlarmTimes')
             .then((response) => {
@@ -650,12 +653,23 @@
         });
       },
       getTrafficLightOptimizeCongestionStatus() {
-        return new Promise((resolve, reject) => {
-          this.$http.get('/history/trafficLightOptimizeAlarmTimes')
-            .then((response) => {
-              console.log(response);
-            })
-        });
+        this.$http.get('/history/trafficLightOptimizeCongestionStatus')
+          .then((response) => {
+            console.log(response);
+          })
+      },
+      getRoadFlowColor(num) {
+        if (num < 30) {
+          return "green"
+        } else if (num > 30 && num < 50) {
+          return "#e7c936"
+        } else if (num > 50 && num < 60) {
+          return "darkorange"
+        } else if (num > 60) {
+          return "red"
+        } else {
+          return "#c9c9cc"
+        }
       },
       jumpPage(key) {
         this.$router.push(key);

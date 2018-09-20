@@ -100,7 +100,7 @@ import { Message } from 'element-ui';
           });
           self.$router.push({path: '/main/map'});
         }
-        else {  
+        else {
           self.$message.error('用户名或密码错误');
         }
       }

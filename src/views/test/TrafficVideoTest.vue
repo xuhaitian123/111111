@@ -33,18 +33,18 @@
           <div class="trafficVideo-select-node-contaienr">
             <div class="trafficVideo-select-node-top">
 
-              <div>
+              <div @click="changeLink(nodeInfo['北'].taskId)">
 
-                <div class="trafficVideo-select-node-action action">N</div>
-                南京路
+                <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['北'] && nodeInfo['北'].taskId===taskId}">N</div>
+                {{nodeInfo['北']?nodeInfo['北'].link_name: ''}}
               </div>
 
             </div>
             <div class="trafficVideo-select-node-middle">
               <div class="trafficVideo-select-node-left">
-                <div>
-                  南京路
-                  <div class="trafficVideo-select-node-action">W</div>
+                <div @click="changeLink(nodeInfo['西'].taskId)">
+                  {{nodeInfo['西']?nodeInfo['西'].link_name: ''}}
+                    <div class="trafficVideo-select-node-action" :class="{action: nodeInfo['西'] && nodeInfo['西'].taskId===taskId}">W</div>
                 </div>
               </div>
 
@@ -52,17 +52,17 @@
 
               </div>
               <div class="trafficVideo-select-node-right">
-                <div>
-                  南京路
-                  <div class="trafficVideo-select-node-action">E</div>
+                <div @click="changeLink(nodeInfo['东'].taskId)">
+                  {{nodeInfo['东']?nodeInfo['东'].link_name: ''}}
+                  <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['东'] &&nodeInfo['东'].taskId===taskId}">E</div>
                 </div>
               </div>
 
             </div>
             <div class="trafficVideo-select-node-bottom">
-              <div>
-                南京路
-                <div class="trafficVideo-select-node-action">S</div>
+              <div @click="changeLink(nodeInfo['南'].taskId)">
+                {{nodeInfo['南']?nodeInfo['南'].link_name: ''}}
+                <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['南'] &&nodeInfo['南'].taskId===taskId}">S</div>
               </div>
             </div>
 
@@ -165,7 +165,7 @@
         </div>
       </div>
     </div>
-    <TimeLine @newTime="updataVideo"></TimeLine>
+    <TimeLine @newTime="updataVideo" @changeTime="clearImage"></TimeLine>
   </div>
 
 </template>
@@ -182,7 +182,7 @@
         currentIndex: -1,
         delay: 10000,
         delay_show: 5000,
-        prevloading: 2000,
+          prevloading: 1000,
         isShowCar: 0,
         isShowBus: 0,
         isShowBike: 0,
@@ -193,6 +193,8 @@
         trafficVideo_car_ctx:{},
         trafficVideo_bus_ctx:{},
         trafficVideo_bike_ctx:{},
+        nodeInfo:{},
+        taskId:null,
 
         ratio: 10,
         // typeList: ['origin','car'],
@@ -230,8 +232,13 @@
           }).camera_id;
           return link
         });
-
-        this.nodeInfo =  linkInfo;
+        var nodeInfo ={}
+        linkInfo.forEach(link=>{
+          nodeInfo[link.link_direction] = link
+        });
+        this.taskId =  nodeInfo['北'].taskId
+        this.nodeInfo =  nodeInfo;
+        console.log(this.nodeInfo)
       })
 
 
@@ -245,7 +252,26 @@
       clearInterval(this.timer)
     },
     methods: {
+      clearImage(){
+        //重置数据
+        this.numberOfCarModal =  {
+          startTime: 0,
+            numberOfModal: {
+            car: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.car.status},
+            bus: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.bus.status},
+            bike: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.bike.status}
+          },
+          endTime: 0,
+        }
+
+        // this.imageList ={}
+      },
+      changeLink(taskId){
+        this.taskId =  taskId;
+        this.imageList ={}
+      },
       updataVideo(time) {
+
         let i = 0;
         var j = 0;
 
@@ -256,14 +282,15 @@
         if (time % 1000 === 0) {
           this.loadImage(startTime);
         }
-        this.showImage(Math.floor((startTime - this.delay_show-2000)/1000)*1000 , millSecond)
+        this.showImage(Math.floor((startTime - this.delay_show-5000)/1000)*1000 , millSecond)
       },
       showImage(startTime, millSecond) {
 
         var prevloadingTime = startTime + this.prevloading;
         for (var time = startTime; time < prevloadingTime; time += 1000) {
           if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
-            return this.loading = true
+            // console.log(this.imageList[time])
+            return this.loading = Math.random()
           }
         }
 
@@ -293,14 +320,16 @@
       },
 
       loadImage(endTime) {
-
+        if (!this.taskId) return;
         var startTime = endTime - 1000;
 
-        this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0};
+        this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0,startTime: new Date()};
         this.getCountOfNode(endTime).then((count) => {
-          this.$http.get('http://localhost:3000/video/videoImage?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime).then(
+          this.countAllTypeNumber(count)
+          // console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
+          this.$http.get('/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime).then(
             (images) => {
-              if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id=04461d423ded11e8b051d094663aac3d&start=' + startTime + '&end=' + endTime)
+              if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
               images = images.data.map(item => {
                 item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
                 return item
@@ -367,14 +396,16 @@
               })
 
               Promise.all([loading_origin,loading_bus,loading_car,loading_bike]).then((image) => {
-                this.imageList[startTime] = {
-                  isLoading: 1,
-                  imageList: images,
+                // this.imageList[startTime] = {
 
-                  index: -1,
-                  preImage: image,
-                  count: count,
-                }
+                  this.imageList[startTime].imageList=images
+
+                  this.imageList[startTime].index=-1
+                  this.imageList[startTime].preImage=image
+                  this.imageList[startTime].count=count
+                  this.imageList[startTime].endTime=new Date()
+                this.imageList[startTime].isLoading=1
+                // }
               })
             })
         })
@@ -424,18 +455,57 @@
 
 
       },
+      countAllTypeNumber(result){
+        var directions = result.result;
+        var directs = ['东','北','南','西'];
+        var direct_codes = [];
+        for (var n = 0; n < directs.length; n ++)
+        {
+          if (this.nodeInfo[directs[n]].taskId == this.taskId)
+          {
+            var movementList = this.nodeInfo[directs[n]].movementList;
+            for (var j = 0; j < movementList.length; j ++)
+            {
+              direct_codes.push(movementList[j].movement_id);
+            }
+            break;
+          }
+        }
+        var types = ['car','bus','bike'];
+        var direct_types = ['car','truck','bike'];
+
+        for (var m = 0; m < directions.length; m ++)
+        {
+          for (var i = 0; i < types.length; i ++)
+          {
+            if (direct_codes.indexOf(directions[m].movement_id) != -1)
+            {
+              this.numberOfCarModal.numberOfModal[types[i]][directions[m].direction] += directions[m][direct_types[i]]
+            }
+          }
+        }
+
+      },
       countNumber(type) {
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
         this['trafficVideo_'+ type+'_ctx'].clearRect(0, 0, 1080, 680)
+        if (this.numberOfCarModal.numberOfModal[type].status == true)
+        {
+          this.numberOfCarModal.numberOfModal[type].left = 0;
+          this.numberOfCarModal.numberOfModal[type].straight = 0;
+          this.numberOfCarModal.numberOfModal[type].right = 0;
+        }
 
       },
       getCountOfNode(endTime) {
         return new Promise(resolve => {
-          // var startTime = endTime - 1000;
-          // this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
-          //   resolve(result.data)
-          // })
-          resolve([])
+          var startTime = endTime - 1000;
+          this.$http.get('http://172.16.5.82:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
+            resolve(result.data);
+          })
+          //  resolve({result:[{movement_id: 210, direction: "left", car: 1, truck: 2, bike: 3, status: false},
+          // {movement_id: 203, direction: "straight", car: 1, truck: 2, bike: 3, status: false},
+          // {movement_id: 211, direction: "right", car: 1, truck: 2, bike: 3, status: false}]})
         });
       },
       getNodeCameraLish(nodeId) {
@@ -486,6 +556,7 @@
     width: 1080px;
     height: 715px;
     position: relative;
+    overflow: hidden;
   }
 
   .trafficVideo-video-header {
