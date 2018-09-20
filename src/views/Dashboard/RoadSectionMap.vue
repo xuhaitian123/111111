@@ -11,7 +11,8 @@
             </div>
           </div>
           <div class="" style="position: relative;background: #1f1f2c">
-            <road-net-map style="width: 65%" :all-node-delay="allNodeDelay" :all-links-delay="allLinksDelay"></road-net-map>
+            <road-net-map style="width: 65%" :all-node-delay="allNodeDelay"
+                          :all-links-delay="allLinksDelay"></road-net-map>
 
             <div class="Road_row_link">
               <el-row type="flex" justify="space-around">
@@ -299,8 +300,8 @@
         linksInfo: [
           [], []
         ],
-        allNodeDelay:[],
-        allLinksDelay:[],
+        allNodeDelay: [],
+        allLinksDelay: [],
       }
     },
     mounted() {
@@ -315,7 +316,7 @@
         this.getAllLinkId();
         this.getLinkDelayDoubleDirection();
 
-        window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng, this.$route.query.lat), 18);
+        window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
 
         this.getTrafficCongestionRoadAvgDelay((lineDelay) => {
           this.getAllNodeD12s((nodeDelay) => {
@@ -340,7 +341,9 @@
         this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&current=true')
           .then((response) => {
             console.log(response)
-            this.linkData = response.data
+            if(response.data.related_data){
+              this.linkData = response.data
+            }
           })
       },
       getNodeDataD3ByLinkId(linkId, cb) {  //进道口机动车流量 + 非机动车流量
