@@ -613,6 +613,7 @@
       getAllNodeCongestionAlarm() {  //交叉口报警信息
         this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true')
           .then((response) => {
+            console.log(response.data)
             this.allNodeAlarmInfo = response.data;
           })
       },
