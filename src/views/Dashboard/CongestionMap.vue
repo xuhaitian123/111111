@@ -205,8 +205,7 @@
         this.getCongestionPercent();
         this.getRoadNetCongestionScore();
         this.getAllNodeCongestionAlarm();
-        this.getAllLinksFlow();
-        this.getAllNodesFlow();
+        this.getAllFlow();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -243,18 +242,16 @@
             cb(response.data.values)
           })
       },
-      getAllLinksFlow() {
+      getAllLinksFlow(cb) {  //所有进道口流量
         this.$http.get('/nodeData/getAllLinksFlow?current=true')
           .then((response) => {
-            console.log(response)
-            this.allLinksFlow = response.data;
+            cb(response)
           })
       },
-      getAllNodesFlow() {
+      getAllNodesFlow(cb) {  // 所有交叉口流量
         this.$http.get('/nodeData/getAllNodesFlow?current=true')
           .then((response) => {
-            console.log(response)
-            this.allNodeFlow = response.data;
+            cb(response)
           })
       },
 
@@ -269,7 +266,17 @@
               this.allLinksDelay = lineDelay;
             });
           });
+        }else {
+          this.getAllFlow();
         }
+      },
+      getAllFlow(){
+        this.getAllLinksFlow((link)=>{
+          this.getAllNodesFlow((node)=>{
+            this.allLinksFlow = link.data;
+            this.allNodeFlow = node.data;
+          });
+        });
       },
       getRoadAvgDelayColor(num) {
         if (num < 30) {

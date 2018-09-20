@@ -366,6 +366,7 @@
           })
       },
       getLinksData(links, num) {
+        console.log(links)
         this.getLinkFlowAndLength(links[num]).then((data) => {
           if (num === links.length - 1) {
             this.linksInfo = links;
