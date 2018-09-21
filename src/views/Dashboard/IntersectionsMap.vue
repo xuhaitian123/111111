@@ -72,98 +72,116 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <div style="padding: 80px 20px 0;">
-                    <div
-                      style="border-bottom: 1px solid #c9c9cc;border-top: 1px solid #c9c9cc;font-size: 12px;padding: 0 5px 10px;">
+                  <div style="margin: 20px 20px 0;">
+                    <div @mousemove="changeSignalLine" @mouseup='stopChange' @mouseleave="stopChange"
+                      style="border-bottom: 1px solid #c9c9cc;border-top: 1px solid #c9c9cc;font-size: 12px;padding: 0 5px 20px;position: relative">
+                        <div class="signal_current_line" id="signal_line" @mousedown="moveSignalLine" :style="{left: lineLeft+'px'}"></div>
                       <el-row>
-                        <el-col :span="10">
-                          <div class="">
-                            <div>
-                              <div
-                                style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
-                              <div>↑ 02(R)</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['111']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['111'].key)}}</div>
 
-                              <div style="height: 12px;background: green;width: 90%;float: left">71s</div>
-                              <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['111'].MaxGreen/ signalPlan['111'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['111'].MaxGreen}}s
                             </div>
+                            <div :style="{width: (signalPlan['111'].Yellow / signalPlan['111'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['111'].AllRed / signalPlan['111'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
-                        <el-col :span="4">
-                          <div>
-                            <div>→ 02</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['112']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['112'].key)}}</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">35s</div>
-                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['112'].MaxGreen/ signalPlan['112'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['112'].MaxGreen}}s
+                            </div>
+                            <div :style="{width: (signalPlan['112'].Yellow / signalPlan['112'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['112'].AllRed / signalPlan['112'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
-                        <el-col :span="7">
-                          <div>
-                            <div>→ 02</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['121']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['121'].key)}}</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">27s</div>
-                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['121'].MaxGreen/ signalPlan['121'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['121'].MaxGreen}}s
+                            </div>
+                            <div :style="{width: (signalPlan['121'].Yellow / signalPlan['121'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['121'].AllRed / signalPlan['121'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
-                        <el-col :span="3">
-                          <div>
-                            <div>↓ 02</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['122']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['122'].key)}}</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">20s</div>
-                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['122'].MaxGreen/ signalPlan['122'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['122'].MaxGreen}}s
+                            </div>
+                            <div :style="{width: (signalPlan['122'].Yellow / signalPlan['122'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['122'].AllRed / signalPlan['122'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
                       </el-row>
 
                       <el-row>
-                        <el-col :span="10">
-                          <div class="">
-                            <div>
-                              <div
-                                style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
-                              <div>↑ 02(R)</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['211']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['211'].key)}}</div>
 
-                              <div style="height: 12px;background: green;width: 90%;float: left">71s</div>
-                              <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['211'].MaxGreen/ signalPlan['211'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['211'].MaxGreen}}s
                             </div>
+                            <div :style="{width: (signalPlan['211'].Yellow / signalPlan['211'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['211'].AllRed / signalPlan['211'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
-                        <el-col :span="4">
-                          <div>
-                            <div>← 02</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['212']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['212'].key)}}</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">35s</div>
-                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
-                          </div>
-                        </el-col>
-                      </el-row>
-
-                      <el-row>
-                        <el-col :span="8">
-                          <div class="">
-                            <div>
-                              <div
-                                style="width: 10px;height: 10px;border-radius: 50%;background: red;float: left;margin-top: 2px;margin-right: 10px;"></div>
-                              <div>↑ 02</div>
-
-                              <div style="height: 12px;background: green;width: 90%;float: left">20s</div>
-                              <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['212'].MaxGreen/ signalPlan['212'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['212'].MaxGreen}}s
                             </div>
+                            <div :style="{width: (signalPlan['212'].Yellow / signalPlan['212'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['212'].AllRed / signalPlan['212'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
-                        <el-col :span="8">
-                          <div>
-                            <div>→ 02</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['221']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['221'].key)}}</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">86s</div>
-                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['221'].MaxGreen/ signalPlan['221'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['221'].MaxGreen}}s
+                            </div>
+                            <div :style="{width: (signalPlan['221'].Yellow / signalPlan['221'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['221'].AllRed / signalPlan['221'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
-                        <el-col :span="8">
-                          <div>
-                            <div>→ 02</div>
+                        <el-col :span="6">
+                          <div v-if="signalPlan['222']!==undefined">
+                            <div>{{getRoadFlow(signalPlan['222'].key)}}</div>
 
-                            <div style="height: 12px;background: green;width: 90%;float: left">47s</div>
-                            <div style="height: 12px;background: darkorange;width: 10%;float: left"></div>
+                            <div :style="{width: (signalPlan['222'].MaxGreen/ signalPlan['222'].total)*100+'%'}"
+                                 style="height: 12px;background: green;float: left">{{signalPlan['222'].MaxGreen}}s
+                            </div>
+                            <div :style="{width: (signalPlan['222'].Yellow / signalPlan['222'].total)*100+'%'}"
+                                 style="height: 12px;background: darkorange;float: left"></div>
+                            <div :style="{width: (signalPlan['222'].AllRed / signalPlan['222'].total)*100+'%'}"
+                                 style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
                       </el-row>
@@ -218,9 +236,11 @@
                           </div>
                           <div style="letter-spacing: 10px"> | | | |</div>
                         </div>
-                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc;position:relative;">
-                          <div :style="{height: nodeLength.values[3].value+'px',background: getSaturationColor(nodeLength.values[3].value)}"
-                               style="width: 100%;position: absolute;bottom: 0"></div>
+                        <div class="block"
+                             style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc;position:relative;">
+                          <div
+                            :style="{height: nodeLength.values[3].value+'px',background: getSaturationColor(nodeLength.values[3].value)}"
+                            style="width: 100%;position: absolute;bottom: 0"></div>
                         </div>
                         <div class="block">
                           <div class="Node_length_list Node_length_list_right">
@@ -233,13 +253,15 @@
                           </div>
                         </div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
-                          <div :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor(nodeLength.values[2].value)}"
-                               style="height: 100%;float: right"></div>
+                          <div
+                            :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor(nodeLength.values[2].value)}"
+                            style="height: 100%;float: right"></div>
                         </div>
                         <div class="block" style="border: 3px solid #c9c9cc;"></div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
-                          <div :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor(nodeLength.values[0].value)}"
-                               style="height: 100%;"></div>
+                          <div
+                            :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor(nodeLength.values[0].value)}"
+                            style="height: 100%;"></div>
                         </div>
                         <div class="block">
                           <div class="Node_length_list Node_length_list_left" style="text-align: right">
@@ -252,8 +274,9 @@
                           </div>
                         </div>
                         <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc">
-                          <div :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor(nodeLength.values[1].value)}"
-                               style="width: 100%;"></div>
+                          <div
+                            :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor(nodeLength.values[1].value)}"
+                            style="width: 100%;"></div>
                         </div>
                         <div class="block" style="padding-left: 15px">
                           <div style="letter-spacing: 10px"> | | | |</div>
@@ -340,11 +363,16 @@
           node: {}
         },
         currentSignal: [],
-        nodeLength:{
-          values:[
-            {},{},{},{}
+        nodeLength: {
+          values: [
+            {}, {}, {}, {}
           ]
         },
+        signalPlan: {},
+        lineLeft:0,
+        startPosition: 0,
+        endPosition: 0,
+        isChangeTime: false,
       }
     },
     mounted() {
@@ -356,15 +384,17 @@
         this.getRoadNetCongestionScore();
         this.getCurrentSignalByNodeId();
         this.getNodeAllDataD13ByNodeId();
+        this.getSignalByNodeId();
+        this.changePosition();
       },
       jumpPage(key) {
         this.$router.push(key);
       },
       getNodeDataD5ByNodeId(nodeId) {  //机动车流量 + 非机动车流量
         return new Promise((resolve, reject) => {
-          this.$http.get('/nodeData/getNodeDataD5ByNodeId?nodeId=' + nodeId + '&current=true')
+          this.$http.get('/nodeData/getNodeDataD5ByNodeId?nodeId=' + nodeId + '&current=true'+'&token='+this.getHeader().token)
             .then((response) => {
-              this.$http.get('/nodeData/getNodeDataD6ByNodeId?nodeId=' + nodeId + '&current=true')
+              this.$http.get('/nodeData/getNodeDataD6ByNodeId?nodeId=' + nodeId + '&current=true'+'&token='+this.getHeader().token)
                 .then((result) => {
                   resolve(response.data.value + result.data.value)
                 })
@@ -372,7 +402,7 @@
         });
       },
       getNodeCongestionSource() { //交叉口延误数据
-        this.$http.get('/nodeData/getNodeDataD12ByNodeId?nodeId=' + this.$route.params.id + '&current=true')
+        this.$http.get('/nodeData/getNodeDataD12ByNodeId?nodeId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             this.getNodeDataD5ByNodeId(response.data.node_id).then((data) => {
               response.data.flow = data;
@@ -382,34 +412,68 @@
       },
       getRoadNetCongestionScore() { //路网拥堵评分
         this.$http
-          .get('/TrafficCongestion/roadNetCongestionScore?current=true')
+          .get('/TrafficCongestion/roadNetCongestionScore?current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             this.roadNetCongestionScore = response.data.value;
           })
       },
       getCurrentSignalByNodeId() {  //实时红绿灯
-        this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id)
+        this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id+'&token='+this.getHeader().token)
           .then((response) => {
-            console.log(response)
-            this.currentSignal = response.data.values.filter((val)=>{return val.value!==null});
+            this.currentSignal = response.data.values.filter((val) => {
+              return val.value !== null
+            });
           });
-
-        this.$http.get('/signal/currentSignalByLinkId?linkId=201')
-          .then((response) => {
-            console.log(response)
-          })
-
-        this.$http.get('/signal/currentSignalByMovementId?movementId=201')
-          .then((response) => {
-            console.log(response)
-          })
       },
       getNodeAllDataD13ByNodeId() {  //交叉口排队长度
-        this.$http.get('/nodeData/getNodeAllDataD13ByNodeId?nodeId='+ this.$route.params.id +'&current=true')
+        this.$http.get('/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
-            this.nodeLength = response.data;
             console.log(response)
+            this.nodeLength = response.data;
           })
+      },
+      getSignalByNodeId() { //信号灯配时方案
+        this.$http.get('/signal/signalByNodeId?nodeId=2&current=true'+'&token='+this.getHeader().token)
+          .then((response) => {
+            let obj = {}
+            response.data.forEach((value) => {
+              value.total = value.AllRed + value.MaxGreen + value.Yellow;
+              obj[value.BRP] = value;
+            });
+            console.log(obj)
+
+            this.signalPlan = obj;
+          })
+      },
+      getRoadFlow(key) {
+        let text = '';
+        switch (key) {
+          case 'd1':
+            text = '← d1';
+            break;
+          case 'd2':
+            text = '↑ d2';
+            break;
+          case 'd3':
+            text='← d3';
+            break;
+          case 'd4':
+            text='→ d4';
+            break;
+          case 'd5':
+            text='← d5';
+            break;
+          case 'd6':
+            text='↓ d6';
+            break;
+          case 'd7':
+            text='→ d7';
+            break;
+          case 'd8':
+            text='→ d8';
+            break;
+        }
+        return text
       },
       getSaturationColor(num) {
         if (num < 30) {
@@ -422,6 +486,30 @@
           return "red"
         } else {
           return "#c9c9cc"
+        }
+      },
+      moveSignalLine(e){
+        this.isChangeTime = true;
+        this.startPosition = e.clientX;
+      },
+      changeSignalLine(e) {
+        if (!this.isChangeTime) return;
+        this.endPosition = e.clientX;
+        if(this.lineLeft + this.endPosition - this.startPosition > 0){
+          document.getElementById('signal_line').style.left = this.lineLeft + this.endPosition - this.startPosition + 'px'
+        }
+      },
+      stopChange(){
+        if(this.isChangeTime ){
+          this.isChangeTime = false;
+          this.changePosition();
+        }
+      },
+      changePosition() {
+        if (this.endPosition && this.startPosition) {
+          this.lineLeft = this.lineLeft + this.endPosition - this.startPosition;
+          this.endPosition = 0;
+          this.startPosition = 0;
         }
       },
     },
@@ -552,6 +640,24 @@
 
   .Node_length_list_left span {
     margin-left: 10px;
+  }
+
+  .signal_current_line {
+    position: absolute;
+    top: 0;
+    width: 16px;
+    height: 100%;
+    background-size: cover;
+    overflow: visible;
+    z-index: 70;
+    background: url("../../../static/timeLine/line.png") center;
+    background-size: 20px 100%;
+  }
+
+  .signal_current_line image {
+    position: absolute;
+    width: 40px;
+    height: 80px;
   }
 
 </style>
