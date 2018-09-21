@@ -23,6 +23,7 @@
     },
     methods: {
       init() {
+        console.log(this.data)
         let myChart = this.$echarts.init(document.getElementById('main'));
 
         let option = {

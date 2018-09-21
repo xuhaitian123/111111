@@ -134,7 +134,7 @@
             </div>
 
             <div style="position:absolute;bottom: 80px;width: 100%">
-              <time-line></time-line>
+              <time-line @newTime="getNewTime"></time-line>
             </div>
           </div>
         </el-card>
@@ -191,6 +191,7 @@
         allNodeDelay: [],
         allLinksFlow: [],
         allNodeFlow: [],
+        startTime:0,
       }
     },
     mounted() {
@@ -214,6 +215,7 @@
         this.$http
           .get('/trafficCongestion/congestionPercent?current=true')
           .then((response) => {
+            console.log(response)
             this.congestionPercent = response.data.value;
           })
       },
@@ -306,6 +308,19 @@
           return "/static/image/map/red.jpg"
         }
       },
+
+      getNewTime(val){
+        if(this.startTime !==0){
+          if(val-this.startTime>5*60*5000){
+            console.log(this.formatDate(new Date(val),'yy-MM-dd hh:mm:ss'))
+
+            this.startTime = 0;
+          }
+        }else {
+          this.startTime = val;
+        }
+      },
+
     }
   }
 </script>
