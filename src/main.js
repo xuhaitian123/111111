@@ -55,7 +55,7 @@ function padLeftZero(str) {
 
 
 /* eslint-disable no-new */
-new Vue({
+window.myMv = new Vue({
   el: '#app',
   router,
   components: {App},
