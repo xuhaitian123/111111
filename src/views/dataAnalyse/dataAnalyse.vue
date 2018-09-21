@@ -18,7 +18,7 @@
           <div class="alarmData_title">
             <div class="alarmData_title_text">路网拥堵报警次数月变化趋势</div>
           </div>
-          <div class="alarmData_body_area">
+          <div class="alarmData_body_area ">
             <div id="data" style="height: 100%;width: 100%"></div>
           </div>
         </div>
@@ -27,7 +27,7 @@
             <div class="IntersectionData_title_text">各交叉口平均延误水平与拥堵报警次数</div>
           </div>
           <div class="IntersectionData_body_area">
-
+            <div id="data_three" style="height: 100%;width: 100%"></div>
           </div>
         </div>
         <div class="flowRate">
@@ -152,21 +152,28 @@
     data() {
       return {
         myChart: undefined,
+        Intersection:undefined,
       }
     },//
     methods: {
       init() {
-        this.myChart = this.$echarts.init(document.getElementById('data'));//
+        this.myChart = this.$echarts.init(document.getElementById('data'));
+        this.Intersection = this.$echarts.init(document.getElementById('data_three'));
         let options = {
           legend: {
-            top: 50,
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: {
+                type: 'cross'
+              }
+            },
             data: [{
               name: '优化前',
               icon: 'square',
               textStyle: {
                 color: '#c9c9cc',
                 fontSize: 10,
-              }
+              },
             },
               {
                 name: '优化后',
@@ -175,32 +182,50 @@
                   color: '#c9c9cc',
                   fontSize: 10,
                 }
-              },],
+              },
+            ],
+            top: 30
           },
           grid: {
-            // left: 103,
-            // bottom: 61,
+            left: 100
           },
           xAxis: {
             type: 'value',
-            name: ['报警次数'],
-            nameLocation: 'end',
-            nameTextStyle: {
-              color: '#c9c9cc'
-            },
-            color:'#c9c9cc',
+            color: '#c9c9cc',
             splitLine: {
               show: false
             },
-            // minInterval: 1,
+            axisLine: {
+              lineStyle: {
+                color: '#595B66'
+              },
+            },
+            axisTick: {
+              show: false
+            },
             axisLabel: {
               show: "true",
-              color: '#c9c9cc'
+              color: '#c9c9cc',
+              margin: 20
+
             }
           },
           yAxis: {
             type: 'category',
-            data: ['五月', '四月', '三月', '二月', '一月', '九月', '十月', '十一月', '十二月'],
+            data: ['五月', '四月', '三月', '二月', '一月', '八月', '九月', '十月', '十一月', '十二月'],
+            margin: 30,
+            axisLine: {
+              lineStyle: {
+                color: '#595B66'
+              },
+            },
+            axisLabel: {
+              color: '#c9c9cc',
+              margin: 20
+            },
+            axisTick: {
+              show: false,
+            },
 
 
           },
@@ -210,19 +235,101 @@
               type: 'bar',
               color: '#e05f9a',
               barWidth: '12',
-              data: [100, 200, 300, 1000]
+              data: [[1000, '八月'], [800, '九月'], [700, '十月'], [600, '十一月'], [2000, '十二月']]
             },
             {
               name: '优化后',
               type: 'bar',
+              barGap: '-100%',
               color: '#02d1d1',
               barWidth: '12',
-              data: [10, 52, 200, 1500]
+              data: [[500, '一月'], [100, '二月'], [200, '三月'], [500, '四月'], [300, '五月']]
             }
           ]
 
-        }
+        };
+        let option_one = {
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+              type: 'cross'
+            }
+          },
+          legend: {
+            data:['优化前延误', '优化后延误', '优化前报警', '优化后报警'],
+          },
+          grid: {
+            left: 50
+          },
+          xAxis:[{
+            type:'category',
+            data:['人民路','厦门路','南京路','沈阳路','大连路','普惠路','外环路','江苏路'],
+            axisLine: {
+              lineStyle: {
+                color: '#595B66'
+              },
+            },
+            axisLabel: {
+              color: '#c9c9cc',
+              margin:15
+            },
+            axisTick: {
+              show: false,
+            },
+
+          }],
+          yAxis: [{
+            type: 'value',
+            show:true,
+            min:0,
+            max:120,
+            position:'right',
+          },
+            {
+              type: 'value',
+              show:true,
+              min:0,
+              max:30,
+              interval: 5,
+              position:'left',
+              // nameTextStyle: {
+              //   color: '#c9c9cc',
+              //   align: 'center',
+              // },
+            }],
+          series:[
+            {
+              type:'bar',
+              color: '#e05f9a',
+              yAxisIndex: 1,
+              data:[['人民路',12],['厦门路',11],['南京路',15],['沈阳路',16],['大连路',19],['普惠路',10],['外环路',11],['江苏路',11],]
+            },
+            {
+              type:'bar',
+              color: '#eacc36',
+              yAxisIndex: 1,//
+              data:[['人民路',30],['厦门路',13],['南京路',7],['沈阳路',8],['大连路',9],['普惠路',1],['外环路',10],['江苏路',20],]
+            },
+            {
+              type:'line',
+              yAxisIndex: 0,
+              symbol: 'circle',
+              color: '#af69c9',
+              data:[['人民路',30],['厦门路',89],['南京路',77],['沈阳路',66],['大连路',88],['普惠路',99],['外环路',89],['江苏路',78],]
+            },
+            {
+              type:'line',
+              yAxisIndex: 0,
+              symbol: 'circle',
+              color: '#02d1d1',
+              data:[['人民路',100],['厦门路',70],['南京路',60],['沈阳路',100],['大连路',60],['普惠路',90],['外环路',80],['江苏路',60],]
+            },
+          ]
+
+
+        };
         this.myChart.setOption(options);
+        this.Intersection.setOption(option_one);
       }
 
     },
