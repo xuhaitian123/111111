@@ -11,7 +11,23 @@
             </div>
           </div>
           <div class="" style="position: relative;background: #1f1f2c">
-            <div style="width: 65%;height: 720px"></div>
+            <div style="width: 65%;height: 720px">
+              <img src="/static/image/map/node_cross.png" style="height: 100%;width: 100%"/>
+            </div>
+
+            <div class="signal_left_block"
+                 style="top: 50px;height: 60px;font-size: 23px;text-align: center;color: #c9c9cc;">
+              <div style="padding-top: 3px">N</div>
+              <i class="iconfont icon-fangxiang" style="font-size: 22px"></i>
+            </div>
+
+            <div class="signal_left_block"
+                 style="top: 120px;height: 120px;">
+
+              <img src="/static/image/map/40.png"
+                   style="width: 50px;height: 50px;padding: 5px;border-bottom: 1px solid #acacaf"/>
+              <img src="/static/image/map/camera.png" style="width: 30px;height: 30px;padding: 15px;"/>
+            </div>
 
             <div class="Road_row_link">
               <el-row type="flex" justify="space-around">
@@ -51,10 +67,9 @@
               </el-row>
             </div>
 
-            <div
-              style="position: absolute;right: 37%;top: 50px;height: 140px;width: 170px;background:  rgba(41,41,54,0.9);text-align: center">
+            <div class="signal_road_score">
               <div style="font-size: 14px;margin-top: 10px">路网拥堵评分</div>
-              <road-gauge :data="roadNetCongestionScore" class="Dashboard_card_roadGauge"></road-gauge>
+              <road-gauge :data="roadNetCongestionScore.toFixed(0)" class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
             <div class="Node_right_top">
@@ -74,8 +89,9 @@
                   </el-row>
                   <div style="margin: 20px 20px 0;">
                     <div @mousemove="changeSignalLine" @mouseup='stopChange' @mouseleave="stopChange"
-                      style="border-bottom: 1px solid #c9c9cc;border-top: 1px solid #c9c9cc;font-size: 12px;padding: 0 5px 20px;position: relative">
-                        <div class="signal_current_line" id="signal_line" @mousedown="moveSignalLine" :style="{left: lineLeft+'px'}"></div>
+                         style="border-bottom: 1px solid #c9c9cc;border-top: 1px solid #c9c9cc;font-size: 12px;padding: 0 5px 20px;position: relative">
+                      <div class="signal_current_line" id="signal_line" @mousedown="moveSignalLine"
+                           :style="{left: lineLeft+'px'}"></div>
                       <el-row>
                         <el-col :span="6">
                           <div v-if="signalPlan['111']!==undefined">
@@ -239,7 +255,7 @@
                         <div class="block"
                              style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc;position:relative;">
                           <div
-                            :style="{height: nodeLength.values[3].value+'px',background: getSaturationColor(nodeLength.values[3].value)}"
+                            :style="{height: nodeLength.values[3].value+'px',background: getSaturationColor((nodeLength.values[3].value/50)*100)}"
                             style="width: 100%;position: absolute;bottom: 0"></div>
                         </div>
                         <div class="block">
@@ -254,13 +270,13 @@
                         </div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
                           <div
-                            :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor(nodeLength.values[2].value)}"
+                            :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor((nodeLength.values[2].value/50)*100)}"
                             style="height: 100%;float: right"></div>
                         </div>
                         <div class="block" style="border: 3px solid #c9c9cc;"></div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
                           <div
-                            :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor(nodeLength.values[0].value)}"
+                            :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor((nodeLength.values[0].value/50)*100)}"
                             style="height: 100%;"></div>
                         </div>
                         <div class="block">
@@ -275,7 +291,7 @@
                         </div>
                         <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc">
                           <div
-                            :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor(nodeLength.values[1].value)}"
+                            :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor((nodeLength.values[1].value/ 50) * 100)}"
                             style="width: 100%;"></div>
                         </div>
                         <div class="block" style="padding-left: 15px">
@@ -298,32 +314,290 @@
               <el-tabs type="border-card" style="height: 290px;margin-top: 10px;background: #353644">
                 <el-tab-pane label="交叉口机动车/非机动车流量">
                   <el-row>
-                    <el-col :span="12">
-                      <div class=""></div>
+                    <el-col :span="10">
+                      <div class="">人民路</div>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="10">
                       <div class=""></div>
                     </el-col>
                   </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="交叉口延误数据">
                   <el-row>
-                    <el-col :span="16">
-                      <div class="grid-content bg-purple">1</div>
+                    <el-col :span="12" :offset="2">
+                      <div class="" style="display: flex">
+
+                        <div style="width: 20px;line-height: 245px;font-size: 12px">南</div>
+
+                        <div style="flex: 1;position: relative">
+                          <div style="line-height: 30px;text-align: center;font-size: 12px"
+                               v-if="allLinks[allLinks.length-1]">{{allLinks[allLinks.length-1].link_name}}
+                          </div>
+                          <img src="/static/image/map/delay_cross.png"
+                               style="width: 186px;height: 186px;display: block;margin: 0 auto"/>
+
+                          <div v-if="allMovementDelay['东']" style="position: absolute;top: 80px;right: 30px;transform: rotate(270deg);">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['东']['左'])" stroke="none">
+                                <path d="M95 1256 c-49 -29 -91 -58 -92 -63 -5 -13 186 -125 198 -117 5 3 9
+18 9 35 0 29 0 29 61 29 54 0 64 -3 88 -29 49 -53 51 -72 51 -610 l0 -501 45
+0 46 0 -3 533 -3 532 -25 49 c-14 27 -43 63 -64 80 -34 28 -46 31 -117 35
+l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 21.600000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                 :fill="getSaturationColor(allMovementDelay['东']['直'])" stroke="none">
+                                <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['东']['右'])" stroke="none">
+                                <path d="M300 1271 l0 -39 -79 -3 c-71 -4 -83 -7 -117 -35 -21 -17 -50 -53
+-64 -80 l-25 -49 -3 -532 -3 -533 46 0 45 0 0 501 c0 538 2 557 51 610 24 26
+34 29 88 29 61 0 61 0 61 -29 0 -17 4 -32 9 -35 12 -8 203 104 198 117 -3 11
+-183 117 -198 117 -5 0 -9 -18 -9 -39z"/>
+                              </g>
+                            </svg>
+                          </div>
+
+                          <div v-if="allMovementDelay['南']" style="position: absolute;bottom: 40px;right: 70px;">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['南']['左'])" stroke="none">
+                                <path d="M95 1256 c-49 -29 -91 -58 -92 -63 -5 -13 186 -125 198 -117 5 3 9
+18 9 35 0 29 0 29 61 29 54 0 64 -3 88 -29 49 -53 51 -72 51 -610 l0 -501 45
+0 46 0 -3 533 -3 532 -25 49 c-14 27 -43 63 -64 80 -34 28 -46 31 -117 35
+l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 21.600000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                 :fill="getSaturationColor(allMovementDelay['南']['直'])" stroke="none">
+                                <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['南']['右'])" stroke="none">
+                                <path d="M300 1271 l0 -39 -79 -3 c-71 -4 -83 -7 -117 -35 -21 -17 -50 -53
+-64 -80 l-25 -49 -3 -532 -3 -533 46 0 45 0 0 501 c0 538 2 557 51 610 24 26
+34 29 88 29 61 0 61 0 61 -29 0 -17 4 -32 9 -35 12 -8 203 104 198 117 -3 11
+-183 117 -198 117 -5 0 -9 -18 -9 -39z"/>
+                              </g>
+                            </svg>
+                          </div>
+
+                          <div v-if="allMovementDelay['西']" style="position: absolute;top: 130px;left: 30px;;transform: rotate(90deg)">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['西']['左'])" stroke="none">
+                                <path d="M95 1256 c-49 -29 -91 -58 -92 -63 -5 -13 186 -125 198 -117 5 3 9
+18 9 35 0 29 0 29 61 29 54 0 64 -3 88 -29 49 -53 51 -72 51 -610 l0 -501 45
+0 46 0 -3 533 -3 532 -25 49 c-14 27 -43 63 -64 80 -34 28 -46 31 -117 35
+l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 21.600000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                 :fill="getSaturationColor(allMovementDelay['西']['直'])" stroke="none">
+                                <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['西']['右'])" stroke="none">
+                                <path d="M300 1271 l0 -39 -79 -3 c-71 -4 -83 -7 -117 -35 -21 -17 -50 -53
+-64 -80 l-25 -49 -3 -532 -3 -533 46 0 45 0 0 501 c0 538 2 557 51 610 24 26
+34 29 88 29 61 0 61 0 61 -29 0 -17 4 -32 9 -35 12 -8 203 104 198 117 -3 11
+-183 117 -198 117 -5 0 -9 -18 -9 -39z"/>
+                              </g>
+                            </svg>
+                          </div>
+
+                          <div v-if="allMovementDelay['北']" style="position: absolute;top: 40px;left: 70px;transform: rotate(180deg)">
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['北']['左'])" stroke="none">
+                                <path d="M95 1256 c-49 -29 -91 -58 -92 -63 -5 -13 186 -125 198 -117 5 3 9
+18 9 35 0 29 0 29 61 29 54 0 64 -3 88 -29 49 -53 51 -72 51 -610 l0 -501 45
+0 46 0 -3 533 -3 532 -25 49 c-14 27 -43 63 -64 80 -34 28 -46 31 -117 35
+l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 21.600000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                 :fill="getSaturationColor(allMovementDelay['北']['直'])" stroke="none">
+                                <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                              </g>
+                            </svg>
+
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                 width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
+                                 preserveAspectRatio="xMidYMid meet">
+                              <metadata>
+                                Created by potrace 1.13, written by Peter Selinger 2001-2015
+                              </metadata>
+                              <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000)"
+                                 :fill="getSaturationColor(allMovementDelay['北']['右'])" stroke="none">
+                                <path d="M300 1271 l0 -39 -79 -3 c-71 -4 -83 -7 -117 -35 -21 -17 -50 -53
+-64 -80 l-25 -49 -3 -532 -3 -533 46 0 45 0 0 501 c0 538 2 557 51 610 24 26
+34 29 88 29 61 0 61 0 61 -29 0 -17 4 -32 9 -35 12 -8 203 104 198 117 -3 11
+-183 117 -198 117 -5 0 -9 -18 -9 -39z"/>
+                              </g>
+                            </svg>
+                          </div>
+
+                        </div>
+
+                        <div style="width: 20px;line-height: 245px;font-size: 12px">南</div>
+                      </div>
                     </el-col>
-                    <el-col :span="8" style="padding: 50px 0 0 20px">
+                    <el-col :offset="3" :span="7" style="padding: 50px 0 0 20px;">
                       <div class="">
                         <ul class="Node_delay_time">
                           <li>
+                            <div style="transform: rotate(90deg);position: absolute;top: 3px;margin-left: -35px">
+                              <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                   width="14px" height="32px" viewBox="0 0 21.600000 104.800000"
+                                   preserveAspectRatio="xMidYMid meet">
+                                <metadata>
+                                  Created by potrace 1.13, written by Peter Selinger 2001-2015
+                                </metadata>
+                                <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                   fill="green" stroke="none">
+                                  <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                                </g>
+                              </svg>
+                            </div>
                             <span>延误时间 < 30秒</span>
                           </li>
                           <li>
+                            <div style="transform: rotate(90deg);position: absolute;top: 3px;margin-left: -35px">
+                              <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                   width="14px" height="32px" viewBox="0 0 21.600000 104.800000"
+                                   preserveAspectRatio="xMidYMid meet">
+                                <metadata>
+                                  Created by potrace 1.13, written by Peter Selinger 2001-2015
+                                </metadata>
+                                <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                   fill="#e7c936" stroke="none">
+                                  <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                                </g>
+                              </svg>
+                            </div>
                             <span>延误时间 30-50秒</span>
                           </li>
                           <li>
+                            <div style="transform: rotate(90deg);position: absolute;top: 3px;margin-left: -35px">
+                              <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                   width="14px" height="32px" viewBox="0 0 21.600000 104.800000"
+                                   preserveAspectRatio="xMidYMid meet">
+                                <metadata>
+                                  Created by potrace 1.13, written by Peter Selinger 2001-2015
+                                </metadata>
+                                <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                   fill="darkorange" stroke="none">
+                                  <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                                </g>
+                              </svg>
+                            </div>
                             <span>延误时间 50-60秒</span>
                           </li>
                           <li>
+                            <div style="transform: rotate(90deg);position: absolute;top: 3px;margin-left: -35px">
+                              <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                                   width="14px" height="32px" viewBox="0 0 21.600000 104.800000"
+                                   preserveAspectRatio="xMidYMid meet">
+                                <metadata>
+                                  Created by potrace 1.13, written by Peter Selinger 2001-2015
+                                </metadata>
+                                <g transform="translate(0.000000,104.800000) scale(0.080000,-0.080000) "
+                                   fill="red" stroke="none">
+                                  <path d="M62 1200 c-34 -60 -62 -114 -62 -120 0 -5 20 -10 45 -10 l45 0 0
+-535 0 -535 45 0 45 0 0 535 0 535 46 0 c32 0 44 4 42 13 -7 28 -124 227 -133
+227 -5 0 -38 -50 -73 -110z"/>
+                                </g>
+                              </svg>
+                            </div>
                             <span>延误时间 > 60秒</span>
                           </li>
                         </ul>
@@ -334,8 +608,9 @@
               </el-tabs>
             </div>
           </div>
+
           <div style="width: 100%;margin-top: 20px;margin-bottom: 30px">
-            <time-line></time-line>
+            <time-line @newTime="getNewTime"></time-line>
           </div>
         </el-card>
       </el-col>
@@ -369,10 +644,14 @@
           ]
         },
         signalPlan: {},
-        lineLeft:0,
+        lineLeft: 0,
         startPosition: 0,
         endPosition: 0,
         isChangeTime: false,
+        motorVehicleFlow: {},
+        nonMotorVehicleFlow: {},
+        allLinks: [],
+        allMovementDelay: {},
       }
     },
     mounted() {
@@ -380,70 +659,125 @@
     },
     methods: {
       init() {
-        this.getNodeCongestionSource();
-        this.getRoadNetCongestionScore();
-        this.getCurrentSignalByNodeId();
-        this.getNodeAllDataD13ByNodeId();
-        this.getSignalByNodeId();
-        this.changePosition();
+        this.getAllData();
+      },
+      getAllData(startTime, endTime) {
+        this.getNodeCongestionSource(startTime, endTime);
+        this.getRoadNetCongestionScore(startTime, endTime);
+        this.getCurrentSignalByNodeId(startTime, endTime);
+        this.getNodeAllDataD13ByNodeId(startTime, endTime);
+        this.getSignalByNodeId(startTime, endTime);
+
+        this.$http.get('/index/getAllLinksByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token)
+          .then((response) => {
+            this.allLinks = response.data.links;
+          })
+
+        this.$http.get('/index/getAllMovementsByNodeId?nodeId=2' + '&token=' + this.getHeader().token)
+          .then((response) => {
+            console.log(response)
+            this.getAllMovementDelay(response.data.movements, 0, startTime, endTime)
+          })
       },
       jumpPage(key) {
         this.$router.push(key);
       },
-      getNodeDataD5ByNodeId(nodeId) {  //机动车流量 + 非机动车流量
+      setUrlDate(startTime, endTime) {
+        return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
+      },
+      getAllMovementDelay(data, num, startTime, endTime) {
+        this.getMovementDelay(data[num].movement_id, startTime, endTime).then((result) => {
+          data[num].delay = result;
+
+          if (num === data.length - 1) {
+            this.getMovementDirection(data);
+          } else {
+            num += 1;
+            this.getAllMovementDelay(data, num, startTime, endTime);
+          }
+        })
+      },
+      getMovementDirection(data) {
+        let direction = {};
+        data.forEach((delay) => {
+          if (direction[delay.link_direction]) {
+            direction[delay.link_direction][delay.turning_direction] = delay.delay;
+          } else {
+            direction[delay.link_direction] = {};
+            direction[delay.link_direction][delay.turning_direction] = delay.delay;
+          }
+        });
+        console.log(direction)
+        this.allMovementDelay = direction;
+      },
+      getMovementDelay(id, startTime, endTime) {
         return new Promise((resolve, reject) => {
-          this.$http.get('/nodeData/getNodeDataD5ByNodeId?nodeId=' + nodeId + '&current=true'+'&token='+this.getHeader().token)
-            .then((response) => {
-              this.$http.get('/nodeData/getNodeDataD6ByNodeId?nodeId=' + nodeId + '&current=true'+'&token='+this.getHeader().token)
-                .then((result) => {
-                  resolve(response.data.value + result.data.value)
-                })
-            })
+          let url = '/nodeData/getNodeDataD10ByMovementId?movementId=' + id + '&token=' + this.getHeader().token;
+          url += this.setUrlDate(startTime, endTime);
+          this.$http.get(url).then((response) => {
+            resolve(response.data.value)
+          })
         });
       },
-      getNodeCongestionSource() { //交叉口延误数据
-        this.$http.get('/nodeData/getNodeDataD12ByNodeId?nodeId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            this.getNodeDataD5ByNodeId(response.data.node_id).then((data) => {
-              response.data.flow = data;
-              this.nodeData = response.data;
-            });
+      getNodeDataD5ByNodeId(nodeId, startTime, endTime) {  //机动车流量 + 非机动车流量
+        return new Promise((resolve, reject) => {
+          let url = '/nodeData/getNodeDataD5ByNodeId?nodeId=' + nodeId + '&token=' + this.getHeader().token;
+          let secondUrl = '/nodeData/getNodeDataD6ByNodeId?nodeId=' + nodeId + '&token=' + this.getHeader().token;
+          url += this.setUrlDate(startTime, endTime);
+          secondUrl += this.setUrlDate(startTime, endTime);
+
+          this.$http.get(url).then((response) => {
+            this.$http.get(secondUrl).then((result) => {
+
+              resolve(response.data.value + result.data.value)
+            })
           })
+        });
       },
-      getRoadNetCongestionScore() { //路网拥堵评分
-        this.$http
-          .get('/TrafficCongestion/roadNetCongestionScore?current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            this.roadNetCongestionScore = response.data.value;
-          })
+      getNodeCongestionSource(startTime, endTime) { //交叉口延误数据
+        let url = '/nodeData/getNodeDataD12ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          this.getNodeDataD5ByNodeId(response.data.node_id, startTime, endTime).then((data) => {
+            response.data.flow = data;
+            this.nodeData = response.data;
+          });
+        })
+      },
+      getRoadNetCongestionScore(startTime, endTime) { //路网拥堵评分
+        let url = '/TrafficCongestion/roadNetCongestionScore?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          this.roadNetCongestionScore = response.data.value;
+        })
       },
       getCurrentSignalByNodeId() {  //实时红绿灯
-        this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id+'&token='+this.getHeader().token)
+        this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token)
           .then((response) => {
             this.currentSignal = response.data.values.filter((val) => {
               return val.value !== null
             });
           });
       },
-      getNodeAllDataD13ByNodeId() {  //交叉口排队长度
-        this.$http.get('/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            console.log(response)
-            this.nodeLength = response.data;
-          })
+      getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度
+        let url = '/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          this.nodeLength = response.data;
+        })
       },
-      getSignalByNodeId() { //信号灯配时方案
-        this.$http.get('/signal/signalByNodeId?nodeId=2&current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            let obj = {}
-            response.data.forEach((value) => {
-              value.total = value.AllRed + value.MaxGreen + value.Yellow;
-              obj[value.BRP] = value;
-            });
-            console.log(obj)
+      getSignalByNodeId(startTime, endTime) { //信号灯配时方案
+        let url = '/signal/signalByNodeId?nodeId=2&current=true' + '&token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
 
-            this.signalPlan = obj;
-          })
+        this.$http.get(url).then((response) => {
+          let obj = {};
+          response.data.value.forEach((value) => {
+            value.total = value.AllRed + value.MaxGreen + value.Yellow;
+            obj[value.BRP] = value;
+          });
+          this.signalPlan = obj;
+        })
       },
       getRoadFlow(key) {
         let text = '';
@@ -455,29 +789,30 @@
             text = '↑ d2';
             break;
           case 'd3':
-            text='← d3';
+            text = '← d3';
             break;
           case 'd4':
-            text='→ d4';
+            text = '→ d4';
             break;
           case 'd5':
-            text='← d5';
+            text = '← d5';
             break;
           case 'd6':
-            text='↓ d6';
+            text = '↓ d6';
             break;
           case 'd7':
-            text='→ d7';
+            text = '→ d7';
             break;
           case 'd8':
-            text='→ d8';
+            text = '→ d8';
             break;
         }
         return text
       },
       getSaturationColor(num) {
+        console.log(num)
         if (num < 30) {
-          return "#green"
+          return "green"
         } else if (num > 30 && num < 50) {
           return "#e7c936"
         } else if (num > 50 && num < 60) {
@@ -488,19 +823,19 @@
           return "#c9c9cc"
         }
       },
-      moveSignalLine(e){
+      moveSignalLine(e) {
         this.isChangeTime = true;
         this.startPosition = e.clientX;
       },
       changeSignalLine(e) {
         if (!this.isChangeTime) return;
         this.endPosition = e.clientX;
-        if(this.lineLeft + this.endPosition - this.startPosition > 0){
+        if (this.lineLeft + this.endPosition - this.startPosition > 0) {
           document.getElementById('signal_line').style.left = this.lineLeft + this.endPosition - this.startPosition + 'px'
         }
       },
-      stopChange(){
-        if(this.isChangeTime ){
+      stopChange() {
+        if (this.isChangeTime) {
           this.isChangeTime = false;
           this.changePosition();
         }
@@ -510,6 +845,17 @@
           this.lineLeft = this.lineLeft + this.endPosition - this.startPosition;
           this.endPosition = 0;
           this.startPosition = 0;
+        }
+      },
+      getNewTime(val) {
+        if (this.startTime !== 0 && val > this.startTime) {
+          if (val - this.startTime >= 5 * 60 * 1000) {
+            console.log(this.formatDate(new Date(val), 'yy-MM-dd hh:mm:ss'))
+            this.getAllData(this.startTime, val);
+            this.startTime = 0;
+          }
+        } else {
+          this.startTime = val;
         }
       },
     },
@@ -616,6 +962,7 @@
     color: #c9c9cc;
     padding: 10px 0;
     font-size: 12px;
+    position: relative;
   }
 
   .block {
@@ -658,6 +1005,25 @@
     position: absolute;
     width: 40px;
     height: 80px;
+  }
+
+  .signal_road_score {
+    position: absolute;
+    right: 36%;
+    top: 50px;
+    height: 140px;
+    width: 170px;
+    background: rgba(41, 41, 54, 0.9);
+    text-align: center
+  }
+
+  .signal_left_block {
+    background: #353644;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #111;
+    left: 1%;
+    width: 60px;
+    position: absolute;
   }
 
 </style>
