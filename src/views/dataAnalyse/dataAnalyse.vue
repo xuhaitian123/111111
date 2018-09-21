@@ -250,13 +250,42 @@
         };
         let option_one = {
           tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross'
-            }
+            trigger: 'axis'
           },
           legend: {
-            data:['优化前延误', '优化后延误', '优化前报警', '优化后报警'],
+
+            data: [{
+              name: '优化前延误',
+              icon: 'square',
+              textStyle: {
+                color: '#c9c9cc',
+                fontSize: 10,
+              },
+            },
+              {
+                name: '优化后延误',
+                icon: 'square',
+                textStyle: {
+                  color: '#c9c9cc',
+                  fontSize: 10,
+                }
+              },
+              {
+                name: '优化前报警',
+                textStyle: {
+                  color: '#c9c9cc',
+                  fontSize: 10,
+                },
+              },
+              {
+                name: '优化后报警',
+                textStyle: {
+                  color: '#c9c9cc',
+                  fontSize: 10,
+                }
+              },
+            ],
+            top: 10
           },
           grid: {
             left: 50
@@ -278,39 +307,69 @@
             },
 
           }],
-          yAxis: [{
+          yAxis: [
+            {
+              name: "报",
+              nameTextStyle: {
+                color: "#c9c9cc"
+              },
+              nameLocation: "center",
+              nameGap: '30',
+              nameRotate: 270,
             type: 'value',
             show:true,
             min:0,
             max:120,
+            color:'#fff',
+              axisLabel: {
+                formatter: '{value}',
+                color:'#c9c9cc'
+              },
             position:'right',
+
           },
             {
+              name: '平    (s)',
+              nameTextStyle: {
+                color: "#c9c9cc",
+                align: 'left'
+              },
+              nameLocation: "center",
+              nameGap: '30',
+              nameRotate: 270,
               type: 'value',
               show:true,
-              min:0,
-              max:30,
-              interval: 5,
               position:'left',
-              // nameTextStyle: {
-              //   color: '#c9c9cc',
-              //   align: 'center',
-              // },
+              axisLabel: {
+                formatter: '{value}',
+                color:'#c9c9cc'
+              },
+              splitLine: {
+                show: true,
+                interval: 'auto',
+                lineStyle: {
+                  color: ['#c9c9cc']
+                }
+              },
+
             }],
           series:[
             {
+              name:'优化前延误',
               type:'bar',
               color: '#e05f9a',
               yAxisIndex: 1,
               data:[['人民路',12],['厦门路',11],['南京路',15],['沈阳路',16],['大连路',19],['普惠路',10],['外环路',11],['江苏路',11],]
             },
             {
+              name:'优化后延误',
               type:'bar',
               color: '#eacc36',
               yAxisIndex: 1,//
               data:[['人民路',30],['厦门路',13],['南京路',7],['沈阳路',8],['大连路',9],['普惠路',1],['外环路',10],['江苏路',20],]
             },
             {
+              name:'优化前报警',
               type:'line',
               yAxisIndex: 0,
               symbol: 'circle',
@@ -318,6 +377,7 @@
               data:[['人民路',30],['厦门路',89],['南京路',77],['沈阳路',66],['大连路',88],['普惠路',99],['外环路',89],['江苏路',78],]
             },
             {
+              name:'优化后报警',
               type:'line',
               yAxisIndex: 0,
               symbol: 'circle',
