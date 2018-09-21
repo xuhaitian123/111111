@@ -392,9 +392,9 @@
       },
       getNodeDataD5ByNodeId(nodeId) {  //机动车流量 + 非机动车流量
         return new Promise((resolve, reject) => {
-          this.$http.get('/nodeData/getNodeDataD5ByNodeId?nodeId=' + nodeId + '&current=true')
+          this.$http.get('/nodeData/getNodeDataD5ByNodeId?nodeId=' + nodeId + '&current=true'+'&token='+this.getHeader().token)
             .then((response) => {
-              this.$http.get('/nodeData/getNodeDataD6ByNodeId?nodeId=' + nodeId + '&current=true')
+              this.$http.get('/nodeData/getNodeDataD6ByNodeId?nodeId=' + nodeId + '&current=true'+'&token='+this.getHeader().token)
                 .then((result) => {
                   resolve(response.data.value + result.data.value)
                 })
@@ -402,7 +402,7 @@
         });
       },
       getNodeCongestionSource() { //交叉口延误数据
-        this.$http.get('/nodeData/getNodeDataD12ByNodeId?nodeId=' + this.$route.params.id + '&current=true')
+        this.$http.get('/nodeData/getNodeDataD12ByNodeId?nodeId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             this.getNodeDataD5ByNodeId(response.data.node_id).then((data) => {
               response.data.flow = data;
@@ -412,44 +412,36 @@
       },
       getRoadNetCongestionScore() { //路网拥堵评分
         this.$http
-          .get('/TrafficCongestion/roadNetCongestionScore?current=true')
+          .get('/TrafficCongestion/roadNetCongestionScore?current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             this.roadNetCongestionScore = response.data.value;
           })
       },
       getCurrentSignalByNodeId() {  //实时红绿灯
-        this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id)
+        this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id+'&token='+this.getHeader().token)
           .then((response) => {
             this.currentSignal = response.data.values.filter((val) => {
               return val.value !== null
             });
           });
-
-        this.$http.get('/signal/currentSignalByLinkId?linkId=201')
-          .then((response) => {
-            // console.log(response)
-          })
-
-        this.$http.get('/signal/currentSignalByMovementId?movementId=201')
-          .then((response) => {
-            // console.log(response)
-          })
       },
       getNodeAllDataD13ByNodeId() {  //交叉口排队长度
-        this.$http.get('/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&current=true')
+        this.$http.get('/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             console.log(response)
             this.nodeLength = response.data;
           })
       },
       getSignalByNodeId() { //信号灯配时方案
-        this.$http.get('/signal/signalByNodeId?nodeId=2&current=true')
+        this.$http.get('/signal/signalByNodeId?nodeId=2&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             let obj = {}
             response.data.forEach((value) => {
               value.total = value.AllRed + value.MaxGreen + value.Yellow;
               obj[value.BRP] = value;
             });
+            console.log(obj)
+
             this.signalPlan = obj;
           })
       },
