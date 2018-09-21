@@ -183,7 +183,6 @@
     watch: {
       trafficLightData: {
         handler(newVal, oldVal) {
-          console.log(newVal)
           if (this.myChart) {
             if (newVal) {
               let option = this.myChart.getOption();
