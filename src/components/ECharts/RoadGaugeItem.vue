@@ -7,7 +7,7 @@
   export default {
     props: {
       data: {
-        type: Number,
+        type: String,
         default: 0,
       },
       color: {
@@ -23,7 +23,6 @@
     },
     methods: {
       init() {
-        console.log(this.data)
         let myChart = this.$echarts.init(document.getElementById('main'));
 
         let option = {
@@ -43,7 +42,7 @@
               detail: {
                 show: false,
               },
-              data: [{value: this.data, name: String(this.data.toFixed(0))}],
+              data: [{value: this.data, name: String(this.data)}],
               title: {
                 show: true,
                 offsetCenter: [0, -10],

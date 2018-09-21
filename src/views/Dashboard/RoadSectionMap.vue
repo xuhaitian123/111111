@@ -326,19 +326,19 @@
         });
       },
       getTrafficCongestionRoadAvgDelay(cb) {  //所有路段延误
-        this.$http.get('/trafficCongestion/roadAllLinksDelay?current=true')
+        this.$http.get('/trafficCongestion/roadAllLinksDelay?current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             cb(response.data.values)
           })
       },
       getAllNodeD12s(cb) {  //所有交叉口延误数据
-        this.$http.get('/nodeData/getAllNodeD12s?current=true')
+        this.$http.get('/nodeData/getAllNodeD12s?current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             cb(response.data.values)
           })
       },
       getLinkDelayDoubleDirection() {  //路段双向延误(双向)
-        this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&current=true')
+        this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             console.log(response)
             if(response.data.related_data){
@@ -347,16 +347,16 @@
           })
       },
       getNodeDataD3ByLinkId(linkId, cb) {  //进道口机动车流量 + 非机动车流量
-        this.$http.get('/nodeData/getNodeDataD3ByLinkId?linkId=' + linkId + '&current=true')
+        this.$http.get('/nodeData/getNodeDataD3ByLinkId?linkId=' + linkId + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
-            this.$http.get('/nodeData/getNodeDataD4ByLinkId?linkId=' + linkId + '&current=true')
+            this.$http.get('/nodeData/getNodeDataD4ByLinkId?linkId=' + linkId + '&current=true'+'&token='+this.getHeader().token)
               .then((result) => {
                 cb(response.data.value + result.data.value)
               })
           })
       },
       getAllLinkId() {  //获取全部linkid
-        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=' + this.$route.params.id)
+        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=' + this.$route.params.id+'&token='+this.getHeader().token)
           .then((response) => {
             this.allLinkId = response.data;
             let links = Object.values(response.data.links);
@@ -398,14 +398,14 @@
         });
       },
       getNodeDataD13ByLinkId(linkId, cb) {   //获取进道口排队长度(双向)
-        this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&current=true')
+        this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             cb(response.data.total)
           })
       },
 
       getNodeDataD18ByLinkId() {  //进道口绿灯到达率
-        this.$http.get('/nodeData/getNodeDataD18ByLinkId?linkId=' + this.$route.params.id + '&current=true')
+        this.$http.get('/nodeData/getNodeDataD18ByLinkId?linkId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
           .then((response) => {
             // console.log(response)
           })

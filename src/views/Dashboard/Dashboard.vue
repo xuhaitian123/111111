@@ -59,7 +59,7 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">路网拥堵评分</div>
-                <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
+                <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent.toFixed(0)"></road-gauge>
 
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id"
@@ -584,8 +584,7 @@
         this.getTrafficLightOptimizeCongestionStatus();
       },
       getCongestionPercent() { //拥堵里程比例
-        this.$http
-          .get('/TrafficCongestion/congestionPercent?current=true' + '&token=' + this.getHeader().token)
+        this.$http.get('/TrafficCongestion/congestionPercent?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
             this.congestionPercent = response.data.value;
           })
@@ -613,13 +612,11 @@
       getAllNodeCongestionAlarm() {  //交叉口报警信息
         this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
-            console.log(response.data)
             this.allNodeAlarmInfo = response.data;
           })
       },
       getNodes() {
-        this.$http.get('/nodeData/getNodes' + '?token=' + this.getHeader().token)
-          .then((response) => {
+        this.$http.get('/nodeData/getNodes' + '?token=' + this.getHeader().token).then((response) => {
             this.nodeName = response.data.map((node) => {
               if (node.name) return node.name;
             }).filter((val) => {
@@ -654,7 +651,7 @@
         });
       },
       getTrafficLightOptimizeCongestionStatus() {
-        this.$http.get('/history/trafficLightOptimizeCongestionStatus' + '?token=' + this.getHeader().token)
+        this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token)
           .then((response) => {
             console.log(response);
           })

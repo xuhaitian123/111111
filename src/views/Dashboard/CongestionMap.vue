@@ -14,7 +14,8 @@
           </div>
           <div class="" style="height: 980px;position: relative">
             <road-net-map :all-links-delay="allLinksDelay"
-                          :all-node-delay="allNodeDelay" :all-links-flow="allLinksFlow" :all-node-flow="allNodeFlow" style="width: 100%"></road-net-map>
+                          :all-node-delay="allNodeDelay" :all-links-flow="allLinksFlow" :all-node-flow="allNodeFlow"
+                          style="width: 100%"></road-net-map>
 
             <div style="position: absolute;top: 15px;width: 100%;text-align: center">
               <el-row
@@ -47,7 +48,7 @@
 
                 <el-row class="">
                   <el-col :span="12">
-                    <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent"></road-gauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent.toFixed(0)"></road-gauge>
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
@@ -191,90 +192,100 @@
         allNodeDelay: [],
         allLinksFlow: [],
         allNodeFlow: [],
-        startTime:0,
+        startTime: 0,
       }
     },
     mounted() {
       this.init();
     },
     methods: {
-      init() {
-        this.getAllData();
-        let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
+      init(startTime, endTime) {
+        this.getAllData(startTime, endTime);
       },
-      getAllData() {
-        this.getCongestionPercent();
-        this.getRoadNetCongestionScore();
-        this.getAllNodeCongestionAlarm();
-        this.getAllFlow();
+      getAllData(startTime, endTime) {
+        this.getCongestionPercent(startTime, endTime);
+        this.getRoadNetCongestionScore(startTime, endTime);
+        this.getAllNodeCongestionAlarm(startTime, endTime);
+        this.getAllFlow(startTime, endTime);
       },
       jumpPage(key) {
         this.$router.push(key);
       },
-      getCongestionPercent() { //拥堵里程比例
-        this.$http
-          .get('/trafficCongestion/congestionPercent?current=true')
-          .then((response) => {
-            console.log(response)
-            this.congestionPercent = response.data.value;
-          })
+      setUrlDate(startTime, endTime) {
+        return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
       },
-      getRoadNetCongestionScore() { //路网拥堵评分
-        this.$http
-          .get('/trafficCongestion/roadNetCongestionScore?current=true')
-          .then((response) => {
-            this.roadNetCongestionScore = response.data.value;
-          })
+      getCongestionPercent(startTime, endTime) { //拥堵里程比例
+        let url = '/trafficCongestion/congestionPercent?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          this.congestionPercent = response.data.value;
+        })
       },
-      getAllNodeCongestionAlarm() {  //交叉口报警信息
-        this.$http.get('/trafficCongestion/allNodeCongestionAlarm?current=true')
-          .then((response) => {
-            this.allNodeAlarmInfo = response.data;
-          })
+      getRoadNetCongestionScore(startTime, endTime) { //路网拥堵评分
+        let url = '/trafficCongestion/roadNetCongestionScore?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          this.roadNetCongestionScore = response.data.value;
+        })
       },
-      getTrafficCongestionRoadAvgDelay(cb) {  //所有路段延误
-        this.$http.get('/trafficCongestion/roadAllLinksDelay?current=true')
+      getAllNodeCongestionAlarm(startTime, endTime) {  //交叉口报警信息
+        let url = '/trafficCongestion/allNodeCongestionAlarm?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          this.allNodeAlarmInfo = response.data;
+        })
+      },
+      getTrafficCongestionRoadAvgDelay(startTime, endTime, cb) {  //所有路段延误
+        let url = '/trafficCongestion/roadAllLinksDelay?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get()
           .then((response) => {
             cb(response.data.values)
           })
       },
-      getAllNodeD12s(cb) {  //所有交叉口延误数据
-        this.$http.get('/nodeData/getAllNodeD12s?current=true')
-          .then((response) => {
-            cb(response.data.values)
-          })
+      getAllNodeD12s(startTime, endTime, cb) {  //所有交叉口延误数据
+        let url = '/nodeData/getAllNodeD12s?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          cb(response.data.values)
+        })
       },
-      getAllLinksFlow(cb) {  //所有进道口流量
-        this.$http.get('/nodeData/getAllLinksFlow?current=true')
-          .then((response) => {
-            cb(response)
-          })
+      getAllLinksFlow(startTime, endTime, cb) {  //所有进道口流量
+        let url = '/nodeData/getAllLinksFlow?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          cb(response)
+        })
       },
-      getAllNodesFlow(cb) {  // 所有交叉口流量
-        this.$http.get('/nodeData/getAllNodesFlow?current=true')
-          .then((response) => {
-            cb(response)
-          })
+      getAllNodesFlow(startTime, endTime, cb) {  // 所有交叉口流量
+        let url = '/nodeData/getAllNodesFlow?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          cb(response)
+        })
       },
 
-      setRoadNetStatus(is) {
+      setRoadNetStatus(is, startTime, endTime) {
         this.currentRoadNet = is;
 
         window.congestionMap.clearOverlays();
         if (is) {
-          this.getTrafficCongestionRoadAvgDelay((lineDelay) => {
-            this.getAllNodeD12s((nodeDelay) => {
-              this.allNodeDelay = nodeDelay;
-              this.allLinksDelay = lineDelay;
-            });
-          });
-        }else {
-          this.getAllFlow();
+          this.getAllDelay(startTime, endTime);
+        } else {
+          this.getAllFlow(startTime, endTime);
         }
       },
-      getAllFlow(){
-        this.getAllLinksFlow((link)=>{
-          this.getAllNodesFlow((node)=>{
+      getAllDelay(startTime, endTime) {
+        this.getTrafficCongestionRoadAvgDelay(startTime, endTime, (lineDelay) => {
+          this.getAllNodeD12s(startTime, endTime, (nodeDelay) => {
+            this.allNodeDelay = nodeDelay;
+            this.allLinksDelay = lineDelay;
+          });
+        });
+      },
+      getAllFlow(startTime, endTime) {
+        this.getAllLinksFlow(startTime, endTime, (link) => {
+          this.getAllNodesFlow(startTime, endTime, (node) => {
             this.allLinksFlow = link.data;
             this.allNodeFlow = node.data;
           });
@@ -309,14 +320,15 @@
         }
       },
 
-      getNewTime(val){
-        if(this.startTime !==0){
-          if(val-this.startTime>5*60*5000){
-            console.log(this.formatDate(new Date(val),'yy-MM-dd hh:mm:ss'))
-
+      getNewTime(val) {
+        if (this.startTime !== 0 && val > this.startTime) {
+          if (val - this.startTime >= 5 * 60 * 1000) {
+            console.log(this.formatDate(new Date(val), 'yy-MM-dd hh:mm:ss'))
+            this.init(this.startTime, val);
+            this.setRoadNetStatus(this.currentRoadNet, this.startTime, val);
             this.startTime = 0;
           }
-        }else {
+        } else {
           this.startTime = val;
         }
       },
