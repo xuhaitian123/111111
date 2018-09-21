@@ -34,7 +34,7 @@
   </div>
     </div>
 </template>
-import $ from 'jquery'
+<!--import $ from 'jquery'-->
 import { Message } from 'element-ui';
 <script>
   export default {
@@ -66,6 +66,28 @@ import { Message } from 'element-ui';
         var self =this
         var username =$(".user-text").val();
         var password = $('.passward-text').val()
+        this.$http.post("/login/login",{username:username,password:password})
+          .then((response) => {
+            console.log(response.data)
+            if(self.checked == true){
+              window.localStorage.setItem("username",username)
+            }
+            self.$message({
+              message: '恭喜你,登陆成功',
+              type: 'success',
+              duration:2000
+            });
+            console.log("登录成功")
+            self.$router.push({path: '/main/map'});
+          }).catch(function (error) {
+          if(self.checked == true){
+            console.log(self.checked)
+            window.localStorage.setItem("username",username)
+          }
+          self.$message.error('用户名或密码错误');
+        });
+
+
         // this.$http.axios.post('/login', {
         //   username: username,
         //   password: password
@@ -89,20 +111,21 @@ import { Message } from 'element-ui';
         //     }
         //     self.$message.error('用户名或密码错误');
         //   });
-        if(username == 123  && password== 123){
-          if(self.checked == true){
-            window.localStorage.setItem("username",username)
-          }
-          self.$message({
-            message: '恭喜你,登陆成功',
-            type: 'success',
-            duration:2000
-          });
-          self.$router.push({path: '/main/map'});
-        }
-        else {
-          self.$message.error('用户名或密码错误');
-        }
+
+        // if(username == 123  && password== 123){
+        //   if(self.checked == true){
+        //     window.localStorage.setItem("username",username)
+        //   }
+        //   self.$message({
+        //     message: '恭喜你,登陆成功',
+        //     type: 'success',
+        //     duration:2000
+        //   });
+        //   self.$router.push({path: '/main/map'});
+        // }
+        // else {
+        //   self.$message.error('用户名或密码错误');
+        // }
       }
     }
   }

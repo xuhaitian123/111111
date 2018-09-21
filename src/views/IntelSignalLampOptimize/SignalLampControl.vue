@@ -11,13 +11,16 @@
             </div>
           </div>
           <div class="signal-lamp-container">
-            <div id="bigMap" class="show-map-style"></div>
+            <div id="bigMap" class="show-map-style">
+              <road-net-map style="width: 65%"></road-net-map>
+            </div>
 
             <div class="right-container">
               <div class="road-select">
                 <span>路口</span><!--el-icon-caret-right-->
                 <el-select class="select-road-style" v-model="road_value" placeholder="请选择">
                   <el-option
+                    class="selectColor"
                     v-for="item in load_options"
                     :key="item.value"
                     :label="item.label"
@@ -25,11 +28,12 @@
                   </el-option>
                 </el-select>
               </div>
-              <div class="close-btn" @click="closeScoreInfo()">
-              </div>
+              <!--<div class="close-btn" @click="closeScoreInfo()">-->
+              <!--</div>-->
               <div class="intel-score">
                 <div class="use-intel-score">
                   <div class="use-intel-score-text">未启用智能控制评分</div>
+                  <!--<road-gauge :data="unuse_intel_score" class="Dashboard_card_roadGauge"></road-gauge>-->
                   <div class="use-intel-score-image">
                     <div class="half-circle">
                       <div class="intel-score-number red-text-color">{{unuse_intel_score}}</div>
@@ -101,6 +105,8 @@
 
 <script>
   import AreaSelect from '../../components/Area/Area'
+  import RoadGauge from '../../components/ECharts/RoadGaugeItem'
+  import RoadNetMap from '../../components/Map/Map'
   var echarts = require('echarts/lib/echarts');
   // 引入柱状图
   require('echarts/lib/chart/bar');
@@ -108,11 +114,13 @@
       name: "SignalLampControl",
       components: {
         AreaSelect,
+        RoadGauge,
+        RoadNetMap,
       },
       data() {
         return {
           road_value:"珠海路-南京路",
-          load_options:[],
+          load_options:[{value:'珠海路-南京路'}],
           unuse_intel_score:0,
           use_intel_score:0
         }
@@ -140,9 +148,9 @@
         jumpPageToMain: function () {
 
         },
-        closeScoreInfo: function () {
-          console.log("关闭评分页面");
-        },
+        // closeScoreInfo: function () {
+        //   console.log("关闭评分页面");
+        // },
         //每周的数据展示柱状图
         showEchartColumn:function () {
           /*ECharts图表*/
@@ -376,6 +384,16 @@
     -moz-appearance:none;
     -webkit-appearance:none;
   }
+  .selectColor{
+    color: white;
+    font-size: 12px;
+    height: 16px;
+    line-height: 16px;
+    margin: 0;
+    padding: 3px;
+    border-radius: 3px;
+
+  }
 
 
   .CongestionMap_Legend li:last-child {
@@ -412,6 +430,10 @@
   .use-intel-score-text
   {
     text-align: center;
+  }
+  .Dashboard_card_roadGauge {
+    height: 180px;
+    margin-bottom: -70px
   }
   .use-intel-score-image{
     width: 208px;

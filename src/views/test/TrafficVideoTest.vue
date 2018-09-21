@@ -301,7 +301,7 @@
           if(this.imageList[time]&& !this.imageList[time].isLoading ){
             this.isPauseTime = true;
           }
-          
+
         }
 
         if (this.imageList[startTime] && this.imageList[startTime].index !== -1) {
