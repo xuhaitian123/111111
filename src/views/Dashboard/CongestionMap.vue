@@ -199,8 +199,8 @@
       this.init();
     },
     methods: {
-      init(startTime, endTime) {
-        this.getAllData(startTime, endTime);
+      init() {
+        this.getAllData();
       },
       getAllData(startTime, endTime) {
         this.getCongestionPercent(startTime, endTime);
@@ -324,7 +324,7 @@
         if (this.startTime !== 0 && val > this.startTime) {
           if (val - this.startTime >= 5 * 60 * 1000) {
             console.log(this.formatDate(new Date(val), 'yy-MM-dd hh:mm:ss'))
-            this.init(this.startTime, val);
+            this.getAllData(this.startTime, val);
             this.setRoadNetStatus(this.currentRoadNet, this.startTime, val);
             this.startTime = 0;
           }
