@@ -585,40 +585,40 @@
       },
       getCongestionPercent() { //拥堵里程比例
         this.$http
-          .get('/TrafficCongestion/congestionPercent?current=true')
+          .get('/TrafficCongestion/congestionPercent?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
             this.congestionPercent = response.data.value;
           })
       },
       getRoadNetAllFlow() { //路网总流量
         this.$http
-          .get('/TrafficCongestion/roadNetAllFlow?&current=true')
+          .get('/TrafficCongestion/roadNetAllFlow?&current=true' + '&token=' + this.getHeader().token,)
           .then((response) => {
             this.allRoadFlow = response.data;
           })
       },
       getRoadNetCongestionScore() { //路网拥堵评分
         this.$http
-          .get('/TrafficCongestion/roadNetCongestionScore?current=true')
+          .get('/TrafficCongestion/roadNetCongestionScore?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
             this.roadNetCongestionScore = response.data.value;
           })
       },
       getNodeCongestionSource() {  //所有交叉口拥堵评分
-        this.$http.get('/TrafficCongestion/allNodeCongestionSource?current=true')
+        this.$http.get('/TrafficCongestion/allNodeCongestionSource?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
             this.allNodeScore = response.data;
           })
       },
       getAllNodeCongestionAlarm() {  //交叉口报警信息
-        this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true')
+        this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
             console.log(response.data)
             this.allNodeAlarmInfo = response.data;
           })
       },
       getNodes() {
-        this.$http.get('/nodeData/getNodes')
+        this.$http.get('/nodeData/getNodes' + '?token=' + this.getHeader().token)
           .then((response) => {
             this.nodeName = response.data.map((node) => {
               if (node.name) return node.name;
@@ -639,7 +639,7 @@
       },
       getHistoryTrafficLightOptimizeDelay() {  //信号灯优化前后平均延误
         return new Promise((resolve, reject) => {
-          this.$http.get('/history/trafficLightOptimizeDelay?[\'\']')
+          this.$http.get('/history/trafficLightOptimizeDelay?[\'\']' + '&token=' + this.getHeader().token)
             .then((response) => {
               resolve(response);
             })
@@ -647,14 +647,14 @@
       },
       getHistoryTrafficLightOptimizeAlarmTimes() {  //信号灯优化前后报警次数
         return new Promise((resolve, reject) => {
-          this.$http.get('/history/trafficLightOptimizeAlarmTimes')
+          this.$http.get('/history/trafficLightOptimizeAlarmTimes' + '?token=' + this.getHeader().token)
             .then((response) => {
               resolve(response);
             })
         });
       },
       getTrafficLightOptimizeCongestionStatus() {
-        this.$http.get('/history/trafficLightOptimizeCongestionStatus')
+        this.$http.get('/history/trafficLightOptimizeCongestionStatus' + '?token=' + this.getHeader().token)
           .then((response) => {
             console.log(response);
           })

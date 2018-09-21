@@ -134,7 +134,7 @@
             </div>
 
             <div style="position:absolute;bottom: 80px;width: 100%">
-              <time-line></time-line>
+              <time-line @newTime="getNewTime"></time-line>
             </div>
           </div>
         </el-card>
@@ -191,6 +191,7 @@
         allNodeDelay: [],
         allLinksFlow: [],
         allNodeFlow: [],
+        startTime:0,
       }
     },
     mounted() {
@@ -205,8 +206,7 @@
         this.getCongestionPercent();
         this.getRoadNetCongestionScore();
         this.getAllNodeCongestionAlarm();
-        this.getAllLinksFlow();
-        this.getAllNodesFlow();
+        this.getAllFlow();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -215,6 +215,7 @@
         this.$http
           .get('/trafficCongestion/congestionPercent?current=true')
           .then((response) => {
+            console.log(response)
             this.congestionPercent = response.data.value;
           })
       },
@@ -243,18 +244,16 @@
             cb(response.data.values)
           })
       },
-      getAllLinksFlow() {
+      getAllLinksFlow(cb) {  //所有进道口流量
         this.$http.get('/nodeData/getAllLinksFlow?current=true')
           .then((response) => {
-            console.log(response)
-            this.allLinksFlow = response.data;
+            cb(response)
           })
       },
-      getAllNodesFlow() {
+      getAllNodesFlow(cb) {  // 所有交叉口流量
         this.$http.get('/nodeData/getAllNodesFlow?current=true')
           .then((response) => {
-            console.log(response)
-            this.allNodeFlow = response.data;
+            cb(response)
           })
       },
 
@@ -269,7 +268,17 @@
               this.allLinksDelay = lineDelay;
             });
           });
+        }else {
+          this.getAllFlow();
         }
+      },
+      getAllFlow(){
+        this.getAllLinksFlow((link)=>{
+          this.getAllNodesFlow((node)=>{
+            this.allLinksFlow = link.data;
+            this.allNodeFlow = node.data;
+          });
+        });
       },
       getRoadAvgDelayColor(num) {
         if (num < 30) {
@@ -299,6 +308,19 @@
           return "/static/image/map/red.jpg"
         }
       },
+
+      getNewTime(val){
+        if(this.startTime !==0){
+          if(val-this.startTime>5*60*5000){
+            console.log(this.formatDate(new Date(val),'yy-MM-dd hh:mm:ss'))
+
+            this.startTime = 0;
+          }
+        }else {
+          this.startTime = val;
+        }
+      },
+
     }
   }
 </script>

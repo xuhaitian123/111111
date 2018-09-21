@@ -66,6 +66,20 @@ import { Message } from 'element-ui';
         var self =this
         var username =$(".user-text").val();
         var password = $('.passward-text').val()
+        this.$http.post('/login/login',{username:username,password:password})
+          .then((user)=>{
+            if(user.data.code===1) {
+              self.$message({
+                message: '恭喜你,登陆成功',
+                type: 'success',
+                duration: 2000
+              });
+              this.setStorageInfo(user);
+              self.$router.push({path: '/main/map'});
+            }else {
+              self.$message.error('用户名或密码错误');
+            }
+          })
         // this.$http.axios.post('/login', {
         //   username: username,
         //   password: password
@@ -89,21 +103,25 @@ import { Message } from 'element-ui';
         //     }
         //     self.$message.error('用户名或密码错误');
         //   });
-        if(username == 123  && password== 123){
-          if(self.checked == true){
-            window.localStorage.setItem("username",username)
-          }
-          self.$message({
-            message: '恭喜你,登陆成功',
-            type: 'success',
-            duration:2000
-          });
-          self.$router.push({path: '/main/map'});
-        }
-        else {
-          self.$message.error('用户名或密码错误');
-        }
-      }
+        // if(username == 123  && password== 123){
+        //   if(self.checked == true){
+        //     window.localStorage.setItem("username",username)
+        //   }
+        //   self.$message({
+        //     message: '恭喜你,登陆成功',
+        //     type: 'success',
+        //     duration:2000
+        //   });
+        //   self.$router.push({path: '/main/map'});
+        // }
+        // else {
+        //   self.$message.error('用户名或密码错误');
+        // }
+      },
+      setStorageInfo(data) {
+        this.setCookie("userToken", data.data.token, 7);
+        this.setCookie("username", data.data.user_name, 7);
+      },
     }
   }
 </script>
