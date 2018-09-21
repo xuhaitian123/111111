@@ -11,7 +11,8 @@
             </div>
           </div>
           <div class="" style="position: relative;background: #1f1f2c">
-            <road-net-map style="width: 65%"></road-net-map>
+            <road-net-map style="width: 65%" :all-node-delay="allNodeDelay"
+                          :all-links-delay="allLinksDelay"></road-net-map>
 
             <div class="Road_row_link">
               <el-row type="flex" justify="space-around">
@@ -114,7 +115,7 @@
                   <div class="">
                     <div class="" style="width: 50%;float: left;color: #c9c9cc;">
                       <div> > 150 100 50 <</div>
-                      <div class="Road_chart_line">| | | |</div>
+                      <div class="Road_chart_line">| | | | |</div>
 
                       <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
                         <div :style="{width: getFlowNum(link.flow)+'px',background: getFlowColor(link.flow)}"
@@ -299,6 +300,8 @@
         linksInfo: [
           [], []
         ],
+        allNodeDelay: [],
+        allLinksDelay: [],
       }
     },
     mounted() {
@@ -306,14 +309,41 @@
     },
     methods: {
       init() {
+        this.getAllData();
+        let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
+      },
+      getAllData() {
         this.getAllLinkId();
         this.getLinkDelayDoubleDirection();
-        // this.getNodeDataD18ByLinkId();
+
+        window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
+
+        this.getTrafficCongestionRoadAvgDelay((lineDelay) => {
+          this.getAllNodeD12s((nodeDelay) => {
+            this.allNodeDelay = nodeDelay;
+            this.allLinksDelay = lineDelay;
+          });
+        });
+      },
+      getTrafficCongestionRoadAvgDelay(cb) {  //所有路段延误
+        this.$http.get('/trafficCongestion/roadAllLinksDelay?current=true')
+          .then((response) => {
+            cb(response.data.values)
+          })
+      },
+      getAllNodeD12s(cb) {  //所有交叉口延误数据
+        this.$http.get('/nodeData/getAllNodeD12s?current=true')
+          .then((response) => {
+            cb(response.data.values)
+          })
       },
       getLinkDelayDoubleDirection() {  //路段双向延误(双向)
         this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&current=true')
           .then((response) => {
-            this.linkData = response.data
+            console.log(response)
+            if(response.data.related_data){
+              this.linkData = response.data
+            }
           })
       },
       getNodeDataD3ByLinkId(linkId, cb) {  //进道口机动车流量 + 非机动车流量
@@ -330,7 +360,6 @@
           .then((response) => {
             this.allLinkId = response.data;
             let links = Object.values(response.data.links);
-
 
             this.getLinksData(links, 0);
 
@@ -381,6 +410,9 @@
           })
       },
 
+      jumpPage(key) {
+        this.$router.push(key);
+      },
       //道路绿灯达到比例
 
       getFlowNum(link) {

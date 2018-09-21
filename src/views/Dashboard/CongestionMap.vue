@@ -14,7 +14,7 @@
           </div>
           <div class="" style="height: 980px;position: relative">
             <road-net-map :all-links-delay="allLinksDelay"
-                          :all-node-delay="allNodeDelay" style="width: 100%"></road-net-map>
+                          :all-node-delay="allNodeDelay" :all-links-flow="allLinksFlow" :all-node-flow="allNodeFlow" style="width: 100%"></road-net-map>
 
             <div style="position: absolute;top: 15px;width: 100%;text-align: center">
               <el-row
@@ -189,7 +189,8 @@
         currentRoadNet: false,
         allLinksDelay: [],
         allNodeDelay: [],
-        allNode: [],
+        allLinksFlow: [],
+        allNodeFlow: [],
       }
     },
     mounted() {
@@ -204,6 +205,8 @@
         this.getCongestionPercent();
         this.getRoadNetCongestionScore();
         this.getAllNodeCongestionAlarm();
+        this.getAllLinksFlow();
+        this.getAllNodesFlow();
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -238,6 +241,20 @@
         this.$http.get('/nodeData/getAllNodeD12s?current=true')
           .then((response) => {
             cb(response.data.values)
+          })
+      },
+      getAllLinksFlow() {
+        this.$http.get('/nodeData/getAllLinksFlow?current=true')
+          .then((response) => {
+            console.log(response)
+            this.allLinksFlow = response.data;
+          })
+      },
+      getAllNodesFlow() {
+        this.$http.get('/nodeData/getAllNodesFlow?current=true')
+          .then((response) => {
+            console.log(response)
+            this.allNodeFlow = response.data;
           })
       },
 
