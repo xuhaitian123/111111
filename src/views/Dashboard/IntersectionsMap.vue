@@ -12,7 +12,43 @@
           </div>
           <div class="" style="position: relative;background: #1f1f2c">
             <div style="width: 65%;height: 720px">
-              <img src="/static/image/map/node_cross.png" style="height: 100%;width: 100%"/>
+              <img src="/static/image/map/node_map_cross.png" style="height: 100%;width: 100%"/>
+
+              <div style="position: absolute;top: 0;">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                     width="411.200000pt" height="2400.000000pt" viewBox="0 0 411.200000 2400.000000"
+                     preserveAspectRatio="xMidYMid meet">
+                  <metadata>
+                    Created by potrace 1.13, written by Peter Selinger 2001-2015
+                  </metadata>
+                  <g transform="translate(0.000000,2400.000000) scale(0.080000,-0.080000)"
+                     fill="red" stroke="none">
+                    <path d="M1992 15007 c-1096 -8245 -1993 -14995 -1993 -14999 1 -5 1101 -8
+2446 -8 2322 0 2445 1 2445 18 0 9 56 3522 124 7807 l124 7790 -159 7120 c-87
+3916 -159 7153 -159 7193 l0 72 -417 0 -418 0 -1993 -14993z"/>
+                  </g>
+                </svg>
+
+              </div>
+              <div style="position: absolute;top: 100px;">
+                <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+                     width="148.400000pt" height="176.800000pt" viewBox="0 0 1486.400000 1376.800000"
+                     preserveAspectRatio="xMidYMid meet">
+                  <metadata>
+                    Created by potrace 1.13, written by Peter Selinger 2001-2015
+                  </metadata>
+                  <g transform="translate(0.000000,1376.800000) scale(0.080000,-0.080000)"
+                     fill="#000000" stroke="none">
+                    <path d="M10120 17185 c-6966 -26 -6975 -26 -7145 -49 -539 -74 -920 -184
+-1320 -381 -775 -381 -1240 -991 -1385 -1818 -19 -106 -26 -497 -145 -7507
+-69 -4067 -125 -7403 -125 -7412 0 -17 115 -18 2286 -18 l2286 0 -6 33 c-10
+57 -340 2193 -515 3342 -735 4800 -1177 7858 -1310 9050 -67 596 -77 1210 -26
+1598 128 972 625 1449 1595 1527 75 6 2460 -5 6780 -30 3666 -22 6851 -40
+7078 -40 l412 0 0 273 c0 149 -3 539 -7 865 l-6 592 -1126 -1 c-619 -1 -3914
+-12 -7321 -24z"/>
+                  </g>
+                </svg>
+              </div>
             </div>
 
             <div class="signal_left_block"
@@ -252,10 +288,10 @@
                           </div>
                           <div style="letter-spacing: 10px"> | | | |</div>
                         </div>
-                        <div class="block"
+                        <div class="block" v-if="nodeLength.values[3]"
                              style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc;position:relative;">
                           <div
-                            :style="{height: nodeLength.values[3].value+'px',background: getSaturationColor((nodeLength.values[3].value/50)*100)}"
+                            :style="{height: nodeLength.values[3].value+'px',background: getSaturationColor((nodeLength.values[3].value / 50)*100)}"
                             style="width: 100%;position: absolute;bottom: 0"></div>
                         </div>
                         <div class="block">
@@ -268,13 +304,15 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
+                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc"
+                             v-if="nodeLength.values[2]">
                           <div
                             :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor((nodeLength.values[2].value/50)*100)}"
                             style="height: 100%;float: right"></div>
                         </div>
                         <div class="block" style="border: 3px solid #c9c9cc;"></div>
-                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
+                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc"
+                             v-if="nodeLength.values[0]">
                           <div
                             :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor((nodeLength.values[0].value/50)*100)}"
                             style="height: 100%;"></div>
@@ -289,7 +327,8 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc">
+                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc"
+                             v-if="nodeLength.values[1]">
                           <div
                             :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor((nodeLength.values[1].value/ 50) * 100)}"
                             style="width: 100%;"></div>
@@ -311,14 +350,32 @@
                 </el-tab-pane>
               </el-tabs>
 
-              <el-tabs type="border-card" style="height: 290px;margin-top: 10px;background: #353644">
+              <el-tabs type="border-card"
+                       style="height: 290px;margin-top: 10px;background: #353644;text-align: center;font-size: 12px">
                 <el-tab-pane label="交叉口机动车/非机动车流量">
                   <el-row>
-                    <el-col :span="10">
-                      <div class="">人民路</div>
+                    <el-col :span="10" :offset="1" style="display: flex">
+                      <div style="width: 20px;line-height: 220px;font-size: 12px">南</div>
+
+                      <div style="flex: 1">
+                        <div class="">人民路</div>
+                        <img src="/static/image/map/flow_cross.png" style="width: 180px;height: 180px;margin: 10px 0"/>
+                        <img src="/static/image/map/flow_car.png" style="width: 110px;height: 20px"/>
+                      </div>
+
+                      <div style="width: 20px;line-height: 220px;font-size: 12px">南</div>
                     </el-col>
-                    <el-col :span="10">
-                      <div class=""></div>
+                    <el-col :span="10" :offset="2" style="display: flex">
+                      <div style="width: 20px;line-height: 220px;font-size: 12px">南</div>
+
+                      <div style="flex: 1">
+                        <div class="">人民路</div>
+                        <img src="/static/image/map/flow_cross.png" style="width: 180px;height: 180px;margin: 10px 0"/>
+                        <img src="/static/image/map/flow_bike.png" style="width: 110px;height: 20px"/>
+                      </div>
+
+                      <div style="width: 20px;line-height: 220px;font-size: 12px">南</div>
+
                     </el-col>
                   </el-row>
                 </el-tab-pane>
@@ -336,7 +393,8 @@
                           <img src="/static/image/map/delay_cross.png"
                                style="width: 186px;height: 186px;display: block;margin: 0 auto"/>
 
-                          <div v-if="allMovementDelay['东']" style="position: absolute;top: 80px;right: 30px;transform: rotate(270deg);">
+                          <div v-if="allMovementDelay['东']"
+                               style="position: absolute;top: 80px;right: 30px;transform: rotate(270deg);">
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                  width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
                                  preserveAspectRatio="xMidYMid meet">
@@ -428,7 +486,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
                             </svg>
                           </div>
 
-                          <div v-if="allMovementDelay['西']" style="position: absolute;top: 130px;left: 30px;;transform: rotate(90deg)">
+                          <div v-if="allMovementDelay['西']"
+                               style="position: absolute;top: 130px;left: 30px;;transform: rotate(90deg)">
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                  width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
                                  preserveAspectRatio="xMidYMid meet">
@@ -474,7 +533,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
                             </svg>
                           </div>
 
-                          <div v-if="allMovementDelay['北']" style="position: absolute;top: 40px;left: 70px;transform: rotate(180deg)">
+                          <div v-if="allMovementDelay['北']"
+                               style="position: absolute;top: 40px;left: 70px;transform: rotate(180deg)">
                             <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                  width="10px" height="25px" viewBox="0 0 40.800000 104.800000"
                                  preserveAspectRatio="xMidYMid meet">
@@ -639,9 +699,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         },
         currentSignal: [],
         nodeLength: {
-          values: [
-            {}, {}, {}, {}
-          ]
+          values: []
         },
         signalPlan: {},
         lineLeft: 0,
@@ -652,6 +710,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         nonMotorVehicleFlow: {},
         allLinks: [],
         allMovementDelay: {},
+        allMovementFlow:{},
       }
     },
     mounted() {
@@ -667,17 +726,13 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         this.getCurrentSignalByNodeId(startTime, endTime);
         this.getNodeAllDataD13ByNodeId(startTime, endTime);
         this.getSignalByNodeId(startTime, endTime);
+        this.getNodeMovement(startTime, endTime);
 
         this.$http.get('/index/getAllLinksByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token)
           .then((response) => {
             this.allLinks = response.data.links;
           })
 
-        this.$http.get('/index/getAllMovementsByNodeId?nodeId=2' + '&token=' + this.getHeader().token)
-          .then((response) => {
-            console.log(response)
-            this.getAllMovementDelay(response.data.movements, 0, startTime, endTime)
-          })
       },
       jumpPage(key) {
         this.$router.push(key);
@@ -685,12 +740,52 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
       },
+      getNodeMovement(startTime, endTime) {
+        this.$http.get('/index/getAllMovementsByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token)
+          .then((response) => {
+            this.getAllMovementFlow(response.data.movements, 0, startTime, endTime);
+            this.getAllMovementDelay(response.data.movements, 0, startTime, endTime)
+          })
+      },
+      getAllMovementFlow(data, num, startTime, endTime) {
+        this.getMovementFlow(data[num].movement_id, startTime, endTime).then((result) => {
+          data[num].car = result.car;
+          data[num].bike = result.bike;
+          data[num].total = result.total;
+
+          if (num === data.length - 1) {
+            // this.getMovementDirection(data);
+            console.log(this.getMovementDirection(data));
+          } else {
+            num += 1;
+            this.getAllMovementFlow(data, num, startTime, endTime);
+          }
+        })
+      },
+      getMovementFlow(id, startTime, endTime) {
+        return new Promise((resolve, reject) => {
+          let url = '/nodeData/getNodeDataD1ByMovementId?movementId=' + id + '&token=' + this.getHeader().token;
+          url += this.setUrlDate(startTime, endTime);
+          let secondUrl = '/nodeData/getNodeDataD2ByMovementId?movementId=' + id + '&token=' + this.getHeader().token;
+          secondUrl += this.setUrlDate(startTime, endTime);
+
+          this.$http.get(url).then((response) => {
+            this.$http.get(secondUrl).then((result) => {
+              resolve({
+                car:response.data.value,
+                bike:result.data.value,
+                total:response.data.value+result.data.value
+              })
+            })
+          })
+        });
+      },
       getAllMovementDelay(data, num, startTime, endTime) {
         this.getMovementDelay(data[num].movement_id, startTime, endTime).then((result) => {
           data[num].delay = result;
 
           if (num === data.length - 1) {
-            this.getMovementDirection(data);
+            this.allMovementDelay = this.getMovementDirection(data);
           } else {
             num += 1;
             this.getAllMovementDelay(data, num, startTime, endTime);
@@ -707,8 +802,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             direction[delay.link_direction][delay.turning_direction] = delay.delay;
           }
         });
-        console.log(direction)
-        this.allMovementDelay = direction;
+        return direction;
       },
       getMovementDelay(id, startTime, endTime) {
         return new Promise((resolve, reject) => {
@@ -810,7 +904,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         return text
       },
       getSaturationColor(num) {
-        console.log(num)
         if (num < 30) {
           return "green"
         } else if (num > 30 && num < 50) {
