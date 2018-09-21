@@ -2,7 +2,7 @@
 
   <div>
 
-    <area-select></area-select>
+    <area-select ></area-select>
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">

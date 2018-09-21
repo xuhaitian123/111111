@@ -150,6 +150,9 @@
     name: "DataAnalyse",
     mounted() {
       this.init();
+      this.init_flowRate();
+      this.init_goodSpeed();
+      this.init_Intersection();
     },
     data() {
       return {
@@ -162,9 +165,6 @@
     methods: {
       init() {
         this.myChart = this.$echarts.init(document.getElementById('data'));
-        this.Intersection = this.$echarts.init(document.getElementById('data_three'));
-        this.flowRate = this.$echarts.init(document.getElementById('data_four'));
-        this.goodSpeed = this.$echarts.init(document.getElementById('data_five'));
         let options = {
           legend: {
             tooltip: {
@@ -254,6 +254,10 @@
           ]
 
         };
+        this.myChart.setOption(options);
+      },
+      init_Intersection(){
+        this.Intersection = this.$echarts.init(document.getElementById('data_three'));
         let option_one = {
           tooltip: {
             trigger: 'axis'
@@ -391,25 +395,29 @@
             },
           ]
         };
+        this.Intersection.setOption(option_one);
+      },
+      init_flowRate(){
+        this.flowRate = this.$echarts.init(document.getElementById('data_four'));
         let option_four = {
           tooltip: {
             trigger: 'axis'
           },
-            legend: {
-              data: [{
-                name: '流量',
+          legend: {
+            data: [{
+              name: '流量',
+              textStyle: {
+                color: '#c9c9cc',
+                fontSize: 10,
+              }
+            },
+              {
+                name: '平均车速',
                 textStyle: {
                   color: '#c9c9cc',
                   fontSize: 10,
                 }
-              },
-                {
-                  name: '平均车速',
-                  textStyle: {
-                    color: '#c9c9cc',
-                    fontSize: 10,
-                  }
-                },]
+              },]
           },
           xAxis: [{
             type: 'category',
@@ -483,7 +491,11 @@
               data:[20,40,50,24,45,54]
             },
           ]
-          };
+        };
+        this.flowRate.setOption(option_four);
+      },
+      init_goodSpeed(){
+        this.goodSpeed = this.$echarts.init(document.getElementById('data_five'));
         let option_five = {
           tooltip: {
             trigger: 'axis'
@@ -559,16 +571,20 @@
             },
           ]
         };
-  this.myChart.setOption(options);
-  this.Intersection.setOption(option_one);
-  this.flowRate.setOption(option_four);
-  this.goodSpeed.setOption(option_five);
-  }
+        this.goodSpeed.setOption(option_five);
+      }
+
+
+
+
+
+
+
 
   },
   components: {
     Area,
-      MixLineBarItem
+    MixLineBarItem
   }
   ,
   }
