@@ -85,9 +85,9 @@
               }
             },
             data: [
-              {value: 335, name: '通畅', itemStyle: {color: '#5ebfba'}},
-              {value: 310, name: '正常', itemStyle: {color: '#ff8539'}},
-              {value: 234, name: '拥堵', itemStyle: {color: '#b14671'}}
+              {value: 0, name: '通畅', itemStyle: {color: '#5ebfba'}},
+              {value: 0, name: '正常', itemStyle: {color: '#ff8539'}},
+              {value: 0, name: '拥堵', itemStyle: {color: '#b14671'}}
             ]
           }
         ]

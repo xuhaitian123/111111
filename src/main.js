@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './style/index.css'
 import '@/style/element-ui.css' // global css
 import './style/map.css'
+import './auth/auth'
 
 import './assets/rem'
 import './assets/font/iconfont.css'
@@ -26,7 +27,7 @@ axios.defaults.baseURL = 'http://47.52.57.26:3000/';
 Vue.config.productionTip = false;
 
 Vue.prototype.$echarts = echarts;
-  Vue.prototype.$https = axios;
+Vue.prototype.$https = axios;
 
 Vue.prototype.formatDate = function (date, fmt) {
   if (/(y+)/.test(fmt)) {
@@ -52,8 +53,9 @@ function padLeftZero(str) {
   return ('00' + str).substr(str.length);
 }
 
+
 /* eslint-disable no-new */
-new Vue({
+window.myMv = new Vue({
   el: '#app',
   router,
   components: {App},

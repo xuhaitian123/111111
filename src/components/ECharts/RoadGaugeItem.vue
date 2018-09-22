@@ -7,8 +7,8 @@
   export default {
     props: {
       data: {
-        type: Number,
-        default: 0,
+        type: String,
+        default: '0',
       },
       color: {
         type: String,
@@ -42,7 +42,7 @@
               detail: {
                 show: false,
               },
-              data: [{value: this.data, name: String(this.data.toFixed(0))}],
+              data: [{value: this.data, name: this.data}],
               title: {
                 show: true,
                 offsetCenter: [0, -10],
@@ -57,7 +57,7 @@
               axisLine: {
                 show: true,
                 lineStyle: {
-                  color: [[this.data / 100, this.color], [1, '#fff']],
+                  color: [[Number(this.data)/ 100, this.color], [1, '#fff']],
                   width: 2,
                   shadowBlur: 15,
                   shadowColor: '#e2ea73',

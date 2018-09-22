@@ -165,7 +165,7 @@
         </div>
       </div>
     </div>
-    <TimeLine @newTime="updataVideo" @changeTime="clearImage"></TimeLine>
+    <TimeLine :isPauseTime="isPauseTime" @newTime="updataVideo" @changeTime="clearImage"></TimeLine>
   </div>
 
 </template>
@@ -195,6 +195,7 @@
         trafficVideo_bike_ctx:{},
         nodeInfo:{},
         taskId:null,
+        isPauseTime:false,
 
         ratio: 10,
         // typeList: ['origin','car'],
@@ -271,6 +272,7 @@
         this.imageList ={}
       },
       updataVideo(time) {
+        console.log(time)
 
         let i = 0;
         var j = 0;
@@ -281,6 +283,7 @@
 
         if (time % 1000 === 0) {
           this.loadImage(startTime);
+
         }
         this.showImage(Math.floor((startTime - this.delay_show-5000)/1000)*1000 , millSecond)
       },
@@ -288,10 +291,17 @@
 
         var prevloadingTime = startTime + this.prevloading;
         for (var time = startTime; time < prevloadingTime; time += 1000) {
+
           if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
             // console.log(this.imageList[time])
+            //设置一个表示表明没有拉下来数据
+
             return this.loading = Math.random()
           }
+          if(this.imageList[time]&& !this.imageList[time].isLoading ){
+            this.isPauseTime = true;
+          }
+
         }
 
         if (this.imageList[startTime] && this.imageList[startTime].index !== -1) {
@@ -302,14 +312,12 @@
 
         var nextIndex = this.getImageIndex(images, index, millSecond, startTime)
         this.loading = false;
+        this.isPauseTime = false;
 
         if (nextIndex >= images.length) return;
 
         this.changeImage(startTime, nextIndex);
-
-
         this.imageList[startTime].index  =  nextIndex
-
 
       },
       getImageIndex(images, index, millSecond, startTime){
@@ -323,13 +331,15 @@
         if (!this.taskId) return;
         var startTime = endTime - 1000;
 
-        this.imageList[startTime] = {isLoading: 0, imageList: [], index: 0,startTime: new Date()};
+        this.imageList[startTime] = {isLoading: 0, imageList: [], index: -2,startTime: new Date()};
         this.getCountOfNode(endTime).then((count) => {
           this.countAllTypeNumber(count)
           // console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
           this.$http.get('/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime).then(
             (images) => {
-              if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
+              if (images.data.length === 0) {
+                return  this.imageList[startTime] = {isLoading: 1, imageList: [], index: -2,startTime: new Date()};
+              }
               images = images.data.map(item => {
                 item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
                 return item
