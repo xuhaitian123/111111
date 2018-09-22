@@ -34,7 +34,7 @@
   </div>
     </div>
 </template>
-import $ from 'jquery'
+<!--import $ from 'jquery'-->
 import { Message } from 'element-ui';
 <script>
   export default {
@@ -66,6 +66,7 @@ import { Message } from 'element-ui';
         var self =this
         var username =$(".user-text").val();
         var password = $('.passward-text').val()
+
         this.$http.post('/login/login',{username:username,password:password})
           .then((user)=>{
             if(user.data.code===1) {
@@ -80,6 +81,7 @@ import { Message } from 'element-ui';
               self.$message.error('用户名或密码错误');
             }
           })
+
         // this.$http.axios.post('/login', {
         //   username: username,
         //   password: password
@@ -117,11 +119,13 @@ import { Message } from 'element-ui';
         // else {
         //   self.$message.error('用户名或密码错误');
         // }
+
       },
       setStorageInfo(data) {
         this.setCookie("userToken", data.data.token, 7);
         this.setCookie("username", data.data.user_name, 7);
       },
+
     }
   }
 </script>

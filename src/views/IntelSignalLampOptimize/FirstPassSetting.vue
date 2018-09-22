@@ -11,10 +11,12 @@
             </div>
           </div>
           <div class="signal-lamp-container">
-            <div id="bigMap" class="show-map-style"></div>
+            <div id="bigMap" class="show-map-style">
+              <road-net-map id="bmap" style="width: 65%"></road-net-map>
+            </div>
             <div class="right-container">
               <div class="control-setting">
-                <div class="control-setting-title">{{road_name}} 优先通行控制设置</div>
+                <div class="control-setting-title">{{current_road}} 优先通行控制设置</div>
                 <div class="control-setting-content">
                   <div class="first_method">
                     <div class="first_method-title">优先方式</div>
@@ -149,10 +151,14 @@
 
 <script>
   import AreaSelect from '../../components/Area/Area'
+  import RoadNetMap from '../../components/Map/Map'
+  // import BMapLib from 'BMapLib'
+  // import $ from 'jquery'
     export default {
       name: "FirstPassSetting",
       components: {
         AreaSelect,
+        RoadNetMap
       },
       data() {
         return {
@@ -171,6 +177,7 @@
               }
               ]
           },
+          current_road:'',
           start_open_first_pass:true,
           is_global:false,
           filter_carID:'000090',
@@ -212,46 +219,68 @@
             first_level:'中',
             delay_time:'10（83%）',
             avg_speed:'50（83%）'
-          },{
-            time:'11:00',
-            road:'人民路',
-            car_id:'00005',
-            car_type:'警卫车辆',
-            first_level:'中',
-            delay_time:'10（83%）',
-            avg_speed:'50（83%）'
-          },{
-            time:'11:00',
-            road:'人民路',
-            car_id:'00005',
-            car_type:'警卫车辆',
-            first_level:'中',
-            delay_time:'10（83%）',
-            avg_speed:'50（83%）'
-          },{
-            time:'11:00',
-            road:'人民路',
-            car_id:'00005',
-            car_type:'警卫车辆',
-            first_level:'中',
-            delay_time:'10（83%）',
-            avg_speed:'50（83%）'
-          },{
-            time:'11:00',
-            road:'人民路',
-            car_id:'00005',
-            car_type:'警卫车辆',
-            first_level:'中',
-            delay_time:'10（83%）',
-            avg_speed:'50（83%）'
           }
           ]
         }
       },
       mounted:function(){
-        this.add_date_picker_show()
+        this.add_date_picker_show();
+        window.open_map_road_icon = (node_id,title) =>{
+          this.open_road_icon(node_id,title)
+        }
+
+        //获取路口数据
+        // this.showBMapPoint();
+        this.getAllRoadInfo();
       },
       methods:{
+        getAllRoadInfo(){
+          console.log('getAllRoadInfo');
+          var self = this;
+          this.$http.get('/index/nodes?token=693e9af84d3dfcc71e640e005bdc5e2e')
+            .then((response) => {
+              console.log(response.data);
+              self.showBMapPoint(response.data.nodes);
+              return response.data;
+            })
+        },
+        showBMapPoint(nodes){
+          var self = this;
+          var map = window.congestionMap;
+          // 百度地图API功能
+          for (var i = 0; i < nodes.length; i ++)
+          {
+            //创建图标
+            var pt = new BMap.Point(nodes[i].long, nodes[i].lat);
+            var myIcon = new BMap.Icon("/static/image/map/63.png", new BMap.Size(50,50));
+            var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+            marker.title = nodes[i].node_name;
+            marker.id = nodes[i].node_id;
+
+            marker.addEventListener("click", function(e){
+              var title = "\"" +e.target.title + "\"";
+              var sContent = "<div style=''  class='box-content'>" +
+                "<div class='control-button'>" +
+                "<div class='open-button' onclick='open_map_road_icon(" + e.target.id+ "," +title +")'>开启</div>"+
+                "<div class='close-button'>关闭</div>"
+                +"</div>"+
+                "<div class='select-options'><ul>" +
+                  "<li>Default</li>"+
+                  "<li>Minimize Delay</li>"+
+                  "<li>Minimize</li>"+
+                  "</ul>" +
+                "</div>"
+                +"</div>";
+
+              var infoBox = new BMap.InfoWindow(sContent);
+              map.openInfoWindow(infoBox, e.target.point)
+              self.current_road = e.target.title;
+
+            });
+            map.addOverlay(marker);
+
+          }
+        },
         add_date_picker_show:function(){
           $( "#date_picker" ).datepicker({
             showMonthAfterYear: true,
@@ -314,12 +343,22 @@
           var reg = new RegExp(/^(([01]?\d)|(2[0-3])):[0-5]\d$/);
           //开始判断
           if(!reg.test(time)) alert("时间输入的格式不合法!");
+        },
+        //地图标注打开按钮
+        open_road_icon(node_id,title){
+          console.log(node_id);
+          console.log(title);
+        },
+        //地图图标关闭按钮
+        close_road_icon(){
+
         }
       }
     }
 </script>
 
 <style scoped>
+
 
   .CongestionMap_Legend i {
     margin-right: 5px;

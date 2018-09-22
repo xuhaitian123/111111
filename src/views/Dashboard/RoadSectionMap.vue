@@ -114,11 +114,11 @@
                 <el-col :span="8">
                   <div class="">
                     <div class="" style="width: 50%;float: left;color: #c9c9cc;">
-                      <div> > 150 100 50 <</div>
+                      <div> > 150 100 50 < </div>
                       <div class="Road_chart_line">| | | | |</div>
 
-                      <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
-                        <div :style="{width: getFlowNum(link.flow)+'px',background: getFlowColor(link.flow)}"
+                      <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden">
+                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow)}"
                              style="height: 65px;float: right;"></div>
                       </div>
 
@@ -127,11 +127,11 @@
                          :style="{height: 85 * linksInfo[0].length+'px'}"></div>
 
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
-                      <div> < 50 100 150 ></div>
+                      <div> < 50 100 150 > </div>
                       <div class="Road_chart_line">| | | | |</div>
 
-                      <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
-                        <div :style="{width: getFlowNum(link.flow)+'px',background: getFlowColor(link.flow)}"
+                      <div style="border-bottom: 1px solid;overflow: hidden" v-for="link in linksInfo[1]">
+                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow)}"
                              style="width: 30px;height: 65px;"></div>
                       </div>
 
@@ -143,7 +143,7 @@
                 <el-col :span="3">
                   <div class="" style="margin-top: 10px">
                     <div v-for="name in linksInfo[0]" :key="name.link_id" style="padding: 24px 0">
-                      {{name.link_name}}
+                      <!--{{name.link_name}}-->
                     </div>
                   </div>
                 </el-col>
@@ -266,7 +266,7 @@
             </div>
 
             <div style="position:absolute;bottom: 80px;width: 100%">
-              <time-line></time-line>
+              <time-line @newTime="getNewTime"></time-line>
             </div>
           </div>
         </el-card>
@@ -302,6 +302,7 @@
         ],
         allNodeDelay: [],
         allLinksDelay: [],
+        startTime: 0,
       }
     },
     mounted() {
@@ -310,83 +311,79 @@
     methods: {
       init() {
         this.getAllData();
-        let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
-      },
-      getAllData() {
-        this.getAllLinkId();
-        this.getLinkDelayDoubleDirection();
-
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
-
-        this.getTrafficCongestionRoadAvgDelay((lineDelay) => {
-          this.getAllNodeD12s((nodeDelay) => {
+      },
+      getAllData(startTime, endTime) {
+        this.getAllLinkId();
+        this.getLinkDelayDoubleDirection(startTime, endTime);
+        this.getAllDelay(startTime, endTime);
+      },
+      setUrlDate(startTime, endTime) {
+        return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
+      },
+      getAllDelay(startTime, endTime) {
+        this.getTrafficCongestionRoadAvgDelay(startTime, endTime, (lineDelay) => {
+          this.getAllNodeD12s(startTime, endTime, (nodeDelay) => {
             this.allNodeDelay = nodeDelay;
             this.allLinksDelay = lineDelay;
           });
         });
       },
-      getTrafficCongestionRoadAvgDelay(cb) {  //所有路段延误
-        this.$http.get('/trafficCongestion/roadAllLinksDelay?current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            cb(response.data.values)
-          })
+      getTrafficCongestionRoadAvgDelay(startTime, endTime, cb) {  //所有路段延误
+        let url = '/trafficCongestion/roadAllLinksDelay?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          cb(response.data.values)
+        })
       },
-      getAllNodeD12s(cb) {  //所有交叉口延误数据
-        this.$http.get('/nodeData/getAllNodeD12s?current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            cb(response.data.values)
-          })
+      getAllNodeD12s(startTime, endTime, cb) {  //所有交叉口延误数据
+        let url = '/nodeData/getAllNodeD12s?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          cb(response.data.values)
+        })
       },
-      getLinkDelayDoubleDirection() {  //路段双向延误(双向)
-        this.$http.get('/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            console.log(response)
-            if(response.data.related_data){
-              this.linkData = response.data
-            }
-          })
+      getLinkDelayDoubleDirection(startTime, endTime) {  //路段双向延误(双向)
+        let url = '/nodeData/getLinkDelayDoubleDirection?linkId=' + this.$route.params.id + '&token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          if (response.data.related_data) {
+            this.linkData = response.data
+          }
+        })
       },
-      getNodeDataD3ByLinkId(linkId, cb) {  //进道口机动车流量 + 非机动车流量
-        this.$http.get('/nodeData/getNodeDataD3ByLinkId?linkId=' + linkId + '&current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            this.$http.get('/nodeData/getNodeDataD4ByLinkId?linkId=' + linkId + '&current=true'+'&token='+this.getHeader().token)
-              .then((result) => {
-                cb(response.data.value + result.data.value)
-              })
-          })
-      },
-      getAllLinkId() {  //获取全部linkid
-        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=' + this.$route.params.id+'&token='+this.getHeader().token)
-          .then((response) => {
-            this.allLinkId = response.data;
-            let links = Object.values(response.data.links);
+      getAllLinkId(startTime, endTime) {  //获取全部linkid
+        let url = '/index/roadAllLinksBySomeLinkId?linkId=' + this.$route.params.id + '&token=' + this.getHeader().token;
+        this.$http.get(url).then((response) => {
+          this.allLinkId = response.data;
+          let links = Object.values(response.data.links);
 
-            this.getLinksData(links, 0);
-
-          })
+          if (links.length === 2) {
+            this.getLinksData(links, 0, startTime, endTime);
+          }
+        })
       },
-      getLinksData(links, num) {
-        console.log(links)
-        this.getLinkFlowAndLength(links[num]).then((data) => {
+      getLinksData(links, num, startTime, endTime) {
+        this.getLinkFlowAndLength(links[num], startTime, endTime).then((data) => {
           if (num === links.length - 1) {
             this.linksInfo = links;
           } else {
             num += 1;
             this.getLinksData(links, num)
           }
-
         })
       },
-      getLinkFlowAndLength(direction) {
+      getLinkFlowAndLength(direction, startTime, endTime) {
         return new Promise((resolve, reject) => {
           let num = 0;
-          this.getLink(direction, num, resolve);
+          this.getLink(direction, num, resolve, startTime, endTime);
         })
       },
-      getLink(direction, i, resolve) {
-        this.getNodeDataD3ByLinkId(direction[i].link_id, (result) => {
+      getLink(direction, i, resolve, startTime, endTime) {
+        this.getNodeDataD3ByLinkId(direction[i].link_id, startTime, endTime, (result) => {
           direction[i].flow = result;
-          this.getNodeDataD13ByLinkId(direction[i].link_id, (result) => {
+
+          this.getNodeDataD13ByLinkId(direction[i].link_id, startTime, endTime, (result) => {
             direction[i].lineLength = result;
             if (i === direction.length - 1) {
               resolve(direction);
@@ -397,32 +394,34 @@
           })
         });
       },
-      getNodeDataD13ByLinkId(linkId, cb) {   //获取进道口排队长度(双向)
-        this.$http.get('/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
+      getNodeDataD3ByLinkId(linkId, startTime, endTime, cb) {  //进道口机动车流量 + 非机动车流量
+        let url = '/nodeData/getNodeDataD3ByLinkId?linkId=' + linkId + '&token=' + this.getHeader().token;
+        let secondUrl = '/nodeData/getNodeDataD4ByLinkId?linkId=' + linkId + '&token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        secondUrl += this.setUrlDate(startTime, endTime);
+
+        this.$http.get(url).then((response) => {
+          this.$http.get(secondUrl).then((result) => {
+              cb(response.data.value + result.data.value)
+            })
+        })
+      },
+      getNodeDataD13ByLinkId(linkId, startTime, endTime, cb) {   //获取进道口排队长度(双向)
+        let url ='/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
             cb(response.data.total)
           })
       },
-
-      getNodeDataD18ByLinkId() {  //进道口绿灯到达率
-        this.$http.get('/nodeData/getNodeDataD18ByLinkId?linkId=' + this.$route.params.id + '&current=true'+'&token='+this.getHeader().token)
-          .then((response) => {
-            // console.log(response)
-          })
-      },
-
       jumpPage(key) {
         this.$router.push(key);
       },
-      //道路绿灯达到比例
-
       getFlowNum(link) {
+        console.log(link)
         // console.log(link.flow);
-        return link / 12
+        return (link /200) * 100
       },
-
       getFlowColor(num) {
-        num = num / 12
         if (num < 30) {
           return "#green"
         } else if (num > 30 && num < 50) {
@@ -435,7 +434,6 @@
           return "#c9c9cc"
         }
       },
-
       getRoadAvgDelayColor(num) {
         if (num < 30) {
           return "#green"
@@ -447,6 +445,17 @@
           return "red"
         } else {
           return "#c9c9cc"
+        }
+      },
+      getNewTime(val) {
+        if (this.startTime !== 0 && val > this.startTime) {
+          if (val - this.startTime >= 5 * 60 * 1000) {
+            console.log(this.formatDate(new Date(val), 'yy-MM-dd hh:mm:ss'))
+            this.getAllData(this.startTime, val);
+            this.startTime = 0;
+          }
+        } else {
+          this.startTime = val;
         }
       },
     }

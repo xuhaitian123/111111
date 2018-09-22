@@ -199,8 +199,8 @@
       this.init();
     },
     methods: {
-      init(startTime, endTime) {
-        this.getAllData(startTime, endTime);
+      init() {
+        this.getAllData();
       },
       getAllData(startTime, endTime) {
         this.getCongestionPercent(startTime, endTime);
@@ -304,27 +304,11 @@
           return "#c9c9cc"
         }
       },
-      getNodeDelayImg(num) {
-        if (num < 30) {
-          // return "/static/50.png"
-          return "/static/image/map/green.jpg"
-        } else if (num > 30 && num < 50) {
-          // return "/static/53.png"
-          return "/static/image/map/yellow.jpg"
-        } else if (num > 50 && num < 60) {
-          // return "/static/52.png"
-          return "/static/image/map/orange.jpg"
-        } else if (num > 60) {
-          // return "/static/51.png"
-          return "/static/image/map/red.jpg"
-        }
-      },
-
       getNewTime(val) {
         if (this.startTime !== 0 && val > this.startTime) {
           if (val - this.startTime >= 5 * 60 * 1000) {
             console.log(this.formatDate(new Date(val), 'yy-MM-dd hh:mm:ss'))
-            this.init(this.startTime, val);
+            this.getAllData(this.startTime, val);
             this.setRoadNetStatus(this.currentRoadNet, this.startTime, val);
             this.startTime = 0;
           }
