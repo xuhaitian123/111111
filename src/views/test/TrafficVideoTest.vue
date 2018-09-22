@@ -49,6 +49,7 @@
               </div>
 
               <div class="trafficVideo-select-node-center">
+                <img src="/static/image/trafficVideo/0919-55.png"/>
 
               </div>
               <div class="trafficVideo-select-node-right">
@@ -222,25 +223,26 @@
     },
     mounted() {
 
-      Promise.all([this.getAllMovementsByNodeId(2),this.getNodeCameraLish(2),this.getAllLinksByNodeId(2)]).then(result=>{
-        var linkInfo = result[2].links.map(link=>{
-          link.movementList = result[0].movements.filter(movement=>{
-            return movement.link_id === link.link_id
-          })
-          link.taskId = result[1].find(movement=>{
-            return movement.camera_name.substr(-1,1) === link.link_direction
-          }).camera_id;
-          return link
-        });
-        var nodeInfo ={}
-        linkInfo.forEach(link=>{
-          nodeInfo[link.link_direction] = link
-        });
-        this.taskId =  nodeInfo['北'].taskId
-        this.nodeInfo =  nodeInfo;
-        console.log(this.nodeInfo)
-      })
+        Promise.all([this.getAllMovementsByNodeId(2),this.getNodeCameraLish(2),this.getAllLinksByNodeId(2)]).then(result=>{
 
+          var linkInfo = result[2].links.map(link=>{
+            link.movementList = result[0].movements.filter(movement=>{
+              return movement.link_id === link.link_id
+            })
+            link.taskId = result[1].find(movement=>{
+              return movement.camera_name.substr(-1,1) === link.link_direction
+            }).camera_id;
+            return link
+          });
+          var nodeInfo ={}
+          linkInfo.forEach(link=>{
+            nodeInfo[link.link_direction] = link
+          });
+          this.taskId =  nodeInfo['北'].taskId
+          this.nodeInfo =  nodeInfo;
+          console.log(this.nodeInfo)
+        })
+    // this.getDate()
 
 
       this.trafficVideo_origin_ctx=  document.getElementById("trafficVideo_origin").getContext("2d");
@@ -327,7 +329,7 @@
         this.getCountOfNode(endTime).then((count) => {
           this.countAllTypeNumber(count)
           // console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
-          this.$http.get('/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime).then(
+          this.$http.get('/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then(
             (images) => {
               if (images.data.length === 0) return console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
               images = images.data.map(item => {
@@ -500,7 +502,7 @@
       getCountOfNode(endTime) {
         return new Promise(resolve => {
           var startTime = endTime - 1000;
-          this.$http.get('http://172.16.5.82:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime).then((result)=>{
+          this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then((result)=>{
             resolve(result.data);
           })
           //  resolve({result:[{movement_id: 210, direction: "left", car: 1, truck: 2, bike: 3, status: false},
@@ -510,25 +512,30 @@
       },
       getNodeCameraLish(nodeId) {
         return new Promise(resolve => {
-          this.$http.get('/nodeData/getCameraNode?nodeId=' + nodeId).then((result) => {
+          this.$http.get('/nodeData/getCameraNode?nodeId=' + nodeId + '&token=' + this.getHeader().token).then((result) => {
             resolve(result.data)
           })
         });
       },
       getAllMovementsByNodeId(id) {
         return new Promise(resolve => {
-          this.$http.get('/index/getAllMovementsByNodeId?nodeId='+ id).then((result) => {
+          this.$http.get('/index/getAllMovementsByNodeId?nodeId='+ id +  '&token=' + this.getHeader().token).then((result) => {
             resolve(result.data)
           })
         });
       },
       getAllLinksByNodeId(id){
         return new Promise(resolve => {
-          this.$http.get('/index/getAllLinksByNodeId?nodeId='+ id).then((result) => {
+          this.$http.get('/index/getAllLinksByNodeId?nodeId='+ id+  '&token=' + this.getHeader().token).then((result) => {
             resolve(result.data)
           })
         });
       },
+      getDate(){
+          this.$http.get('/roadDataAnalysis/weekCongestionBaohe?nodeId=2&dayBegin=20180910&dayEnd=20180916' +  '&token=' + this.getHeader().token).then((result)=>{
+            console.log(result)
+          })
+      }
 
     }
   }
@@ -745,9 +752,13 @@
   .trafficVideo-select-node-center {
     width: 186px;
     height: 186px;
-    border: 1px solid rgb(41, 41, 54);
+    /*border: 1px solid rgb(41, 41, 54);*/
     flex-shrink: 0;
     flex-grow: 0;
+  }
+  .trafficVideo-select-node-center img{
+    width: 100%;
+    height: 100%;
   }
 
   .trafficVideo-select-node-left,
