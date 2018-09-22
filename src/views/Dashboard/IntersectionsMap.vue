@@ -225,7 +225,7 @@
               <el-tabs type="border-card" style="height: 420px;background: #353644">
                 <el-tab-pane label="当前信号灯配时方案">
                   <el-row style="padding: 40px 20px 0;text-align: center">
-                    <el-col :span="3" v-for="(value,index) in currentSignal" :key="index" v-if="value.value !== null">
+                    <el-col :span="3" v-for="(value,index) in currentSignal" :key="index" v-if="index < 8">
                       <div class="" style="margin-bottom: 5px">{{value.link_direction}}</div>
                       <div style="height: 86px;border-radius: 10px;width: 30px;background: #2a2b36;margin: auto">
                         <ul class="Node_signal_lamp">
@@ -236,7 +236,7 @@
                       </div>
                     </el-col>
                   </el-row>
-                  <div style="margin: 20px 20px 0;">
+                  <div style="margin: 80px 20px 0;">
                     <div @mousemove="changeSignalLine" @mouseup='stopChange' @mouseleave="stopChange"
                          style="border-bottom: 1px solid #c9c9cc;border-top: 1px solid #c9c9cc;font-size: 12px;padding: 0 5px 20px;position: relative">
                       <div class="signal_current_line" id="signal_line" @mousedown="moveSignalLine"
@@ -990,9 +990,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         })
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
-        let url = '/signal/signalByNodeId?nodeId=2&current=true' + '&token=' + this.getHeader().token;
-        url += this.setUrlDate(startTime, endTime);
-
+        let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
+        url += endTime ? '&current=' + endTime : '&current=true';
         this.$http.get(url).then((response) => {
           let obj = {};
           response.data.value.forEach((value) => {
