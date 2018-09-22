@@ -157,25 +157,25 @@
       getNodeDelayImg(num) {
         if (num < 30) {
           // return "/static/50.png"
-          return "/static/image/map/green.jpg"
+          return "/static/image/map/green.png"
         } else if (num > 30 && num < 50) {
           // return "/static/53.png"
-          return "/static/image/map/yellow.jpg"
+          return "/static/image/map/yellow.png"
         } else if (num > 50 && num < 60) {
           // return "/static/52.png"
-          return "/static/image/map/orange.jpg"
+          return "/static/image/map/orange.png"
         } else if (num > 60) {
           // return "/static/51.png"
-          return "/static/image/map/red.jpg"
+          return "/static/image/map/red.png"
         }
       },
       getNodeFlowImg(num){
         if (num < 1000) {
-          return "/static/image/map/green.jpg"
+          return "/static/image/map/green.png"
         } else if (num > 1000 && num < 3000) {
-          return "/static/image/map/orange.jpg"
+          return "/static/image/map/orange.png"
         } else if (num > 3000) {
-          return "/static/image/map/red.jpg"
+          return "/static/image/map/red.png"
         }
       },
     },

@@ -122,6 +122,10 @@
       isRealTime: {
         type: Boolean,
         default: true
+      },
+      isPauseTime: {
+        type: Boolean,
+        default: false
       }
     },
     data() {
@@ -177,6 +181,11 @@
         }, this.rate)
       },
       changePosition() {
+        if (this.isPauseTime == true)
+        {
+          this.getTimer();
+          return;
+        }
         if (this.isChangeTime || this.left >= this.timeLineWidth - 10) return;
         if (this.endPosition && this.startPosition) {
           let left = this.left + this.endPosition - this.startPosition;

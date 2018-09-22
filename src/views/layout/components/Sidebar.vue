@@ -27,7 +27,7 @@
           <div class="item-line"></div>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="2-1">信号灯优化前后数据<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+          <el-menu-item index="/dataAnalyse/dataAnalyse">信号灯优化前后数据<div class="active-item"></div><div class="item-line"></div></el-menu-item>
           <el-menu-item index="2-2">拥堵情况变化趋势<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
