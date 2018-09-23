@@ -16,8 +16,8 @@
                    style="height: 100%;width: 100%"/>
 
               <div style="position: absolute;top: 35%;width: 96%;z-index: 10;font-size: 16px;left: 2%">
-                <div style="float: left">{{allLinksName[currentNum % 2 ? '南':'东']}}</div>
-                <div style="float: right">{{allLinksName[currentNum % 2 ? '南':'东']}}</div>
+                <div style="float: left">{{allLinksName[currentDirection[1]]}}</div>
+                <div style="float: right">{{allLinksName[currentDirection[3]]}}</div>
               </div>
 
               <div style="position: absolute;bottom: 10px;z-index: 10;font-size: 16px;left: 30%">
@@ -43,7 +43,8 @@
                          preserveAspectRatio="xMidYMid meet">
 
                       <g transform="translate(0.000000,2065.000000) scale(0.100000,-0.100000)"
-                         :fill="getSaturationColor(allMovementFlow[currentDirection[currentNum]]['左'].total)" opacity="0.5" stroke="none">
+                         :fill="getSaturationColor(allMovementFlow[currentDirection[currentNum]]['左'].total)"
+                         opacity="0.5" stroke="none">
                         <path d="M19120 20646 c-5 -4 -7878 -22 -14962 -32 l-4158 -6 0 -804 0 -804
 9450 0 c6627 0 9480 -3 9548 -11 396 -43 836 -193 1165 -397 902 -557 1252
 -1565 1021 -2936 -204 -1213 -1810 -7294 -3895 -14742 -137 -490 -249 -896
@@ -63,7 +64,8 @@
                         Created by potrace 1.13, written by Peter Selinger 2001-2015
                       </metadata>
                       <g transform="translate(0.000000,2400.000000) scale(0.080000,-0.080000)"
-                         :fill="getSaturationColor(allMovementFlow[currentDirection[currentNum]]['直'].total)" opacity="0.5" stroke="none">
+                         :fill="getSaturationColor(allMovementFlow[currentDirection[currentNum]]['直'].total)"
+                         opacity="0.5" stroke="none">
                         <path d="M1992 15007 c-1096 -8245 -1993 -14995 -1993 -14999 1 -5 1101 -8
 2446 -8 2322 0 2445 1 2445 18 0 9 56 3522 124 7807 l124 7790 -159 7120 c-87
 3916 -159 7153 -159 7193 l0 72 -417 0 -418 0 -1993 -14993z"/>
@@ -80,7 +82,8 @@
                         Created by potrace 1.13, written by Peter Selinger 2001-2015
                       </metadata>
                       <g transform="translate(0.000000,1376.800000) scale(0.080000,-0.080000)"
-                         :fill="getSaturationColor(allMovementFlow[currentDirection[currentNum]]['右'].total)" opacity="0.5" stroke="none">
+                         :fill="getSaturationColor(allMovementFlow[currentDirection[currentNum]]['右'].total)"
+                         opacity="0.5" stroke="none">
                         <path d="M10120 17185 c-6966 -26 -6975 -26 -7145 -49 -539 -74 -920 -184
 -1320 -381 -775 -381 -1240 -991 -1385 -1818 -19 -106 -26 -497 -145 -7507
 -69 -4067 -125 -7403 -125 -7412 0 -17 115 -18 2286 -18 l2286 0 -6 33 c-10
@@ -113,7 +116,8 @@
                          preserveAspectRatio="xMidYMid meet">
 
                       <g transform="translate(0.000000,2065.000000) scale(0.100000,-0.100000)"
-                         :fill="getSaturationColor(allMovementDelay[currentDirection[currentNum]]['左'])" opacity="0.5" stroke="none">
+                         :fill="getSaturationColor(allMovementDelay[currentDirection[currentNum]]['左'])" opacity="0.5"
+                         stroke="none">
                         <path d="M19120 20646 c-5 -4 -7878 -22 -14962 -32 l-4158 -6 0 -804 0 -804
 9450 0 c6627 0 9480 -3 9548 -11 396 -43 836 -193 1165 -397 902 -557 1252
 -1565 1021 -2936 -204 -1213 -1810 -7294 -3895 -14742 -137 -490 -249 -896
@@ -133,7 +137,8 @@
                         Created by potrace 1.13, written by Peter Selinger 2001-2015
                       </metadata>
                       <g transform="translate(0.000000,2400.000000) scale(0.080000,-0.080000)"
-                         :fill="getSaturationColor(allMovementDelay[currentDirection[currentNum]]['直'])" opacity="0.5" stroke="none">
+                         :fill="getSaturationColor(allMovementDelay[currentDirection[currentNum]]['直'])" opacity="0.5"
+                         stroke="none">
                         <path d="M1992 15007 c-1096 -8245 -1993 -14995 -1993 -14999 1 -5 1101 -8
 2446 -8 2322 0 2445 1 2445 18 0 9 56 3522 124 7807 l124 7790 -159 7120 c-87
 3916 -159 7153 -159 7193 l0 72 -417 0 -418 0 -1993 -14993z"/>
@@ -150,7 +155,8 @@
                         Created by potrace 1.13, written by Peter Selinger 2001-2015
                       </metadata>
                       <g transform="translate(0.000000,1376.800000) scale(0.080000,-0.080000)"
-                         :fill="getSaturationColor(allMovementDelay[currentDirection[currentNum]]['右'])" opacity="0.5" stroke="none">
+                         :fill="getSaturationColor(allMovementDelay[currentDirection[currentNum]]['右'])" opacity="0.5"
+                         stroke="none">
                         <path d="M10120 17185 c-6966 -26 -6975 -26 -7145 -49 -539 -74 -920 -184
 -1320 -381 -775 -381 -1240 -991 -1385 -1818 -19 -106 -26 -497 -145 -7507
 -69 -4067 -125 -7403 -125 -7412 0 -17 115 -18 2286 -18 l2286 0 -6 33 c-10
@@ -222,6 +228,48 @@
               <road-gauge :data="roadNetCongestionScore.toFixed(0)" class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
+            <!--<div>-->
+              <!--<div-->
+                <!--style="position: absolute;bottom: 200px;width: 250px;height: 40px;background: #1f1f2c;border-radius: 10px;left: 28%">-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+
+              <!--<div-->
+                <!--style="position: absolute;top: 130px;width: 150px;height: 30px;background: #1f1f2c;border-radius: 10px;left: 26%">-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+
+              <!--<div-->
+                <!--style="position: absolute;top: 38%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;left: 9%;transform: rotate(44deg);">-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+
+              <!--<div-->
+                <!--style="position: absolute;top: 28%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;right: 49%;transform: rotate(-17deg);">-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+
             <div class="Node_right_top">
               <el-tabs type="border-card" style="height: 420px;background: #353644">
                 <el-tab-pane label="当前信号灯配时方案">
@@ -231,8 +279,9 @@
                       <div style="height: 86px;border-radius: 10px;width: 30px;background: #2a2b36;margin: auto">
                         <ul class="Node_signal_lamp">
                           <li :style="{background : value.value === 'Red' ? 'red':''}"></li>
-                          <li :style="{background : value.value === 'Yellow' ? 'yellow':''}"></li>
-                          <li :style="{background : value.value === 'Green' ? 'green':''}"></li>
+                          <li
+                            :style="{background : currentColor[value.key]==='yellow'? 'yellow':'' || currentColor[value.key]!=='green'?'yellow':''}"></li>
+                          <li :style="{background : currentColor[value.key]==='green'?'green':''}"></li>
                         </ul>
                       </div>
                     </el-col>
@@ -243,7 +292,7 @@
                       <div class="signal_current_line" id="signal_line" @mousedown="moveSignalLine"
                            :style="{left: lineLeft+'px'}"></div>
                       <el-row>
-                        <el-col :span="6">
+                        <el-col :span="6" id="allWidth">
                           <div v-if="signalPlan['111']!==undefined">
                             <div>{{getRoadFlow(signalPlan['111'].key)}}</div>
 
@@ -310,10 +359,12 @@
                           <div v-if="signalPlan['211']!==undefined">
                             <div>{{getRoadFlow(signalPlan['211'].key)}}</div>
 
-                            <div :style="{width: (signalPlan['211'].MaxGreen/ signalPlan['211'].total)*100+'%'}"
+                            <div id="211_red"
+                                 :style="{width: (signalPlan['211'].MaxGreen/ signalPlan['211'].total)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['211'].MaxGreen}}s
                             </div>
-                            <div :style="{width: (signalPlan['211'].Yellow / signalPlan['211'].total)*100+'%'}"
+                            <div id="211_yellow"
+                                 :style="{width: (signalPlan['211'].Yellow / signalPlan['211'].total)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
                             <div :style="{width: (signalPlan['211'].AllRed / signalPlan['211'].total)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
@@ -323,10 +374,12 @@
                           <div v-if="signalPlan['212']!==undefined">
                             <div>{{getRoadFlow(signalPlan['212'].key)}}</div>
 
-                            <div :style="{width: (signalPlan['212'].MaxGreen/ signalPlan['212'].total)*100+'%'}"
+                            <div id="212_red"
+                                 :style="{width: (signalPlan['212'].MaxGreen/ signalPlan['212'].total)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['212'].MaxGreen}}s
                             </div>
-                            <div :style="{width: (signalPlan['212'].Yellow / signalPlan['212'].total)*100+'%'}"
+                            <div id="212_yellow"
+                                 :style="{width: (signalPlan['212'].Yellow / signalPlan['212'].total)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
                             <div :style="{width: (signalPlan['212'].AllRed / signalPlan['212'].total)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
@@ -336,10 +389,12 @@
                           <div v-if="signalPlan['221']!==undefined">
                             <div>{{getRoadFlow(signalPlan['221'].key)}}</div>
 
-                            <div :style="{width: (signalPlan['221'].MaxGreen/ signalPlan['221'].total)*100+'%'}"
+                            <div id="221_red"
+                                 :style="{width: (signalPlan['221'].MaxGreen/ signalPlan['221'].total)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['221'].MaxGreen}}s
                             </div>
-                            <div :style="{width: (signalPlan['221'].Yellow / signalPlan['221'].total)*100+'%'}"
+                            <div id="221_yellow"
+                                 :style="{width: (signalPlan['221'].Yellow / signalPlan['221'].total)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
                             <div :style="{width: (signalPlan['221'].AllRed / signalPlan['221'].total)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
@@ -349,10 +404,12 @@
                           <div v-if="signalPlan['222']!==undefined">
                             <div>{{getRoadFlow(signalPlan['222'].key)}}</div>
 
-                            <div :style="{width: (signalPlan['222'].MaxGreen/ signalPlan['222'].total)*100+'%'}"
+                            <div id="222_red"
+                                 :style="{width: (signalPlan['222'].MaxGreen/ signalPlan['222'].total)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['222'].MaxGreen}}s
                             </div>
-                            <div :style="{width: (signalPlan['222'].Yellow / signalPlan['222'].total)*100+'%'}"
+                            <div id="222_yellow"
+                                 :style="{width: (signalPlan['222'].Yellow / signalPlan['222'].total)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
                             <div :style="{width: (signalPlan['222'].AllRed / signalPlan['222'].total)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
@@ -1251,6 +1308,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         currentTabs: '0',
         currentDirection: ['南', '东', '北', '西'],
         currentNum: 0,
+        currentColor: {},
       }
     },
     mounted() {
@@ -1263,7 +1321,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       getAllData(startTime, endTime) {
         this.getNodeCongestionSource(startTime, endTime);
         this.getRoadNetCongestionScore(startTime, endTime);
-        // this.getCurrentSignalByNodeId(startTime, endTime);
         this.getNodeAllDataD13ByNodeId(startTime, endTime);
         this.getSignalByNodeId(startTime, endTime);
         this.getNodeMovement(startTime, endTime);
@@ -1400,14 +1457,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           this.roadNetCongestionScore = response.data.value;
         })
       },
-      // getCurrentSignalByNodeId() {  //实时红绿灯
-      //   this.$http.get('/signal/currentSignalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token)
-      //     .then((response) => {
-      //       this.currentSignal = response.data.values.filter((val) => {
-      //         return val.value !== null
-      //       });
-      //     });
-      // },
       getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度
         let url = '/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
@@ -1426,6 +1475,9 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             obj[value.BRP] = value;
           });
           this.signalPlan = obj;
+          return 'true'
+        }).then((val) => {
+          this.getSignalColor(0);
         })
       },
       setFlowOrDelay(val) {
@@ -1483,7 +1535,84 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         this.endPosition = e.clientX;
         if (this.lineLeft + this.endPosition - this.startPosition > 0) {
           document.getElementById('signal_line').style.left = this.lineLeft + this.endPosition - this.startPosition + 'px'
+          this.getSignalColor((this.lineLeft + this.endPosition - this.startPosition) + 4);
         }
+      },
+      getSignalColor(left) {
+        if (!document.getElementById('111_red')) {
+          return console.log('---')
+        }
+        let width = document.getElementById('allWidth').offsetWidth;
+        let d1 = document.getElementById('111_red').offsetWidth;
+        let d1S = document.getElementById('111_yellow').offsetWidth;
+        let d2 = document.getElementById('112_red').offsetWidth;
+        let d2S = document.getElementById('112_yellow').offsetWidth;
+        let d3 = document.getElementById('121_red').offsetWidth;
+        let d3S = document.getElementById('121_yellow').offsetWidth;
+        let d4 = document.getElementById('122_red').offsetWidth;
+        let d4S = document.getElementById('122_yellow').offsetWidth;
+
+
+        let d5 = document.getElementById('211_red').offsetWidth;
+        let d5S = document.getElementById('211_yellow').offsetWidth;
+        let d6 = document.getElementById('212_red').offsetWidth;
+        let d6S = document.getElementById('212_yellow').offsetWidth;
+        let d7 = document.getElementById('221_red').offsetWidth;
+        let d7S = document.getElementById('221_yellow').offsetWidth;
+        let d8 = document.getElementById('222_red').offsetWidth;
+        let d8S = document.getElementById('222_yellow').offsetWidth;
+        this.currentColor = {};
+        if (left <= width) {
+          if (left <= d1) {
+            this.currentColor[this.signalPlan['111'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['111'].key] = 'yellow';
+          }
+
+          if (left <= d5) {
+            this.currentColor[this.signalPlan['211'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['211'].key] = 'yellow';
+          }
+        } else if (left > width && left <= width * 2) {
+          if (left <= width + d2) {
+            this.currentColor[this.signalPlan['112'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['112'].key] = 'yellow';
+          }
+
+          if (left <= width + d6) {
+            this.currentColor[this.signalPlan['212'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['212'].key] = 'yellow';
+          }
+        } else if (left > width * 2 && left <= width * 3) {
+          if (left <= width * 2 + d3) {
+            this.currentColor[this.signalPlan['121'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['121'].key] = 'yellow';
+          }
+
+          if (left <= width * 2 + d7) {
+            this.currentColor[this.signalPlan['221'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['221'].key] = 'yellow';
+          }
+        } else if (left > width * 3 && left <= width * 4) {
+          if (left <= width * 3 + d4) {
+            this.currentColor[this.signalPlan['122'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['122'].key] = 'yellow';
+          }
+
+          if (left <= width * 3 + d8) {
+            this.currentColor[this.signalPlan['222'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['222'].key] = 'yellow';
+          }
+        }
+
+
       },
       stopChange() {
         if (this.isChangeTime) {
@@ -1514,7 +1643,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         setTimeout(() => {
           document.getElementById('node_animated').className = 'animated bounceIn';
 
-          this.currentNum = (this.currentNum +1) % 4;
+          // this.currentNum = (this.currentNum + 1) % 4;
+          this.currentDirection.push(this.currentDirection.shift())
         }, 500)
       },
     },
