@@ -164,100 +164,126 @@
     },//
     methods: {
       init() {
-        this.myChart = this.$echarts.init(document.getElementById('data'));
-        let options = {
-          legend: {
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: {
-                type: 'cross'
-              }
-            },
-            data: [{
-              name: '优化前',
-              icon: 'square',
-              textStyle: {
-                color: '#c9c9cc',
-                fontSize: 10,
+        var that = this;
+        this.$http.get('/history/roadNetAlarmTimesByMonths?months=201807,201808,201809,201810,201811,201812' +
+          ''+ '&token=' + this.getHeader().token).then(function (item) {
+          var data = item.data;
+          var array_data =[];
+          var goodBefore = [];
+          var goodAfter = [];
+          data.map(function (item) {
+            array_data.push(Object.values(item))
+         });
+          for(var i = 0;i<3;i++){
+            goodBefore.push(array_data[i])
+          }
+          for(var j = 3;j<array_data.length;j++){
+            goodAfter.push(array_data[j])
+          }
+          let options = {
+            legend: {
+              tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                  type: 'cross'
+                }
               },
-            },
-              {
-                name: '优化后',
+              data: [{
+                name: '优化前',
                 icon: 'square',
                 textStyle: {
                   color: '#c9c9cc',
                   fontSize: 10,
-                }
+                },
               },
-            ],
+                {
+                  name: '优化后',
+                  icon: 'square',
+                  textStyle: {
+                    color: '#c9c9cc',
+                    fontSize: 10,
+                  }
+                },
+              ],
 
-          },
-          grid: {
-            left: 100
-          },
-          xAxis: {
-            type: 'value',
-            color: '#c9c9cc',
-            splitLine: {
-              show: false
             },
-            axisLine: {
-              lineStyle: {
-                color: '#595B66'
-              },
+            grid: {
+              left: 100
             },
-            axisTick: {
-              show: false
-            },
-            axisLabel: {
-              show: "true",
+            xAxis: {
+              type: 'value',
               color: '#c9c9cc',
-              margin: 20
-
-            }
-          },
-          yAxis: {
-            type: 'category',
-            data: ['五月', '四月', '三月', '二月', '一月', '八月', '九月', '十月', '十一月', '十二月'],
-            margin: 30,
-            axisLine: {
-              lineStyle: {
-                color: '#595B66'
+              splitLine: {
+                show: false
               },
+              axisLine: {
+                lineStyle: {
+                  color: '#595B66'
+                },
+              },
+              axisTick: {
+                show: false
+              },
+              axisLabel: {
+                show: "true",
+                color: '#c9c9cc',
+                margin: 20
+
+              }
             },
-            axisLabel: {
-              color: '#c9c9cc',
-              margin: 20
-            },
-            axisTick: {
-              show: false,
-            },
+            yAxis: {
+              type: 'category',
+              data: [ '七月', '八月','九月', '十月', '十一月', '十二月'],
+              margin: 30,
+              axisLine: {
+                lineStyle: {
+                  color: '#595B66'
+                },
+              },
+              axisLabel: {
+                color: '#c9c9cc',
+                margin: 20
+              },
+              axisTick: {
+                show: false,
+              },
 
 
-          },
-          series: [
-            {
-              name: '优化前',
-              type: 'bar',
-              color: '#e05f9a',
-              barWidth: '12',
-              data: [[1000, '八月'], [800, '九月'], [700, '十月'], [600, '十一月'], [2000, '十二月']]
             },
-            {
-              name: '优化后',
-              type: 'bar',
-              barGap: '-100%',
-              color: '#02d1d1',
-              barWidth: '12',
-              data: [[500, '一月'], [100, '二月'], [200, '三月'], [500, '四月'], [300, '五月']]
-            }
-          ]
-
-        };
-        this.myChart.setOption(options);
+            series: [
+              {
+                name: '优化前',
+                type: 'bar',
+                color: '#e05f9a',
+                barWidth: '12',
+                data: [[ '七月'], [ '八月'], [ '九月']]
+              },
+              {
+                name: '优化后',
+                type: 'bar',
+                barGap: '-100%',
+                color: '#02d1d1',
+                barWidth: '12',
+                data: [['十月'],['十一月'],[ '十二月']]
+              }
+            ]
+          };
+          for (var k = 0;k<goodBefore.length;k++ ){
+            options.series[0].data[k].unshift(goodBefore[k][1])
+          }
+          for (var l = 0;l<goodAfter.length;l++){
+            options.series[1].data[l].unshift(goodAfter[l][1])
+          }
+          that.myChart = that.$echarts.init(document.getElementById('data'));
+          that.myChart.setOption(options);
+        })
       },
       init_Intersection(){
-        this.Intersection = this.$echarts.init(document.getElementById('data_three'));
+        var that = this;
+        this.$http.get('/history/trafficLightOptimizeDelay?' + 'token=' + this.getHeader().token).then(function (item) {
+           console.log(item.data)
+        })
+        that.Intersection = that.$echarts.init(document.getElementById('data_three'));
         let option_one = {
           tooltip: {
             trigger: 'axis'
@@ -395,7 +421,7 @@
             },
           ]
         };
-        this.Intersection.setOption(option_one);
+        that.Intersection.setOption(option_one);
       },
       init_flowRate(){
         this.flowRate = this.$echarts.init(document.getElementById('data_four'));

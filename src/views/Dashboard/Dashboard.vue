@@ -145,10 +145,10 @@
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
-              <pie-doughnut id="pieDoughnut" title="优化前"></pie-doughnut>
+              <pie-doughnut id="pieDoughnut" title="优化前" :data="trafficLightRatio.before.values" ></pie-doughnut>
             </div>
             <div style="width: 50%;height: 80%;display: inline-block" class="fr">
-              <pie-doughnut id="PieDoughnut" title="优化后"></pie-doughnut>
+              <pie-doughnut id="PieDoughnut" title="优化后" :data="trafficLightRatio.after.values"></pie-doughnut>
             </div>
           </div>
         </el-card>
@@ -513,6 +513,10 @@
         radio4: 2,
         radioLine: 1,
         nodeName: [],
+        trafficLightRatio:{
+          before:{},
+          after:{}
+        },
 
 
         polar: {
@@ -650,10 +654,11 @@
             })
         });
       },
-      getTrafficLightOptimizeCongestionStatus() {
+      getTrafficLightOptimizeCongestionStatus() {  //优化前后流量饱和度
         this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token)
           .then((response) => {
-            console.log(response);
+            console.log(response.data.after)
+            this.trafficLightRatio = response.data;
           })
       },
       getRoadFlowColor(num) {
