@@ -14,6 +14,7 @@ import './auth/auth'
 
 import './assets/rem'
 import './assets/font/iconfont.css'
+import './assets/animate.css'
 import timelinepick from "vue-timelinepick"
 import "vue-timelinepick/dist/vue-timelinepick.css"
 import echarts from 'echarts'
