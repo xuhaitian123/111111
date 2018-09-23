@@ -657,7 +657,6 @@
       getTrafficLightOptimizeCongestionStatus() {  //优化前后流量饱和度
         this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token)
           .then((response) => {
-            console.log(response.data.after)
             this.trafficLightRatio = response.data;
           })
       },
