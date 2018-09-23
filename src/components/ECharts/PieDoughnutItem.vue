@@ -8,12 +8,15 @@
     props: {
       id: String,
       title: String,
+      data: Object,
     },
     data() {
-      return {}
+      return {
+        myChart: undefined,
+      }
     },
     mounted() {
-      let myChart = this.$echarts.init(document.getElementById(this.id));
+      this.myChart = this.$echarts.init(document.getElementById(this.id));
       let option = {};
       option = {
         title: {
@@ -74,7 +77,7 @@
             label: {
               normal: {
                 show: false,
-                position:'inside'
+                position: 'inside'
               },
               emphasis: {
                 show: true,
@@ -83,16 +86,28 @@
                 }
               }
             },
-            data: [
-              {value: 0, name: '通畅', itemStyle: {color: '#5ebfba'}},
-              {value: 0, name: '正常', itemStyle: {color: '#ff8539'}},
-              {value: 0, name: '拥堵', itemStyle: {color: '#b14671'}}
-            ]
+            data: []
           }
         ]
       };
-      myChart.setOption(option, true);
+      this.myChart.setOption(option, true);
     },
+    watch: {
+      data: {
+        handler(newVal, oldVal) {
+          if (this.myChart) {
+            let option = this.myChart.getOption();
+            option.series[0].data = [
+              {value: newVal['一级'], name: '通畅', itemStyle: {color: '#5ebfba'}},
+              {value: newVal['二级'], name: '正常', itemStyle: {color: '#ff8539'}},
+              {value: newVal['三级'] + newVal['四级'], name: '拥堵', itemStyle: {color: '#b14671'}}
+            ];
+            this.myChart.setOption(option);
+          }
+        },
+        deep: true //对象内部属性的监听，关键。
+      }
+    }
   }
 </script>
 

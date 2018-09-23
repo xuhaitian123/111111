@@ -23,7 +23,9 @@ Vue.use(timelinepick);
 Vue.use(VueAxios, axios);
 Vue.use(ElementUI);
 
-axios.defaults.baseURL = 'http://47.52.57.26:3000/';
+// axios.defaults.baseURL = 'http://47.52.57.26:3000/';
+axios.defaults.baseURL = 'http://localhost:3000/';
+
 Vue.config.productionTip = false;
 
 Vue.prototype.$echarts = echarts;

@@ -420,12 +420,13 @@
     background: rgba(41,41,54,0.7);
   }
   .control-setting-title{
-    width: 100%;
+    width: 530px;
     padding-left: 20px;
     height: 30px;
     line-height: 30px;
     color: #fff;
     background: #1f1f2c;
+    box-sizing: border-box;
   }
   .control-setting-content{
     margin: 35px 0 0 52px;
