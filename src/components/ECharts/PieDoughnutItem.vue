@@ -18,7 +18,6 @@
     mounted() {
       this.myChart = this.$echarts.init(document.getElementById(this.id));
       let option = {};
-
       option = {
         title: {
           text: this.title,

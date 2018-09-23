@@ -362,7 +362,7 @@
     height: 980px;
   }
   .right-container{
-    background: rgba(41,41,54,0.7);
+    background: #333643;
     position: absolute;
     width: 530px;
     height: 960px;

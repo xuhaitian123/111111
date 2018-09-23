@@ -25,27 +25,27 @@
               </div>
               <div class="show-filter-item_road">
                 <div class="selected_road">选择路口</div>
-                <!--<el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">-->
-                <!--<el-option-->
-                <!--v-for="item in cityList"-->
-                <!--:key="item.value"-->
-                <!--:label="item.label"-->
-                <!--:value="item.value">-->
-                <!--</el-option>-->
-                <!--</el-select>-->
+                <el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">
+                <el-option
+                v-for="item in nodes"
+                :key="item.node_id"
+                :label="item.node_name"
+                :value="item.node_id">
+                </el-option>
+                </el-select>
               </div>
             </div>
             <div class="main_up_left_right_head">
               <div class="show-filter-item_road">
                 <div class="selected_road">选择路口</div>
-                <!--<el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">-->
-                <!--<el-option-->
-                <!--v-for="item in cityList"-->
-                <!--:key="item.value"-->
-                <!--:label="item.label"-->
-                <!--:value="item.value">-->
-                <!--</el-option>-->
-                <!--</el-select>-->
+                <el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">
+                <el-option
+                v-for="item in nodes"
+                :key="item.node_id"
+                  :label="item.node_name"
+                :value="item.node_id">
+                </el-option>
+                </el-select>
               </div>
               <div class="show_time_right">
                 <div class="time_right">开始时间</div>
@@ -175,19 +175,19 @@
 
           <div v-for="(intersections, index) in intersectionsList" v-if="index*2 < intersectionsList.length"
                class="rate-container">
-            <div class="rate-container-item">
+            <div class="rate-container-item" @click="changeRoadRate(  intersections.id, $event)">
               <div class="rate-container-item-title"> {{intersections.rate}}%</div>
               <div class="rate-container-cavans-container">
-                <rate :id="intersectionsList[index].id" :rate="intersections.rate"></rate>
+                <rate :id="intersections.id" :rate="intersections.rate"></rate>
               </div>
-
-
             </div>
-            <div class="rate-container-action-contaienr">
+            <div class="rate-container-action-contaienr" >
               <div class="rate-item-top" :class="{'hide': index === 0}"></div>
               <div class="rate-container-action">
                 <div class="rate-container-action-line"></div>
                 <div class="rate-container-action-option">
+                   <div class="rate-container-action-title">光源路</div>
+                  <div class="rate-container-action-selected"> </div>
 
                 </div>
                 <div class="rate-container-action-line"></div>
@@ -197,7 +197,7 @@
             /2}"></div>
 
             </div>
-            <div class="rate-container-item">
+            <div class="rate-container-item" @click="changeRoadRate(  intersectionsList[intersectionsList.length-1-index].id, $event)">
               <div class="rate-container-cavans-container">
                 <rate :id="intersectionsList[intersectionsList.length-1-index].id"
                       :rate="intersectionsList[intersectionsList.length-1-index].rate"></rate>
@@ -205,7 +205,6 @@
 
               <div class="rate-container-item-title"> {{intersectionsList[intersectionsList.length-1-index].rate}}%</div>
             </div>
-
 
           </div>
 
@@ -219,7 +218,10 @@
           <span>天（24hr）趋势分析</span>
         </div>
         <div class="main_down_down">
-          <div id="line_map" style="width: 100%;height: 100%;position: absolute;z-index: 10"></div>
+          <!--<div id="line_map" style="width: 100%;height: 100%;position: absolute;z-index: 10"></div>-->
+
+          <trendLine  style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
+
           <div
             style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center">
             <div class="contrast_right">
@@ -258,11 +260,14 @@
   import Area from '../../components/Area/Area'
   import rate from '../../components/ECharts/rate'
   import heatChart from '../../components/ECharts/heatChart'
+  import trendLine from  '../../components/ECharts/trendLine'
+
 
   export default {
     name: "signal-optimization",
     data() {
       return {
+        nodes: [],
         left_date_picker_start: "",
         left_date_picker_end: "",
         left_filter_road_name: "",
@@ -275,21 +280,36 @@
         intersectionsList: [{id: '1', rate: 20}, {id: '2', rate: 30}, {id: '3', rate: 30}, {
           id: '4',
           rate: 40
-        }, {id: '11', rate: 20}, {id: '22', rate: 30}, {id: '33', rate: 30}, {id: '44', rate: 40}]
+        }, {id: '11', rate: 20}, {id: '22', rate: 30}, {id: '33', rate: 30}, {id: '44', rate: 40},
+           {id: '41', rate: 20}, {id: '42', rate: 30}, {id: '53', rate: 30}, {id: '54', rate: 40}]
       }
     },
     components: {
       Area,
       rate,
-      heatChart
+      heatChart,
+      trendLine,
     },
     mounted: function () {
+      this.$http.get('/index/nodes').then(nodes=>{
+        this.nodes = nodes.data.nodes
+        console.log(nodes)
+      })
+
       this.add_date_picker_show()
       this.init()
-      this.line_map_init()
+      // this.line_map_init()
       // this.pie_map_init()
     },
     methods: {
+      changeRoadRate(id, event){
+        $(".rate-container-item").removeClass('is-active');
+        $(event.currentTarget).addClass('is-active');
+        $('.rate-container-action-contaienr').removeClass('is-active');
+        $(event.currentTarget).siblings('.rate-container-action-contaienr').addClass('is-active');
+
+
+      },
       add_date_picker_show: function () {
         $("#left_date_picker_start,#left_date_picker_end,#right_date_picker_start,#right_date_picker_end,#line_map_top_right_date_picker_start,#line_map_top_right_date_picker_end").datepicker({
           showMonthAfterYear: true,
@@ -439,10 +459,49 @@
       },
       line_map_init() {
         this.myChart = this.$echarts.init(document.getElementById('line_map'));//
+
+
+        var data = [
+          {
+            name: '路口一',
+            type: 'line',
+            smooth: true,
+            data: [1, 2, 3, 4, 6, 4, 3, 3, 2, 6, 3, 5]
+          },
+          {
+            name: '路口二',
+            type: 'line',
+            smooth: true,
+            data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 5, 2, 5]
+          },
+          {
+            name: '路口三',
+            type: 'line',
+            smooth: true,
+            data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 2, 4, 3]
+          },
+          {
+            name: '路口四',
+            type: 'line',
+            smooth: true,
+            data: [5, 3, 4, 4, 3, 3, 2, 6, 3, 2, 4, 3]
+          },
+          {
+            name: '路口五',
+            type: 'line',
+            smooth: true,
+            data: [5, 3, 4, 4, 3, 3, 3, 3, 2, 4, 2, 3]
+          },
+          {
+            name: '路口六',
+            type: 'line',
+            smooth: true,
+            data: [5, 3, 4, 4, 2, 3, 4, 3, 2, 4, 2, 3]
+          },];
         var option = {
           grid: {
             height: '130px',
-            width: "940px",
+            width: "600px",
             y: '10%',
             left: "75px",
             top: "25px"
@@ -454,85 +513,20 @@
           },
           yAxis: {
             type: 'value',
-            min: 0,
-            max: 6
           },
           legend: {
-            right: 224,
-            // type:'line',
+            x:'right',
+            top: 90,
             pageButtonItemGap: 100,
-            // top:95,
-
             textStyle: {
               color: '#c9c9cc',
             },
-            width: 100,
-            height: 10,
-            data: [
-              {
-                name: '邮件营销',
-                type: 'line'
-              },
-              {
-                name: '联盟广告',
-                type: 'line'
-              },
-              {
-                name: '视频广告',
-                type: 'line'
-              },
-              {
-                name: '直接访问',
-                type: 'line'
-              },
-              {
-                name: '搜索引擎',
-                type: 'line'
-              },
-              {
-                name: '直接查询',
-                type: 'line'
-              }
-            ],
-            // data:['(流量)指标一','(流量)指标二','(流量)指标三','(流量)指标四','(流量)指标五','(流量)指标六']
+            // width: 100,
+            // height: 10,
+
+            data:['路口一','路口二','','路口三','路口四','','路口五','路口六']
           },
-          series: [
-            {
-              name: '邮件营销',
-              type: 'line',
-              smooth: true,
-              data: [1, 2, 3, 4, 6, 4, 3, 3, 2, 6, 3, 5]
-            },
-            {
-              name: '联盟广告',
-              type: 'line',
-              smooth: true,
-              data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 5, 2, 5]
-            },
-            {
-              name: '视频广告',
-              type: 'line',
-              smooth: true,
-              data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-            },
-            {
-              name: '直接访问',
-              type: 'line',
-              smooth: true,
-              data: [5, 3, 4, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-            },
-            {
-              name: '直接查询',
-              type: 'line',
-              smooth: true,
-              data: [5, 3, 4, 4, 3, 3, 3, 3, 2, 4, 2, 3]
-            },
-            {
-              name: '搜索引擎',
-              type: 'line',
-              smooth: true,
-              data: [5, 3, 4, 4, 2, 3, 4, 3, 2, 4, 2, 3]
-            },],
+          series: data,
           textStyle: {
             color: '#c9c9cc',
           }
@@ -792,7 +786,7 @@
 
   .rate-container {
     display: flex;;
-    height: 100px;
+    height: 80px;
     justify-content: center;
     align-items: center;
     padding: 0 20px;
@@ -803,11 +797,17 @@
     align-items: right;
   }
 
+  .is-active.rate-container-item{
+    background: rgb(71,74,87);
+    border-radius: 15px;
+  }
   .rate-container-item {
+    padding: 5px;
     width: 30%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-sizing: border-box;
   }
 
   .rate-container-action-contaienr {
@@ -828,8 +828,8 @@
     /*text-align: left;*/
   /*}*/
   .rate-container-cavans-container {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
   }
 
   .rate-container-action {
@@ -840,12 +840,16 @@
     padding: 0 5px;
   }
 
+  .is-active .rate-container-action-line{
+      opacity: 1;
+  }
   .rate-container-action-line {
     flex-grow: 1;
     height: 1px;
     background-image: linear-gradient(to right, rgb(221, 129, 41) 0%, rgb(221, 129, 41) 50%, transparent 50%);
     background-size: 10px 1px;
     background-repeat: repeat-x;
+    opacity: 0;
 
   }
 
@@ -855,6 +859,27 @@
     box-sizing: border-box;
     border-radius: 50%;
     border: 2px solid rgb(221, 129, 41);
+    padding: 5px;
+    position: relative;
+  }
+  .rate-container-action-title{
+    position: absolute;
+    font-size: 10px;
+    right: -35px;
+    top: -5px;
+  }
+  .is-active .rate-container-action-selected{
+    opacity: 1;
+  }
+
+
+  .rate-container-action-selected{
+    width: 14px;
+    height: 14px;
+    background: rgb(221, 129, 41);
+    border-radius: 50%;
+    box-sizing: border-box;
+    opacity: 0;
   }
 
   .rate-item-bottom,
@@ -873,7 +898,7 @@
   }
   .main-search-action{
     display: flex;
-    padding: 5px 60px 0 60px;
+    padding: 5px 60px 15px 60px;
     height: 40px;
     justify-content: center;
   }
