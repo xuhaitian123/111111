@@ -18,8 +18,8 @@
     z-index: 99;
     width: 90px;
     margin: auto;
-    top: 23px;
-    height: 82%;
+    top: 20px;
+    height: 84%;
     background: #333643;
   }
   .heatChart-canvas{
@@ -78,7 +78,8 @@
       } while (i <= 718)
       let options = {
         tooltip: {
-          position: 'top'
+          position: 'top',
+          showContent: false
         },
         animation: false,
         grid: {
