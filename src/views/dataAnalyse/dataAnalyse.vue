@@ -13,14 +13,14 @@
             <div class="score_title_text">优化前后路网总评分/路网各类路况占比</div>
           </div>
           <div class="score_body_area" style="padding: 43px 43px 50px 43px;box-sizing: border-box;display: flex;flex-wrap: wrap;">
-          <div id="before_road_net_score" style="height: 120px;width: 170px"></div>
-          <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 52px"></div>
-          <div id="before_road_net_proportion" style="height: 170px;width: 190px">
-            <PieDoughnutItem :id='"before_road_net_proportion"':title = '"优化前"'></PieDoughnutItem>
-          </div>
-          <div id="after_road_net_proportion" style="height: 170px;width: 190px;margin-left: 52px">
-            <PieDoughnutItem :id='"after_road_net_proportion"':title = '"优化后"' ></PieDoughnutItem>
-          </div>
+          <!--<div id="before_road_net_score" style="height: 120px;width: 170px"></div>-->
+          <!--<div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 52px"></div>-->
+          <!--<div id="before_road_net_proportion" style="height: 170px;width: 190px">-->
+            <!--<PieDoughnutItem :id='"before_road_net_proportion"':title = '"优化前"'></PieDoughnutItem>-->
+          <!--</div>-->
+          <!--<div id="after_road_net_proportion" style="height: 170px;width: 190px;margin-left: 52px">-->
+            <!--<PieDoughnutItem :id='"after_road_net_proportion"':title = '"优化后"' ></PieDoughnutItem>-->
+          <!--</div>-->
 
           </div>
         </div>
@@ -29,7 +29,7 @@
             <div class="alarmData_title_text">路网拥堵报警次数月变化趋势</div>
           </div>
           <div class="alarmData_body_area " style="padding-top: 44px;box-sizing: border-box">
-            <div id="data" style="height: 100%;width: 100%"></div>
+            <alarm-data :alarm_data=alarm_data></alarm-data>
           </div>
         </div>
         <div class="IntersectionData">
@@ -37,7 +37,7 @@
             <div class="IntersectionData_title_text">各交叉口平均延误水平与拥堵报警次数</div>
           </div>
           <div class="IntersectionData_body_area" style="padding-top: 44px;box-sizing: border-box">
-            <div id="data_three" style="height: 100%;width: 100%"></div>
+            <intersection :intersection_data=intersection_data :trafficLightOptimizeAlarmTimes=trafficLightOptimizeAlarmTimes></intersection>
           </div>
         </div>
         <div class="flowRate">
@@ -45,7 +45,7 @@
             <div class="flowRate_title_text">路网流量、平均车速月变化趋势</div>
           </div>
           <div class="flowRate_body_area" style="padding: 35px 20px 0 30px;box-sizing: border-box">
-          <div id="data_four" style="height: 100%;width: 100%"></div>
+         <flow-data :flow_rate_data=flow_rate_data :speed_data=speed_data></flow-data>
           </div>
         </div>
         <div class="goodSpeed">
@@ -53,7 +53,7 @@
             <div class="goodSpeed_title_text">优化前后平均车速日变化趋势</div>
           </div>
           <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box">
-            <div id="data_five" style="height: 100%;width: 100%"></div>
+            <good-data></good-data>
           </div>
         </div>
 
@@ -154,7 +154,10 @@
 
 <script>
   import Area from '../../components/Area/Area'
-  import PieDoughnutItem from '../../components/ECharts/PieDoughnutItem'
+  import AlarmData from '../../components/signalDataAnalysis/alarmData'
+  import  FlowData from '../../components/signalDataAnalysis/flowRate'
+  import  goodData from '../../components/signalDataAnalysis/goodSpeed'
+  import  Intersection from '../../components/signalDataAnalysis/Intersection'
 
   export default {
     name: "DataAnalyse",
@@ -172,6 +175,10 @@
         flowRate: undefined,
         goodSpeed: undefined,
         alarm_data:[],
+        intersection_data:[],
+        trafficLightOptimizeAlarmTimes:[],
+        flow_rate_data:[],
+        speed_data:[]
 
       }
     },//
@@ -180,411 +187,26 @@
         var that = this;
         this.$http.get('/history/roadNetAlarmTimesByMonths?months=201807,201808,201809,201810,201811,201812' +
           ''+ '&token=' + this.getHeader().token).then(function (item) {
-          var data = item.data;
-          console.log(data);
-          let options = {
-            legend: {
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                  type: 'cross'
-                }
-              },
-              data: [{
-                name: '优化前',
-                icon: 'square',
-                textStyle: {
-                  color: '#c9c9cc',
-                  fontSize: 10,
-                },
-              },
-                {
-                  name: '优化后',
-                  icon: 'square',
-                  textStyle: {
-                    color: '#c9c9cc',
-                    fontSize: 10,
-                  }
-                },
-              ],
-
-            },
-            grid: {
-              left: 100
-            },
-            xAxis: {
-              type: 'value',
-              color: '#c9c9cc',
-              splitLine: {
-                show: false
-              },
-              axisLine: {
-                lineStyle: {
-                  color: '#595B66'
-                },
-              },
-              axisTick: {
-                show: false
-              },
-              axisLabel: {
-                show: "true",
-                color: '#c9c9cc',
-                margin: 20
-
-              }
-            },
-            yAxis: {
-              type: 'category',
-              data: [],
-              margin: 30,
-              axisLine: {
-                lineStyle: {
-                  color: '#595B66'
-                },
-              },
-              axisLabel: {
-                color: '#c9c9cc',
-                margin: 20
-              },
-              axisTick: {
-                show: false,
-              },
-
-
-            },
-            series: [
-              {
-                name: '优化前',
-                type: 'bar',
-                color: '#e05f9a',
-                barWidth: '12',
-                data: []
-              },
-              {
-                name: '优化后',
-                type: 'bar',
-                barGap: '-100%',
-                color: '#02d1d1',
-                barWidth: '12',
-                data: []
-              }
-            ]
-          };
-          var number = [];
-           number = data.map(function (item) {
-            return{month:parseInt(item.month.substring(4,6)),value:item.value}
-          });
-          var month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-
-          for( var i = 0;i<number.length;i++){
-            options.yAxis.data.push(month[number[i].month-1])
-          }
-          number.forEach(function (data) {
-            if(data.month>9){
-              options.series[1].data.push(data)
-            }else if(data.month<9 &&data.month>6){
-              options.series[0].data.push(data)
-            }
-          })
-          that.myChart = that.$echarts.init(document.getElementById('data'));
-          that.myChart.setOption(options);
-
+          that.alarm_data = item.data
         })
       },
       init_Intersection(){
         var that = this;
         this.get_init_Intersection_data().then(function (data) {
           that.$http.get('/history/trafficLightOptimizeAlarmTimes' + '?token=' + that.getHeader().token).then(function (item) {
-             var road_name = data.after.map(function (data) {
-                return data.node_name
-            });
-            let option_one = {
-              tooltip: {
-                trigger: 'axis'
-              },
-              legend: {
-
-                data: [{
-                  name: '优化前延误',
-                  icon: 'square',
-                  textStyle: {
-                    color: '#c9c9cc',
-                    fontSize: 10,
-                  },
-                },
-                  {
-                    name: '优化后延误',
-                    icon: 'square',
-                    textStyle: {
-                      color: '#c9c9cc',
-                      fontSize: 10,
-                    }
-                  },
-                  {
-                    name: '优化前报警',
-                    textStyle: {
-                      color: '#c9c9cc',
-                      fontSize: 10,
-                    },
-                  },
-                  {
-                    name: '优化后报警',
-                    textStyle: {
-                      color: '#c9c9cc',
-                      fontSize: 10,
-                    }
-                  },
-                ],
-              },
-              grid: {
-                left: 50,
-                bottom:100
-              },
-              xAxis: {
-                type: 'category',
-                data: [],
-                axisLine: {
-                  lineStyle: {
-                    color: '#595B66'
-                  },
-                },
-                axisLabel: {
-                  color: '#c9c9cc',
-                  margin: 15,
-                  rotate:-40
-                },
-                axisTick: {
-                  show: false,
-                },
-
-              },
-              yAxis: [
-                {
-                  name: "报警次数",
-                  nameTextStyle: {
-                    color: "#c9c9cc"
-                  },
-                  nameLocation: "center",
-                  nameGap: '35',
-                  nameRotate: 270,
-                  type: 'value',
-                  show: true,
-                  min: 0,
-                  max: 1000,
-                  color: '#fff',
-                  axisLabel: {
-                    formatter: '{value}',
-                    color: '#c9c9cc'
-                  },
-                  splitLine: {
-                    show: true,
-                    lineStyle: {
-                      color: ['#c9c9cc']
-                    }
-                  },
-                  position: 'right',
-
-                },
-                {
-                  name: '平均延误时间(s)',
-                  nameTextStyle: {
-                    color: "#c9c9cc",
-                    align: 'left'
-                  },
-                  nameLocation: "center",
-                  nameGap: '30',
-                  nameRotate: 270,
-                  min:0,
-                  max:100,
-                  type: 'value',
-                  show: true,
-                  position: 'left',
-                  axisLabel: {
-                    formatter: '{value}',
-                    color: '#c9c9cc'
-                  },
-                  splitLine: {
-                    show: true,
-                    lineStyle: {
-                      color: ['#c9c9cc']
-                    }
-                  },
-
-                }],
-              series: [
-                {
-                  name: '优化前延误',
-                  type: 'bar',
-                  color: '#e05f9a',
-                  yAxisIndex: 1,
-                  data: []
-                },
-                {
-                  name: '优化后延误',
-                  type: 'bar',
-                  color: '#eacc36',
-                  barWidth:10,
-                  yAxisIndex: 1,//
-                  data: []
-                },
-                {
-                  name: '优化前报警',
-                  type: 'line',
-                  yAxisIndex: 0,
-                  symbol: 'circle',
-                  color: '#af69c9',
-                  data: []
-                },
-                {
-                  name: '优化后报警',
-                  type: 'line',
-                  yAxisIndex: 0,
-                  symbol: 'circle',
-                  color: '#02d1d1',
-                  data: []
-                },
-              ]
-            };
-            road_name.forEach(function (data) {
-              option_one.xAxis.data.push (data)
-            })
-            data.before.forEach(function (data) {
-              option_one.series[0].data.push(data)
-            })
-            data.after.forEach(function (data) {
-              option_one.series[1].data.push(data)
-            })
-            item.data.before.forEach(function (data) {
-              option_one.series[2].data.push(data)
-            })
-            item.data.after.forEach(function (data) {
-              option_one.series[3].data.push(data)
-            })
-            that.Intersection = that.$echarts.init(document.getElementById('data_three'));
-            that.Intersection.setOption(option_one);
+            this.intersection_data = data;
+            this.trafficLightOptimizeAlarmTimes = item.data
           })
         })
-
       },
       init_flowRate(){
         var that = this;
         this.get_flowRate_data().then(function (data) {
-          that.$http.get('/history/roadNetAvgSpeedByMonths?months=201808,201809' + '&token=' + that.getHeader().token).then(function (item){
-            var road_speed_number = item.data.map(function (data) {
-              return {month:parseInt(data.month.substring(4,6)),value:data.value}
-            })
-            var flow_number = data.map(function (item) {
-              return {month:parseInt(item.month.substring(4,6)),value:item.value}
-            })
-            var month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-            let option_four = {
-              tooltip: {
-                trigger: 'axis'
-              },
-              legend: {
-                data: [{
-                  name: '流量',
-                  textStyle: {
-                    color: '#c9c9cc',
-                    fontSize: 10,
-                  }
-                },
-                  {
-                    name: '平均车速',
-                    textStyle: {
-                      color: '#c9c9cc',
-                      fontSize: 10,
-                    }
-                  },]
-              },
-              xAxis: [{
-                type: 'category',
-                data: [],
-                axisLine: {
-                  lineStyle: {
-                    color: '#595B66'
-                  },
-                },
-                axisLabel: {
-                  color: '#c9c9cc',
-                  margin: 30
-                },
-                axisTick: {
-                  show: false,
-                },
-              }],
-              yAxis: [
-                {
-                  type: 'value',
-                  show: true,
-                  min: 30,
-                  max: 60,
-                  axisLabel: {
-                    formatter: '{value}',
-                    color: '#c9c9cc',
-                    margin:10
-                  },
-                  position: 'right',
-                  splitLine: {
-                    show: true,
-                    interval: 'auto',//
-                    lineStyle: {
-                      color: ['#595B66']
-                    }
-                  },
-                },
-                {
-                  type: 'value',
-                  show: true,
-                  min: 20000,
-                  max: 26000,
-                  position: 'left',
-                  axisLabel: {
-                    formatter: '{value}',
-                    color: '#c9c9cc'//
-                  },
-                  splitLine: {
-                    show: true,
-                    interval: 'auto',//
-                    lineStyle: {
-                      color: ['#595B66']
-                    }
-                  },
-                }],
-              series:[
-                {
-                  name: '流量',
-                  type: 'line',
-                  color: '#02d1d1',
-                  symbol: 'circle',
-                  yAxisIndex: 1,
-                  data: []
-                },
-                {
-                  name: '平均车速',
-                  type: 'line',
-                  color: '#eacc36',
-                  symbol: 'circle',
-                  yAxisIndex: 0,
-                  data:[]
-                },
-              ]
-            };
-            for( var i = 0;i<road_speed_number.length;i++){
-              option_four.xAxis.data.push(month[road_speed_number[i].month-1])
-            }
-            road_speed_number.forEach(function (data) {
-                option_four.series[1].data.push(data)
-            })
-            flow_number.forEach(function (data) {
-              option_four.series[0].data.push(data)
-            })
-            that.flowRate = that.$echarts.init(document.getElementById('data_four'));
-            that.flowRate.setOption(option_four);
+          that.$http.get('/history/roadNetAvgSpeedByMonths?months=201808,201809' + '&token=' + that.getHeader().token).then(function (item) {
+            that.flow_rate_data = data
+            that.data = item.data
           })
-
         })
-
       },
       init_goodSpeed(){
         var that = this;
@@ -671,7 +293,7 @@
         })
 
       },
-     get_init_Intersection_data(){
+      get_init_Intersection_data(){
           return new Promise((resolve, reject) => {
             this.$http.get('/history/trafficLightOptimizeDelay?' + '&token=' + this.getHeader().token).then(function (item) {
               resolve(item.data)
@@ -689,7 +311,11 @@
   },
   components: {
     Area,
-    PieDoughnutItem
+    AlarmData,
+    FlowData,
+    goodData,
+    Intersection
+
   }
   ,
   }
