@@ -470,7 +470,12 @@
         var that = this;
         this.get_flowRate_data().then(function (data) {
           that.$http.get('/history/roadNetAvgSpeedByMonths?months=201808,201809' + '&token=' + that.getHeader().token).then(function (item){
-            console.log(item.data)
+            var road_speed_number = item.data.map(function (data) {
+              return {month:parseInt(data.month.substring(4,6)),value:data.value}
+            })
+            var flow_number = data.map(function (item) {
+              return {month:parseInt(item.month.substring(4,6)),value:item.value}
+            })
             var month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
             let option_four = {
               tooltip: {
@@ -494,7 +499,7 @@
               },
               xAxis: [{
                 type: 'category',
-                data: ['一月', '二月', '三月', '四月', '五月', '六月'],
+                data: [],
                 axisLine: {
                   lineStyle: {
                     color: '#595B66'
@@ -565,11 +570,14 @@
                 },
               ]
             };
-            data.forEach(function (item) {
-              option_four.series[0].data.push(item)
+            for( var i = 0;i<road_speed_number.length;i++){
+              option_four.xAxis.data.push(month[road_speed_number[i].month-1])
+            }
+            road_speed_number.forEach(function (data) {
+                option_four.series[1].data.push(data)
             })
-            item.data.forEach(function (item) {
-                   option_four.series[1].data.push(item)
+            flow_number.forEach(function (data) {
+              option_four.series[0].data.push(data)
             })
             that.flowRate = that.$echarts.init(document.getElementById('data_four'));
             that.flowRate.setOption(option_four);
