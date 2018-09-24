@@ -170,9 +170,9 @@
           this.Intersection.setOption(option_one);
         },
         data_processing(){
-          var data = this.intersection_data;
-          var item = this.trafficLightOptimizeAlarmTimes;
-          var road_name = data.after.map(function (item) {
+          let data = this.intersection_data;
+          let item = this.trafficLightOptimizeAlarmTimes;
+          let road_name = data.after.map(function (item) {
             return item.node_name
           });
           road_name.forEach(function (data) {
