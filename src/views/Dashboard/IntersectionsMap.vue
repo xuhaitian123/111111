@@ -239,47 +239,49 @@
               <road-gauge :data="roadNetCongestionScore.toFixed(0)" class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
-            <div>
-              <div
-                style="position: absolute;bottom: 200px;width: 250px;height: 40px;background: #1f1f2c;border-radius: 10px;left: 28%">
-                <div style="width: 50%;float: left;">
-                  <div style="height: 20px;width: 70%;margin: 10px auto;background: red;border-radius: 10px"></div>
-                </div>
-                <div style="width: 50%;float: left;">
-                  <div style="height: 20px;width: 70%;margin: 10px auto;background: red;border-radius: 10px"></div>
-                </div>
-              </div>
+            <!--<div>-->
+              <!--<div-->
+                <!--style="position: absolute;bottom: 200px;width: 250px;height: 40px;background: #1f1f2c;border-radius: 10px;left: 28%">-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
+                  <!--:style="{background : currentColor['d5']==='green'?'green':'yellow'}"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
+                       <!--:style="{background : currentColor['d2']==='green'?'green':'yellow'}"></div>-->
+                <!--</div>-->
+              <!--</div>-->
 
-              <div
-                style="position: absolute;top: 130px;width: 150px;height: 30px;background: #1f1f2c;border-radius: 10px;left: 26%">
-                <div style="width: 50%;float: left;">
-                  <div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>
-                </div>
-                <div style="width: 50%;float: left;">
-                  <div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>
-                </div>
-              </div>
+              <!--<div-->
+                <!--style="position: absolute;top: 130px;width: 150px;height: 30px;background: #1f1f2c;border-radius: 10px;left: 26%">-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
 
-              <div
-                style="position: absolute;top: 38%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;left: 9%;transform: rotate(44deg);">
-                <div style="width: 75%;margin: auto">
-                  <div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>
-                </div>
-                <div style="width: 75%;margin: auto">
-                  <div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>
-                </div>
-              </div>
+              <!--<div-->
+                <!--style="position: absolute;top: 38%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;left: 9%;transform: rotate(44deg);">-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
 
-              <div
-                style="position: absolute;top: 28%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;right: 49%;transform: rotate(-20deg);">
-                <div style="width: 75%;margin: auto">
-                  <div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>
-                </div>
-                <div style="width: 75%;margin: auto">
-                  <div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>
-                </div>
-              </div>
-            </div>
+              <!--<div-->
+                <!--style="position: absolute;top: 28%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;right: 49%;transform: rotate(-20deg);">-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
 
             <div class="Node_right_top">
               <el-tabs type="border-card" style="height: 420px;background: #353644">
