@@ -2,7 +2,6 @@
   <div class="heatChart">
     <div :id="id" class="heatChart-canvas"></div>
     <div class="heatChart-title">
-
     </div>
   </div>
 
@@ -61,12 +60,14 @@
       data.push([0, 4, 0])
       do {
          if(i<=288 || (i >= 430 && i<=718 )){
-          data.push([i, 1, parseInt(Math.random() * 100)])
-          data.push([i, 2, parseInt(Math.random() * 100)])
-          data.push([i, 3, parseInt(Math.random() * 100)])
-          data.push([i, 4, parseInt(Math.random() * 100)])
-          data.push([i, 5, parseInt(Math.random() * 100)])
+           // data.push([i, -1, ''])
+          data.push([i, 1, ''])
+          data.push([i, 2, ''])
+          data.push([i, 3, ''])
+          data.push([i, 4, ''])
+          data.push([i, 5, ''])
         }else{
+
            data.push([i, 1, 0])
            data.push([i, 2, 0])
            data.push([i, 3, 0])
@@ -125,6 +126,7 @@
         },
         yAxis: {
           type: 'category',
+          startValue:0,
           axisLabel: {
             show: false,
           },

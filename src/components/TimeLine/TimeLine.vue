@@ -155,6 +155,9 @@
         checkedDay: new Date().getDate(),
       }
     },
+    beforeDestroy(){
+      clearInterval(this.timer)
+    },
     mounted() {
       document.getElementById('timeLine-line').width = this.timeLineWidth + 50;
       this.initPosition();
@@ -177,6 +180,7 @@
       start(e) {
         this.isChangeTime = false;
         this.timer = setInterval(() => {
+          console.log(0)
           this.changePosition()
         }, this.rate)
       },

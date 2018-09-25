@@ -1,19 +1,21 @@
 <template>
-  <div>
+  <div v-loading="isLoadingInfo" element-loading-background="rgba(0, 0, 0, 0.8)">
     <Area></Area>
     <div class="trafficVideo-container-header">
 
     </div>
-    <div class="trafficVideo-container">
+    <div class="trafficVideo-container" >
       <div class="trafficVideo-container-left" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="trafficVideo-video-header">
           <div class="trafficVideo-video-header-left font16">人民路-南京路监控视频</div>
-          <div class="trafficVideo-video-header-right">
+          <div class="trafficVideo-video-header-right" >
             本区域所有监控视频路口
 
           </div>
 
         </div>
+
+
         <!--<canvas width="1080" height="680" id="mycanvas"></canvas>-->
         <canvas class="trafficVideo"  width="1080" height="680"  id="trafficVideo_origin">
         </canvas>
@@ -23,6 +25,12 @@
         </canvas>
         <canvas class="trafficVideo" width="1080" height="680"  id="trafficVideo_bike">
         </canvas>
+
+        <div v-if="!taskId" class="trafficVideo" style="background: black">
+
+
+        </div>
+
       </div>
       <div class="trafficVideo-container-right">
 
@@ -178,6 +186,7 @@
   export default {
     data() {
       return {
+        isLoadingInfo: true,
         timer: "",
         imageList: {},
         currentIndex: -1,
@@ -225,7 +234,6 @@
     mounted() {
 
         Promise.all([this.getAllMovementsByNodeId(2),this.getNodeCameraLish(2),this.getAllLinksByNodeId(2)]).then(result=>{
-
           var linkInfo = result[2].links.map(link=>{
             link.movementList = result[0].movements.filter(movement=>{
               return movement.link_id === link.link_id
@@ -239,9 +247,10 @@
           linkInfo.forEach(link=>{
             nodeInfo[link.link_direction] = link
           });
+          this.isLoadingInfo = false;
           this.taskId =  nodeInfo['北'].taskId
           this.nodeInfo =  nodeInfo;
-          console.log(this.nodeInfo)
+
         })
     // this.getDate()
 
@@ -512,10 +521,10 @@
       getCountOfNode(endTime) {
         return new Promise(resolve => {
           var startTime = endTime - 1000;
-          this.$http.get('http://localhost:3000/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then((result)=>{
-            resolve(result.data);
-          })
-          //  resolve({result:[{movement_id: 210, direction: "left", car: 1, truck: 2, bike: 3, status: false},
+          // this.$http.get('/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then((result)=>{
+          //   resolve(result.data);
+          // })
+           resolve({result:[{movement_id: 210, direction: "left", car: 1, truck: 2, bike: 3, status: false}]})
           // {movement_id: 203, direction: "straight", car: 1, truck: 2, bike: 3, status: false},
           // {movement_id: 211, direction: "right", car: 1, truck: 2, bike: 3, status: false}]})
         });
@@ -582,7 +591,7 @@
     position: relative;
     left: 0;
     top: 0;
-    z-index: 3000;
+    z-index: 1000;
     background: rgb(31, 31, 44);
     display: flex;
     align-items: center;
