@@ -10,14 +10,21 @@
         speed_data:Array
       },
       data(){
-          return{}
+          return{
+            flowRate: undefined,
+          }
       },
       mounted(){
+
+      },
+      watch: {
+        speed_data(){
           this.init()
+        }
       },
       methods:{
         init(){
-          let option_four = {
+          let option_four =  {
             tooltip: {
               trigger: 'axis'
             },
@@ -57,8 +64,8 @@
               {
                 type: 'value',
                 show: true,
-                min: 30,
-                max: 60,
+                min: 0,
+                max: 100,
                 axisLabel: {
                   formatter: '{value}',
                   color: '#c9c9cc',
@@ -76,8 +83,8 @@
               {
                 type: 'value',
                 show: true,
-                min: 20000,
-                max: 26000,
+                min: 0,
+                max: 1000,
                 position: 'left',
                 axisLabel: {
                   formatter: '{value}',
@@ -110,21 +117,21 @@
               },
             ]
           };
-          this.data_processing();
+          this.data_processing(option_four);
           this.flowRate = this.$echarts.init(document.getElementById('data_four'));
           this.flowRate.setOption(option_four);
         },
-        data_processing(){
-          var road_speed_number = this.speed_data.map(function (data) {
-            return {month:parseInt(data.month.substring(4,6)),value:data.value}
-          })
-          var flow_number = this.flow_rate_data.map(function (item) {
+        data_processing(option_four){
+          let road_speed_number = this.speed_data.map(function (item) {
             return {month:parseInt(item.month.substring(4,6)),value:item.value}
           })
-          var month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-
-          for( var i = 0;i<road_speed_number.length;i++){
-            option_four.xAxis.data.push(month[road_speed_number[i].month-1])
+          let flow_number = this.flow_rate_data.map(function (item) {
+            return {month:parseInt(item.month.substring(4,6)),value:item.value}
+          })
+          let month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+          console.log(option_four)
+          for( let i = 0;i<flow_number.length;i++){
+            option_four.xAxis[0].data.push(month[flow_number[i].month-1])
           }
           road_speed_number.forEach(function (data) {
             option_four.series[1].data.push(data)

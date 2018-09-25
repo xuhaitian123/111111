@@ -6,10 +6,21 @@
     export default {
       name: "good-speed",
       props: {
-        good_speed:Array
+        good_speed:Object
+      },
+      data(){
+        return {
+          goodSpeed: undefined,
+        }
       },
       mounted() {
-  this.init()
+
+      },
+      watch: {
+        good_speed() {
+          this.init()
+        },
+
       },
       methods: {
         init() {
@@ -77,23 +88,29 @@
                 type: 'line',
                 color: '#02d1d1',
                 symbol: 'circle',
-                data: [50.60, 30,60, 45, 66, 44, 33, 66, 88, 33, 22, 11, 1, 2, 4, 6, 8, 9, 10, 23, 23, 45, 43]
+                data: []
               },
               {
                 name: '优化后',
                 type: 'line',
                 color: '#e05f9a',
                 symbol: 'circle',
-                data: [50.60, 30,60, 20, 66, 44, 33, 88, 88, 33, 11, 11, 1, 2, 4, 8, 8, 9, 10, 23, 23, 45, 43]
+                data: []
               },
             ]
           };
-          this.data_processing();
+          this.data_processing(option_five);
           this.goodSpeed = this.$echarts.init(document.getElementById('data_five'));
           this.goodSpeed.setOption(option_five);
         },
-        data_processing(){
+        data_processing(option_five){
           let goodSpeedData = this.good_speed;
+          goodSpeedData.before.value.forEach(function (data) {
+               option_five.series[0].data.push(data)
+          })
+          goodSpeedData.after.value.forEach(function (data) {
+            option_five.series[1].data.push(data)
+          })
 
         }
       }
