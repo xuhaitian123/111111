@@ -16,10 +16,10 @@
           <div id="before_road_net_score" style="height: 120px;width: 170px"></div>
           <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 52px"></div>
           <div id="before_road_net_proportion" style="height: 170px;width: 190px">
-            <PieDoughnutItem :id='"before_road_net_proportion"':data="data.before.values" :title = '"优化前"'></PieDoughnutItem>
+            <TrafficAccounting :id='"before_road_net_proportion"':data="data.before.values" :title = '"优化前"' ></TrafficAccounting>
           </div>
           <div id="after_road_net_proportion" style="height: 170px;width: 190px;margin-left: 52px">
-            <PieDoughnutItem :id='"after_road_net_proportion"':data="data.after.values" :title = '"优化后"' ></PieDoughnutItem>
+            <TrafficAccounting :id='"after_road_net_proportion"':data="data.after.values" :title = '"优化后"' ></TrafficAccounting>
           </div>
 
           </div>
@@ -154,7 +154,7 @@
 
 <script>
   import Area from '../../components/Area/Area'
-  import  PieDoughnutItem from '../../components/ECharts/PieDoughnutItem'
+  import  TrafficAccounting from '../../components/signalDataAnalysis/TrafficAccounting'
   import AlarmData from '../../components/signalDataAnalysis/alarmData'
   import  FlowData from '../../components/signalDataAnalysis/flowRate'
   import  goodData from '../../components/signalDataAnalysis/goodSpeed'
@@ -222,6 +222,7 @@
         let that = this;
         that.$http.get('history/trafficLightOptimizeDayAvgSpeed?token=?' + ''+ '&token=' + this.getHeader().token).then(function (item) {
           that.good_speed = item.data
+          console.log(item.data)
 
         })
       },
@@ -252,7 +253,7 @@
   },
   components: {
     Area,
-    PieDoughnutItem,
+    TrafficAccounting,
     AlarmData,
     FlowData,
     goodData,
