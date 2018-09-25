@@ -81,7 +81,7 @@
       },
       addNodeMarker(long, lat, value, id, isAddUrl) {
         let pt = new window.BMap.Point(long, lat);
-        let myIcon = new window.BMap.Icon(isAddUrl?this.getNodeDelayImg(value):this.getNodeFlowImg(value), new window.BMap.Size(40, 40));
+        let myIcon = new window.BMap.Icon(isAddUrl?this.getNodeDelayImg(value):this.getNodeFlowImg(value), new window.BMap.Size(52, 51));
         let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
         if (isAddUrl) {
           marker.id = id;

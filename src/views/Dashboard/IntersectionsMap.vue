@@ -609,7 +609,7 @@
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(-90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['南']['直'].car}}
                               </div>
                             </div>
@@ -674,7 +674,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(-90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['西']['直'].car}}
                               </div>
                             </div>
@@ -740,7 +740,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(-90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['北']['直'].car}}
                               </div>
                             </div>
@@ -806,7 +806,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
                                 {{allMovementFlow['东']['直'].car}}
                               </div>
                             </div>
@@ -885,7 +885,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(-90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['南']['直'].bike}}
                               </div>
                             </div>
@@ -950,7 +950,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(-90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['西']['直'].bike}}
                               </div>
                             </div>
@@ -1016,7 +1016,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(-90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['北']['直'].bike}}
                               </div>
                             </div>
@@ -1082,7 +1082,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-40%) translateY(-40%) rotate(90deg)">
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
                                 {{allMovementFlow['东']['直'].bike}}
                               </div>
                             </div>
