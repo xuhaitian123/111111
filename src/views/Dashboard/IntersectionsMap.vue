@@ -383,19 +383,19 @@
                           <div v-if="signalPlan['211']!==undefined">
                             <div>
                               <div style="float: left;" id="width211"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['211'].MaxGreen+signalPlan['211'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['211'].key)}}
                               </div>
                               <div style="float: left;" id="width212"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['212'].MaxGreen+signalPlan['212'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['212'].key)}}
                               </div>
                               <div style="float: left;" id="width221"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['221'].MaxGreen+signalPlan['221'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['221'].key)}}
                               </div>
                               <div style="float: left;" id="width222"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['222'].MaxGreen+signalPlan['222'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['222'].key)}}
                               </div>
 
@@ -574,6 +574,7 @@
 
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
+
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
@@ -588,6 +589,10 @@
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;">
+                                {{allMovementFlow['南']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
