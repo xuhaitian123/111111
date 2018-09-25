@@ -494,16 +494,14 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc"
-                             v-if="nodeLength.values[2]">
-                          <div
+                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
+                          <div v-if="nodeLength.values[2]"
                             :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor((nodeLength.values[2].value/50)*100)}"
                             style="height: 100%;float: right"></div>
                         </div>
                         <div class="block" style="border: 3px solid #c9c9cc;"></div>
-                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc"
-                             v-if="nodeLength.values[0]">
-                          <div
+                        <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
+                          <div v-if="nodeLength.values[0]"
                             :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor((nodeLength.values[0].value/50)*100)}"
                             style="height: 100%;"></div>
                         </div>
@@ -517,9 +515,8 @@
                             </ul>
                           </div>
                         </div>
-                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc"
-                             v-if="nodeLength.values[1]">
-                          <div
+                        <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc">
+                          <div v-if="nodeLength.values[1]"
                             :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor((nodeLength.values[1].value/ 50) * 100)}"
                             style="width: 100%;"></div>
                         </div>
@@ -544,17 +541,17 @@
                        style="height: 290px;margin-top: 10px;background: #353644;text-align: center;font-size: 12px">
                 <el-tab-pane label="交叉口机动车/非机动车流量">
                   <el-row>
-                    <el-col :span="10" :offset="1" style="display: flex">
+                    <el-col :span="10" :offset="1" style="display: flex;position: relative">
                       <div style="width: 20px;line-height: 220px;font-size: 12px">西</div>
 
-                      <div style="flex: 1;position: relative">
-                        <div class="">{{allLinksName['北']}}</div>
+                      <div style="flex: 1;">
+                        <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
 
-                        <div style="position: relative;margin: 20px 0 5px;" v-if="allMovementFlow['南']">
+                        <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -569,7 +566,7 @@
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -605,7 +602,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(90deg);left: -7px">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -621,7 +618,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -659,7 +656,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             style="width: 100%;height: 180px;position: absolute;top: -14px;transform: rotate(180deg);">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -675,7 +672,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -713,7 +710,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(270deg);left: 8px">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -729,7 +726,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -764,25 +761,24 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                           </div>
                         </div>
 
-
                         <img src="/static/image/map/flow_car.png"
-                             style="width: 110px;height: 20px;position: absolute;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                             style="width: 110px;height: 20px;position: absolute;bottom: -15px;left: 0;right: 0;margin: auto;"/>
 
                       </div>
 
                       <div style="width: 20px;line-height: 220px;font-size: 12px">东</div>
                     </el-col>
-                    <el-col :span="10" :offset="2" style="display: flex">
+                    <el-col :span="10" :offset="2" style="display: flex;position: relative">
                       <div style="width: 20px;line-height: 220px;font-size: 12px">西</div>
 
-                      <div style="flex: 1;position: relative">
-                        <div class="">{{allLinksName['北']}}</div>
+                      <div style="flex: 1">
+                        <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
 
-                        <div style="position: relative;margin: 20px 0 5px;" v-if="allMovementFlow['南']">
+                        <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -797,7 +793,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -833,7 +829,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(90deg);left: -7px">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -849,7 +845,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -887,7 +883,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             style="width: 100%;height: 180px;position: absolute;top: -14px;transform: rotate(180deg);">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -903,7 +899,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -941,7 +937,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(270deg);left: 8px">
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="112px" height="112px" viewBox="0 0 366.000000 373.000000"
+                                   width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
@@ -957,7 +953,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                                   width="6px" height="180px" viewBox="0 0 16.000000 495.200000"
+                                   width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
@@ -993,7 +989,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                         </div>
 
                         <img src="/static/image/map/flow_bike.png"
-                             style="width: 110px;height: 20px;position: absolute;bottom: 0;left: 0;right: 0;margin: auto;"/>
+                             style="width: 110px;height: 20px;position: absolute;bottom: -15px;left: 0;right: 0;margin: auto;"/>
                       </div>
 
                       <div style="width: 20px;line-height: 220px;font-size: 12px">东</div>
@@ -1006,7 +1002,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                     <el-col :span="12" :offset="2">
                       <div class="" style="display: flex">
 
-                        <div style="width: 20px;line-height: 245px;font-size: 12px">南</div>
+                        <div style="width: 20px;line-height: 245px;font-size: 12px">西</div>
 
                         <div style="flex: 1;position: relative">
                           <div style="line-height: 30px;text-align: center;font-size: 12px"
@@ -1204,7 +1200,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
                         </div>
 
-                        <div style="width: 20px;line-height: 245px;font-size: 12px">南</div>
+                        <div style="width: 20px;line-height: 245px;font-size: 12px">东</div>
                       </div>
                     </el-col>
                     <el-col :offset="3" :span="7" style="padding: 50px 0 0 20px;">
