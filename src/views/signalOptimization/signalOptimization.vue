@@ -135,9 +135,6 @@
             </div>
           </div>
 
-
-
-
         </div>
 
 
@@ -217,7 +214,7 @@
         <div class="main_down_down">
           <!--<div id="line_map" style="width: 100%;height: 100%;position: absolute;z-index: 10"></div>-->
 
-          <trendLine  style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
+          <trendLine  :tranelineInfo="trendLineData" style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
 
           <div
             style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
@@ -249,13 +246,15 @@
   import rate from '../../components/ECharts/rate'
   import heatChart from '../../components/ECharts/heatChart'
   import trendLine from  '../../components/ECharts/trendLine'
-
+  // 路口流量图(平均流量):/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922,20180921&token=693e9af84d3dfcc71e640e005bdc5e2e
 
   export default {
     name: "signal-optimization",
     data() {
       return {
         nodes: [],
+        trendLineData:[],
+        left_date_picker_start: "",
         week_date_1_picker_start: "",
         week_date_1_picker_end: '',
         week_date_1_picker_node:'',
@@ -275,11 +274,6 @@
         hour_data_picker_node:'',
         hour_data_picker:[],
         sheets:[{id:1,sheet_name:'梁红玉路'},{id:2, sheet_name:'沈坤路'}],
-
-
-
-
-
         left_date_picker_end: "",
         left_filter_road_name: "",
         right_date_picker_start: "",
@@ -292,7 +286,8 @@
           id: '4',
           rate: 40
         }, {id: '11', rate: 20}, {id: '22', rate: 30}, {id: '33', rate: 30}, {id: '44', rate: 40},
-           {id: '41', rate: 20}, {id: '42', rate: 30}, {id: '53', rate: 30}, {id: '54', rate: 40}]
+           {id: '41', rate: 20}, {id: '42', rate: 30}, {id: '53', rate: 30}, {id: '54', rate: 40}],
+      data:[]
       }
     },
     components: {
@@ -306,13 +301,33 @@
         this.nodes = nodes.data.nodes
         console.log(nodes)
       })
-
+      this.road()
       this.add_date_picker_show()
       this.init()
       // this.line_map_init()
       // this.pie_map_init()
     },
     methods: {
+      road(){
+        var self = this
+        this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922' +
+          ''+ '&token=' + this.getHeader().token).then(function (data) {
+            var trendLineData = []
+            for(var j = 0;j<data.data.length;j++){
+              var a =[]
+              for ( var i=0;i<data.data[j].values.length;i++){
+                a.push([i+1,data.data[j].values[i].value])
+              }
+              trendLineData.push(a)
+            }
+            self.trendLineData=trendLineData;
+
+
+          })
+          .catch(function (data) {
+            console.log(data);
+          });
+      },
       changeRoadRate(id, event){
         $(".rate-container-item").removeClass('is-active');
         $(event.currentTarget).addClass('is-active');
@@ -744,7 +759,7 @@
     margin-top: 3px;
     text-align: center;
     line-height: 20px;
-    padding-top: 2px; 
+    padding-top: 2px;
     font-size: 10px;
     color: #c9c9cc;
     outline: none;
