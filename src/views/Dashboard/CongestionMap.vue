@@ -238,8 +238,7 @@
       getTrafficCongestionRoadAvgDelay(startTime, endTime, cb) {  //所有路段延误
         let url = '/trafficCongestion/roadAllLinksDelay?token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
-        this.$http.get()
-          .then((response) => {
+        this.$http.get(url).then((response) => {
             cb(response.data.values)
           })
       },
