@@ -7,6 +7,7 @@
         name: "flow-rate",
       props:{
         flow_rate_data:Array,
+        speed_data:Array
       },
       data(){
           return{}
@@ -38,7 +39,7 @@
             },
             xAxis: [{
               type: 'category',
-              data: ['一月', '二月', '三月', '四月', '五月', '六月'],
+              data: [],
               axisLine: {
                 lineStyle: {
                   color: '#595B66'
@@ -109,6 +110,28 @@
               },
             ]
           };
+          this.data_processing();
+          this.flowRate = this.$echarts.init(document.getElementById('data_four'));
+          this.flowRate.setOption(option_four);
+        },
+        data_processing(){
+          var road_speed_number = this.speed_data.map(function (data) {
+            return {month:parseInt(data.month.substring(4,6)),value:data.value}
+          })
+          var flow_number = this.flow_rate_data.map(function (item) {
+            return {month:parseInt(item.month.substring(4,6)),value:item.value}
+          })
+          var month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+
+          for( var i = 0;i<road_speed_number.length;i++){
+            option_four.xAxis.data.push(month[road_speed_number[i].month-1])
+          }
+          road_speed_number.forEach(function (data) {
+            option_four.series[1].data.push(data)
+          })
+          flow_number.forEach(function (data) {
+            option_four.series[0].data.push(data)
+          })
         }
       },
     }

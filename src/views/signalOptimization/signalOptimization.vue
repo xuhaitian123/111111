@@ -15,17 +15,17 @@
             <div class="main_up_left_left_head">
               <div class="show_time_left">
                 <div class="time_left">开始时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="left_date_picker_start"
-                       id="left_date_picker_start" type="text"/>
+                <input class="time_left_show" placeholder="选择日期" v-model="week_date_1_picker_start"
+                       id="week_date_1_picker_start" type="text"/>
               </div>
               <div class="show_time_left">
                 <div class="time_left">结束时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="left_date_picker_end"
-                       id="left_date_picker_end" type="text"/>
+                <input class="time_left_show" placeholder="选择日期" v-model="week_date_1_picker_end"
+                       id="week_date_1_picker_end" type="text"/>
               </div>
               <div class="show-filter-item_road">
                 <div class="selected_road">选择路口</div>
-                <el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">
+                <el-select v-model="week_date_1_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
                 <el-option
                 v-for="item in nodes"
                 :key="item.node_id"
@@ -38,7 +38,7 @@
             <div class="main_up_left_right_head">
               <div class="show-filter-item_road">
                 <div class="selected_road">选择路口</div>
-                <el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">
+                <el-select v-model="week_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
                 <el-option
                 v-for="item in nodes"
                 :key="item.node_id"
@@ -49,13 +49,13 @@
               </div>
               <div class="show_time_right">
                 <div class="time_right">开始时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
-                       id="right_date_picker_start" type="text"/>
+                <input class="time_left_show" placeholder="选择日期" v-model="week_date_2_picker_start"
+                       id="week_date_2_picker_start" type="text"/>
               </div>
               <div class="show_time_right">
                 <div class="time_right">结束时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_end"
-                       id="right_date_picker_end" type="text"/>
+                <input class="time_left_show" placeholder="选择日期" v-model="week_date_2_picker_end"
+                       id="week_date_2_picker_end" type="text"/>
               </div>
             </div>
 
@@ -65,16 +65,16 @@
             <div class="hot_map_view">
               <div class="hot_map_view_date"
                    style="width: 95%;height: 62px;display: flex;align-items: center;margin-left: 5%">
-                <div class="contrast_left">
-                  <div class="time_right">对比时段</div>
-                  <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
-                         id="map_top_left_date_picker_start" type="text"/>
-                </div>
-                <div class="contrast_right">
-                  <div class="time_right">对比时段</div>
-                  <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
-                         id="map_top_right_date_picker_start" type="text"/>
-                </div>
+                <!--<div class="contrast_left">-->
+                  <!--<div class="time_right">对比时段</div>-->
+                  <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start"-->
+                         <!--id="sheet_date_1_picker_start" type="text"/>-->
+                <!--</div>-->
+                <!--<div class="contrast_right">-->
+                  <!--<div class="time_right">对比时段</div>-->
+                  <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_end"-->
+                         <!--id="sheet_date_1_picker_end" type="text"/>-->
+                <!--</div>-->
               </div>
               <div id="hot_map"></div>
               <div class="keep_up_div"></div>
@@ -91,43 +91,41 @@
             <div class="main-search-item">
               <div class="main-search-title">开始时间</div>
               <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
+                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start" id="sheet_date _1_picker_start"
                         type="text"/>
               </div>
             </div>
 
             <div class="main-search-item">
-              <div class="main-search-title">开始时间</div>
+              <div class="main-search-title">结束时间</div>
               <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
+                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_end" id="sheet_date_1_picker_end"
                        type="text"/>
               </div>
             </div>
 
             <div class="main-search-item">
-              <div class="main-search-title">开始时间</div>
+              <div class="main-search-title">路口</div>
               <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
-                       type="text"/>
-              </div>
-            </div>
-
-            <div class="main-search-item">
-              <div class="main-search-title">开始时间</div>
-              <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
-                       type="text"/>
+                <el-select v-model="sheet_date_1_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+                  <el-option
+                    v-for="item in nodes"
+                    :key="item.node_id"
+                    :label="item.node_name"
+                    :value="item.node_id">
+                  </el-option>
+                </el-select>
               </div>
             </div>
 
           </div>
           <div class="main-search-action">
             <div class="main-search-item">
-              <div class="main-search-title">开始时间</div>
-              <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"
-                       type="text"/>
-              </div>
+              <!--<div class="main-search-title">开始时间</div>-->
+              <!--<div>-->
+                <!--<input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"-->
+                       <!--type="text"/>-->
+              <!--</div>-->
             </div>
 
           </div>
@@ -150,26 +148,25 @@
           <div class="main_up_right_pie_head">
             <div style="margin-left: 70px;padding-right: 40px">
               <div class="time_left">开始时间</div>
-              <input class="time_left_show" placeholder="选择日期" v-model="left_date_picker_start" type="text"/>
+              <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_start" id="sheet_date_2_picker_start" type="text"/>
             </div>
             <div style="padding-right: 40px">
-              <div class="selected_road">数据类型</div>
-              <!--<el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">-->
-              <!--<el-option-->
-              <!--v-for="item in cityList"-->
-              <!--:key="item.value"-->
-              <!--:label="item.label"-->
-              <!--:value="item.value">-->
-              <!--</el-option>-->
-              <!--</el-select>-->
-            </div>
-            <div style="padding-right: 40px">
-              <div class="time_right">对比时段</div>
-              <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start" type="text"/>
+              <div class="time_right">道路</div>
+              <div>
+                <el-select v-model="sheet_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false" >
+                  <!--<el-option :label="请选择" :key='1' :value='1' :disabled="false"></el-option>-->
+                  <el-option
+                    v-for="item in sheets"
+                    :key="item.id"
+                    :label="item.sheet_name"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </div>
             </div>
             <div style="padding-right: 70px">
               <div class="time_left">结束时间</div>
-              <input class="time_left_show" placeholder="选择日期" v-model="left_date_picker_end" type="text"/>
+              <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_end" id="sheet_date_2_picker_end" type="text"/>
             </div>
           </div>
 
@@ -223,31 +220,22 @@
           <trendLine  style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
 
           <div
-            style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center">
+            style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
             <div class="contrast_right">
-              <div class="time_right">对比时段</div>
-              <input class="time_left_show" placeholder="选择日期" v-model="left_date_picker_start_line_map"
+              <div class="time_right">选择时间</div>
+              <input class="time_left_show" placeholder="选择日期" v-model="hour_data_picker"
                      id="line_map_top_right_date_picker_start" type="text"/>
             </div>
             <div class="show-filter-item_road">
               <div class="selected_road">选择路口</div>
-              <!--<el-select v-model="currentCity" size="mini" class="area_titleSelect" placeholder="" :popper-append-to-body="false">-->
-              <!--<el-option-->
-              <!--v-for="item in cityList"-->
-              <!--:key="item.value"-->
-              <!--:label="item.label"-->
-              <!--:value="item.value">-->
-              <!--</el-option>-->
-              <!--</el-select>-->
-            </div>
-            <div class="contrast_right">
-              <div class="time_right">对比时段</div>
-              <input class="time_left_show" placeholder="选择日期" type="text"/>
-            </div>
-            <div class="contrast_right">
-              <div class="time_right">对比时段</div>
-              <input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start_line_map"
-                     id="line_map_top_right_date_picker_end" type="text"/>
+              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+              <el-option
+              v-for="item in nodes"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+              </el-option>
+              </el-select>
             </div>
           </div>
         </div>
@@ -268,7 +256,30 @@
     data() {
       return {
         nodes: [],
-        left_date_picker_start: "",
+        week_date_1_picker_start: "",
+        week_date_1_picker_end: '',
+        week_date_1_picker_node:'',
+
+        week_date_2_picker_start: "",
+        week_date_2_picker_end: '',
+        week_date_2_picker_node:'',
+
+        sheet_date_1_picker_start: "",
+        sheet_date_1_picker_end: '',
+        sheet_date_1_picker_node:'',
+
+        sheet_date_2_picker_start: "",
+        sheet_date_2_picker_end: '',
+        sheet_date_2_picker_node:'',
+
+        hour_data_picker_node:'',
+        hour_data_picker:[],
+        sheets:[{id:1,sheet_name:'梁红玉路'},{id:2, sheet_name:'沈坤路'}],
+
+
+
+
+
         left_date_picker_end: "",
         left_filter_road_name: "",
         right_date_picker_start: "",
@@ -311,7 +322,19 @@
 
       },
       add_date_picker_show: function () {
-        $("#left_date_picker_start,#left_date_picker_end,#right_date_picker_start,#right_date_picker_end,#line_map_top_right_date_picker_start,#line_map_top_right_date_picker_end").datepicker({
+        $("#week_date_1_picker_start," +
+          "#week_date_1_picker_end," +
+          "#week_date_2_picker_start," +
+          "#week_date_2_picker_end," +
+
+          "#sheet_date_1_picker_start," +
+          "#sheet_date_1_picker_end," +
+
+          "#sheet_date_2_picker_start," +
+          "#sheet_date_2_picker_end," +
+
+          "#line_map_top_right_date_picker_start," +
+          "#line_map_top_right_date_picker_end").datepicker({
           showMonthAfterYear: true,
           changeMonth: true,
           changeYear: true,
@@ -405,8 +428,6 @@
               interval: 13,
               show: true,
               formatter: function (value, index) {
-                // console.log(value)
-                // var a =  value%14 === 0 ? value : ''
                 return value;
 
               },
@@ -423,8 +444,6 @@
             max: 100,
             itemWidth: 10,
             itemHeight: 370,
-            // text:['0 sec','100 sec'],
-            // textGap:['0px','10px'],
             calculable: false,
             orient: 'horizontal',
             // heightStyle:{
@@ -457,81 +476,107 @@
         // myChart.setOption(option);
         this.myChart.setOption(option);
       },
+      weekAnalyse(){
+        let node = 2;
+        let startTime = '20180910';
+        let dayEnd= '20180916';
+        this.$http.get('/roadDataAnalysis/weekCongestionSaturate?nodeId=2&dayBegin=20180910&dayEnd=20180916').then(function(result){
+          console.log(result.data)
+        })
+      },
+      hRoladAnalyse(){
+          this.$http.get('/roadDataAnalysis/daysSaturateOfLinks?linkIds=201,202&days=20180921，20180922&token=693e9af84d3dfcc71e640e005bdc5e2e')
+            .then((result)=>{
+              console.log(result.data)
+        })
+      },
+      hInterAnalyse(){
+        this.$http.get('/roadDataAnalysis/daysSaturateOfLinks?linkIds=201,202&days=20180921，20180922&token=693e9af84d3dfcc71e640e005bdc5e2e')
+          .then((result)=>{
+            console.log(result.data)
+          })
+      },
+
+
+
+
+
+
       line_map_init() {
-        this.myChart = this.$echarts.init(document.getElementById('line_map'));//
-
-
-        var data = [
-          {
-            name: '路口一',
-            type: 'line',
-            smooth: true,
-            data: [1, 2, 3, 4, 6, 4, 3, 3, 2, 6, 3, 5]
-          },
-          {
-            name: '路口二',
-            type: 'line',
-            smooth: true,
-            data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 5, 2, 5]
-          },
-          {
-            name: '路口三',
-            type: 'line',
-            smooth: true,
-            data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-          },
-          {
-            name: '路口四',
-            type: 'line',
-            smooth: true,
-            data: [5, 3, 4, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-          },
-          {
-            name: '路口五',
-            type: 'line',
-            smooth: true,
-            data: [5, 3, 4, 4, 3, 3, 3, 3, 2, 4, 2, 3]
-          },
-          {
-            name: '路口六',
-            type: 'line',
-            smooth: true,
-            data: [5, 3, 4, 4, 2, 3, 4, 3, 2, 4, 2, 3]
-          },];
-        var option = {
-          grid: {
-            height: '130px',
-            width: "600px",
-            y: '10%',
-            left: "75px",
-            top: "25px"
-          },
-          xAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: ['19:00', '21:00', '23:00', '1:00', '3:00', '5:00', '7:00', '9:00', '11:00', '13:00', '15:00', '17:00']
-          },
-          yAxis: {
-            type: 'value',
-          },
-          legend: {
-            x:'right',
-            top: 90,
-            pageButtonItemGap: 100,
-            textStyle: {
-              color: '#c9c9cc',
-            },
-            // width: 100,
-            // height: 10,
-
-            data:['路口一','路口二','','路口三','路口四','','路口五','路口六']
-          },
-          series: data,
-          textStyle: {
-            color: '#c9c9cc',
-          }
-        };
-        this.myChart.setOption(option);
+      //   this.myChart = this.$echarts.init(document.getElementById('line_map'));//
+      //
+      //
+      //   var data = [
+      //     {
+      //       name: '路口一',
+      //       type: 'line',
+      //       smooth: true,
+      //       data: [1, 2, 3, 4, 6, 4, 3, 3, 2, 6, 3, 5]
+      //     },
+      //     {
+      //       name: '路口二',
+      //       type: 'line',
+      //       smooth: true,
+      //       data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 5, 2, 5]
+      //     },
+      //     {
+      //       name: '路口三',
+      //       type: 'line',
+      //       smooth: true,
+      //       data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 2, 4, 3]
+      //     },
+      //     {
+      //       name: '路口四',
+      //       type: 'line',
+      //       smooth: true,
+      //       data: [5, 3, 4, 4, 3, 3, 2, 6, 3, 2, 4, 3]
+      //     },
+      //     {
+      //       name: '路口五',
+      //       type: 'line',
+      //       smooth: true,
+      //       data: [5, 3, 4, 4, 3, 3, 3, 3, 2, 4, 2, 3]
+      //     },
+      //     {
+      //       name: '路口六',
+      //       type: 'line',
+      //       smooth: true,
+      //       data: [5, 3, 4, 4, 2, 3, 4, 3, 2, 4, 2, 3]
+      //     },];
+      //   var option = {
+      //     grid: {
+      //       height: '130px',
+      //       width: "600px",
+      //       y: '10%',
+      //       left: "75px",
+      //       top: "25px"
+      //     },
+      //     xAxis: {
+      //       type: 'category',
+      //       boundaryGap: false,
+      //       data: ['19:00', '21:00', '23:00', '1:00', '3:00', '5:00', '7:00', '9:00', '11:00', '13:00', '15:00', '17:00']
+      //     },
+      //     yAxis: {
+      //       type: 'value',
+      //     },
+      //     legend: {
+      //       x:'right',
+      //       top: 90,
+      //       pageButtonItemGap: 100,
+      //       textStyle: {
+      //         color: '#c9c9cc',
+      //       },
+      //       // width: 100,
+      //       // height: 10,
+      //
+      //       data:['路口一','路口二','','路口三','路口四','','路口五','路口六']
+      //     },
+      //     series: data,
+      //     textStyle: {
+      //       color: '#c9c9cc',
+      //     }
+      //   };
+      //   this.myChart.setOption(option);
       },
 
     },
@@ -657,7 +702,7 @@
   .contrast_right {
     width: 60px;
     height: 30px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
   }
 
   .contrast_left {
@@ -699,8 +744,8 @@
     margin-top: 3px;
     text-align: center;
     line-height: 20px;
-    padding-top: 2px;
-    font-size: 12px;
+    padding-top: 2px; 
+    font-size: 10px;
     color: #c9c9cc;
     outline: none;
     border: none;

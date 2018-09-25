@@ -168,31 +168,31 @@
           this.data_processing();
           this.Intersection = this.$echarts.init(document.getElementById('data_three'));
           this.Intersection.setOption(option_one);
+        },
+        data_processing(){
+          let data = this.intersection_data;
+          let item = this.trafficLightOptimizeAlarmTimes;
+          let road_name = data.after.map(function (item) {
+            return item.node_name
+          });
+          road_name.forEach(function (data) {
+            option_one.xAxis.data.push (data)
+          })
+          data.before.forEach(function (data) {
+            option_one.series[0].data.push(data)
+          })
+          data.after.forEach(function (data) {
+            option_one.series[1].data.push(data)
+          })
+          item.before.forEach(function (data) {
+            option_one.series[2].data.push(data)
+          })
+          item.after.forEach(function (data) {
+            option_one.series[3].data.push(data)
+          })
         }
         },
-      data_processing(){
-        var data = intersection_data;
-        var item = trafficLightOptimizeAlarmTimes;
-        var road_name = data.after.map(function (data) {
-          return data.node_name
-        });
-        road_name.forEach(function (data) {
-          option_one.xAxis.data.push (data)
-        })
-        data.before.forEach(function (data) {
-          option_one.series[0].data.push(data)
-        })
-        data.after.forEach(function (data) {
-          option_one.series[1].data.push(data)
-        })
-        item.data.before.forEach(function (data) {
-          option_one.series[2].data.push(data)
-        })
-        item.data.after.forEach(function (data) {
-          option_one.series[3].data.push(data)
-        })
 
-      }
     }
 </script>
 
