@@ -9,6 +9,8 @@
       id: String,
       title: String,
       data: Object,
+      x:String
+
     },
     data() {
       return {
@@ -21,7 +23,7 @@
       option = {
         title: {
           text: this.title,
-          x: '28%',
+          x: '21%',
           y: 'center',
           textStyle: {
             color: '#7d7d7d',
