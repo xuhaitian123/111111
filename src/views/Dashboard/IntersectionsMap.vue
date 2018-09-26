@@ -383,19 +383,19 @@
                           <div v-if="signalPlan['211']!==undefined">
                             <div>
                               <div style="float: left;" id="width211"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['211'].MaxGreen+signalPlan['211'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['211'].key)}}
                               </div>
                               <div style="float: left;" id="width212"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['212'].MaxGreen+signalPlan['212'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['212'].key)}}
                               </div>
                               <div style="float: left;" id="width221"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['221'].MaxGreen+signalPlan['221'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['221'].key)}}
                               </div>
                               <div style="float: left;" id="width222"
-                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.second)*100+'%'}">
+                                   :style="{width: ((signalPlan['222'].MaxGreen+signalPlan['222'].Yellow)/ signalPlan.second)*100+'%'}">
                                 {{getRoadFlow(signalPlan['222'].key)}}
                               </div>
 
@@ -574,10 +574,11 @@
 
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
+
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['左'].car)"
@@ -588,11 +589,15 @@
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['南']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -603,11 +608,15 @@
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['南']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -620,6 +629,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['南']['右'].car}}
+                              </div>
                             </div>
                           </div>
 
@@ -628,7 +641,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['左'].car)"
@@ -640,11 +653,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['西']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -656,11 +673,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['西']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -674,6 +695,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['西']['右'].car}}
+                              </div>
                             </div>
                           </div>
 
@@ -682,7 +707,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['左'].car)"
@@ -694,11 +719,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['北']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -710,11 +739,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['北']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -728,6 +761,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['北']['右'].car}}
+                              </div>
                             </div>
                           </div>
 
@@ -736,7 +773,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['左'].car)"
@@ -748,11 +785,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['东']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -764,11 +805,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
+                                {{allMovementFlow['东']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -782,6 +827,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['东']['右'].car}}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -801,13 +850,14 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
+
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
-                                   :fill="getSaturationColor(allMovementFlow['南']['左'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['南']['左'].car)"
                                    :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -815,31 +865,39 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['南']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['南']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['南']['直'].car)"
                                    :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['南']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['南']['右'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['南']['右'].car)"
                                    :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -847,6 +905,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['南']['右'].bike}}
+                              </div>
                             </div>
                           </div>
 
@@ -855,7 +917,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['左'].bike)"
@@ -867,32 +929,40 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['西']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['西']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['西']['直'].car)"
                                    :opacity="currentDirection[0] === '西' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['西']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['西']['右'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['西']['右'].car)"
                                    :opacity="currentDirection[0] === '西' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
@@ -901,6 +971,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['西']['右'].bike}}
+                              </div>
                             </div>
                           </div>
 
@@ -909,7 +983,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['左'].bike)"
@@ -921,32 +995,40 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['北']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['北']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['北']['直'].car)"
                                    :opacity="currentDirection[0] === '北' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['北']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['北']['右'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['北']['右'].car)"
                                    :opacity="currentDirection[0] === '北' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
@@ -955,6 +1037,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['北']['右'].bike}}
+                              </div>
                             </div>
                           </div>
 
@@ -963,7 +1049,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['左'].bike)"
@@ -975,27 +1061,35 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['东']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['东']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['东']['直'].car)"
                                    :opacity="currentDirection[0] === '东' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
+                                {{allMovementFlow['东']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -1009,6 +1103,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['东']['右'].bike}}
+                              </div>
                             </div>
                           </div>
                         </div>
