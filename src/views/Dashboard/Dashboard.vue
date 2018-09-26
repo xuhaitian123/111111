@@ -1,8 +1,8 @@
 <template>
 
-  <div>
+  <div v-loading.fullscreen.lock="fullscreenLoading">
 
-    <area-select ></area-select>
+    <area-select></area-select>
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
@@ -16,7 +16,8 @@
             </div>
           </div>
           <div class="Dashboard_card_body">
-            <div id="map"></div>
+            <road-net-map :all-links-flow="allLinksFlow" :all-node-flow="allNodeFlow" style=" width: 100%;
+    height: 400px;"></road-net-map>
           </div>
         </el-card>
       </el-col>
@@ -98,7 +99,8 @@
                       v-if="index <5">
                 <el-col :span="6" :offset="1">
                   <!--#9f172b-->
-                  <div class="" :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value,i.value[0].isMock)}">
+                  <div class=""
+                       :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value,i.value[0].isMock)}">
                     <span>{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
                     <br>
                     <span>{{ formatDate(new Date(i.end),'hh:mm')}}</span>
@@ -145,7 +147,7 @@
           </div>
           <div class="Dashboard_card_body_two">
             <div style="width: 50%;height: 80%;display: inline-block">
-              <pie-doughnut id="pieDoughnut" title="优化前" :data="trafficLightRatio.before.values" ></pie-doughnut>
+              <pie-doughnut id="pieDoughnut" title="优化前" :data="trafficLightRatio.before.values"></pie-doughnut>
             </div>
             <div style="width: 50%;height: 80%;display: inline-block" class="fr">
               <pie-doughnut id="PieDoughnut" title="优化后" :data="trafficLightRatio.after.values"></pie-doughnut>
@@ -449,6 +451,7 @@
   import PieDoughnut from '../../components/ECharts/PieDoughnutItem'
   import SmoothBarLine from '../../components/ECharts/SmoothBarLineItem'
   import AreaSelect from '../../components/Area/Area'
+  import RoadNetMap from '../../components/Map/Map'
 
   export default {
     components: {
@@ -457,6 +460,7 @@
       MixLineBar,
       PieDoughnut,
       SmoothBarLine,
+      RoadNetMap,
     },
     data() {
       let data = []
@@ -468,8 +472,8 @@
       }
 
       return {
-        alarmColor: function (val,is) {
-          if(is){
+        alarmColor: function (val, is) {
+          if (is) {
             return "#9a9bac";
           }
           if (val < 60) {
@@ -516,10 +520,13 @@
         radio4: 2,
         radioLine: 1,
         nodeName: [],
-        trafficLightRatio:{
-          before:{},
-          after:{}
+        trafficLightRatio: {
+          before: {},
+          after: {}
         },
+        allLinksFlow: [],
+        allNodeFlow: [],
+        fullscreenLoading:false,
 
 
         polar: {
@@ -559,21 +566,24 @@
       }
     },
     mounted() {
-      let map = new window.BMap.Map("map");    // 创建Map实例
-      map.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);  // 初始化地图,设置中心点坐标和地图级别
-      map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      map.setMinZoom(12);
-      map.setMaxZoom(18);
-      map.addControl(new window.BMap.NavigationControl({
-        offset: new BMap.Size(10, 60)
-      }));   //缩放按钮
-      let b = new window.BMap.Bounds(new window.BMap.Point(118.19214, 32.717855), new window.BMap.Point(119.648976, 34.184862));
-      try {
-        BMapLib.AreaRestriction.setBounds(map, b);
-      } catch (e) {
-      }
+      // let map = new window.BMap.Map("map");    // 创建Map实例
+      // map.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);  // 初始化地图,设置中心点坐标和地图级别
+      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+      // map.setMinZoom(12);
+      // map.setMaxZoom(18);
+      // map.addControl(new window.BMap.NavigationControl({
+      //   offset: new BMap.Size(10, 60)
+      // }));   //缩放按钮
+      // let b = new window.BMap.Bounds(new window.BMap.Point(118.19214, 32.717855), new window.BMap.Point(119.648976, 34.184862));
+      // try {
+      //   BMapLib.AreaRestriction.setBounds(map, b);
+      // } catch (e) {
+      // }
 
-      this.init()
+      this.init();
+      window.congestionMap.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);
+
+      // this.fullscreenLoading = true;
     },
     methods: {
       init() {
@@ -589,6 +599,7 @@
         this.getAllNodeCongestionAlarm();
         this.getTrafficLightData();
         this.getTrafficLightOptimizeCongestionStatus();
+        this.getAllFlow();
       },
       getCongestionPercent() { //拥堵里程比例
         this.$http.get('/TrafficCongestion/congestionPercent?current=true' + '&token=' + this.getHeader().token)
@@ -623,14 +634,41 @@
             this.allNodeAlarmInfo = response.data;
           })
       },
+
+      getAllFlow(startTime, endTime) {
+        this.getAllLinksFlow(startTime, endTime, (link) => {
+          this.getAllNodesFlow(startTime, endTime, (node) => {
+            this.allLinksFlow = link.data;
+            this.allNodeFlow = node.data;
+          });
+        });
+      },
+      setUrlDate(startTime, endTime) {
+        return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
+      },
+      getAllLinksFlow(startTime, endTime, cb) {  //所有进道口流量
+        let url = '/nodeData/getAllLinksFlow?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          cb(response)
+        })
+      },
+      getAllNodesFlow(startTime, endTime, cb) {  // 所有交叉口流量
+        let url = '/nodeData/getAllNodesFlow?token=' + this.getHeader().token;
+        url += this.setUrlDate(startTime, endTime);
+        this.$http.get(url).then((response) => {
+          cb(response)
+        })
+      },
+
       getNodes() {
         this.$http.get('/nodeData/getNodes' + '?token=' + this.getHeader().token).then((response) => {
-            this.nodeName = response.data.map((node) => {
-              if (node.name) return node.name;
-            }).filter((val) => {
-              return val !== undefined
-            });
-          })
+          this.nodeName = response.data.map((node) => {
+            if (node.name) return node.name;
+          }).filter((val) => {
+            return val !== undefined
+          });
+        })
       },
       getTrafficLightData() {
         this.getHistoryTrafficLightOptimizeDelay().then((delayData) => {
@@ -639,6 +677,9 @@
             this.trafficLightData.beforeDelay = delayData.data.before;
             this.trafficLightData.afterAlarm = alarmData.data.after;
             this.trafficLightData.beforeAlarm = alarmData.data.before;
+            setTimeout(() => {
+              this.fullscreenLoading = false;
+            }, 2000);
           })
         })
       },

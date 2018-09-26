@@ -355,6 +355,7 @@
 
   .CongestionMap_Legend li {
     margin: 0 10px;
+    padding-left: 10px;
     border-bottom: 1px solid #a7a7ac;
   }
 
