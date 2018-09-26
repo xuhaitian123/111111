@@ -13,8 +13,12 @@
             <div class="score_title_text">优化前后路网总评分/路网各类路况占比</div>
           </div>
           <div class="score_body_area" style="padding: 43px 43px 50px 43px;box-sizing: border-box;display: flex;flex-wrap: wrap;">
-          <div id="before_road_net_score" style="height: 120px;width: 170px"></div>
-          <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 52px"></div>
+          <div id="before_road_net_score" style="height: 120px;width: 170px">
+            <RoadCondition></RoadCondition>
+          </div>
+          <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 52px">
+            <RoadCondition></RoadCondition>
+          </div>
           <div id="before_road_net_proportion" style="height: 170px;width: 190px">
             <TrafficAccounting :id='"before_road_net_proportion"':data="data.before.values" :title = '"优化前"' ></TrafficAccounting>
           </div>
@@ -159,6 +163,7 @@
   import  FlowData from '../../components/signalDataAnalysis/flowRate'
   import  goodData from '../../components/signalDataAnalysis/goodSpeed'
   import  Intersection from '../../components/signalDataAnalysis/Intersection'
+  import  RoadCondition from '../../components/signalDataAnalysis/roadCondition'
 
   export default {
     name: "DataAnalyse",
@@ -168,6 +173,7 @@
       this.init_goodSpeed();
       this.init_Intersection();
       this.get_PieDoughnutItem();
+      this.get_RoadCondition_data()
 
     },
     data() {
@@ -181,8 +187,8 @@
         data:{
           before:{},
           after:{}
-        }
-
+        },
+        RoadCondition:[]
       }
     },//
     methods: {
@@ -222,8 +228,6 @@
         let that = this;
         that.$http.get('history/trafficLightOptimizeDayAvgSpeed?token=?' + ''+ '&token=' + this.getHeader().token).then(function (item) {
           that.good_speed = item.data
-          console.log(item.data)
-
         })
       },
       get_init_Intersection_data(){
@@ -245,9 +249,14 @@
         this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token).then(function (item) {
           that.data.before = item.data.before;
            that.data.after = item.data.after
-          console.log(that.data.before)
-          console.log('(((****')
         })
+      },
+      get_RoadCondition_data(){
+        let that = this;
+        this.$http.get('/trafficCongestion/roadNetCongestionScore?current=true' + this.getHeader().token).then(function (item) {
+        console.log(item)
+        })
+
       }
 
   },
@@ -257,7 +266,8 @@
     AlarmData,
     FlowData,
     goodData,
-    Intersection
+    Intersection,
+    RoadCondition
 
   }
   ,
