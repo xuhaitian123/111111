@@ -115,6 +115,7 @@
           strokeColor: isAddUrl ? this.getDelayColor(value) : this.getFlowColor(value)//折线颜色
         });
         polyline.id = id;
+        polyline.name = id.substring(0,id.indexOf('_'));
         polyline.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
           this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);

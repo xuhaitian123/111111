@@ -1,6 +1,6 @@
 <template>
 
-  <div v-loading.fullscreen.lock="fullscreenLoading">
+  <div v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
 
     <area-select></area-select>
 
@@ -272,7 +272,7 @@
             <!--</div>-->
             <!--</div>-->
             <!--</el-col>-->
-            <el-col :span="6" class="" v-for="item in nodeName">
+            <el-col :span="6" class="" v-for="(item,i) in nodeName" v-if="i <4">
 
               <div class="Dashboard_set_col">
                 {{item}}优先通行控制设置
@@ -323,11 +323,12 @@
                   </div>
                 </div>
 
-                <div style="position: absolute;bottom: 20px;left: 30px">
+                <div style="position: absolute;bottom: 20px;left: 30px;    display: flex;">
                   启动优先通行
-                  <el-radio v-model="radioLine" :label="1">&nbsp;</el-radio>
+                  <div class="empty-circle">
+                    <div class="fill-circle" v-if="start_open_first_pass"></div>
+                  </div>
                 </div>
-
               </div>
             </el-col>
 
@@ -495,6 +496,7 @@
     font-size: 14px;
     color: #fff;
     position: relative;
+    margin-bottom: 10px;
   }
 
   .control-setting-content {
@@ -652,7 +654,7 @@
         },
         allLinksFlow: [],
         allNodeFlow: [],
-        fullscreenLoading: false,
+        loading: false,
         first_items: {
           first_style: ['绿灯延长', '红灯提前结束', '调整相位顺序'],
           first_car: ['警卫车辆', '警务车辆', '领导车辆', '救护车', '公交车']
@@ -666,63 +668,14 @@
             }
           ]
         },
-
-
-        polar: {
-          title: {
-            text: '极坐标双数值轴'
-          },
-          legend: {
-            data: ['line']
-          },
-          polar: {
-            center: ['50%', '54%']
-          },
-          tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-              type: 'cross'
-            }
-          },
-          angleAxis: {
-            type: 'value',
-            startAngle: 0
-          },
-          radiusAxis: {
-            min: 0
-          },
-          series: [
-            {
-              coordinateSystem: 'polar',
-              name: 'line',
-              type: 'line',
-              showSymbol: false,
-              data: data
-            }
-          ],
-          animationDuration: 2000,
-        }
+        start_open_first_pass:true,
       }
     },
     mounted() {
-      // let map = new window.BMap.Map("map");    // 创建Map实例
-      // map.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);  // 初始化地图,设置中心点坐标和地图级别
-      // map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
-      // map.setMinZoom(12);
-      // map.setMaxZoom(18);
-      // map.addControl(new window.BMap.NavigationControl({
-      //   offset: new BMap.Size(10, 60)
-      // }));   //缩放按钮
-      // let b = new window.BMap.Bounds(new window.BMap.Point(118.19214, 32.717855), new window.BMap.Point(119.648976, 34.184862));
-      // try {
-      //   BMapLib.AreaRestriction.setBounds(map, b);
-      // } catch (e) {
-      // }
-
       this.init();
       window.congestionMap.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);
 
-      // this.fullscreenLoading = true;
+      this.loading = true;
     },
     methods: {
       init() {
@@ -816,9 +769,7 @@
             this.trafficLightData.beforeDelay = delayData.data.before;
             this.trafficLightData.afterAlarm = alarmData.data.after;
             this.trafficLightData.beforeAlarm = alarmData.data.before;
-            setTimeout(() => {
-              this.fullscreenLoading = false;
-            }, 2000);
+            this.loading = false;
           })
         })
       },
