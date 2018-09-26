@@ -4,11 +4,11 @@
     <div class="trafficVideo-container-header">
 
     </div>
-    <div class="trafficVideo-container" >
+    <div class="trafficVideo-container">
       <div class="trafficVideo-container-left" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="trafficVideo-video-header">
           <div class="trafficVideo-video-header-left font16">人民路-南京路监控视频</div>
-          <div class="trafficVideo-video-header-right" >
+          <div class="trafficVideo-video-header-right">
             本区域所有监控视频路口
 
           </div>
@@ -17,13 +17,13 @@
 
 
         <!--<canvas width="1080" height="680" id="mycanvas"></canvas>-->
-        <canvas class="trafficVideo"  width="1080" height="680"  id="trafficVideo_origin">
+        <canvas class="trafficVideo" width="1080" height="680" id="trafficVideo_origin">
         </canvas>
-        <canvas class="trafficVideo" width="1080" height="680"  id="trafficVideo_car">
+        <canvas class="trafficVideo" width="1080" height="680" id="trafficVideo_car">
         </canvas>
-        <canvas class="trafficVideo" width="1080" height="680"  id="trafficVideo_bus">
+        <canvas class="trafficVideo" width="1080" height="680" id="trafficVideo_bus">
         </canvas>
-        <canvas class="trafficVideo" width="1080" height="680"  id="trafficVideo_bike">
+        <canvas class="trafficVideo" width="1080" height="680" id="trafficVideo_bike">
         </canvas>
 
         <div v-if="!taskId" class="trafficVideo" style="background: black">
@@ -43,7 +43,9 @@
 
               <div @click="changeLink(nodeInfo['北'].taskId)">
 
-                <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['北'] && nodeInfo['北'].taskId===taskId}">N</div>
+                <div class="trafficVideo-select-node-action"
+                     :class="{action:  nodeInfo['北'] && nodeInfo['北'].taskId===taskId}">N
+                </div>
                 {{nodeInfo['北']?nodeInfo['北'].link_name: ''}}
               </div>
 
@@ -52,7 +54,9 @@
               <div class="trafficVideo-select-node-left">
                 <div @click="changeLink(nodeInfo['西'].taskId)">
                   {{nodeInfo['西']?nodeInfo['西'].link_name: ''}}
-                    <div class="trafficVideo-select-node-action" :class="{action: nodeInfo['西'] && nodeInfo['西'].taskId===taskId}">W</div>
+                  <div class="trafficVideo-select-node-action"
+                       :class="{action: nodeInfo['西'] && nodeInfo['西'].taskId===taskId}">W
+                  </div>
                 </div>
               </div>
 
@@ -63,7 +67,9 @@
               <div class="trafficVideo-select-node-right">
                 <div @click="changeLink(nodeInfo['东'].taskId)">
                   {{nodeInfo['东']?nodeInfo['东'].link_name: ''}}
-                  <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['东'] &&nodeInfo['东'].taskId===taskId}">E</div>
+                  <div class="trafficVideo-select-node-action"
+                       :class="{action:  nodeInfo['东'] &&nodeInfo['东'].taskId===taskId}">E
+                  </div>
                 </div>
               </div>
 
@@ -71,7 +77,9 @@
             <div class="trafficVideo-select-node-bottom">
               <div @click="changeLink(nodeInfo['南'].taskId)">
                 {{nodeInfo['南']?nodeInfo['南'].link_name: ''}}
-                <div class="trafficVideo-select-node-action" :class="{action:  nodeInfo['南'] &&nodeInfo['南'].taskId===taskId}">S</div>
+                <div class="trafficVideo-select-node-action"
+                     :class="{action:  nodeInfo['南'] &&nodeInfo['南'].taskId===taskId}">S
+                </div>
               </div>
             </div>
 
@@ -88,6 +96,11 @@
 
           <div class="trafficVideo-table">
             <div class="trafficVideo-title">
+              <div class="trafficVideo-title-content">开始时间： {{startTime}}</div>
+              <div class="trafficVideo-title-content">进程时间： {{totalTime}}</div>
+
+              <div class="trafficVideo-title-action" @click="restartCountNumber">归零</div>
+
             </div>
 
             <div class="trafficVideo-row">
@@ -98,7 +111,7 @@
             </div>
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
-                机动车
+                小客车
                 <img @click="countNumber('car')" v-if="numberOfCarModal.numberOfModal.car.status"
                      class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
                 <img @click="countNumber('car')" v-if="!numberOfCarModal.numberOfModal.car.status"
@@ -117,7 +130,7 @@
             </div>
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
-                非机动车
+                重型车
                 <img @click="countNumber('bus')" v-if="numberOfCarModal.numberOfModal.bus.status"
                      class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
                 <img @click="countNumber('bus')" v-if="!numberOfCarModal.numberOfModal.bus.status"
@@ -192,22 +205,25 @@
         currentIndex: -1,
         delay: 10000,
         delay_show: 5000,
-          prevloading: 1000,
+        prevloading: 1000,
         isShowCar: 0,
         isShowBus: 0,
         isShowBike: 0,
         loading: true,
         typeList: ['origin', 'car', 'bus', 'bike'],
         ctx: {},
-        trafficVideo_origin_ctx:{},
-        trafficVideo_car_ctx:{},
-        trafficVideo_bus_ctx:{},
-        trafficVideo_bike_ctx:{},
-        nodeInfo:{},
-        taskId:null,
-        isPauseTime:false,
+        trafficVideo_origin_ctx: {},
+        trafficVideo_car_ctx: {},
+        trafficVideo_bus_ctx: {},
+        trafficVideo_bike_ctx: {},
+        nodeInfo: {},
+        taskId: null,
+        isCountNumber: false,
+        isPauseTime: false,
 
         ratio: 10,
+        totalTime:'-',
+        startTime:'-',
         // typeList: ['origin','car'],
         numberOfCarModal: {
           startTime: 0,
@@ -217,6 +233,7 @@
             bike: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: 0}
           },
           endTime: 0,
+
         },
 
         typeMap: {
@@ -233,61 +250,49 @@
     },
     mounted() {
 
-        Promise.all([this.getAllMovementsByNodeId(2),this.getNodeCameraLish(2),this.getAllLinksByNodeId(2)]).then(result=>{
-          var linkInfo = result[2].links.map(link=>{
-            link.movementList = result[0].movements.filter(movement=>{
-              return movement.link_id === link.link_id
-            })
-            link.taskId = result[1].find(movement=>{
-              return movement.camera_name.substr(-1,1) === link.link_direction
-            }).camera_id;
-            return link
-          });
-          var nodeInfo ={}
-          linkInfo.forEach(link=>{
-            nodeInfo[link.link_direction] = link
-          });
-          this.isLoadingInfo = false;
-          this.taskId =  nodeInfo['北'].taskId
-          this.nodeInfo =  nodeInfo;
+      Promise.all([this.getAllMovementsByNodeId(2), this.getNodeCameraLish(2), this.getAllLinksByNodeId(2)]).then(result => {
+        var linkInfo = result[2].links.map(link => {
+          link.movementList = result[0].movements.filter(movement => {
+            return movement.link_id === link.link_id
+          })
+          link.taskId = result[1].find(movement => {
+            return movement.camera_name.substr(-1, 1) === link.link_direction
+          }).camera_id;
+          return link
+        });
+        var nodeInfo = {}
+        linkInfo.forEach(link => {
+          nodeInfo[link.link_direction] = link
+        });
+        this.isLoadingInfo = false;
+        this.taskId = nodeInfo['北'].taskId
+        this.nodeInfo = nodeInfo;
 
-        })
-    // this.getDate()
+      })
+      // this.getDate()
 
 
-      this.trafficVideo_origin_ctx=  document.getElementById("trafficVideo_origin").getContext("2d");
-      this.trafficVideo_car_ctx=  document.getElementById("trafficVideo_car").getContext("2d");
-      this.trafficVideo_bus_ctx=  document.getElementById("trafficVideo_bus").getContext("2d");
-      this.trafficVideo_bike_ctx=  document.getElementById("trafficVideo_bike").getContext("2d");
+      this.trafficVideo_origin_ctx = document.getElementById("trafficVideo_origin").getContext("2d");
+      this.trafficVideo_car_ctx = document.getElementById("trafficVideo_car").getContext("2d");
+      this.trafficVideo_bus_ctx = document.getElementById("trafficVideo_bus").getContext("2d");
+      this.trafficVideo_bike_ctx = document.getElementById("trafficVideo_bike").getContext("2d");
     },
     beforeDestroy() {
-      clearInterval(this.timer)
+      // clearInterval(this.timer)
     },
     methods: {
-      clearImage(){
+      clearImage() {
         //重置数据
-        this.numberOfCarModal =  {
-          startTime: 0,
-            numberOfModal: {
-            car: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.car.status},
-            bus: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.bus.status},
-            bike: {startTime: 0, endTime: 0, left: 0, right: 0, straight: 0, status: this.numberOfCarModal.numberOfModal.bike.status}
-          },
-          endTime: 0,
-        }
+      this.restartCountNumber()
 
-        // this.imageList ={}
-      },
-      changeLink(taskId){
-        this.taskId =  taskId;
         this.imageList ={}
       },
+      changeLink(taskId) {
+        this.taskId = taskId;
+        this.imageList = {}
+        this.restartCountNumber()
+      },
       updataVideo(time) {
-        console.log(time)
-
-        let i = 0;
-        var j = 0;
-
         let millSecond = time % 1000;
 
         let startTime = time - this.delay_show;
@@ -296,24 +301,27 @@
           this.loadImage(startTime);
 
         }
-        this.showImage(Math.floor((startTime - this.delay_show-5000)/1000)*1000 , millSecond)
+        this.loadingTime = startTime
+        let showTime = startTime - this.delay_show ;
+        this.showImage(Math.floor((showTime) / 1000) * 1000, millSecond)
       },
       showImage(startTime, millSecond) {
 
         var prevloadingTime = startTime + this.prevloading;
         for (var time = startTime; time < prevloadingTime; time += 1000) {
 
-          if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
-            // console.log(this.imageList[time])
-            //设置一个表示表明没有拉下来数据
 
-            return this.loading = Math.random()
-          }
-          if(this.imageList[time]&& !this.imageList[time].isLoading ){
+          if (this.imageList[time] && !this.imageList[time].isLoading) {
             this.isPauseTime = true;
+
+          }
+
+          if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
+            return this.loading = Math.random()
           }
 
         }
+        this.isPauseTime = false
 
         if (this.imageList[startTime] && this.imageList[startTime].index !== -1) {
           this.removeImage(startTime)
@@ -323,115 +331,140 @@
 
         var nextIndex = this.getImageIndex(images, index, millSecond, startTime)
         this.loading = false;
-        this.isPauseTime = false;
 
-        if (nextIndex >= images.length) return;
+        if (nextIndex<0 || nextIndex >= images.length) return;
 
         this.changeImage(startTime, nextIndex);
-        this.imageList[startTime].index  =  nextIndex
+        this.imageList[startTime].index = nextIndex
+
+        this.countAllTypeNumber(startTime)
 
       },
-      getImageIndex(images, index, millSecond, startTime){
-        var count = images.length;
-        var index = index;
-        var current = Math.ceil((millSecond/100)/count);
-        return current;
+      getImageIndex(images, index, millSecond, startTime) {
+        var nextIndex = index+1;
+        if(nextIndex<0 || nextIndex>=images.length) return index
+        if(images[nextIndex].timestamp%1000 < millSecond){
+          return nextIndex
+        }
+        return index
       },
 
       loadImage(endTime) {
         if (!this.taskId) return;
+
         var startTime = endTime - 1000;
 
-        this.imageList[startTime] = {isLoading: 0, imageList: [], index: -2,startTime: new Date()};
-        this.getCountOfNode(endTime).then((count) => {
-          this.countAllTypeNumber(count)
-          // console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime)
-          this.$http.get('/video/videoImage?task_id='+ this.taskId +'&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then(
+        this.imageList[startTime] = {isLoading: 0, imageList: [], index: -2, startTime: new Date()};
+        this.getCountOfNode(endTime).then((flow) => {
+
+          this.$http.get('http://localhost:3000/video/videoImage?task_id=' + this.taskId + '&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then(
             (images) => {
-              if (images.data.length === 0) {
-                return  this.imageList[startTime] = {isLoading: 1, imageList: [], index: -2,startTime: new Date()};
+              images =images.data
+              if (images.length === 0) {
+                return this.imageList[startTime] = {isLoading: 1, imageList: [], index: -2, startTime: new Date()};
               }
-              images = images.data.map(item => {
-                item.url = item.url.replace('192.168.8.131:8002', '47.97.165.170:6003');
-                return item
+              var originUrl = images.map(item=>{
+                var url = item.url.split('/')
+                url[2] ='47.97.165.170:6008'
+                return url.join('/')
+              })
+              var mask = images.map(item=>{
+                var url = item.mask.split('/')
+                url[2] ='47.97.165.170:6008'
+                return url.join('/')
+              })
+              var mask2 = images.map(item=>{
+                var url = item.mask2.split('/')
+                url[2] ='47.97.165.170:6008'
+                return url.join('/')
+              })
+              var mask3 = images.map(item=>{
+                var url = item.mask3.split('/')
+                url[2] ='47.97.165.170:6008'
+                return url.join('/')
               })
 
-              let allPromise = images.map((item) => {
+
+
+              let allPromise = originUrl.map((url) => {
                 return new Promise(function (resolve) {
                   let imgObj = new Image(); // 创建图片对象
-                  imgObj.src = item.url;
+                  imgObj.src = url;
 
                   imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
                     resolve(imgObj)
                   }, false);
                 })
               })
-              let allPromise1 = images.map((item) => {
+              let allPromise1 = mask.map((url) => {
                 return new Promise(function (resolve) {
                   let imgObj = new Image(); // 创建图片对象
-                  imgObj.src = item.url.replace('img/', 'mask/').replace('jpg', 'png');
+                  imgObj.src = url;
+
                   imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
                     resolve(imgObj)
                   }, false);
                 })
               })
-              let allPromise2 = images.map((item) => {
+              let allPromise2 = mask2.map((url) => {
                 return new Promise(function (resolve) {
                   let imgObj = new Image(); // 创建图片对象
-                  imgObj.src = item.url.replace('img/', 'mask2/').replace('jpg', 'png');
+                  imgObj.src = url;
+
                   imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
                     resolve(imgObj)
                   }, false);
                 })
               })
-              let allPromise3 = images.map((item) => {
+              let allPromise3 = mask3.map((url) => {
                 return new Promise(function (resolve) {
                   let imgObj = new Image(); // 创建图片对象
-                  imgObj.src = item.url.replace('img/', 'mask3/').replace('jpg', 'png');
+                  imgObj.src = url;
+
                   imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
                     resolve(imgObj)
                   }, false);
                 })
               })
+
 
               var loading_origin = new Promise(resolve => {
-                Promise.all(allPromise).then(image=>{
+                Promise.all(allPromise).then(image => {
                   resolve(image)
                 })
               })
 
               var loading_car = new Promise(resolve => {
-                Promise.all(allPromise1).then(image=>{
+                Promise.all(allPromise1).then(image => {
                   resolve(image)
                 })
               })
               var loading_bus = new Promise(resolve => {
-                Promise.all(allPromise2).then(image=>{
+                Promise.all(allPromise2).then(image => {
                   resolve(image)
                 })
               })
               var loading_bike = new Promise(resolve => {
-                Promise.all(allPromise3).then(image=>{
+                Promise.all(allPromise3).then(image => {
                   resolve(image)
                 })
               })
 
-              Promise.all([loading_origin,loading_bus,loading_car,loading_bike]).then((image) => {
+              Promise.all([loading_origin, loading_car,loading_bus ,loading_bike]).then((image) => {
                 // this.imageList[startTime] = {
-
-                  this.imageList[startTime].imageList=images
-
-                  this.imageList[startTime].index=-1
-                  this.imageList[startTime].preImage=image
-                  this.imageList[startTime].count=count
-                  this.imageList[startTime].endTime=new Date()
-                this.imageList[startTime].isLoading=1
+                if(!this.imageList[startTime]) return;
+                this.imageList[startTime].imageList = images
+                this.imageList[startTime].index = -1
+                this.imageList[startTime].preImage = image
+                this.imageList[startTime].flow = flow
+                this.imageList[startTime].endTime = new Date()
+                this.imageList[startTime].isLoading = 1
                 // }
               })
             })
         })
-
       },
+
       addImage(time) {
         this.typeList.forEach(type => {
           let fristImages = this.imageList[time].imageList;
@@ -458,60 +491,126 @@
       },
       changeImage(currentTime, index) {
         var img = this.imageList[currentTime].preImage;
-        this.trafficVideo_origin_ctx.drawImage(img[0][index], 0, 0,1280, 720, 0, 0, 1080, 680);
-        if(this.numberOfCarModal.numberOfModal.car.status){
+        this.trafficVideo_origin_ctx.drawImage(img[0][index], 0, 0, 1280, 720, 0, 0, 1080, 680);
+        if (this.numberOfCarModal.numberOfModal.car.status) {
           this.trafficVideo_car_ctx.clearRect(0, 0, 1080, 680)
-          this.trafficVideo_car_ctx.drawImage(img[1][index], 0, 0, 640, 360, 0, 0, 1080, 680);
+          this.trafficVideo_car_ctx.drawImage(img[1][index], 0, 0, 1280, 720, 0, 0, 1080, 680);
         }
-        if(this.numberOfCarModal.numberOfModal.bus.status){
+        if (this.numberOfCarModal.numberOfModal.bus.status) {
           this.trafficVideo_bus_ctx.clearRect(0, 0, 1080, 680)
-          this.trafficVideo_bus_ctx.drawImage(img[2][index], 0, 0, 640, 360, 0, 0, 1080, 680);
+          this.trafficVideo_bus_ctx.drawImage(img[2][index], 0, 0, 1280, 720, 0, 0, 1080, 680);
 
         }
-        if(this.numberOfCarModal.numberOfModal.bike.status){
+        if (this.numberOfCarModal.numberOfModal.bike.status) {
           this.trafficVideo_bike_ctx.clearRect(0, 0, 1080, 680)
-          this.trafficVideo_bike_ctx.drawImage(img[3][index], 0, 0,640, 360, 0, 0, 1080, 680);
+          this.trafficVideo_bike_ctx.drawImage(img[3][index], 0, 0, 1280, 720, 0, 0, 1080, 680);
 
         }
 
 
       },
-      countAllTypeNumber(result){
-        var directions = result.result;
-        var directs = ['东','北','南','西'];
+      restartCountNumber(){
+        this.totalTime = '-';
+        this.startTime = '-';
+        this.numberOfCarModal = {
+          startTime: 0,
+          numberOfModal: {
+            car: {
+              startTime: 0,
+              endTime: 0,
+              left: 0,
+              right: 0,
+              straight: 0,
+              status: this.numberOfCarModal.numberOfModal.car.status
+            },
+            bus: {
+              startTime: 0,
+              endTime: 0,
+              left: 0,
+              right: 0,
+              straight: 0,
+              status: this.numberOfCarModal.numberOfModal.bus.status
+            },
+            bike: {
+              startTime: 0,
+              endTime: 0,
+              left: 0,
+              right: 0,
+              straight: 0,
+              status: this.numberOfCarModal.numberOfModal.bike.status
+            }
+          },
+          endTime: 0,
+        }
+      },
+
+      handleStartTime(time){
+        time = new Date(time)
+
+        return time.getHours()+':'+( time.getMinutes()<10? ('0'+time.getMinutes()): time.getMinutes())
+      },
+      handleTotalTime(time){
+
+         time = Number(time)/1000;
+
+        var minutes = parseInt(time/60)
+
+        var seconds = time%60;
+
+        return (minutes>9? minutes: ('0'+minutes) )+":"+ (seconds>9? seconds: ('0'+seconds) )
+
+
+      },
+
+      countAllTypeNumber(startTime) {
+
+        if(!this.isCountNumber) return;
+        if(this.numberOfCarModal.startTime && (this.numberOfCarModal.endTime === startTime)) return
+
+        if(!this.numberOfCarModal.startTime){
+          this.numberOfCarModal.startTime =  startTime
+        }
+
+        this.numberOfCarModal.endTime = startTime;
+        this.startTime= this.handleStartTime(startTime);
+
+        this.totalTime = this.handleTotalTime(this.numberOfCarModal.endTime-this.numberOfCarModal.startTime)
+        var directions = this.imageList[startTime].flow.result;
+        var directs = ['东', '北', '南', '西'];
         var direct_codes = [];
-        for (var n = 0; n < directs.length; n ++)
-        {
-          if (this.nodeInfo[directs[n]].taskId == this.taskId)
-          {
+        for (var n = 0; n < directs.length; n++) {
+          if (this.nodeInfo[directs[n]].taskId == this.taskId) {
             var movementList = this.nodeInfo[directs[n]].movementList;
-            for (var j = 0; j < movementList.length; j ++)
-            {
+            for (var j = 0; j < movementList.length; j++) {
               direct_codes.push(movementList[j].movement_id);
             }
             break;
           }
         }
-        var types = ['car','bus','bike'];
-        var direct_types = ['car','truck','bike'];
+        var types = ['car', 'bus', 'bike'];
+        var direct_types = ['car', 'truck', 'bike'];
 
-        for (var m = 0; m < directions.length; m ++)
-        {
-          for (var i = 0; i < types.length; i ++)
-          {
-            if (direct_codes.indexOf(directions[m].movement_id) != -1)
-            {
-              this.numberOfCarModal.numberOfModal[types[i]][directions[m].direction] += directions[m][direct_types[i]]
+        for (var m = 0; m < directions.length; m++) {
+          for (var i = 0; i < types.length; i++) {
+            if (direct_codes.indexOf(directions[m].movement_id) != -1) {
+                this.numberOfCarModal.numberOfModal[types[i]][directions[m].direction] += directions[m][direct_types[i]]
             }
           }
         }
 
       },
       countNumber(type) {
+
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
-        this['trafficVideo_'+ type+'_ctx'].clearRect(0, 0, 1080, 680)
-        if (this.numberOfCarModal.numberOfModal[type].status == true)
-        {
+
+
+
+        this.isCountNumber =  this.numberOfCarModal.numberOfModal['bike'].status ||
+          this.numberOfCarModal.numberOfModal['car'].status||
+          this.numberOfCarModal.numberOfModal['bus'].status;
+        if(!this.isCountNumber) this.restartCountNumber()
+        this['trafficVideo_' + type + '_ctx'].clearRect(0, 0, 1080, 680)
+        if (this.numberOfCarModal.numberOfModal[type].status == true) {
           this.numberOfCarModal.numberOfModal[type].left = 0;
           this.numberOfCarModal.numberOfModal[type].straight = 0;
           this.numberOfCarModal.numberOfModal[type].right = 0;
@@ -521,11 +620,13 @@
       getCountOfNode(endTime) {
         return new Promise(resolve => {
           var startTime = endTime - 1000;
-          // this.$http.get('/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then((result)=>{
-          //   resolve(result.data);
-          // })
-           resolve({result:[{movement_id: 210, direction: "left", car: 1, truck: 2, bike: 3, status: false}]})
-          // {movement_id: 203, direction: "straight", car: 1, truck: 2, bike: 3, status: false},
+          this.$http.get('/video/videoAnalysis?intersection_id=2&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then((result)=>{
+
+            resolve(result.data);
+
+          })
+          // resolve({result: [{movement_id: 210, direction: "left", car: 1, truck: 2, bike: 3, status: false},{movement_id: 203, direction: "straight", car: 1, truck: 2, bike: 3, status: false},{movement_id: 211, direction: "right", car: 1, truck: 2, bike: 3, status: false}]})
+          //
           // {movement_id: 211, direction: "right", car: 1, truck: 2, bike: 3, status: false}]})
         });
       },
@@ -538,22 +639,22 @@
       },
       getAllMovementsByNodeId(id) {
         return new Promise(resolve => {
-          this.$http.get('/index/getAllMovementsByNodeId?nodeId='+ id +  '&token=' + this.getHeader().token).then((result) => {
+          this.$http.get('/index/getAllMovementsByNodeId?nodeId=' + id + '&token=' + this.getHeader().token).then((result) => {
             resolve(result.data)
           })
         });
       },
-      getAllLinksByNodeId(id){
+      getAllLinksByNodeId(id) {
         return new Promise(resolve => {
-          this.$http.get('/index/getAllLinksByNodeId?nodeId='+ id+  '&token=' + this.getHeader().token).then((result) => {
+          this.$http.get('/index/getAllLinksByNodeId?nodeId=' + id + '&token=' + this.getHeader().token).then((result) => {
             resolve(result.data)
           })
         });
       },
-      getDate(){
-          this.$http.get('/roadDataAnalysis/weekCongestionBaohe?nodeId=2&dayBegin=20180910&dayEnd=20180916' +  '&token=' + this.getHeader().token).then((result)=>{
-            console.log(result)
-          })
+      getDate() {
+        this.$http.get('/roadDataAnalysis/weekCongestionBaohe?nodeId=2&dayBegin=20180910&dayEnd=20180916' + '&token=' + this.getHeader().token).then((result) => {
+          console.log(result)
+        })
       }
 
     }
@@ -653,7 +754,7 @@
   }
 
   .trafficVideo-table {
-    padding: 20px;
+    padding: 10px 20px;
     box-sizing: border-box;
 
   }
@@ -667,6 +768,22 @@
     line-height: 30px;
     color: #fff;
   }
+
+  .trafficVideo-title{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 5px;
+
+  }
+  .trafficVideo-title-content{
+    width: 150px;
+  }
+  .trafficVideo-title-action{
+    flex-grow: 1;
+    text-align: center;
+  }
+
 
   .trafficVideo-row:nth-child(3) .trafficVideo-li {
     background: rgb(67, 175, 126);
@@ -775,7 +892,8 @@
     flex-shrink: 0;
     flex-grow: 0;
   }
-  .trafficVideo-select-node-center img{
+
+  .trafficVideo-select-node-center img {
     width: 100%;
     height: 100%;
   }
