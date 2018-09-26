@@ -129,7 +129,6 @@
             return {month:parseInt(item.month.substring(4,6)),value:item.value}
           })
           let month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-          console.log(option_four)
           for( let i = 0;i<flow_number.length;i++){
             option_four.xAxis[0].data.push(month[flow_number[i].month-1])
           }

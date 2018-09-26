@@ -180,7 +180,6 @@
       start(e) {
         this.isChangeTime = false;
         this.timer = setInterval(() => {
-          console.log(0)
           this.changePosition()
         }, this.rate)
       },
@@ -214,7 +213,7 @@
 
 
         var second = Math.floor(seconds / 10 % 60);
-        var milliseconds = Math.floor(seconds % 10)
+        var milliseconds = Math.floor(seconds % 10);
 
         var time = new Date(this.checkedYear + '-' + this.checkedMonth + '-' + this.checkedDay)
         time.setHours(hour)
