@@ -357,7 +357,7 @@
         this.imageList[startTime] = {isLoading: 0, imageList: [], index: -2, startTime: new Date()};
         this.getCountOfNode(endTime).then((flow) => {
 
-          this.$http.get('http://localhost:3000/video/videoImage?task_id=' + this.taskId + '&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then(
+          this.$http.get('/video/videoImage?task_id=' + this.taskId + '&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then(
             (images) => {
               images =images.data
               if (images.length === 0) {
