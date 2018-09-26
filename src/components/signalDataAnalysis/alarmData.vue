@@ -105,11 +105,11 @@
                 }
               ]
             };
-          this.data_processing();
+          this.data_processing(options);
             this.myChart = this.$echarts.init(document.getElementById('data'));
             this.myChart.setOption(options);
           },
-        data_processing(){
+        data_processing(options){
           var data = this.alarm_data;
           var  number = data.map(function (item) {
             return{month:parseInt(item.month.substring(4,6)),value:item.value}

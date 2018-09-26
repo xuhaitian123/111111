@@ -213,11 +213,8 @@
         </div>
         <div class="main_down_down">
           <!--<div id="line_map" style="width: 100%;height: 100%;position: absolute;z-index: 10"></div>-->
-
-          <trendLine  :tranelineInfo="trendLineData" style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
-
-          <div
-            style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
+          <trendLine  :tranelineInfo="trendLineData" :node_name= "hour_data_picker_node" style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
+          <div style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
             <div class="contrast_right">
               <div class="time_right">选择时间</div>
               <input class="time_left_show" placeholder="选择日期" v-model="hour_data_picker"
@@ -230,9 +227,12 @@
               v-for="item in nodes"
               :key="item.value"
               :label="item.label"
-              :value="item.value">
+              :value="item.node_name">
               </el-option>
               </el-select>
+            </div>
+            <div style="">
+              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px;text-align: center;line-height: 12px;margin :auto 0; font-size: 12px">确定</el-button>
             </div>
           </div>
         </div>
@@ -297,32 +297,41 @@
       trendLine,
     },
     mounted: function () {
-      this.$http.get('/index/nodes').then(nodes=>{
+      this.$http.get('/index/nodes' +
+        ''+ '?token=' + this.getHeader().token).then(nodes=>{
         this.nodes = nodes.data.nodes
         console.log(nodes)
       })
       this.road()
       this.add_date_picker_show()
       this.init()
+      this.heatChart_map_right()
       // this.line_map_init()
       // this.pie_map_init()
     },
     methods: {
+      heatChart_map_right(){
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180921&endDay=20180921' +
+          ''+ '?token=' + this.getHeader().token).then(function (data) {
+          console.log(data)
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
+      },
       road(){
         var self = this
         this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922' +
           ''+ '&token=' + this.getHeader().token).then(function (data) {
             var trendLineData = []
             for(var j = 0;j<data.data.length;j++){
-              var a =[]
+              var line_map_info =[]
               for ( var i=0;i<data.data[j].values.length;i++){
-                a.push([i+1,data.data[j].values[i].value])
+                line_map_info.push([i+1,data.data[j].values[i].value])
               }
-              trendLineData.push(a)
+              trendLineData.push(line_map_info)
             }
             self.trendLineData=trendLineData;
-
-
           })
           .catch(function (data) {
             console.log(data);
@@ -333,8 +342,6 @@
         $(event.currentTarget).addClass('is-active');
         $('.rate-container-action-contaienr').removeClass('is-active');
         $(event.currentTarget).siblings('.rate-container-action-contaienr').addClass('is-active');
-
-
       },
       add_date_picker_show: function () {
         $("#week_date_1_picker_start," +
@@ -397,7 +404,6 @@
         data = data.map(function (item) {
           return [item[1], item[0], item[2] || '-'];
         });
-
         // 指定图表的配置项和数据
         var option = {
           tooltip: {
