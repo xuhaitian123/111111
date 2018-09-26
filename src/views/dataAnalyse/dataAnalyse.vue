@@ -16,10 +16,10 @@
           <div id="before_road_net_score" style="height: 120px;width: 170px"></div>
           <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 52px"></div>
           <div id="before_road_net_proportion" style="height: 170px;width: 190px">
-            <PieDoughnutItem :id='"before_road_net_proportion"' :title = '"优化前"'></PieDoughnutItem>
+            <PieDoughnutItem :id='"before_road_net_proportion"':data="data.before.values" :title = '"优化前"'></PieDoughnutItem>
           </div>
           <div id="after_road_net_proportion" style="height: 170px;width: 190px;margin-left: 52px">
-            <PieDoughnutItem :id='"after_road_net_proportion"' :title = '"优化后"' ></PieDoughnutItem>
+            <PieDoughnutItem :id='"after_road_net_proportion"':data="data.after.values" :title = '"优化后"' ></PieDoughnutItem>
           </div>
 
           </div>
@@ -167,54 +167,62 @@
       this.init_flowRate();
       this.init_goodSpeed();
       this.init_Intersection();
+      this.get_PieDoughnutItem();
 
     },
     data() {
       return {
-        myChart: undefined,
-        Intersection: undefined,
-        flowRate: undefined,
-        goodSpeed: undefined,
         alarm_data:[],
         intersection_data:[],
         trafficLightOptimizeAlarmTimes:[],
         flow_rate_data:[],
         speed_data:[],
-        good_speed:[]
+        good_speed:{},
+        data:{
+          before:{},
+          after:{}
+        }
 
       }
     },//
     methods: {
       init() {
-        var that = this;
-        this.$http.get('/history/roadNetAlarmTimesByMonths?months=201807,201808,201809,201810,201811,201812' +
+        let that = this;
+        this.$http.get('/history/roadNetAlarmTimesByMonths?months=201806,201807,201808,201809,201810,201811,201812' +
           ''+ '&token=' + this.getHeader().token).then(function (item) {
           that.alarm_data = item.data
+           var newdata = item.data
         })
       },
       init_Intersection(){
-        var that = this;
+        let that = this;
         this.get_init_Intersection_data().then(function (data) {
           that.$http.get('/history/trafficLightOptimizeAlarmTimes' + '?token=' + that.getHeader().token).then(function (item) {
-            that.intersection_data = data;
-            that.trafficLightOptimizeAlarmTimes = item.data
+            var newdata = data;
+            var newdata2 = item.data;
+            that.intersection_data = newdata;
+            that.trafficLightOptimizeAlarmTimes =newdata2
           })
         })
       },
       init_flowRate(){
-        var that = this;
+        let that = this;
         this.get_flowRate_data().then(function (data) {
           that.$http.get('/history/roadNetAvgSpeedByMonths?months=201808,201809' + '&token=' + that.getHeader().token).then(function (item) {
-            that.flow_rate_data = data
-            that.data = item.data
+
+           var newdata = data
+            var newdata2 = item.data
+            that.flow_rate_data = newdata
+            that.speed_data =  newdata2
+
           })
         })
       },
       init_goodSpeed(){
-        var that = this;
-        that.$http.get('/history/roadNetAvgSpeedByDay?day=20180101' +
-          ''+ '?token=' + this.getHeader().token).then(function (item) {
-             that.good_speed = item.data
+        let that = this;
+        that.$http.get('history/trafficLightOptimizeDayAvgSpeed?token=?' + ''+ '&token=' + this.getHeader().token).then(function (item) {
+          that.good_speed = item.data
+
         })
       },
       get_init_Intersection_data(){
@@ -226,9 +234,18 @@
      },
       get_flowRate_data(){
         return new Promise((resolve, reject) => {
-          this.$http.get('/history/roadNetAllFlowByMonths?months=201801,201802,201803,201804,201805,201806' + '&token=' + this.getHeader().token).then(function (item) {
+          this.$http.get('/history/roadNetAllFlowByMonths?months=201808,201809' + '&token=' + this.getHeader().token).then(function (item) {
             resolve(item.data)
           })
+        })
+      },
+      get_PieDoughnutItem(){
+        let that = this;
+        this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token).then(function (item) {
+          that.data.before = item.data.before;
+           that.data.after = item.data.after
+          console.log(that.data.before)
+          console.log('(((****')
         })
       }
 

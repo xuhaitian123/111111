@@ -98,7 +98,7 @@
                       v-if="index <5">
                 <el-col :span="6" :offset="1">
                   <!--#9f172b-->
-                  <div class="" :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value)}">
+                  <div class="" :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value,i.value[0].isMock)}">
                     <span>{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
                     <br>
                     <span>{{ formatDate(new Date(i.end),'hh:mm')}}</span>
@@ -111,10 +111,10 @@
                 </el-col>
                 <el-col :span="10">
                   <div class="Dashboard_alarm_info">
-                    <span :style="{color:alarmColor(i.value[0].value)}">
+                    <span :style="{color:alarmColor(i.value[0].value,i.value[0].isMock)}">
                       {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                     <br>
-                    <span :style="{color:alarmColor(i.value[1].value)}">
+                    <span :style="{color:alarmColor(i.value[1].value,i.value[1].isMock)}">
                       {{flowText[i.value[1].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
                   </div>
                 </el-col>
@@ -468,7 +468,10 @@
       }
 
       return {
-        alarmColor: function (val) {
+        alarmColor: function (val,is) {
+          if(is){
+            return "#9a9bac";
+          }
           if (val < 60) {
             return "#ccccd0";
           } else if (val > 60 && val < 80) {
@@ -616,6 +619,7 @@
       getAllNodeCongestionAlarm() {  //交叉口报警信息
         this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
+            console.log(response)
             this.allNodeAlarmInfo = response.data;
           })
       },

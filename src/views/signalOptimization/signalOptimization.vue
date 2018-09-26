@@ -42,7 +42,7 @@
                 <el-option
                 v-for="item in nodes"
                 :key="item.node_id"
-                  :label="item.node_name"
+                :label="item.node_name"
                 :value="item.node_id">
                 </el-option>
                 </el-select>
@@ -91,7 +91,7 @@
             <div class="main-search-item">
               <div class="main-search-title">开始时间</div>
               <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start" id="sheet_date _1_picker_start"
+                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start" id="sheet_date_1_picker_start"
                         type="text"/>
               </div>
             </div>
@@ -117,7 +117,7 @@
                 </el-select>
               </div>
             </div>
-
+            <!--<el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-top: 18px">确定</el-button>-->
           </div>
           <div class="main-search-action">
             <div class="main-search-item">
@@ -127,7 +127,6 @@
                        <!--type="text"/>-->
               <!--</div>-->
             </div>
-
           </div>
           <div>
             <div style="width: 500px; height: 493px;margin: auto">
@@ -223,7 +222,7 @@
             <div class="show-filter-item_road">
               <div class="selected_road">选择路口</div>
               <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
-              <el-option
+                <el-option
               v-for="item in nodes"
               :key="item.value"
               :label="item.label"
@@ -231,9 +230,9 @@
               </el-option>
               </el-select>
             </div>
-            <div style="">
-              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px;text-align: center;line-height: 12px;margin :auto 0; font-size: 12px">确定</el-button>
-            </div>
+              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="line_map_select"
+
+              >确定</el-button>
           </div>
         </div>
       </div>
@@ -247,7 +246,6 @@
   import heatChart from '../../components/ECharts/heatChart'
   import trendLine from  '../../components/ECharts/trendLine'
   // 路口流量图(平均流量):/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922,20180921&token=693e9af84d3dfcc71e640e005bdc5e2e
-
   export default {
     name: "signal-optimization",
     data() {
@@ -272,7 +270,7 @@
         sheet_date_2_picker_node:'',
 
         hour_data_picker_node:'',
-        hour_data_picker:[],
+        hour_data_picker:'',
         sheets:[{id:1,sheet_name:'梁红玉路'},{id:2, sheet_name:'沈坤路'}],
         left_date_picker_end: "",
         left_filter_road_name: "",
@@ -306,14 +304,18 @@
       this.add_date_picker_show()
       this.init()
       this.heatChart_map_right()
-      // this.line_map_init()
+        // this.line_map_init()
       // this.pie_map_init()
     },
     methods: {
+      line_map_select(){
+      console.log(this.hour_data_picker)
+        console.log(this.hour_data_picker_node)
+      },
       heatChart_map_right(){
-        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180921&endDay=20180921' +
-          ''+ '?token=' + this.getHeader().token).then(function (data) {
-          console.log(data)
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180914&endDay=20180921' +
+            ''+ '&token=' + this.getHeader().token).then(function (data) {
+          console.log(data.data.value)
         })
           .catch(function (data) {
             console.log(data);
@@ -400,7 +402,6 @@
           [5, 1, 1], [5, 2, 0], [5, 3, 3], [5, 4, 0], [5, 5, 0], [5, 6, 0], [5, 7, 0], [5, 8, 2], [5, 9, 0], [5, 10, 4], [5, 11, 1], [5, 12, 5], [5, 13, 10], [5, 14, 5], [5, 15, 7], [5, 16, 11],
           [5, 17, 6], [5, 18, 0], [5, 19, 5], [5, 20, 3], [5, 21, 4], [5, 22, 2], [5, 23, 0], [6, 0, 1], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0],
           [6, 10, 1], [6, 11, 0], [6, 12, 2], [6, 13, 1], [6, 14, 3], [6, 15, 4], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 1], [6, 21, 2], [6, 22, 2], [6, 23, 6]];
-
         data = data.map(function (item) {
           return [item[1], item[0], item[2] || '-'];
         });

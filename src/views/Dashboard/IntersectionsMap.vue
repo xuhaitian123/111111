@@ -240,45 +240,47 @@
             </div>
 
             <!--<div>-->
-            <!--<div-->
-            <!--style="position: absolute;bottom: 200px;width: 250px;height: 40px;background: #1f1f2c;border-radius: 10px;left: 28%">-->
-            <!--<div style="width: 50%;float: left;">-->
-            <!--<div style="height: 20px;width: 70%;margin: 10px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--<div style="width: 50%;float: left;">-->
-            <!--<div style="height: 20px;width: 70%;margin: 10px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+              <!--<div-->
+                <!--style="position: absolute;bottom: 200px;width: 250px;height: 40px;background: #1f1f2c;border-radius: 10px;left: 28%">-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
+                  <!--:style="{background : currentColor['d5']==='green'?'green':'yellow'}"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
+                       <!--:style="{background : currentColor['d2']==='green'?'green':'yellow'}"></div>-->
+                <!--</div>-->
+              <!--</div>-->
 
-            <!--<div-->
-            <!--style="position: absolute;top: 130px;width: 150px;height: 30px;background: #1f1f2c;border-radius: 10px;left: 26%">-->
-            <!--<div style="width: 50%;float: left;">-->
-            <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--<div style="width: 50%;float: left;">-->
-            <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+              <!--<div-->
+                <!--style="position: absolute;top: 130px;width: 150px;height: 30px;background: #1f1f2c;border-radius: 10px;left: 26%">-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 50%;float: left;">-->
+                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
 
-            <!--<div-->
-            <!--style="position: absolute;top: 38%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;left: 9%;transform: rotate(44deg);">-->
-            <!--<div style="width: 75%;margin: auto">-->
-            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--<div style="width: 75%;margin: auto">-->
-            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+              <!--<div-->
+                <!--style="position: absolute;top: 38%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;left: 9%;transform: rotate(44deg);">-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
 
-            <!--<div-->
-            <!--style="position: absolute;top: 28%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;right: 49%;transform: rotate(-17deg);">-->
-            <!--<div style="width: 75%;margin: auto">-->
-            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--<div style="width: 75%;margin: auto">-->
-            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-            <!--</div>-->
-            <!--</div>-->
+              <!--<div-->
+                <!--style="position: absolute;top: 28%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;right: 49%;transform: rotate(-20deg);">-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+                <!--<div style="width: 75%;margin: auto">-->
+                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+                <!--</div>-->
+              <!--</div>-->
             <!--</div>-->
 
             <div class="Node_right_top">
@@ -303,126 +305,149 @@
                       <div class="signal_current_line" id="signal_line" @mousedown="moveSignalLine"
                            :style="{left: lineLeft+'px'}"></div>
                       <el-row>
-                        <el-col :span="6" id="allWidth">
+                        <el-col :span="24" id="allWidth">
                           <div v-if="signalPlan['111']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['111'].key)}}</div>
+                            <div>
+                              <div style="float: left;" id="width111"
+                                   :style="{width: ((signalPlan['111'].MaxGreen+signalPlan['111'].Yellow)/ signalPlan.first)*100+'%'}">
+                                {{getRoadFlow(signalPlan['111'].key)}}
+                              </div>
+                              <div style="float: left;" id="width112"
+                                   :style="{width: ((signalPlan['112'].MaxGreen+signalPlan['112'].Yellow)/ signalPlan.first)*100+'%'}">
+                                {{getRoadFlow(signalPlan['112'].key)}}
+                              </div>
+                              <div style="float: left;" id="width121"
+                                   :style="{width: ((signalPlan['121'].MaxGreen+signalPlan['121'].Yellow)/ signalPlan.first)*100+'%'}">
+                                {{getRoadFlow(signalPlan['121'].key)}}
+                              </div>
+                              <div style="float: left;" id="width122"
+                                   :style="{width: ((signalPlan['122'].MaxGreen+signalPlan['122'].Yellow)/ signalPlan.first)*100+'%'}">
+                                {{getRoadFlow(signalPlan['122'].key)}}
+                              </div>
+                            </div>
 
                             <div id="111_red"
-                                 :style="{width: (signalPlan['111'].MaxGreen/ signalPlan['111'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['111'].MaxGreen/ signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['111'].MaxGreen}}s
                             </div>
                             <div id="111_yellow"
-                                 :style="{width: (signalPlan['111'].Yellow / signalPlan['111'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['111'].Yellow / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['111'].AllRed / signalPlan['111'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['111'].AllRed / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
-                        </el-col>
-                        <el-col :span="6">
+
                           <div v-if="signalPlan['112']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['112'].key)}}</div>
 
                             <div id="112_red"
-                                 :style="{width: (signalPlan['112'].MaxGreen/ signalPlan['112'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['112'].MaxGreen/ signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['112'].MaxGreen}}s
                             </div>
                             <div id="112_yellow"
-                                 :style="{width: (signalPlan['112'].Yellow / signalPlan['112'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['112'].Yellow / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['112'].AllRed / signalPlan['112'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['112'].AllRed / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
-                        </el-col>
-                        <el-col :span="6">
+
                           <div v-if="signalPlan['121']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['121'].key)}}</div>
 
                             <div id="121_red"
-                                 :style="{width: (signalPlan['121'].MaxGreen/ signalPlan['121'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['121'].MaxGreen/ signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['121'].MaxGreen}}s
                             </div>
                             <div id="121_yellow"
-                                 :style="{width: (signalPlan['121'].Yellow / signalPlan['121'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['121'].Yellow / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['121'].AllRed / signalPlan['121'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['121'].AllRed / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
-                        </el-col>
-                        <el-col :span="6">
+
                           <div v-if="signalPlan['122']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['122'].key)}}</div>
 
                             <div id="122_red"
-                                 :style="{width: (signalPlan['122'].MaxGreen/ signalPlan['122'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['122'].MaxGreen/ signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['122'].MaxGreen}}s
                             </div>
                             <div id="122_yellow"
-                                 :style="{width: (signalPlan['122'].Yellow / signalPlan['122'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['122'].Yellow / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['122'].AllRed / signalPlan['122'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['122'].AllRed / signalPlan.first)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
                       </el-row>
 
                       <el-row>
-                        <el-col :span="6">
+                        <el-col :span="24">
                           <div v-if="signalPlan['211']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['211'].key)}}</div>
+                            <div>
+                              <div style="float: left;" id="width211"
+                                   :style="{width: ((signalPlan['211'].MaxGreen+signalPlan['211'].Yellow)/ signalPlan.second)*100+'%'}">
+                                {{getRoadFlow(signalPlan['211'].key)}}
+                              </div>
+                              <div style="float: left;" id="width212"
+                                   :style="{width: ((signalPlan['212'].MaxGreen+signalPlan['212'].Yellow)/ signalPlan.second)*100+'%'}">
+                                {{getRoadFlow(signalPlan['212'].key)}}
+                              </div>
+                              <div style="float: left;" id="width221"
+                                   :style="{width: ((signalPlan['221'].MaxGreen+signalPlan['221'].Yellow)/ signalPlan.second)*100+'%'}">
+                                {{getRoadFlow(signalPlan['221'].key)}}
+                              </div>
+                              <div style="float: left;" id="width222"
+                                   :style="{width: ((signalPlan['222'].MaxGreen+signalPlan['222'].Yellow)/ signalPlan.second)*100+'%'}">
+                                {{getRoadFlow(signalPlan['222'].key)}}
+                              </div>
+
+                            </div>
 
                             <div id="211_red"
-                                 :style="{width: (signalPlan['211'].MaxGreen/ signalPlan['211'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['211'].MaxGreen/ signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['211'].MaxGreen}}s
                             </div>
                             <div id="211_yellow"
-                                 :style="{width: (signalPlan['211'].Yellow / signalPlan['211'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['211'].Yellow / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['211'].AllRed / signalPlan['211'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['211'].AllRed / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
-                        </el-col>
-                        <el-col :span="6">
+
                           <div v-if="signalPlan['212']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['212'].key)}}</div>
 
                             <div id="212_red"
-                                 :style="{width: (signalPlan['212'].MaxGreen/ signalPlan['212'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['212'].MaxGreen/ signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['212'].MaxGreen}}s
                             </div>
                             <div id="212_yellow"
-                                 :style="{width: (signalPlan['212'].Yellow / signalPlan['212'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['212'].Yellow / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['212'].AllRed / signalPlan['212'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['212'].AllRed / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
-                        </el-col>
-                        <el-col :span="6">
+
                           <div v-if="signalPlan['221']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['221'].key)}}</div>
 
                             <div id="221_red"
-                                 :style="{width: (signalPlan['221'].MaxGreen/ signalPlan['221'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['221'].MaxGreen/ signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['221'].MaxGreen}}s
                             </div>
                             <div id="221_yellow"
-                                 :style="{width: (signalPlan['221'].Yellow / signalPlan['221'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['221'].Yellow / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['221'].AllRed / signalPlan['221'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['221'].AllRed / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
-                        </el-col>
-                        <el-col :span="6">
+
                           <div v-if="signalPlan['222']!==undefined">
-                            <div>{{getRoadFlow(signalPlan['222'].key)}}</div>
 
                             <div id="222_red"
-                                 :style="{width: (signalPlan['222'].MaxGreen/ signalPlan['222'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['222'].MaxGreen/ signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: green;float: left">{{signalPlan['222'].MaxGreen}}s
                             </div>
                             <div id="222_yellow"
-                                 :style="{width: (signalPlan['222'].Yellow / signalPlan['222'].total)*100+'%'}"
+                                 :style="{width: (signalPlan['222'].Yellow / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: darkorange;float: left"></div>
-                            <div :style="{width: (signalPlan['222'].AllRed / signalPlan['222'].total)*100+'%'}"
+                            <div :style="{width: (signalPlan['222'].AllRed / signalPlan.second)*100+'%'}"
                                  style="height: 12px;background: red;float: left"></div>
                           </div>
                         </el-col>
@@ -496,14 +521,14 @@
                         </div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
                           <div v-if="nodeLength.values[2]"
-                            :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor((nodeLength.values[2].value/50)*100)}"
-                            style="height: 100%;float: right"></div>
+                               :style="{width: nodeLength.values[2].value+'px',background: getSaturationColor((nodeLength.values[2].value/50)*100)}"
+                               style="height: 100%;float: right"></div>
                         </div>
                         <div class="block" style="border: 3px solid #c9c9cc;"></div>
                         <div class="block" style="border-top: 3px solid #c9c9cc;border-bottom: 3px solid #c9c9cc">
                           <div v-if="nodeLength.values[0]"
-                            :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor((nodeLength.values[0].value/50)*100)}"
-                            style="height: 100%;"></div>
+                               :style="{width: nodeLength.values[0].value+'px',background: getSaturationColor((nodeLength.values[0].value/50)*100)}"
+                               style="height: 100%;"></div>
                         </div>
                         <div class="block">
                           <div class="Node_length_list Node_length_list_left" style="text-align: right">
@@ -517,8 +542,8 @@
                         </div>
                         <div class="block" style="border-left: 3px solid #c9c9cc;border-right: 3px solid #c9c9cc">
                           <div v-if="nodeLength.values[1]"
-                            :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor((nodeLength.values[1].value/ 50) * 100)}"
-                            style="width: 100%;"></div>
+                               :style="{height: nodeLength.values[1].value+'px',background: getSaturationColor((nodeLength.values[1].value/ 50) * 100)}"
+                               style="width: 100%;"></div>
                         </div>
                         <div class="block" style="padding-left: 15px">
                           <div style="letter-spacing: 10px"> | | | |</div>
@@ -549,10 +574,11 @@
 
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
+
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['左'].car)"
@@ -563,11 +589,15 @@
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['南']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -578,11 +608,15 @@
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['南']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -595,6 +629,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['南']['右'].car}}
+                              </div>
                             </div>
                           </div>
 
@@ -603,7 +641,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['左'].car)"
@@ -615,11 +653,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['西']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -631,11 +673,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['西']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -649,6 +695,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['西']['右'].car}}
+                              </div>
                             </div>
                           </div>
 
@@ -657,7 +707,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['左'].car)"
@@ -669,11 +719,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['北']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -685,11 +739,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['北']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -703,6 +761,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['北']['右'].car}}
+                              </div>
                             </div>
                           </div>
 
@@ -711,7 +773,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['左'].car)"
@@ -723,11 +785,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['东']['左'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -739,11 +805,15 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
+                                {{allMovementFlow['东']['直'].car}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -757,6 +827,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['东']['右'].car}}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -776,13 +850,14 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
+
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
-                                   :fill="getSaturationColor(allMovementFlow['南']['左'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['南']['左'].car)"
                                    :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -790,31 +865,39 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['南']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['南']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['南']['直'].car)"
                                    :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['南']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['南']['右'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['南']['右'].car)"
                                    :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -822,6 +905,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['南']['右'].bike}}
+                              </div>
                             </div>
                           </div>
 
@@ -830,7 +917,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['左'].bike)"
@@ -842,32 +929,40 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['西']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['西']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['西']['直'].car)"
                                    :opacity="currentDirection[0] === '西' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['西']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['西']['右'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['西']['右'].car)"
                                    :opacity="currentDirection[0] === '西' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
@@ -876,6 +971,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['西']['右'].bike}}
+                              </div>
                             </div>
                           </div>
 
@@ -884,7 +983,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['左'].bike)"
@@ -896,32 +995,40 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['北']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['北']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['北']['直'].car)"
                                    :opacity="currentDirection[0] === '北' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                                {{allMovementFlow['北']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['北']['右'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['北']['右'].car)"
                                    :opacity="currentDirection[0] === '北' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
@@ -930,6 +1037,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['北']['右'].bike}}
+                              </div>
                             </div>
                           </div>
 
@@ -938,7 +1049,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                             <div style="position: absolute;bottom: 0;">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['左'].bike)"
@@ -950,27 +1061,35 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 41 -49z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;left: 30px;z-index: 12">
+                                {{allMovementFlow['东']['左'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 69px">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
-                                   :fill="getSaturationColor(allMovementFlow['东']['直'].bike)"
+                                   :fill="getSaturationColor(allMovementFlow['东']['直'].car)"
                                    :opacity="currentDirection[0] === '东' ? '':'0.3'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
+                                {{allMovementFlow['东']['直'].bike}}
+                              </div>
                             </div>
                             <div style="position: absolute;bottom: 0;right: 0">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
-                                   preserveAspectRatio="xMidYMid meet">
+                                   preserveAspectRatio="xMidYMid meet" position="relative">
                                 <metadata>
                                   Created by potrace 1.13, written by Peter Selinger 2001-2015
                                 </metadata>
@@ -984,6 +1103,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 -13z"/>
                                 </g>
                               </svg>
+
+                              <div style="position: absolute;top: -2px;right: 30px">
+                                {{allMovementFlow['东']['右'].bike}}
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1509,6 +1632,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             value.total = value.AllRed + value.MaxGreen + value.Yellow;
             obj[value.BRP] = value;
           });
+          obj.first = obj['111'].total + obj['112'].total + obj['121'].total + obj['122'].total;
+          obj.second = obj['211'].total + obj['212'].total + obj['221'].total + obj['222'].total;
           this.signalPlan = obj;
           return 'true'
         }).then((val) => {
@@ -1577,7 +1702,15 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         if (!document.getElementById('111_red')) {
           return console.log('---')
         }
-        let width = document.getElementById('allWidth').offsetWidth;
+        let width111 = document.getElementById('width111').offsetWidth;
+        let width112 = document.getElementById('width112').offsetWidth + width111;
+        let width121 = document.getElementById('width121').offsetWidth + width112 + width111;
+        let width122 = document.getElementById('width122').offsetWidth + width121 + width112 + width111;
+        let width211 = document.getElementById('width211').offsetWidth;
+        let width212 = document.getElementById('width212').offsetWidth + width211;
+        let width221 = document.getElementById('width221').offsetWidth + width212 + width211;
+        let width222 = document.getElementById('width222').offsetWidth + width221 + width212 + width211;
+
         let d1 = document.getElementById('111_red').offsetWidth;
         let d1S = document.getElementById('111_yellow').offsetWidth;
         let d2 = document.getElementById('112_red').offsetWidth;
@@ -1597,57 +1730,59 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         let d8 = document.getElementById('222_red').offsetWidth;
         let d8S = document.getElementById('222_yellow').offsetWidth;
         this.currentColor = {};
-        if (left <= width) {
+        if (left <= width111) {
           if (left <= d1) {
             this.currentColor[this.signalPlan['111'].key] = 'green';
           } else {
             this.currentColor[this.signalPlan['111'].key] = 'yellow';
           }
+        } else if (left > width111 && left <= width112) {
+          if (left <= width111 + d2) {
+            this.currentColor[this.signalPlan['112'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['112'].key] = 'yellow';
+          }
+        } else if (left > width112 && left <= width121) {
+          if (left <= width112 + d3) {
+            this.currentColor[this.signalPlan['121'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['121'].key] = 'yellow';
+          }
+        } else if (left > width121 && left <= width122) {
+          if (left <= width121 + d4) {
+            this.currentColor[this.signalPlan['122'].key] = 'green';
+          } else {
+            this.currentColor[this.signalPlan['122'].key] = 'yellow';
+          }
+        }
 
+        if (left <= width211) {
           if (left <= d5) {
             this.currentColor[this.signalPlan['211'].key] = 'green';
           } else {
             this.currentColor[this.signalPlan['211'].key] = 'yellow';
           }
-        } else if (left > width && left <= width * 2) {
-          if (left <= width + d2) {
-            this.currentColor[this.signalPlan['112'].key] = 'green';
-          } else {
-            this.currentColor[this.signalPlan['112'].key] = 'yellow';
-          }
-
-          if (left <= width + d6) {
+        } else if (left > width211 && left <= width212) {
+          if (left <= width211 + d6) {
             this.currentColor[this.signalPlan['212'].key] = 'green';
           } else {
             this.currentColor[this.signalPlan['212'].key] = 'yellow';
           }
-        } else if (left > width * 2 && left <= width * 3) {
-          if (left <= width * 2 + d3) {
-            this.currentColor[this.signalPlan['121'].key] = 'green';
-          } else {
-            this.currentColor[this.signalPlan['121'].key] = 'yellow';
-          }
-
-          if (left <= width * 2 + d7) {
+        } else if (left > width212 && left <= width221) {
+          if (left <= width212 + d7) {
             this.currentColor[this.signalPlan['221'].key] = 'green';
           } else {
             this.currentColor[this.signalPlan['221'].key] = 'yellow';
           }
-        } else if (left > width * 3 && left <= width * 4) {
-          if (left <= width * 3 + d4) {
-            this.currentColor[this.signalPlan['122'].key] = 'green';
-          } else {
-            this.currentColor[this.signalPlan['122'].key] = 'yellow';
-          }
-
-          if (left <= width * 3 + d8) {
+        } else if (left > width221 && left <= width222) {
+          if (left <= width221 + d8) {
             this.currentColor[this.signalPlan['222'].key] = 'green';
           } else {
             this.currentColor[this.signalPlan['222'].key] = 'yellow';
           }
         }
 
-
+        console.log(this.currentColor)
       },
       stopChange() {
         if (this.isChangeTime) {
