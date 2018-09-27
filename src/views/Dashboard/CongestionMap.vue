@@ -78,11 +78,11 @@
                 <el-row class="Dashboard_alarm_list" v-for="(i,index) in allNodeAlarmInfo" :key="i.node_id"
                         v-if="index <5">
                   <el-col :span="6" :offset="1">
-                    <div class=""
+                    <div class="" style="height: 30px"
                          :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value,i.value[0].isMock)}">
-                      <span>{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
+                      <span v-if="!i.value[0].isMock">{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
                       <br>
-                      <span>{{ formatDate(new Date(i.end),'hh:mm')}}</span>
+                      <span v-if="!i.value[0].isMock">{{ formatDate(new Date(i.end),'hh:mm')}}</span>
                     </div>
                   </el-col>
                   <el-col :span="8">
@@ -91,11 +91,11 @@
                     </div>
                   </el-col>
                   <el-col :span="9">
-                    <div class="Dashboard_alarm_info">
-                      <span :style="{color:alarmColor(i.value[0].value,i.value[0].isMock)}">
+                    <div class="Dashboard_alarm_info" style="height: 30px">
+                      <span v-if="!i.value[0].isMock" :style="{color:alarmColor(i.value[0].value,i.value[0].isMock)}">
                       {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                       <br>
-                      <span :style="{color:alarmColor(i.value[1].value,i.value[1].isMock)}">
+                      <span v-if="!i.value[0].isMock" :style="{color:alarmColor(i.value[1].value,i.value[1].isMock)}">
                       {{flowText[i.value[1].movement_turning_direction]}}{{alarmText(i.value[1].value)}}度拥挤</span>
                     </div>
                   </el-col>
@@ -320,7 +320,7 @@
           this.getAllNodesFlow(startTime, endTime, (node) => {
             this.allLinksFlow = link.data;
             this.allNodeFlow = node.data;
-            this.loading = true;
+            this.loading = false;
           });
         });
       },
