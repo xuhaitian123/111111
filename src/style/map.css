@@ -65,6 +65,9 @@
   line-height: 30px;
   border-bottom: 1px solid #6a6a72;
 }
+.open-road-li-color{
+  color: white !important;
+}
 .select-options ul li:last-child{
   border-bottom: none;
 }

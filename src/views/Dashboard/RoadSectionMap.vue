@@ -1,7 +1,7 @@
 <template>
   <div>
     <area-select></area-select>
-    <el-row :gutter="10" class="Dashboard_lineRow" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
@@ -28,17 +28,17 @@
                     <ul style="line-height: 30px;margin-left: 30px">
                       <li>
                         <div style="float: left;">←</div>
-                        <div class="Road_border" :style="{border: linkData.data.value <30 ? '1px solid green' :'0' }">
+                        <div class="Road_border" :style="{border: linkData.data.value <=30 ? '1px solid green' :'0' }">
                           <div class="Road_circle"
                                style="background: green;"></div>
                         </div>
                         <div class="Road_border">
                           <div class="Road_circle"
-                               :style="{border: linkData.data.value <50&&linkData.data.value >30 ? '1px solid #e7c936' :'0' }"
+                               :style="{border: linkData.data.value <=50&&linkData.data.value >30 ? '1px solid #e7c936' :'0' }"
                                style="background: #e7c936;"></div>
                         </div>
                         <div class="Road_border"
-                             :style="{border: linkData.data.value <60&&linkData.data.value >50 ? '1px solid darkorange' :'0' }">
+                             :style="{border: linkData.data.value <=60&&linkData.data.value >50 ? '1px solid darkorange' :'0' }">
                           <div class="Road_circle"
                                style="background: darkorange;"></div>
                         </div>
@@ -51,17 +51,17 @@
                       <li>
                         <div style="float: left;">→</div>
                         <div class="Road_border"
-                             :style="{border: linkData.related_data.value < 30 ? '1px solid green' :'0' }">
+                             :style="{border: linkData.related_data.value <= 30 ? '1px solid green' :'0' }">
                           <div class="Road_circle"
                                style="background: green;"></div>
                         </div>
                         <div class="Road_border">
                           <div class="Road_circle"
-                               :style="{border: linkData.related_data.value <50&&linkData.related_data.value >30 ? '1px solid #e7c936' :'0' }"
+                               :style="{border: linkData.related_data.value <=50&&linkData.related_data.value >30 ? '1px solid #e7c936' :'0' }"
                                style="background: #e7c936;"></div>
                         </div>
                         <div class="Road_border"
-                             :style="{border: linkData.related_data.value <60&&linkData.related_data.value >50 ? '1px solid darkorange' :'0' }">
+                             :style="{border: linkData.related_data.value <=60&&linkData.related_data.value >50 ? '1px solid darkorange' :'0' }">
                           <div class="Road_circle"
                                style="background: darkorange;"></div>
                         </div>
@@ -107,30 +107,32 @@
 
             </div>
 
-            <div class="Road_right_top">
+            <div class="Road_right_top" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
               <div class="Road_row_title">道路流量/排队长度/饱和度数据展示</div>
 
               <el-row class="Road_right_link">
                 <el-col :span="8">
                   <div class="">
                     <div class="" style="width: 50%;float: left;color: #c9c9cc;">
-                      <div> > 150 100 50 < </div>
+                      <div> > 150 100 50 <</div>
                       <div class="Road_chart_line">| | | | |</div>
 
-                      <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden">
+                      <div v-for="(link,i) in linksInfo[0]"
+                           style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden" v-if="i <4">
                         <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow)}"
                              style="height: 65px;float: right;"></div>
                       </div>
 
                     </div>
-                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;"
-                         :style="{height: 85 * linksInfo[0].length+'px'}"></div>
+                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px"
+                         :style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"></div>
 
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
-                      <div> < 50 100 150 > </div>
+                      <div> < 50 100 150 ></div>
                       <div class="Road_chart_line">| | | | |</div>
 
-                      <div style="border-bottom: 1px solid;overflow: hidden" v-for="link in linksInfo[1]">
+                      <div style="border-bottom: 1px solid;overflow: hidden" v-for="(link ,i) in linksInfo[1]"
+                           v-if="i <4">
                         <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow)}"
                              style="width: 30px;height: 65px;"></div>
                       </div>
@@ -143,7 +145,7 @@
                 <el-col :span="3">
                   <div class="" style="margin-top: 10px">
                     <div v-for="name in linksInfo[0]" :key="name.link_id" style="padding: 24px 0">
-                      <!--{{name.link_name}}-->
+                      {{name.link_name}}
                     </div>
                   </div>
                 </el-col>
@@ -153,21 +155,22 @@
                       <div> > 25 12 0</div>
                       <div class="Road_chart_line">| | | | |</div>
 
-                      <div v-for="link in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
+                      <div v-for="(link,i) in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;"
+                           v-if="i <4">
                         <div
                           :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
                           style="height: 65px;float: right;"></div>
                       </div>
 
                     </div>
-                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;"
-                         :style="{height: 85 * linksInfo[0].length+'px'}"></div>
+                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px"
+                         :style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"></div>
 
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
                       <div> 0 12 25 ></div>
                       <div class="Road_chart_line">| | | |</div>
 
-                      <div style="border-bottom: 1px solid" v-for="link in linksInfo[1]">
+                      <div style="border-bottom: 1px solid" v-for="(link ,i) in linksInfo[1]" v-if="i <4">
                         <div
                           :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
                           style="width: 30px;height: 65px;"></div>
@@ -198,19 +201,23 @@
 
                     <div style="padding: 10px 8px;color: #c9c9cc">
                       <div style="margin: 10px 0">
-                        <div style="background: #c94343;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
+                        <div
+                          style="background: #c94343;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">已饱和</div>
                       </div>
                       <div style="margin: 10px 0">
-                        <div style="background: #f98d21;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
+                        <div
+                          style="background: #f98d21;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">50 - 75%</div>
                       </div>
                       <div style="margin: 10px 0">
-                        <div style="background: #eacc36;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
+                        <div
+                          style="background: #eacc36;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">25 - 50%</div>
                       </div>
                       <div style="margin: 10px 0">
-                        <div style="background: green;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
+                        <div
+                          style="background: green;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">< 25%</div>
                       </div>
                     </div>
@@ -219,14 +226,14 @@
               </el-row>
             </div>
 
-            <div class="Road_right_bottom">
-              <div class="Road_row_title">道路协同评分/道路绿灯到达比率</div>
+            <div class="Road_right_bottom" v-loading="loadingNode" element-loading-background="rgba(0, 0, 0, 0.8)">
+              <div class="Road_row_title">交通运行评分</div>
 
               <el-row>
                 <el-col :span="10">
                   <div class="">
                     <div class="Road_row_subtitle">
-                      道路协同评分
+                      交通走廊
                     </div>
 
                     <road-gauge style="height: 180px;padding-top: 80px" color="#c57426"></road-gauge>
@@ -234,29 +241,31 @@
                 </el-col>
                 <el-col :span="14">
                   <div class="Road_row_subtitle">
-                    道路绿灯到达比率
+                    交叉口
                   </div>
 
                   <el-row style="margin: 20px">
                     <el-col :span="10">
-                      <div class="">
-                        <div style="float: left;line-height: 50px;font-size: 12px">57.4%</div>
-                        <concise-pie id="test" direction="left"
+                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px">
+                        <div style="float: left;line-height: 50px;font-size: 12px">{{item[0].value.toFixed(0)}}</div>
+                        <concise-pie :id="'pie_left_'+item[0].link.link_id" :data="item[0]"
                                      style="width: 50px;height: 50px;margin: auto"></concise-pie>
                       </div>
                     </el-col>
-                    <el-col :span="4">
-                      <div class="">
+                    <el-col :span="4" style="padding-top: 15px">
+                      <div class="" v-for="(item,i) in scoreName" v-if="i <4" style="position: relative;">
                         <div
-                          style="width: 14px;height: 14px;border-radius: 50%;border: 1px solid #f98d21;margin: auto;position: relative"></div>
-                        <div style="font-size: 12px;position: absolute;top: -17px;margin-left: 25px;">人民路</div>
-                        <div style="height: 20px;width: 1px;background: #f98d21;margin: auto"></div>
+                          style="width: 14px;height: 14px;border-radius: 50%;border: 1px solid #f98d21;margin: auto;"></div>
+                        <div style="font-size: 12px;position: absolute;top: -5px;margin-left: 35px;width: 60px">
+                          {{item}}
+                        </div>
+                        <div v-if="i < 3 " style="height: 45px;width: 1px;background: #f98d21;margin: auto"></div>
                       </div>
                     </el-col>
                     <el-col :span="10">
-                      <div class="">
-                        <div style="float: right;line-height: 50px;font-size: 12px">57.4%</div>
-                        <concise-pie id="test1" direction="left"
+                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px">
+                        <div style="float: right;line-height: 50px;font-size: 12px">{{item[1].value.toFixed(0)}}</div>
+                        <concise-pie :id="'pie_right_'+item[1].link.link_id" :data="item[1]"
                                      style="width: 50px;height: 50px;margin: auto"></concise-pie>
                       </div>
                     </el-col>
@@ -303,37 +312,58 @@
         allNodeDelay: [],
         allLinksDelay: [],
         startTime: 0,
-        loading:false,
+        loading: false,
+        loadingNode: false,
+        allScore: [],
+        scoreName: [],
       }
     },
     mounted() {
       this.init();
-      this.loading = true;
     },
     methods: {
       init() {
         this.getAllData();
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
-
-        this.$http.get('/roadDataAnalysis/getCorridorCongestionSource?token=693e9af84d3dfcc71e640e005bdc5e2e&current=true')
-          .then((response) => {
-            console.log(response)
-          })
       },
       getAllData(startTime, endTime) {
         this.getAllLinkId();
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
+        this.getLinkByNodeScore(startTime, endTime);
+
+        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=201&token='+this.getHeader().token)
+          .then((result)=>{
+            console.log(result)
+          })
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
+      },
+      getLinkByNodeScore(startTime, endTime) {
+        this.loadingNode = true;
+        this.$http.get('trafficCongestion/roadAvgDelay?linkId=' + this.$route.params.id + '&current=true&token=' + this.getHeader().token)
+          .then((response) => {
+            let linkName = response.data.link.link_name;
+            let url = '/roadDataAnalysis/getCorridorCongestionSource?token=' + this.getHeader().token;
+            url += this.setUrlDate(startTime, endTime);
+            this.$http.get(url).then((result) => {
+              if (result.data.value[linkName]) {
+                this.allScore = Object.values(result.data.value[linkName]);
+                this.scoreName = Object.keys(result.data.value[linkName]);
+                if (this.scoreName.length > 4) {
+                  this.scoreName.length = 4;
+                }
+              }
+              this.loadingNode = false;
+            });
+          });
       },
       getAllDelay(startTime, endTime) {
         this.getTrafficCongestionRoadAvgDelay(startTime, endTime, (lineDelay) => {
           this.getAllNodeD12s(startTime, endTime, (nodeDelay) => {
             this.allNodeDelay = nodeDelay;
             this.allLinksDelay = lineDelay;
-            this.loading = false;
           });
         });
       },
@@ -361,6 +391,7 @@
         })
       },
       getAllLinkId(startTime, endTime) {  //获取全部linkid
+        this.loading = true;
         let url = '/index/roadAllLinksBySomeLinkId?linkId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         this.$http.get(url).then((response) => {
           this.allLinkId = response.data;
@@ -375,6 +406,7 @@
         this.getLinkFlowAndLength(links[num], startTime, endTime).then((data) => {
           if (num === links.length - 1) {
             this.linksInfo = links;
+            this.loading = false;
           } else {
             num += 1;
             this.getLinksData(links, num)
@@ -410,31 +442,30 @@
 
         this.$http.get(url).then((response) => {
           this.$http.get(secondUrl).then((result) => {
-              cb(response.data.value + result.data.value)
-            })
+            cb(response.data.value + result.data.value)
+          })
         })
       },
       getNodeDataD13ByLinkId(linkId, startTime, endTime, cb) {   //获取进道口排队长度(双向)
-        let url ='/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&token=' + this.getHeader().token;
+        let url = '/nodeData/getLinkQueueLengthDoubleDirection?' + linkId + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
-            cb(response.data.total)
-          })
+          cb(response.data.total)
+        })
       },
       jumpPage(key) {
         this.$router.push(key);
       },
       getFlowNum(link) {
-        console.log(link)
         // console.log(link.flow);
-        return (link /200) * 100
+        return (link / 200) * 100
       },
       getFlowColor(num) {
-        if (num < 30) {
+        if (num <= 30) {
           return "#green"
-        } else if (num > 30 && num < 50) {
+        } else if (num > 30 && num <= 50) {
           return "#e7c936"
-        } else if (num > 50 && num < 60) {
+        } else if (num > 50 && num <= 60) {
           return "darkorange"
         } else if (num > 60) {
           return "red"
@@ -443,11 +474,11 @@
         }
       },
       getRoadAvgDelayColor(num) {
-        if (num < 30) {
+        if (num <= 30) {
           return "#green"
-        } else if (num > 30 && num < 50) {
+        } else if (num > 30 && num <= 50) {
           return "#e7c936"
-        } else if (num > 50 && num < 60) {
+        } else if (num > 50 && num <= 60) {
           return "darkorange"
         } else if (num > 60) {
           return "red"

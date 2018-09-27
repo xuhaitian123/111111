@@ -137,9 +137,9 @@
         this.$router.push(key);
       },
       getFlowColor(num) {
-        if (num < 1000) {
+        if (num <= 1000) {
           return "green"
-        } else if (num > 1000 && num < 3000) {
+        } else if (num > 1000 && num <= 3000) {
           return "darkorange"
         } else if (num > 3000) {
           return "red"
@@ -148,11 +148,11 @@
         }
       },
       getDelayColor(num) {
-        if (num < 30) {
+        if (num <= 30) {
           return "green"
-        } else if (num > 30 && num < 50) {
+        } else if (num > 30 && num <= 50) {
           return "#e7c936"
-        } else if (num > 50 && num < 60) {
+        } else if (num > 50 && num <= 60) {
           return "darkorange"
         } else if (num > 60) {
           return "red"
@@ -161,24 +161,20 @@
         }
       },
       getNodeDelayImg(num) {
-        if (num < 30) {
-          // return "/static/50.png"
+        if (num <= 30) {
           return "/static/image/map/green.png"
-        } else if (num > 30 && num < 50) {
-          // return "/static/53.png"
+        } else if (num > 30 && num <= 50) {
           return "/static/image/map/yellow.png"
-        } else if (num > 50 && num < 60) {
-          // return "/static/52.png"
+        } else if (num > 50 && num <= 60) {
           return "/static/image/map/orange.png"
         } else if (num > 60) {
-          // return "/static/51.png"
           return "/static/image/map/red.png"
         }
       },
       getNodeFlowImg(num) {
-        if (num < 1000) {
+        if (num <= 1000) {
           return "/static/image/map/green.png"
-        } else if (num > 1000 && num < 3000) {
+        } else if (num > 1000 && num <= 3000) {
           return "/static/image/map/orange.png"
         } else if (num > 3000) {
           return "/static/image/map/red.png"
@@ -203,7 +199,9 @@
         handler(newVal, oldVal) {
           console.log(newVal)
           newVal.forEach((flow) => {
+            let text = flow.node.node_name + "<br>总流量: " + flow.value + "pcu";
             this.addNodeMarker(flow.node.long, flow.node.lat, flow.value, flow.node.node_id+'_flow_node', false)
+            this.addLabel(flow.node.long, flow.node.lat, text, flow.value, flow.node_id+'_delay_label', false);
           })
         },
         deep: true //对象内部属性的监听，关键。
