@@ -92,7 +92,9 @@
   height: 30px;
   background: #353643;
 }
-
+.el-select-dropdown{
+  background:  rgb(41, 41, 53);
+}
 .el-select input {
   height: 30px;
   background: #353643;
