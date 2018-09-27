@@ -1,7 +1,7 @@
 <template>
   <div>
     <area-select></area-select>
-    <el-row :gutter="10" class="Dashboard_lineRow" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+    <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
@@ -10,7 +10,7 @@
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
-          <div class="" style="position: relative;background: #1f1f2c">
+          <div class="" style="position: relative;background: #1f1f2c" >
             <div style="width: 65%;height: 720px;position: relative">
               <img class="animated " src="/static/image/map/node_map_cross.png" id="node_animated"
                    style="height: 100%;width: 100%"/>
@@ -287,7 +287,7 @@
 
             <div class="Node_right_top">
               <el-tabs type="border-card" style="height: 420px;background: #353644">
-                <el-tab-pane label="当前信号灯配时方案">
+                <el-tab-pane label="当前信号灯配时方案" v-loading="loadingSignal" element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row style="padding: 40px 20px 0;text-align: center">
                     <el-col :span="3" v-for="(value,index) in currentSignal" :key="index">
                       <div class="" style="margin-bottom: 5px">{{signalText[value.key]}}</div>
@@ -456,8 +456,8 @@
                       </el-row>
                     </div>
                   </div>
-                </el-tab-pane>
-                <el-tab-pane label="交叉口饱和度/排队长度数据展示">
+                </el-tab-pane >
+                <el-tab-pane label="交叉口饱和度/排队长度数据展示" v-loading="loadingLength" element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row>
                     <el-col :span="6" style="padding: 20px 10px ">
                       <div class="Node_row_list">
@@ -566,7 +566,7 @@
 
               <el-tabs type="border-card" :before-leave="setFlowOrDelay"
                        style="height: 290px;margin-top: 10px;background: #353644;text-align: center;font-size: 12px">
-                <el-tab-pane label="交叉口机动车/非机动车流量">
+                <el-tab-pane label="交叉口机动车/非机动车流量" v-loading="loadingFlow" element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row style="position: relative">
                     <el-col :span="10" :offset="1" style="display: flex;position: relative">
                       <div style="width: 20px;line-height: 220px;font-size: 12px">西</div>
@@ -1048,7 +1048,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(270deg);left: 8px">
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1068,7 +1068,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['东']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1088,7 +1088,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['东']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1135,7 +1135,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
     right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}</div>
                   </el-row>
                 </el-tab-pane>
-                <el-tab-pane label="交叉口延误数据">
+                <el-tab-pane label="交叉口延误数据" v-loading="loadingDelay" element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row>
                     <el-col :span="12" :offset="2">
                       <div class="" style="display: flex">
@@ -1464,14 +1464,14 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           values: []
         },
         signalText: {
-          d1: '北',
-          d2: '南',
-          d3: '东',
-          d4: '西',
-          d5: '南',
-          d6: '北',
-          d7: '西',
-          d8: '东',
+          d1: '北-左',
+          d2: '南-直',
+          d3: '东-左',
+          d4: '西-直',
+          d5: '南-左',
+          d6: '北-直',
+          d7: '西-左',
+          d8: '东-直',
         },
         signalPlan: {},
         lineLeft: 0,
@@ -1486,7 +1486,10 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         currentTabs: '0',
         currentDirection: ['南', '东', '北', '西'],
         currentColor: {},
-        loading:false,
+        loadingFlow:false,
+        loadingDelay:false,
+        loadingLength:false,
+        loadingSignal:false,
       }
     },
     mounted() {
@@ -1495,7 +1498,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     methods: {
       init() {
         this.getAllData();
-        // this.loading= true;
       },
       getAllData(startTime, endTime) {
         this.getNodeCongestionSource(startTime, endTime);
@@ -1523,6 +1525,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           })
       },
       getNodeMovement(startTime, endTime) {
+        this.loadingFlow=true;
+        this.loadingDelay=true;
         this.$http.get('/index/getAllMovementsByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token)
           .then((response) => {
             this.getAllMovementFlow(response.data.movements, 0, startTime, endTime);
@@ -1537,6 +1541,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
           if (num === data.length - 1) {
             this.allMovementFlow = this.getMovementDirectionFlow(data);
+            this.loadingFlow=false;
           } else {
             num += 1;
             this.getAllMovementFlow(data, num, startTime, endTime);
@@ -1579,7 +1584,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
           if (num === data.length - 1) {
             this.allMovementDelay = this.getMovementDirection(data);
-            this.loading= false;
+            this.loadingDelay=false;
           } else {
             num += 1;
             this.getAllMovementDelay(data, num, startTime, endTime);
@@ -1640,13 +1645,16 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         })
       },
       getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度
+        this.loadingLength=true;
         let url = '/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
           this.nodeLength = response.data;
+          this.loadingLength=false;
         })
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
+        this.loadingSignal=true;
         let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += endTime ? '&current=' + endTime : '&current=true';
         this.$http.get(url).then((response) => {
@@ -1662,6 +1670,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           return 'true'
         }).then((val) => {
           this.getSignalColor(0);
+          this.loadingSignal=false;
         })
       },
       setFlowOrDelay(val) {

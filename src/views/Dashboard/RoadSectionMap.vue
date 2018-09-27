@@ -145,7 +145,7 @@
                 <el-col :span="3">
                   <div class="" style="margin-top: 10px">
                     <div v-for="name in linksInfo[0]" :key="name.link_id" style="padding: 24px 0">
-                      <!--{{name.link_name}}-->
+                      {{name.link_name}}
                     </div>
                   </div>
                 </el-col>
@@ -331,6 +331,11 @@
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
+
+        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=201&token='+this.getHeader().token)
+          .then((result)=>{
+            console.log(result)
+          })
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
