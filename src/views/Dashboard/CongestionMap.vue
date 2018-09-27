@@ -102,9 +102,38 @@
                 </el-row>
               </div>
 
-              <div style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
-                <div
-                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+              <div v-if="!currentRoadNet" style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+                  图例
+                </div>
+
+                <ul class="CongestionMap_Legend">
+                  <li>
+                    <i class="icon-yuan1 iconfont" style="color: green"></i>
+                    <span>饱和度 < 0.6</span>
+                  </li>
+                  <li>
+                    <i class="icon-yuan1 iconfont" style="color: #e7c936"></i>
+                    <span>饱和度 0.6-0.8</span>
+                  </li>
+                  <li>
+                    <i class="icon-yuan1 iconfont" style="color: darkorange"></i>
+                    <span>饱和度 0.8-0.9</span>
+                  </li>
+                  <li>
+                    <i class="icon-yuan1 iconfont" style="color: red"></i>
+                    <span>饱和度 > 0.9</span></li>
+                  <li>
+                    <i class="icon-yuan1 iconfont"></i>
+                    <span>未知</span>
+                  </li>
+                </ul>
+
+              </div>
+
+
+              <div v-if="currentRoadNet" style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
                   图例
                 </div>
 
@@ -131,7 +160,6 @@
                 </ul>
 
               </div>
-
             </div>
 
             <div style="position:absolute;bottom: 80px;width: 100%">
