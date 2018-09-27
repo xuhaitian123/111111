@@ -61,14 +61,12 @@
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">路网拥堵评分</div>
                 <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent.toFixed(0)"></road-gauge>
-
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id"
                      v-if="i <5">
                   {{item.road_name}}<span class="fr fs20">{{item.value.toFixed(0)}}</span>
                 </div>
               </div>
-
             </div>
           </div>
         </el-card>

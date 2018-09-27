@@ -72,6 +72,7 @@
           {
             name: '访问来源',
             type: 'pie',
+            hoverAnimation:false,
             center: ['40%', '50%'],
             radius: ['60%', '70%'],
             avoidLabelOverlap: false,
