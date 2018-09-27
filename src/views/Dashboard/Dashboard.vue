@@ -1,12 +1,13 @@
 <template>
 
-  <div v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
+  <div>
 
     <area-select></area-select>
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" v-loading="loadingMap"
+                 element-loading-background="rgba(0, 0, 0, 0.8)" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>实时地图</span>
             <div style="float: right; padding: 3px 0">
@@ -23,7 +24,8 @@
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" v-loading="loadingRoad"
+                 element-loading-background="rgba(0, 0, 0, 0.8)" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>路网数据展示</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -75,7 +77,8 @@
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" v-loading="loadingAlarm"
+                 element-loading-background="rgba(0, 0, 0, 0.8)" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>报警信息</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -129,7 +132,8 @@
 
     <el-row :gutter="10" class="Dashboard_lineRow">
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" v-loading="loadingMixLine"
+                 element-loading-background="rgba(0, 0, 0, 0.8)" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -139,8 +143,10 @@
           </div>
         </el-card>
       </el-col>
+
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" v-loading="loadingPie"
+                 element-loading-background="rgba(0, 0, 0, 0.8)" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>信号灯优化前后数据展示</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -157,7 +163,8 @@
       </el-col>
 
       <el-col :span="8">
-        <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
+        <el-card shadow="never" :body-style="{ padding: '0px' }" v-loading="loadingTrend"
+                 element-loading-background="rgba(0, 0, 0, 0.8)" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
             <span>数据变化趋势对比分析</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
@@ -177,116 +184,20 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two" style="padding: 20px">
-
-            <!--<el-col :span="6" class="">-->
-            <!--<div class="Dashboard_set_col" style="height: 180px;position: relative">-->
-            <!--人民路-珠海路优先通行控制设置-->
-
-            <!--<div>-->
-            <!--<div class="fl" style="padding-left: 10px;margin: 10px 0">-->
-            <!--<span>优先方式</span>-->
-            <!--<ul>-->
-            <!--<el-checkbox-group style="margin: 10px 0" v-model="firstMode">-->
-            <!--<li>-->
-            <!--<el-checkbox label="绿灯延长"></el-checkbox>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-checkbox label="红灯提前结束"></el-checkbox>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-checkbox label="调整相位顺序"></el-checkbox>-->
-            <!--</li>-->
-            <!--</el-checkbox-group>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--<div class="fr" style="margin: 10px 0">-->
-            <!--<div class="fl">-->
-            <!--<span>优先车辆和等级</span>-->
-            <!--<ul>-->
-            <!--<el-checkbox-group v-model="firstVehicle" style="margin: 10px 0 10px 10px">-->
-            <!--<li>-->
-            <!--<el-checkbox label="警卫车辆">警卫车辆</el-checkbox>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-checkbox label="警务车辆">警务车辆</el-checkbox>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-checkbox label="领导车辆">领导车辆</el-checkbox>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-checkbox label="救护车">救护车</el-checkbox>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-checkbox label="公交车">公交车</el-checkbox>-->
-            <!--</li>-->
-            <!--</el-checkbox-group>-->
-            <!--</ul>-->
-            <!--</div>-->
-            <!--<div class="fr" style="margin-left: 5px;">-->
-            <!--<span>高 中 低</span>-->
-            <!--<ul style="margin: 10px 0">-->
-            <!--<li>-->
-            <!--<el-radio-group v-model="radio">-->
-            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-            <!--</el-radio-group>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-radio-group v-model="radio1">-->
-            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-            <!--</el-radio-group>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-radio-group v-model="radio2">-->
-            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-            <!--</el-radio-group>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-radio-group v-model="radio3">-->
-            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-            <!--</el-radio-group>-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--<el-radio-group v-model="radio4">-->
-            <!--<el-radio :label="1">&nbsp;</el-radio>-->
-            <!--<el-radio :label="2">&nbsp;</el-radio>-->
-            <!--<el-radio :label="3">&nbsp;</el-radio>-->
-            <!--</el-radio-group>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-
-            <!--<div style="position: absolute;bottom: 20px;left: 30px">-->
-            <!--启动优先通行-->
-            <!--<el-radio v-model="radioLine" :label="1">&nbsp;</el-radio>-->
-            <!--</div>-->
-
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</el-col>-->
-            <el-col :span="6" class="" v-for="(item,i) in nodeName" v-if="i <4">
-
+            <el-col :span="6" class="" v-for="(currentNum) in [0,1,2,3]">
               <div class="Dashboard_set_col">
-                {{item}}优先通行控制设置
+                {{currentNum}}优先通行控制设置
                 <div class="control-setting-content">
                   <div class="first_method">
                     <div class="first_method-title">优先方式</div>
-                    <div class="first_method_item" v-for="(item, index) in first_items.first_style"
-                         @click="set_first_style_item(index)">
+                    <div class="first_method_item" v-for="(item, index) in first_items[currentNum].first_style"
+                         @click="set_first_style_item(index,currentNum)">
                       <div class="empty-retangle">
-                        <div v-for="(setting, i) in first_setting_info.first_style"
-                             v-if="first_setting_info.first_style[i]==first_items.first_style[index]"
+                        <div v-for="(setting, i) in first_setting_info[currentNum].first_style"
+                             v-if="first_setting_info[currentNum].first_style[i]==first_items[currentNum].first_style[index]"
                              class="fill-retangle"></div>
                       </div>
-                      <span>{{first_items.first_style[index]}}</span>
+                      <span>{{first_items[currentNum].first_style[index]}}</span>
                     </div>
                   </div>
                   <div class="first_car_level">
@@ -296,37 +207,38 @@
                       <div class="level">中</div>
                       <div class="level">低</div>
                     </div>
-                    <div class="car_level_item" v-for="(item, index) in first_items.first_car">
-                      <div class="first_method_item car_info" @click="changeFirstCar(index)">
+                    <div class="car_level_item" v-for="(item, index) in first_items[currentNum].first_car">
+                      <div class="first_method_item car_info" @click="changeFirstCar(index,currentNum)">
                         <div class="empty-retangle">
-                          <div class="fill-retangle" v-for="(dataInfo, i) in first_setting_info.first_data"
-                               v-if="first_setting_info.first_data[i].car_name==first_items.first_car[index]"></div>
+                          <div class="fill-retangle" v-for="(dataInfo, i) in first_setting_info[currentNum].first_data"
+                               v-if="first_setting_info[currentNum].first_data[i].car_name==first_items[currentNum].first_car[index]"></div>
                         </div>
-                        <span>{{first_items.first_car[index]}}</span>
+                        <span>{{first_items[currentNum].first_car[index]}}</span>
                       </div>
-                      <div class="empty-circle" @click="changeLevel(index,'高')">
-                        <div class="fill-circle" v-for="(dataInfo, i) in first_setting_info.first_data"
-                             v-if="first_setting_info.first_data[i].car_name==first_items.first_car[index]
-                             && first_setting_info.first_data[i].level=='高'"></div>
+                      <div class="empty-circle" @click="changeLevel(index,'高',currentNum)">
+                        <div class="fill-circle" v-for="(dataInfo, i) in first_setting_info[currentNum].first_data"
+                             v-if="first_setting_info[currentNum].first_data[i].car_name==first_items[currentNum].first_car[index]
+                             && first_setting_info[currentNum].first_data[i].level=='高'"></div>
                       </div>
-                      <div class="empty-circle" @click="changeLevel(index,'中')">
-                        <div class="fill-circle" v-for="(dataInfo, i) in first_setting_info.first_data"
-                             v-if="first_setting_info.first_data[i].car_name==first_items.first_car[index]
-                             && first_setting_info.first_data[i].level=='中'"></div>
+                      <div class="empty-circle" @click="changeLevel(index,'中',currentNum)">
+                        <div class="fill-circle" v-for="(dataInfo, i) in first_setting_info[currentNum].first_data"
+                             v-if="first_setting_info[currentNum].first_data[i].car_name==first_items[currentNum].first_car[index]
+                             && first_setting_info[currentNum].first_data[i].level=='中'"></div>
                       </div>
-                      <div class="empty-circle" @click="changeLevel(index,'低')">
-                        <div class="fill-circle" v-for="(dataInfo, i) in first_setting_info.first_data"
-                             v-if="first_setting_info.first_data[i].car_name==first_items.first_car[index]
-                             && first_setting_info.first_data[i].level=='低'"></div>
+                      <div class="empty-circle" @click="changeLevel(index,'低',currentNum)">
+                        <div class="fill-circle" v-for="(dataInfo, i) in first_setting_info[currentNum].first_data"
+                             v-if="first_setting_info[currentNum].first_data[i].car_name==first_items[currentNum].first_car[index]
+                             && first_setting_info[currentNum].first_data[i].level=='低'"></div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div style="position: absolute;bottom: 20px;left: 30px;    display: flex;">
+                <div style="position: absolute;bottom: 20px;left: 30px;    display: flex;"
+                     @click="change_start_open_first_pass_status(currentNum)">
                   启动优先通行
                   <div class="empty-circle">
-                    <div class="fill-circle" v-if="start_open_first_pass"></div>
+                    <div class="fill-circle" v-if="start_open_first_pass[currentNum]"></div>
                   </div>
                 </div>
               </div>
@@ -591,36 +503,7 @@
       RoadNetMap,
     },
     data() {
-      let data = []
-
-      for (let i = 0; i <= 360; i++) {
-        let t = i / 180 * Math.PI
-        let r = Math.sin(2 * t) * Math.cos(2 * t)
-        data.push([r, i])
-      }
-
       return {
-        alarmColor: function (val, is) {
-          if (is) {
-            return "#9a9bac";
-          }
-          if (val < 60) {
-            return "#ccccd0";
-          } else if (val > 60 && val < 80) {
-            return "#c8772a";
-          } else if (val > 80) {
-            return "#a43f43";
-          }
-        },
-        alarmText: function (val) {
-          if (val < 60) {
-            return "轻";
-          } else if (val > 60 && val < 80) {
-            return "中";
-          } else if (val > 80) {
-            return "重";
-          }
-        },
         flowText: {
           right: '右转',
           left: '左转',
@@ -631,8 +514,6 @@
         roadNetCongestionScore: 0,
         nodeCongestionScore: 0,
         congestionPercent: 0,
-        firstMode: [],
-        firstVehicle: [],
         allNodeScore: [],
         allNodeAlarmInfo: [],
         trafficLightData: {
@@ -641,12 +522,6 @@
           afterAlarm: [],
           beforeAlarm: [],
         },
-        radio: 3,
-        radio1: 3,
-        radio2: 3,
-        radio3: 3,
-        radio4: 2,
-        radioLine: 1,
         nodeName: [],
         trafficLightRatio: {
           before: {},
@@ -654,28 +529,82 @@
         },
         allLinksFlow: [],
         allNodeFlow: [],
-        loading: false,
-        first_items: {
-          first_style: ['绿灯延长', '红灯提前结束', '调整相位顺序'],
-          first_car: ['警卫车辆', '警务车辆', '领导车辆', '救护车', '公交车']
+        loadingMap: false,
+        loadingRoad: false,
+        loadingAlarm: false,
+        loadingMixLine: false,
+        loadingPie: false,
+        loadingTrend: false,
+        first_items: [
+          {
+            first_style: ['绿灯延长', '红灯提前结束', '调整相位顺序'],
+            first_car: ['警卫车辆', '警务车辆', '领导车辆', '救护车', '公交车']
+          },
+          {
+            first_style: ['绿灯延长', '红灯提前结束', '调整相位顺序'],
+            first_car: ['警卫车辆', '警务车辆', '领导车辆', '救护车', '公交车']
+          },
+          {
+            first_style: ['绿灯延长', '红灯提前结束', '调整相位顺序'],
+            first_car: ['警卫车辆', '警务车辆', '领导车辆', '救护车', '公交车']
+          },
+          {
+            first_style: ['绿灯延长', '红灯提前结束', '调整相位顺序'],
+            first_car: ['警卫车辆', '警务车辆', '领导车辆', '救护车', '公交车']
+          }
+        ],
+        first_setting_info: [
+          {
+            first_style: ['绿灯延长'],
+            first_data: [
+              {
+                car_name: '警卫车辆',
+                level: '中'
+              }
+            ]
+          }, {
+            first_style: [],
+            first_data: [
+              {
+                car_name: '警卫车辆',
+                level: '中'
+              }
+            ]
+          }, {
+            first_style: ['绿灯延长'],
+            first_data: [
+              {
+                car_name: '警卫车辆',
+                level: '中'
+              }
+            ]
+          }, {
+            first_style: [],
+            first_data: [
+              {
+                car_name: '警卫车辆',
+                level: '中'
+              }
+            ]
+          }
+        ],
+        start_open_first_pass: {
+          0: true,
+          1: true,
+          2: true,
+          3: true
         },
-        first_setting_info: {
-          first_style: ['绿灯延长'],
-          first_data: [
-            {
-              car_name: '警卫车辆',
-              level: '中'
-            }
-          ]
-        },
-        start_open_first_pass:true,
       }
     },
     mounted() {
       this.init();
       window.congestionMap.centerAndZoom(new window.BMap.Point(119.170574, 33.513026), 14);
+      this.loadingStart();
 
-      this.loading = true;
+      if(localStorage.getItem('first_setting_info')){
+        this.first_setting_info = JSON.parse(localStorage.getItem('first_setting_info'));
+        this.start_open_first_pass = JSON.parse(localStorage.getItem('start_open_first_pass'));
+      }
     },
     methods: {
       init() {
@@ -683,47 +612,74 @@
         let handleAllData = setInterval(this.getAllData, 5 * 60 * 1000)
       },
       getAllData() {
-        this.getRoadNetAllFlow();
-        this.getRoadNetCongestionScore();
-        this.getCongestionPercent();
+        this.getRoadAllData();
+
         this.getNodes();
-        this.getNodeCongestionSource();
         this.getAllNodeCongestionAlarm();
         this.getTrafficLightData();
         this.getTrafficLightOptimizeCongestionStatus();
         this.getAllFlow();
+        this.getRoadDataAnalysisFlow();
+      },
+      loadingStart() {
+        this.loadingMap = true;
+        this.loadingRoad = true;
+        this.loadingAlarm = true;
+        this.loadingMixLine = true;
+        this.loadingPie = true;
+        this.loadingTrend = true;
+      },
+      getRoadAllData() {
+        Promise.all([this.getRoadNetAllFlow(),
+          this.getRoadNetCongestionScore(),
+          this.getCongestionPercent(),
+          this.getNodeCongestionSource()]).then((result) => {
+          console.log(result)
+          this.loadingRoad = false;
+        });
+
       },
       getCongestionPercent() { //拥堵里程比例
-        this.$http.get('/TrafficCongestion/congestionPercent?current=true' + '&token=' + this.getHeader().token)
-          .then((response) => {
-            this.congestionPercent = response.data.value;
-          })
+        return new Promise((resolve, reject) => {
+          this.$http.get('/TrafficCongestion/congestionPercent?current=true' + '&token=' + this.getHeader().token)
+            .then((response) => {
+              this.congestionPercent = response.data.value;
+              resolve();
+            })
+        });
       },
       getRoadNetAllFlow() { //路网总流量
-        this.$http
-          .get('/TrafficCongestion/roadNetAllFlow?&current=true' + '&token=' + this.getHeader().token,)
-          .then((response) => {
-            this.allRoadFlow = response.data;
-          })
+        return new Promise((resolve, reject) => {
+          this.$http.get('/TrafficCongestion/roadNetAllFlow?&current=true' + '&token=' + this.getHeader().token,)
+            .then((response) => {
+              this.allRoadFlow = response.data;
+              resolve();
+            })
+        });
       },
       getRoadNetCongestionScore() { //路网拥堵评分
-        this.$http
-          .get('/TrafficCongestion/roadNetCongestionScore?current=true' + '&token=' + this.getHeader().token)
-          .then((response) => {
-            this.roadNetCongestionScore = response.data.value;
-          })
+        return new Promise((resolve, reject) => {
+          this.$http.get('/TrafficCongestion/roadNetCongestionScore?current=true' + '&token=' + this.getHeader().token)
+            .then((response) => {
+              this.roadNetCongestionScore = response.data.value;
+              resolve();
+            })
+        });
       },
       getNodeCongestionSource() {  //所有交叉口拥堵评分
-        this.$http.get('/TrafficCongestion/allNodeCongestionSource?current=true' + '&token=' + this.getHeader().token)
-          .then((response) => {
-            this.allNodeScore = response.data;
-          })
+        return new Promise((resolve, reject) => {
+          this.$http.get('/TrafficCongestion/allNodeCongestionSource?current=true' + '&token=' + this.getHeader().token)
+            .then((response) => {
+              this.allNodeScore = response.data;
+              resolve();
+            })
+        });
       },
       getAllNodeCongestionAlarm() {  //交叉口报警信息
         this.$http.get('/TrafficCongestion/allNodeCongestionAlarm?current=true' + '&token=' + this.getHeader().token)
           .then((response) => {
-            console.log(response)
             this.allNodeAlarmInfo = response.data;
+            this.loadingAlarm = false;
           })
       },
 
@@ -732,6 +688,7 @@
           this.getAllNodesFlow(startTime, endTime, (node) => {
             this.allLinksFlow = link.data;
             this.allNodeFlow = node.data;
+            this.loadingMap = false;
           });
         });
       },
@@ -769,7 +726,7 @@
             this.trafficLightData.beforeDelay = delayData.data.before;
             this.trafficLightData.afterAlarm = alarmData.data.after;
             this.trafficLightData.beforeAlarm = alarmData.data.before;
-            this.loading = false;
+            this.loadingMixLine = false;
           })
         })
       },
@@ -793,44 +750,55 @@
         this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token)
           .then((response) => {
             this.trafficLightRatio = response.data;
+            this.loadingPie = false;
+          })
+      },
+      getRoadDataAnalysisFlow() {
+        this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=2&beginTime=2018092610&endTime=2018092611&token=' + this.getHeader().token)
+          .then((response) => {
+            console.log(response)
+            this.loadingTrend = true;
           })
       },
 
-      set_first_style_item: function (index) {
-        for (var i = 0; i < this.first_setting_info.first_style.length; i++) {
-          if (this.first_setting_info.first_style[i] == this.first_items.first_style[index]) {
-            this.first_setting_info.first_style.splice(index, 1);
+      set_first_style_item: function (index, num) {
+        for (let i = 0; i < this.first_setting_info[num].first_style.length; i++) {
+          if (this.first_setting_info[num].first_style[i] == this.first_items[num].first_style[index]) {
+            this.first_setting_info[num].first_style.splice(index, 1);
             return;
           }
         }
-        this.first_setting_info.first_style.push(this.first_items.first_style[index]);
+        this.first_setting_info[num].first_style.push(this.first_items[num].first_style[index]);
+        localStorage.setItem('first_setting_info', JSON.stringify(this.first_setting_info));
       },
       //修改等级
-      changeLevel: function (index, str_level) {
-        console.log(index)
-        for (var i = 0; i < this.first_setting_info.first_data.length; i++) {
+      changeLevel: function (index, str_level, num) {
+        for (let i = 0; i < this.first_setting_info[num].first_data.length; i++) {
           console.log("for")
-          if (this.first_setting_info.first_data[i].car_name == this.first_items.first_car[index]) {
+          if (this.first_setting_info[num].first_data[i].car_name == this.first_items[num].first_car[index]) {
             console.log("if")
-            this.first_setting_info.first_data[i].level = str_level;
+            this.first_setting_info[num].first_data[i].level = str_level;
+
+            localStorage.setItem('first_setting_info', JSON.stringify(this.first_setting_info));
             return;
           }
         }
       },
-      changeFirstCar: function (index) {
-        for (var i = 0; i < this.first_setting_info.first_data.length; i++) {
-          if (this.first_setting_info.first_data[i].car_name == this.first_items.first_car[index]) {
-            this.first_setting_info.first_data.splice(i, 1);
+      changeFirstCar: function (index, num) {
+        for (let i = 0; i < this.first_setting_info[num].first_data.length; i++) {
+          if (this.first_setting_info[num].first_data[i].car_name == this.first_items[num].first_car[index]) {
+            this.first_setting_info[num].first_data.splice(i, 1);
             return;
           }
         }
-        this.first_setting_info.first_data.push({car_name: this.first_items.first_car[index], level: '高'});
+        this.first_setting_info[num].first_data.push({car_name: this.first_items[num].first_car[index], level: '高'});
+
+        localStorage.setItem('first_setting_info', JSON.stringify(this.first_setting_info));
       },
-      change_start_open_first_pass_status: function () {
-        this.start_open_first_pass = !this.start_open_first_pass;
-      },
-      change_is_global_status: function () {
-        this.is_global = !this.is_global;
+      change_start_open_first_pass_status: function (num) {
+        this.start_open_first_pass[num] = !this.start_open_first_pass[num];
+
+        localStorage.setItem('start_open_first_pass', JSON.stringify(this.start_open_first_pass));
       },
       getRoadFlowColor(num) {
         if (num < 30) {
@@ -843,6 +811,27 @@
           return "red"
         } else {
           return "#c9c9cc"
+        }
+      },
+      alarmColor(val, is) {
+        if (is) {
+          return "#9a9bac";
+        }
+        if (val < 60) {
+          return "#ccccd0";
+        } else if (val > 60 && val < 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "#a43f43";
+        }
+      },
+      alarmText(val) {
+        if (val < 60) {
+          return "轻";
+        } else if (val > 60 && val < 80) {
+          return "中";
+        } else if (val > 80) {
+          return "重";
         }
       },
       jumpPage(key) {

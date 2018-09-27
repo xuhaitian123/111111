@@ -584,7 +584,7 @@
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['左'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
 -2 1678 -3 1677 -33 67 c-61 125 -177 216 -341 269 l-96 31 -1595 6 -1594 5
@@ -605,7 +605,7 @@
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['直'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
@@ -624,7 +624,7 @@
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['右'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
 l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
@@ -647,7 +647,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['左'].car)"
-                                   :opacity="currentDirection[0] === '西' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '西' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -669,7 +669,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['直'].car)"
-                                   :opacity="currentDirection[0] === '西' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '西' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
@@ -689,7 +689,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['右'].car)"
-                                   :opacity="currentDirection[0] === '西' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '西' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -713,7 +713,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['左'].car)"
-                                   :opacity="currentDirection[0] === '北' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '北' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -735,7 +735,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['直'].car)"
-                                   :opacity="currentDirection[0] === '北' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '北' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
@@ -755,7 +755,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['右'].car)"
-                                   :opacity="currentDirection[0] === '北' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '北' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -779,7 +779,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['左'].car)"
-                                   :opacity="currentDirection[0] === '东' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '东' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -801,7 +801,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['直'].car)"
-                                   :opacity="currentDirection[0] === '东' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '东' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
@@ -821,7 +821,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['右'].car)"
-                                   :opacity="currentDirection[0] === '东' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '东' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -860,7 +860,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['左'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
 -2 1678 -3 1677 -33 67 c-61 125 -177 216 -341 269 l-96 31 -1595 6 -1594 5
@@ -881,7 +881,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['直'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
                                 </g>
@@ -900,7 +900,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['右'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.3'" stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
 l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
@@ -923,7 +923,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['左'].bike)"
-                                   :opacity="currentDirection[0] === '西' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '西' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -945,7 +945,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['直'].car)"
-                                   :opacity="currentDirection[0] === '西' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '西' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
@@ -965,7 +965,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['西']['右'].car)"
-                                   :opacity="currentDirection[0] === '西' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '西' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -989,7 +989,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['左'].bike)"
-                                   :opacity="currentDirection[0] === '北' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '北' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -1011,7 +1011,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['直'].car)"
-                                   :opacity="currentDirection[0] === '北' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '北' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
@@ -1031,7 +1031,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['北']['右'].car)"
-                                   :opacity="currentDirection[0] === '北' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '北' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -1055,7 +1055,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                                 <g transform="translate(0.000000,373.000000) scale(0.100000,-0.100000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['左'].bike)"
-                                   :opacity="currentDirection[0] === '东' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '东' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M37 3684 c23 -27 63 -70 90 -96 l48 -48 1470 -2 c1378 -3 1474 -4
 1530 -21 94 -28 160 -62 208 -107 84 -77 77 93 77 -1759 l0 -1651 100 0 100 0
@@ -1077,7 +1077,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,495.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['直'].car)"
-                                   :opacity="currentDirection[0] === '东' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '东' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M53 6148 l-41 -43 -8 -3052 -7 -3053 102 0 101 0 0 3052 0 3052 -42
 43 c-23 24 -47 43 -53 43 -6 0 -29 -19 -52 -42z"/>
@@ -1097,7 +1097,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['东']['右'].bike)"
-                                   :opacity="currentDirection[0] === '东' ? '':'0.3'"
+                                   :opacity="currentDirection[0] === '东' ? '':'0.2'"
                                    stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
@@ -1422,7 +1422,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
 
                     <div style="position: absolute;
-    bottom: px;
+    bottom: 10px;
     width: 75px;
     right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}</div>
                   </el-row>
