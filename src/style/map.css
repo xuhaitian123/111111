@@ -34,16 +34,19 @@
   height: 35px;
 }
 .open-button{
-  height: 35px;
-  line-height: 35px;
+  height: 25px;
+  line-height: 25px;
   color: white;
-  width: 50%;
+  margin: 5px 10px;
+  border-radius: 13px;
+  background: #34353f;
+  width: 55px;
   text-align: center;
 }
 .close-button{
   height: 35px;
   line-height: 35px;
-  color: #c9c9cc;
+  color: white;
   width: 50%;
   text-align: center;
 }

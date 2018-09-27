@@ -178,7 +178,7 @@
               ]
           },
           open_road_record_List:[],
-          current_road:'',
+          current_road:'人民路-珠海路',
           start_open_first_pass:true,
           is_global:false,
           filter_carID:'000090',
@@ -249,6 +249,7 @@
             })
         },
         createOverLay(map,node){
+          var self = this;
           //创建图标
           var pt = new BMap.Point(node.long, node.lat);
           //
