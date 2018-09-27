@@ -32,10 +32,10 @@
         legend: {
           data: ['']
         },
-        // grid: {
-        //   top: 30,
-        //   bottom: 40
-        // },
+        grid: {
+          top: 30,
+          bottom: 50
+        },
         xAxis: [
           {
             type: 'category',

@@ -196,21 +196,21 @@
                       <li>>50 <span>--</span></li>
                     </ul>
 
-                    <div style="padding: 10px 15px;color: #c9c9cc">
+                    <div style="padding: 10px 8px;color: #c9c9cc">
                       <div style="margin: 10px 0">
-                        <div style="background: #c94343;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                        <div style="background: #c94343;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">已饱和</div>
                       </div>
                       <div style="margin: 10px 0">
-                        <div style="background: #f98d21;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                        <div style="background: #f98d21;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">50 - 75%</div>
                       </div>
                       <div style="margin: 10px 0">
-                        <div style="background: #eacc36;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                        <div style="background: #eacc36;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">25 - 50%</div>
                       </div>
                       <div style="margin: 10px 0">
-                        <div style="background: green;height: 10px;width: 15px;float: left;margin-top: 4px"></div>
+                        <div style="background: green;height: 10px;width: 15px;float: left;margin-top: 4px;margin-right: 5px;"></div>
                         <div style="font-size: 12px;">< 25%</div>
                       </div>
                     </div>
