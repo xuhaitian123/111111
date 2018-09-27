@@ -314,6 +314,11 @@
       init() {
         this.getAllData();
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
+
+        this.$http.get('/roadDataAnalysis/getCorridorCongestionSource?token=693e9af84d3dfcc71e640e005bdc5e2e&current=true')
+          .then((response) => {
+            console.log(response)
+          })
       },
       getAllData(startTime, endTime) {
         this.getAllLinkId();
