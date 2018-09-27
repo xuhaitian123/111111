@@ -56,6 +56,7 @@
         window.congestionMap = map;
       },
       addLabel(long, lat, text, value, id, isAddUrl) {
+        this.deletePoint(id);
         let pt = new window.BMap.Point(long, lat);
         let opts = {position: pt, offset: new BMap.Size(-70, -70)};
         let label = new BMap.Label(text, opts);  // 创建文本标注对象
@@ -70,31 +71,39 @@
           lineHeight: "20px",
         });
 
-        if (isAddUrl) {
-          label.id = id;
-          label.addEventListener('click', (pt) => {
-            console.log(pt.currentTarget)
-            this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
-          });
-        }
+        label.id = id;
+        label.addEventListener('click', (pt) => {
+          console.log(pt.currentTarget)
+          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
+        });
+
         window.congestionMap.addOverlay(label);
       },
       addNodeMarker(long, lat, value, id, isAddUrl) {
+        this.deletePoint(id);
         let pt = new window.BMap.Point(long, lat);
-        let myIcon = new window.BMap.Icon(isAddUrl?this.getNodeDelayImg(value):this.getNodeFlowImg(value), new window.BMap.Size(52, 51));
+        let myIcon = new window.BMap.Icon(isAddUrl ? this.getNodeDelayImg(value) : this.getNodeFlowImg(value), new window.BMap.Size(52, 51));
         let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
-        if (isAddUrl) {
-          marker.id = id;
-          marker.addEventListener('click', (pt) => {
-            console.log(pt.currentTarget)
-            this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
-          });
-        }
+        marker.id = id;
+        marker.addEventListener('click', (pt) => {
+          console.log(pt.currentTarget)
+          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
+        });
 
         window.congestionMap.addOverlay(marker);
       },
-
+      deletePoint(id){
+        let allOverlay = window.congestionMap.getOverlays();
+        for (let i = 0; i < allOverlay.length -1; i++){
+          if(allOverlay[i].id=== id){
+            console.log(id)
+            window.congestionMap.removeOverlay(allOverlay[i]);
+            return false;
+          }
+        }
+      },
       addPloyline(link_nodes, value, id, isAddUrl) { //多线
+        this.deletePoint(id);
         let pois = link_nodes.map((node) => {
           return new window.BMap.Point(node[0], node[1])
         });
@@ -105,26 +114,25 @@
           strokeOpacity: 0.8,//折线的透明度，取值范围0 - 1
           strokeColor: isAddUrl ? this.getDelayColor(value) : this.getFlowColor(value)//折线颜色
         });
-        if (isAddUrl) {
-          polyline.id = id;
-          polyline.addEventListener('click', (pt) => {
-            console.log(pt.currentTarget)
-            this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
-          });
-        }
+        polyline.id = id;
+        polyline.name = id.substring(0,id.indexOf('_'));
+        polyline.addEventListener('click', (pt) => {
+          console.log(pt.currentTarget)
+          this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
+        });
 
         window.congestionMap.addOverlay(polyline);          //增加折线
       },
       addNodeDelay(allNodeDelay) {
         allNodeDelay.forEach((delay) => {
           let text = delay.node.node_name + "<br>交叉口延误时间 " + delay.value + "s";
-          this.addNodeMarker(delay.node.long, delay.node.lat, delay.value, delay.node_id, true);
-          this.addLabel(delay.node.long, delay.node.lat, text, delay.value, delay.node_id, true);
+          this.addNodeMarker(delay.node.long, delay.node.lat, delay.value, delay.node_id+'_delay_node', true);
+          this.addLabel(delay.node.long, delay.node.lat, text, delay.value, delay.node_id+'_delay_label', true);
         })
       },
       addRoadDelay(allLinksDelay) {
         allLinksDelay.forEach((delay) => {
-          this.addPloyline(delay.link.link_nodes, delay.value, delay.link_id, true);
+          this.addPloyline(delay.link.link_nodes, delay.value, delay.link_id+'_delay_line', true);
         });
       },
       jumpPage(key) {
@@ -169,7 +177,7 @@
           return "/static/image/map/red.png"
         }
       },
-      getNodeFlowImg(num){
+      getNodeFlowImg(num) {
         if (num < 1000) {
           return "/static/image/map/green.png"
         } else if (num > 1000 && num < 3000) {
@@ -197,7 +205,7 @@
         handler(newVal, oldVal) {
           console.log(newVal)
           newVal.forEach((flow) => {
-            this.addNodeMarker(flow.node.long, flow.node.lat, flow.value, flow.node.node_id, false)
+            this.addNodeMarker(flow.node.long, flow.node.lat, flow.value, flow.node.node_id+'_flow_node', false)
           })
         },
         deep: true //对象内部属性的监听，关键。
@@ -205,7 +213,7 @@
       allLinksFlow: {
         handler(newVal, oldVal) {
           newVal.forEach((flow) => {
-            this.addPloyline(flow.link.link_nodes, flow.value, flow.link_id, false);
+            this.addPloyline(flow.link.link_nodes, flow.value, flow.link_id+'_flow_line', false);
           })
         },
         deep: true //对象内部属性的监听，关键。

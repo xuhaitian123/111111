@@ -1,7 +1,7 @@
 <template>
   <div>
     <area-select></area-select>
-    <el-row :gutter="10" class="Dashboard_lineRow">
+    <el-row :gutter="10" class="Dashboard_lineRow" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
@@ -196,10 +196,12 @@
         allLinksFlow: [],
         allNodeFlow: [],
         startTime: 0,
+        loading:false,
       }
     },
     mounted() {
       this.init();
+      this.loading = true;
     },
     methods: {
       init() {
@@ -290,6 +292,7 @@
           this.getAllNodesFlow(startTime, endTime, (node) => {
             this.allLinksFlow = link.data;
             this.allNodeFlow = node.data;
+            this.loading = true;
           });
         });
       },
@@ -355,6 +358,7 @@
 
   .CongestionMap_Legend li {
     margin: 0 10px;
+    padding-left: 10px;
     border-bottom: 1px solid #a7a7ac;
   }
 

@@ -12,20 +12,20 @@
       <div class="user">
         <div class="user-input">
           <img src="../../../static/image/login/user.png" class="user-img">
-          <input class="user-text" type="text"/>
+          <input class="user-text" v-model="username" type="text"/>
         </div>
         <div class="user-name">用户名</div>
       </div>
       <div class="passward">
         <div class="passward-input">
           <img src="../../../static/image/login/user.png" class="user-img">
-          <input class="passward-text" type="password"/>
+          <input class="passward-text" v-model="password" type="password"/>
         </div>
         <div class="passward-name">密码</div>
       </div>
       <div class="save_password">
         <div  class="save_password_el">
-          <input type="checkbox"  class="square" @change="save_password" /><span style="color: #ffffff;font-size: 13px">保存密码</span>
+          <input type="checkbox"  class="square" v-model="isRecordUser" @change="save_password" /><span style="color: #ffffff;font-size: 13px">保存密码</span>
         </div>
       </div>
       <button class="login-button" @click="login">登录</button>
@@ -41,8 +41,10 @@ import { Message } from 'element-ui';
     name: "login",
     data() {
       return {
-        checked: false,
-        message:""
+        isRecordUser: false,
+        message:"",
+        username:'',
+        password:''
       }
     },
     mounted:function () {
@@ -50,24 +52,25 @@ import { Message } from 'element-ui';
     },
     methods: {
       get_username(){
-        this.checked =false
-        console.log(this.checked)
-        var username = window.localStorage.getItem("username")|| ""
-        $(".user-text").val(username)
+        var username = window.localStorage.getItem("username")|| "";
+        this.username =  username;
+        this.isRecordUser =  !!this.username;
+        // $(".user-text").val(username)
       },
       save_password() {
-        if(this.checked ==true){
-          this.checked = false
-        }else {
-          this.checked =true
-        }
+        // if(this.checked ==true){
+        //   this.checked = false
+        // }else {
+        //   this.checked =true
+        // }
       },
       login(){
-        var self =this
-        var username =$(".user-text").val();
-        var password = $('.passward-text').val()
+        var self =this;
+        if(this.isRecordUser&& this.username){
+          window.localStorage.setItem("username",this.username)
+        }
 
-        this.$http.post('/login/login',{username:username,password:password})
+        this.$http.post('/login/login',{username:this.username,password:this.password})
           .then((user)=>{
             if(user.data.code===1) {
               self.$message({

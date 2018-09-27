@@ -17,12 +17,17 @@
   </div>
 </template>
 <script>
+
   export  default {
     data(){
       return {}
     },
+    components:{
+
+    },
     methods:{
       logout(){
+        this.setCookie("userToken", '', -1);
         this.$router.push('/login');
       }
     }
