@@ -94,7 +94,7 @@
               </div>
               <div id="day_chart_line">
               </div>
-              <div class="chart-title">周一</div>
+              <div class="chart-title">{{['周一','周二','周三','周四','周五','周六','周日'][showWeeksIndex]}}</div>
             </div>
           </div>
         </el-card>
@@ -126,6 +126,7 @@
           open_road_record_List:[],
           nodesInfo:{},
           currentNodeInfo:{},
+          showWeeksIndex: 0,
         }
       },
       mounted: function () {
@@ -133,6 +134,7 @@
 
           this.showEchartColumn();
           this.showDayLineChart(0);
+          this.get_week_day_data('monday',0)
 
           window.open_map_road_icon = (node_id,title) =>{
             this.open_road_icon(node_id,title)
@@ -147,11 +149,15 @@
 
       },
       beforeMount(){
-        this.showEchartColumn();
-        this.showDayLineChart(0);
+        // this.showEchartColumn();
+        // this.showDayLineChart(0);
       },
       methods:{
-        changeNode(){
+        changeNode(node_id){
+          this.currentNodeInfo = this.nodesInfo[this.road_value]
+          this.get_week_day_data('monday',0)
+          this.showEchartColumn();
+          this.showDayLineChart(0);
 
         },
         getNodesInfoDate(cb){
@@ -296,7 +302,7 @@
         get_week_day_data:function(week_day_id,index){
           this.remove_week_background();
           $("#"+week_day_id).addClass("week-day-background-color");
-
+          this.showWeeksIndex = index;
           this.showDayLineChart(index);
         },
         jumpPageToMain: function () {
