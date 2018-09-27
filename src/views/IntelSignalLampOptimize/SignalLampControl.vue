@@ -122,14 +122,144 @@
           road_value:"珠海路-南京路",
           load_options:[{value:'珠海路-南京路'}],
           unuse_intel_score:0,
-          use_intel_score:0
+          use_intel_score:0,
+          open_road_record_List:[]
         }
       },
       mounted: function () {
         this.showEchartColumn();
         this.showDayLineChart();
+
+        window.open_map_road_icon = (node_id,title) =>{
+          this.open_road_icon(node_id,title)
+        };
+        window.close_map_road_icon = (node_id,title) =>{
+          this.close_road_icon(node_id,title)
+        }
+
+        //获取路口数据
+        this.getAllRoadInfo();
       },
       methods:{
+
+        getAllRoadInfo(){
+          console.log('getAllRoadInfo');
+          var self = this;
+          this.$http.get('/index/nodes?token=693e9af84d3dfcc71e640e005bdc5e2e')
+            .then((response) => {
+              console.log(response.data);
+              self.showBMapPoint(response.data.nodes);
+              return response.data;
+            })
+        },
+        createOverLay(map,node){
+          var self = this;
+          //创建图标
+          var pt = new BMap.Point(node.long, node.lat);
+          //
+          var isExist = this.findRoadIsOpen(node.node_id,node.node_name);
+          console.log(isExist);
+          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/red.png"
+          var myIcon = new BMap.Icon(str_icon_path, new BMap.Size(40,40));
+          var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+          marker.title = node.node_name;
+          marker.id = node.node_id;
+          marker.addEventListener("click", function(e){
+            var title = "\"" +e.target.title + "\"";
+            var sContent = "<div style=''  class='box-content'>" +
+              "<div class='control-button'>" +
+              "<div class='open-button' onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
+              "<div class='close-button' onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
+              +"</div>"+
+              "<div class='select-options'><ul>" +
+              "<li>Default</li>"+
+              "<li>Minimize Delay</li>"+
+              "<li>Minimize</li>"+
+              "</ul>" +
+              "</div>"
+              +"</div>";
+
+            var infoBox = new BMap.InfoWindow(sContent);
+            map.openInfoWindow(infoBox, e.target.point)
+            self.road_value = e.target.title;
+          });
+          return marker;
+        },
+        showBMapPoint(nodes){
+          var self = this;
+          var map = window.congestionMap;
+          // 百度地图API功能
+          for (var i = 0; i < nodes.length; i ++)
+          {
+            var marker = self.createOverLay(map,nodes[i])
+            map.addOverlay(marker);
+
+          }
+        },
+
+        //地图标注打开按钮
+        open_road_icon(node_id,title){
+          var map = window.congestionMap;
+          var isExist = this.findRoadIsOpen(node_id,title);
+          if (isExist == -1) {
+            var arrMarkers = map.getOverlays();
+            this.open_road_record_List.push({node_id:node_id,road_name:title});
+            for (var i = 0; i < arrMarkers.length; i ++)
+            {
+              if (arrMarkers[i].id == node_id)
+              {
+                var node = {
+                  long:arrMarkers[i].point.lng,
+                  lat:arrMarkers[i].point.lat,
+                  title:arrMarkers[i].title,
+                  node_id:arrMarkers[i].id
+                };
+                map.removeOverlay(arrMarkers[i]);
+                var new_marker = this.createOverLay(map,node);
+                map.addOverlay(new_marker);
+              }
+            }
+          }
+          map.closeInfoWindow();
+        },
+        //地图图标关闭按钮
+        close_road_icon(node_id,title){
+          var map = window.congestionMap;
+          var index = this.findRoadIsOpen(node_id,title);
+          if (index != -1) {
+            var arrMarkers = map.getOverlays();
+            this.open_road_record_List.splice(index,1);
+            for (var i = 0; i < arrMarkers.length; i ++)
+            {
+              if (arrMarkers[i].id == node_id)
+              {
+                var node = {
+                  long:arrMarkers[i].point.lng,
+                  lat:arrMarkers[i].point.lat,
+                  title:arrMarkers[i].title,
+                  node_id:arrMarkers[i].id
+                };
+                map.removeOverlay(arrMarkers[i]);
+                var new_marker = this.createOverLay(map,node);
+                map.addOverlay(new_marker);
+              }
+            }
+          }
+          map.closeInfoWindow();
+        },
+        findRoadIsOpen(node_id,title){
+          var isExist = -1;
+          for (var i = 0; i < this.open_road_record_List.length; i ++)
+          {
+            if (this.open_road_record_List[i].node_id == node_id)
+            {
+              isExist = i;
+            }
+          }
+          return isExist;
+        },
+
+
         remove_week_background:function(){
           $("#monday").removeClass("week-day-background-color");
           $("#tuesday").removeClass("week-day-background-color");
