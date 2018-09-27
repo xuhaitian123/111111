@@ -177,6 +177,7 @@
               }
               ]
           },
+          open_road_record_List:[],
           current_road:'',
           start_open_first_pass:true,
           is_global:false,
@@ -227,6 +228,9 @@
         this.add_date_picker_show();
         window.open_map_road_icon = (node_id,title) =>{
           this.open_road_icon(node_id,title)
+        };
+        window.close_map_road_icon = (node_id,title) =>{
+          this.close_road_icon(node_id,title)
         }
 
         //获取路口数据
@@ -244,39 +248,45 @@
               return response.data;
             })
         },
+        createOverLay(map,node){
+          //创建图标
+          var pt = new BMap.Point(node.long, node.lat);
+          //
+          var isExist = this.findRoadIsOpen(node.node_id,node.node_name);
+          console.log(isExist);
+          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/red.png"
+          var myIcon = new BMap.Icon(str_icon_path, new BMap.Size(40,40));
+          var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+          marker.title = node.node_name;
+          marker.id = node.node_id;
+          marker.addEventListener("click", function(e){
+            var title = "\"" +e.target.title + "\"";
+            var sContent = "<div style=''  class='box-content'>" +
+              "<div class='control-button'>" +
+              "<div class='open-button' onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
+              "<div class='close-button' onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
+              +"</div>"+
+              "<div class='select-options'><ul>" +
+              "<li>Default</li>"+
+              "<li>Minimize Delay</li>"+
+              "<li>Minimize</li>"+
+              "</ul>" +
+              "</div>"
+              +"</div>";
+
+            var infoBox = new BMap.InfoWindow(sContent);
+            map.openInfoWindow(infoBox, e.target.point)
+            self.current_road = e.target.title;
+          });
+          return marker;
+        },
         showBMapPoint(nodes){
           var self = this;
           var map = window.congestionMap;
           // 百度地图API功能
           for (var i = 0; i < nodes.length; i ++)
           {
-            //创建图标
-            var pt = new BMap.Point(nodes[i].long, nodes[i].lat);
-            var myIcon = new BMap.Icon("/static/image/map/63.png", new BMap.Size(50,50));
-            var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-            marker.title = nodes[i].node_name;
-            marker.id = nodes[i].node_id;
-
-            marker.addEventListener("click", function(e){
-              var title = "\"" +e.target.title + "\"";
-              var sContent = "<div style=''  class='box-content'>" +
-                "<div class='control-button'>" +
-                "<div class='open-button' onclick='open_map_road_icon(" + e.target.id+ "," +title +")'>开启</div>"+
-                "<div class='close-button'>关闭</div>"
-                +"</div>"+
-                "<div class='select-options'><ul>" +
-                  "<li>Default</li>"+
-                  "<li>Minimize Delay</li>"+
-                  "<li>Minimize</li>"+
-                  "</ul>" +
-                "</div>"
-                +"</div>";
-
-              var infoBox = new BMap.InfoWindow(sContent);
-              map.openInfoWindow(infoBox, e.target.point)
-              self.current_road = e.target.title;
-
-            });
+            var marker = self.createOverLay(map,nodes[i])
             map.addOverlay(marker);
 
           }
@@ -346,12 +356,64 @@
         },
         //地图标注打开按钮
         open_road_icon(node_id,title){
-          console.log(node_id);
-          console.log(title);
+          var isExist = this.findRoadIsOpen(node_id,title);
+          if (isExist == -1) {
+            var map = window.congestionMap;
+            var arrMarkers = map.getOverlays();
+            this.open_road_record_List.push({node_id:node_id,road_name:title});
+            for (var i = 0; i < arrMarkers.length; i ++)
+            {
+              if (arrMarkers[i].id == node_id)
+              {
+                var node = {
+                  long:arrMarkers[i].point.lng,
+                  lat:arrMarkers[i].point.lat,
+                  title:arrMarkers[i].title,
+                  node_id:arrMarkers[i].id
+                };
+                map.removeOverlay(arrMarkers[i]);
+                var new_marker = this.createOverLay(map,node);
+                map.addOverlay(new_marker);
+              }
+            }
+
+          }
         },
         //地图图标关闭按钮
-        close_road_icon(){
+        close_road_icon(node_id,title){
+          var index = this.findRoadIsOpen(node_id,title);
+          if (index != -1) {
+            var map = window.congestionMap;
+            var arrMarkers = map.getOverlays();
+            this.open_road_record_List.splice(index,1);
+            for (var i = 0; i < arrMarkers.length; i ++)
+            {
+              if (arrMarkers[i].id == node_id)
+              {
+                var node = {
+                  long:arrMarkers[i].point.lng,
+                  lat:arrMarkers[i].point.lat,
+                  title:arrMarkers[i].title,
+                  node_id:arrMarkers[i].id
+                };
+                map.removeOverlay(arrMarkers[i]);
+                var new_marker = this.createOverLay(map,node);
+                map.addOverlay(new_marker);
+              }
+            }
 
+          }
+        },
+        findRoadIsOpen(node_id,title){
+          var isExist = -1;
+          for (var i = 0; i < this.open_road_record_List.length; i ++)
+          {
+            if (this.open_road_record_List[i].node_id == node_id)
+            {
+              isExist = i;
+            }
+          }
+          return isExist;
         }
       }
     }
