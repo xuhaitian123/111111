@@ -577,7 +577,7 @@
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
 
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -596,7 +596,7 @@
                                 {{allMovementFlow['南']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -615,7 +615,7 @@
                                 {{allMovementFlow['南']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -624,7 +624,7 @@
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['右'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'"  stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
 l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
@@ -640,7 +640,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(90deg);left: -7px">
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -660,7 +660,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['西']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -680,7 +680,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['西']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -706,7 +706,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -14px;transform: rotate(180deg);">
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -726,7 +726,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['北']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -746,7 +746,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['北']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -772,7 +772,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(270deg);left: 8px">
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -792,7 +792,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['东']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -812,7 +812,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['东']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -853,7 +853,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
 
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -872,7 +872,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['南']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -891,7 +891,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['南']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -916,7 +916,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(90deg);left: -7px">
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -936,7 +936,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['西']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -956,7 +956,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['西']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -982,7 +982,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -14px;transform: rotate(180deg);">
-                            <div style="position: absolute;bottom: 0;">
+                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1002,7 +1002,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['北']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px">
+                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1022,7 +1022,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['北']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0">
+                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1698,11 +1698,11 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         return text
       },
       getSaturationColor(num) {
-        if (num < 30) {
+        if (num <= 30) {
           return "green"
-        } else if (num > 30 && num < 50) {
+        } else if (num > 30 && num <= 50) {
           return "#e7c936"
-        } else if (num > 50 && num < 60) {
+        } else if (num > 50 && num <= 60) {
           return "darkorange"
         } else if (num > 60) {
           return "red"

@@ -7,67 +7,55 @@
     name: "pie-doughnut-item",
     props: {
       id: String,
-      direction: {
-        type: String,
-        default: 'left'
-      }
+      data: Object
     },
     data() {
-      return {}
+      return {
+        myChart: undefined,
+      }
     },
     mounted() {
-
-      let myChart = this.$echarts.init(document.getElementById(this.id));
+      let chart = this.$echarts.init(document.getElementById(this.id));
 
       let option = {
-        // tooltip: {
-        //   trigger: 'item',
-        //   formatter: "{a} <br/>{b}: {c} ({d}%)"
-        // },
         gird: {
           width: 50,
           height: 50,
         },
-        // title: {
-        //   text: '57%',
-        //   textStyle: {
-        //     fontSize: 12,
-        //     color: '#fff'
-        //   },
-        //   x: this.direction,
-        //   y: 'center'
-        // },
         series: [
           {
             name: '访问来源',
             type: 'pie',
-            radius: ['70%', '90%'],
+            radius: ['60%', '90%'],
+            hoverAnimation: false,
             avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: false,
-                position: 'center'
-              },
-            },
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
             data: [
-              {value: 335, name: '直接访问'},
-              {value: 310, name: '邮件营销'},
-              {value: 234, name: '联盟广告'},
+              {value: 15, name: '', itemStyle: {color: '#47ad7d'}},
+              {value: 15, name: '', itemStyle: {color: '#525461'}},
             ]
           }
         ]
       };
-
-      myChart.setOption(option, true);
+      chart.setOption(option, true);
     },
+    watch: {
+      data: {
+        handler(newVal, oldVal) {
+          console.log(newVal)
+          // let chart = this.$echarts.getInstanceByDom(document.getElementById(this.id));
+          // let option = chart.getOption();
+          // option.series[0].data = [
+          //   {value: newVal, name: '', itemStyle: {color: '#47ad7d'}},
+          //   {value: 100 - newVal, name: '', itemStyle: {color: '#525461'}},
+          // ];
+          // console.log(option)
+          // chart.setOption(option);
+
+        },
+        deep: true //对象内部属性的监听，关键。
+      }
+    }
   }
 </script>
 
-<style scoped>
 
-</style>
