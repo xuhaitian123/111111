@@ -2172,7 +2172,7 @@
   .area_select_container{
     display: flex;
     justify-content: left;
-    
+
   }
 
   .area_titleSelect {

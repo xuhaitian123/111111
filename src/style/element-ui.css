@@ -31,6 +31,10 @@
   color: #c9c9cc;
 }
 
+.el-scrollbar__bar {
+  display: none;
+}
+
 .el-select-dropdown__list {
   background: rgb(41, 41, 53);
   color: rgb(136, 136, 143);
@@ -39,7 +43,7 @@
   padding: 0;
 
 }
-
+.el-select-dropdown__item.is-disabled:hover,
 .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
   background-color: rgb(41, 41, 53);
   color: #fff !important;
@@ -161,7 +165,7 @@
 .el-select-dropdown__item.selected {
   color: white;
   font-weight: 100;
-  background: #353644;
+  background: rgb(41, 41, 53);;
 }
 
 .el-card {
