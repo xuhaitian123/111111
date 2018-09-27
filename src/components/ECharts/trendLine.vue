@@ -29,11 +29,13 @@
       tranelineInfo: {
         type: Array,
         default: 0
-      }
+      },
+      hour_data_picker_node:''
     },
     data() {
       return {
         tranelineData:[],
+        hour_data_picker_node:'',
       }
     },
     watch:{

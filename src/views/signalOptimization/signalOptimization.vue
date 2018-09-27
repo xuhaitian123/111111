@@ -42,7 +42,7 @@
                 <el-option
                 v-for="item in nodes"
                 :key="item.node_id"
-                  :label="item.node_name"
+                :label="item.node_name"
                 :value="item.node_id">
                 </el-option>
                 </el-select>
@@ -65,6 +65,8 @@
             <div class="hot_map_view">
               <div class="hot_map_view_date"
                    style="width: 95%;height: 62px;display: flex;align-items: center;margin-left: 5%">
+                <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-left: 165px" v-on:click="heatChart_map_left_select">确定</el-button>
+
                 <!--<div class="contrast_left">-->
                   <!--<div class="time_right">对比时段</div>-->
                   <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start"-->
@@ -91,7 +93,7 @@
             <div class="main-search-item">
               <div class="main-search-title">开始时间</div>
               <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start" id="sheet_date _1_picker_start"
+                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start" id="sheet_date_1_picker_start"
                         type="text"/>
               </div>
             </div>
@@ -117,7 +119,7 @@
                 </el-select>
               </div>
             </div>
-
+            <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-top: 18px" v-on:click="heatChart_map_right_select">确定</el-button>
           </div>
           <div class="main-search-action">
             <div class="main-search-item">
@@ -127,7 +129,6 @@
                        <!--type="text"/>-->
               <!--</div>-->
             </div>
-
           </div>
           <div>
             <div style="width: 500px; height: 493px;margin: auto">
@@ -153,10 +154,10 @@
                 <el-select v-model="sheet_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false" >
                   <!--<el-option :label="请选择" :key='1' :value='1' :disabled="false"></el-option>-->
                   <el-option
-                    v-for="item in sheets"
-                    :key="item.id"
-                    :label="item.sheet_name"
-                    :value="item.id">
+                    v-for="item in nodes"
+                    :key="item.node_id"
+                    :label="item.node_name"
+                    :value="item.node_id">
                   </el-option>
                 </el-select>
               </div>
@@ -165,8 +166,8 @@
               <div class="time_left">结束时间</div>
               <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_end" id="sheet_date_2_picker_end" type="text"/>
             </div>
+            <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="pie_map_select">确定</el-button>
           </div>
-
           <div v-for="(intersections, index) in intersectionsList" v-if="index*2 < intersectionsList.length"
                class="rate-container">
             <div class="rate-container-item" @click="changeRoadRate(  intersections.id, $event)">
@@ -213,11 +214,8 @@
         </div>
         <div class="main_down_down">
           <!--<div id="line_map" style="width: 100%;height: 100%;position: absolute;z-index: 10"></div>-->
-
-          <trendLine  :tranelineInfo="trendLineData" style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
-
-          <div
-            style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
+          <trendLine  :tranelineInfo="trendLineData" :node_name= "hour_data_picker_node" style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
+          <div style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
             <div class="contrast_right">
               <div class="time_right">选择时间</div>
               <input class="time_left_show" placeholder="选择日期" v-model="hour_data_picker"
@@ -225,15 +223,17 @@
             </div>
             <div class="show-filter-item_road">
               <div class="selected_road">选择路口</div>
-              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
-              <el-option
-              v-for="item in nodes"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value">
+              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" multiple
+                         collapse-tags placeholder="请选择" :popper-append-to-body="false">
+                <el-option
+                  v-for="item in sheets"
+              :key="item.id"
+              :label="item.sheet_name"
+              :value="item.id">
               </el-option>
               </el-select>
             </div>
+              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="line_map_select">确定</el-button>
           </div>
         </div>
       </div>
@@ -246,8 +246,6 @@
   import rate from '../../components/ECharts/rate'
   import heatChart from '../../components/ECharts/heatChart'
   import trendLine from  '../../components/ECharts/trendLine'
-  // 路口流量图(平均流量):/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922,20180921&token=693e9af84d3dfcc71e640e005bdc5e2e
-
   export default {
     name: "signal-optimization",
     data() {
@@ -272,7 +270,7 @@
         sheet_date_2_picker_node:'',
 
         hour_data_picker_node:'',
-        hour_data_picker:[],
+        hour_data_picker:'',
         sheets:[{id:1,sheet_name:'梁红玉路'},{id:2, sheet_name:'沈坤路'}],
         left_date_picker_end: "",
         left_filter_road_name: "",
@@ -297,32 +295,105 @@
       trendLine,
     },
     mounted: function () {
-      this.$http.get('/index/nodes').then(nodes=>{
+      this.$http.get('/index/nodes' +
+        ''+ '?token=' + this.getHeader().token).then(nodes=>{
         this.nodes = nodes.data.nodes
         console.log(nodes)
       })
-      this.road()
+      // this.road()
       this.add_date_picker_show()
       this.init()
-      // this.line_map_init()
+      // this.heatChart_map_right()
+        // this.line_map_init()
       // this.pie_map_init()
     },
     methods: {
+      heatChart_map_left_select(){
+        this.week_date_1_picker_start = $("#week_date_1_picker_start").val()
+        this.week_date_1_picker_end = $("#week_date_1_picker_end").val()
+        this.week_date_2_picker_start = $("#week_date_2_picker_start").val()
+        this.week_date_2_picker_end = $("#week_date_2_picker_end").val()
+        console.log(this.week_date_1_picker_start)
+        console.log(this.week_date_1_picker_end)
+        console.log(this.week_date_2_picker_start)
+        console.log(this.week_date_2_picker_end)
+        console.log(this.week_date_1_picker_node)
+        console.log(this.week_date_2_picker_node)
+      },
+      heatChart_map_right_select(){
+        var self = this
+        this.sheet_date_1_picker_start = $("#sheet_date_1_picker_start").val()
+        this.sheet_date_1_picker_end = $("#sheet_date_1_picker_end").val()
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName='+self.sheet_date_1_picker_node+'&beginDay='+self.sheet_date_1_picker_start.replace(/\W/g,'')+'&endDay='+self.sheet_date_1_picker_end.replace(/\W/g,'')+
+          ''+ '&token=' + this.getHeader().token).then(function (data) {
+          console.log(data.data.value)
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
+        console.log(this.sheet_date_1_picker_start.replace(/\W/g,''))
+        console.log(this.sheet_date_1_picker_end.replace(/\W/g,''))
+        console.log(this.sheet_date_1_picker_node)
+      },
+      pie_map_select(){
+        this.sheet_date_2_picker_start = $("#sheet_date_2_picker_start").val()
+        this.sheet_date_2_picker_end = $("#sheet_date_2_picker_end").val()
+        console.log(this.sheet_date_2_picker_start)
+        console.log(this.sheet_date_2_picker_end)
+        console.log(this.sheet_date_2_picker_node)
+      },
+      line_map_select(){
+        this.hour_data_picker = $("#line_map_top_right_date_picker_start").val()
+        var road_id = ''
+        for( var i = 0 ;i<this.hour_data_picker_node.length;i++){
+          if( i< this.hour_data_picker_node.length-1){
+            road_id += this.hour_data_picker_node[i]+','
+          }else {
+            road_id += this.hour_data_picker_node[i]
+          }
+        }
+        console.log(road_id)
+        console.log(this.hour_data_picker.replace(/\W/g,''))
+        console.log(this.hour_data_picker_node)
+        var self = this
+        this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds='+road_id+'&days='+self.hour_data_picker.replace(/\W/g,'')+
+          ''+ '&token=' + this.getHeader().token).then(function (data) {
+          var trendLineData = []
+          for(var j = 0;j<data.data.length;j++){
+            var line_map_info =[]
+            for ( var i=0;i<data.data[j].values.length;i++){
+              line_map_info.push([i+1,data.data[j].values[i].value])
+            }
+            trendLineData.push(line_map_info)
+          }
+          self.trendLineData=trendLineData;
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
+      },
+      heatChart_map_right(){
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180914&endDay=20180921' +
+            ''+ '&token=' + this.getHeader().token).then(function (data) {
+          console.log(data.data.value)
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
+      },
       road(){
         var self = this
         this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922' +
           ''+ '&token=' + this.getHeader().token).then(function (data) {
             var trendLineData = []
             for(var j = 0;j<data.data.length;j++){
-              var a =[]
+              var line_map_info =[]
               for ( var i=0;i<data.data[j].values.length;i++){
-                a.push([i+1,data.data[j].values[i].value])
+                line_map_info.push([i+1,data.data[j].values[i].value])
               }
-              trendLineData.push(a)
+              trendLineData.push(line_map_info)
             }
             self.trendLineData=trendLineData;
-
-
           })
           .catch(function (data) {
             console.log(data);
@@ -333,8 +404,6 @@
         $(event.currentTarget).addClass('is-active');
         $('.rate-container-action-contaienr').removeClass('is-active');
         $(event.currentTarget).siblings('.rate-container-action-contaienr').addClass('is-active');
-
-
       },
       add_date_picker_show: function () {
         $("#week_date_1_picker_start," +
@@ -393,11 +462,9 @@
           [5, 1, 1], [5, 2, 0], [5, 3, 3], [5, 4, 0], [5, 5, 0], [5, 6, 0], [5, 7, 0], [5, 8, 2], [5, 9, 0], [5, 10, 4], [5, 11, 1], [5, 12, 5], [5, 13, 10], [5, 14, 5], [5, 15, 7], [5, 16, 11],
           [5, 17, 6], [5, 18, 0], [5, 19, 5], [5, 20, 3], [5, 21, 4], [5, 22, 2], [5, 23, 0], [6, 0, 1], [6, 1, 0], [6, 2, 0], [6, 3, 0], [6, 4, 0], [6, 5, 0], [6, 6, 0], [6, 7, 0], [6, 8, 0], [6, 9, 0],
           [6, 10, 1], [6, 11, 0], [6, 12, 2], [6, 13, 1], [6, 14, 3], [6, 15, 4], [6, 16, 0], [6, 17, 0], [6, 18, 0], [6, 19, 0], [6, 20, 1], [6, 21, 2], [6, 22, 2], [6, 23, 6]];
-
         data = data.map(function (item) {
           return [item[1], item[0], item[2] || '-'];
         });
-
         // 指定图表的配置项和数据
         var option = {
           tooltip: {
@@ -511,91 +578,7 @@
             console.log(result.data)
           })
       },
-
-
-
-
-
-
-      line_map_init() {
-      //   this.myChart = this.$echarts.init(document.getElementById('line_map'));//
-      //
-      //
-      //   var data = [
-      //     {
-      //       name: '路口一',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [1, 2, 3, 4, 6, 4, 3, 3, 2, 6, 3, 5]
-      //     },
-      //     {
-      //       name: '路口二',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 5, 2, 5]
-      //     },
-      //     {
-      //       name: '路口三',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-      //     },
-      //     {
-      //       name: '路口四',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [5, 3, 4, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-      //     },
-      //     {
-      //       name: '路口五',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [5, 3, 4, 4, 3, 3, 3, 3, 2, 4, 2, 3]
-      //     },
-      //     {
-      //       name: '路口六',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [5, 3, 4, 4, 2, 3, 4, 3, 2, 4, 2, 3]
-      //     },];
-      //   var option = {
-      //     grid: {
-      //       height: '130px',
-      //       width: "600px",
-      //       y: '10%',
-      //       left: "75px",
-      //       top: "25px"
-      //     },
-      //     xAxis: {
-      //       type: 'category',
-      //       boundaryGap: false,
-      //       data: ['19:00', '21:00', '23:00', '1:00', '3:00', '5:00', '7:00', '9:00', '11:00', '13:00', '15:00', '17:00']
-      //     },
-      //     yAxis: {
-      //       type: 'value',
-      //     },
-      //     legend: {
-      //       x:'right',
-      //       top: 90,
-      //       pageButtonItemGap: 100,
-      //       textStyle: {
-      //         color: '#c9c9cc',
-      //       },
-      //       // width: 100,
-      //       // height: 10,
-      //
-      //       data:['路口一','路口二','','路口三','路口四','','路口五','路口六']
-      //     },
-      //     series: data,
-      //     textStyle: {
-      //       color: '#c9c9cc',
-      //     }
-      //   };
-      //   this.myChart.setOption(option);
-      },
-
     },
-
   }
 </script>
 
@@ -969,6 +952,17 @@
 
   }
 
+  .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+    color: #ffffff;
+    background-color: #2F2B39;
+  }
+  .el-select .el-tag {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-color: transparent;
+    margin: 2px 0 2px 6px;
+     background-color: #2F2B39;
+  }
   .hide {
     opacity: 0;
   }
