@@ -356,9 +356,9 @@
         },
         //地图标注打开按钮
         open_road_icon(node_id,title){
+          var map = window.congestionMap;
           var isExist = this.findRoadIsOpen(node_id,title);
           if (isExist == -1) {
-            var map = window.congestionMap;
             var arrMarkers = map.getOverlays();
             this.open_road_record_List.push({node_id:node_id,road_name:title});
             for (var i = 0; i < arrMarkers.length; i ++)
@@ -376,14 +376,14 @@
                 map.addOverlay(new_marker);
               }
             }
-
           }
+          map.closeInfoWindow();
         },
         //地图图标关闭按钮
         close_road_icon(node_id,title){
+          var map = window.congestionMap;
           var index = this.findRoadIsOpen(node_id,title);
           if (index != -1) {
-            var map = window.congestionMap;
             var arrMarkers = map.getOverlays();
             this.open_road_record_List.splice(index,1);
             for (var i = 0; i < arrMarkers.length; i ++)
@@ -401,8 +401,8 @@
                 map.addOverlay(new_marker);
               }
             }
-
           }
+          map.closeInfoWindow();
         },
         findRoadIsOpen(node_id,title){
           var isExist = -1;
