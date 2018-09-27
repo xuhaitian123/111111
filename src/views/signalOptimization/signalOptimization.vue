@@ -65,6 +65,8 @@
             <div class="hot_map_view">
               <div class="hot_map_view_date"
                    style="width: 95%;height: 62px;display: flex;align-items: center;margin-left: 5%">
+                <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-left: 165px" v-on:click="heatChart_map_left_select">确定</el-button>
+
                 <!--<div class="contrast_left">-->
                   <!--<div class="time_right">对比时段</div>-->
                   <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start"-->
@@ -117,7 +119,7 @@
                 </el-select>
               </div>
             </div>
-            <!--<el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-top: 18px">确定</el-button>-->
+            <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-top: 18px" v-on:click="heatChart_map_right_select">确定</el-button>
           </div>
           <div class="main-search-action">
             <div class="main-search-item">
@@ -152,10 +154,10 @@
                 <el-select v-model="sheet_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false" >
                   <!--<el-option :label="请选择" :key='1' :value='1' :disabled="false"></el-option>-->
                   <el-option
-                    v-for="item in sheets"
-                    :key="item.id"
-                    :label="item.sheet_name"
-                    :value="item.id">
+                    v-for="item in nodes"
+                    :key="item.node_id"
+                    :label="item.node_name"
+                    :value="item.node_id">
                   </el-option>
                 </el-select>
               </div>
@@ -164,8 +166,8 @@
               <div class="time_left">结束时间</div>
               <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_end" id="sheet_date_2_picker_end" type="text"/>
             </div>
+            <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="pie_map_select">确定</el-button>
           </div>
-
           <div v-for="(intersections, index) in intersectionsList" v-if="index*2 < intersectionsList.length"
                class="rate-container">
             <div class="rate-container-item" @click="changeRoadRate(  intersections.id, $event)">
@@ -221,18 +223,17 @@
             </div>
             <div class="show-filter-item_road">
               <div class="selected_road">选择路口</div>
-              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" multiple
+                         collapse-tags placeholder="请选择" :popper-append-to-body="false">
                 <el-option
-              v-for="item in nodes"
-              :key="item.value"
-              :label="item.label"
-              :value="item.node_name">
+                  v-for="item in sheets"
+              :key="item.id"
+              :label="item.sheet_name"
+              :value="item.id">
               </el-option>
               </el-select>
             </div>
-              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="line_map_select"
-
-              >确定</el-button>
+              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="line_map_select">确定</el-button>
           </div>
         </div>
       </div>
@@ -245,7 +246,6 @@
   import rate from '../../components/ECharts/rate'
   import heatChart from '../../components/ECharts/heatChart'
   import trendLine from  '../../components/ECharts/trendLine'
-  // 路口流量图(平均流量):/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922,20180921&token=693e9af84d3dfcc71e640e005bdc5e2e
   export default {
     name: "signal-optimization",
     data() {
@@ -300,17 +300,77 @@
         this.nodes = nodes.data.nodes
         console.log(nodes)
       })
-      this.road()
+      // this.road()
       this.add_date_picker_show()
       this.init()
-      this.heatChart_map_right()
+      // this.heatChart_map_right()
         // this.line_map_init()
       // this.pie_map_init()
     },
     methods: {
+      heatChart_map_left_select(){
+        this.week_date_1_picker_start = $("#week_date_1_picker_start").val()
+        this.week_date_1_picker_end = $("#week_date_1_picker_end").val()
+        this.week_date_2_picker_start = $("#week_date_2_picker_start").val()
+        this.week_date_2_picker_end = $("#week_date_2_picker_end").val()
+        console.log(this.week_date_1_picker_start)
+        console.log(this.week_date_1_picker_end)
+        console.log(this.week_date_2_picker_start)
+        console.log(this.week_date_2_picker_end)
+        console.log(this.week_date_1_picker_node)
+        console.log(this.week_date_2_picker_node)
+      },
+      heatChart_map_right_select(){
+        var self = this
+        this.sheet_date_1_picker_start = $("#sheet_date_1_picker_start").val()
+        this.sheet_date_1_picker_end = $("#sheet_date_1_picker_end").val()
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName='+self.sheet_date_1_picker_node+'&beginDay='+self.sheet_date_1_picker_start.replace(/\W/g,'')+'&endDay='+self.sheet_date_1_picker_end.replace(/\W/g,'')+
+          ''+ '&token=' + this.getHeader().token).then(function (data) {
+          console.log(data.data.value)
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
+        console.log(this.sheet_date_1_picker_start.replace(/\W/g,''))
+        console.log(this.sheet_date_1_picker_end.replace(/\W/g,''))
+        console.log(this.sheet_date_1_picker_node)
+      },
+      pie_map_select(){
+        this.sheet_date_2_picker_start = $("#sheet_date_2_picker_start").val()
+        this.sheet_date_2_picker_end = $("#sheet_date_2_picker_end").val()
+        console.log(this.sheet_date_2_picker_start)
+        console.log(this.sheet_date_2_picker_end)
+        console.log(this.sheet_date_2_picker_node)
+      },
       line_map_select(){
-      console.log(this.hour_data_picker)
+        this.hour_data_picker = $("#line_map_top_right_date_picker_start").val()
+        var road_id = ''
+        for( var i = 0 ;i<this.hour_data_picker_node.length;i++){
+          if( i< this.hour_data_picker_node.length-1){
+            road_id += this.hour_data_picker_node[i]+','
+          }else {
+            road_id += this.hour_data_picker_node[i]
+          }
+        }
+        console.log(road_id)
+        console.log(this.hour_data_picker.replace(/\W/g,''))
         console.log(this.hour_data_picker_node)
+        var self = this
+        this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds='+road_id+'&days='+self.hour_data_picker.replace(/\W/g,'')+
+          ''+ '&token=' + this.getHeader().token).then(function (data) {
+          var trendLineData = []
+          for(var j = 0;j<data.data.length;j++){
+            var line_map_info =[]
+            for ( var i=0;i<data.data[j].values.length;i++){
+              line_map_info.push([i+1,data.data[j].values[i].value])
+            }
+            trendLineData.push(line_map_info)
+          }
+          self.trendLineData=trendLineData;
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
       },
       heatChart_map_right(){
         this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180914&endDay=20180921' +
@@ -518,91 +578,7 @@
             console.log(result.data)
           })
       },
-
-
-
-
-
-
-      line_map_init() {
-      //   this.myChart = this.$echarts.init(document.getElementById('line_map'));//
-      //
-      //
-      //   var data = [
-      //     {
-      //       name: '路口一',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [1, 2, 3, 4, 6, 4, 3, 3, 2, 6, 3, 5]
-      //     },
-      //     {
-      //       name: '路口二',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 5, 2, 5]
-      //     },
-      //     {
-      //       name: '路口三',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [3, 4, 6, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-      //     },
-      //     {
-      //       name: '路口四',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [5, 3, 4, 4, 3, 3, 2, 6, 3, 2, 4, 3]
-      //     },
-      //     {
-      //       name: '路口五',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [5, 3, 4, 4, 3, 3, 3, 3, 2, 4, 2, 3]
-      //     },
-      //     {
-      //       name: '路口六',
-      //       type: 'line',
-      //       smooth: true,
-      //       data: [5, 3, 4, 4, 2, 3, 4, 3, 2, 4, 2, 3]
-      //     },];
-      //   var option = {
-      //     grid: {
-      //       height: '130px',
-      //       width: "600px",
-      //       y: '10%',
-      //       left: "75px",
-      //       top: "25px"
-      //     },
-      //     xAxis: {
-      //       type: 'category',
-      //       boundaryGap: false,
-      //       data: ['19:00', '21:00', '23:00', '1:00', '3:00', '5:00', '7:00', '9:00', '11:00', '13:00', '15:00', '17:00']
-      //     },
-      //     yAxis: {
-      //       type: 'value',
-      //     },
-      //     legend: {
-      //       x:'right',
-      //       top: 90,
-      //       pageButtonItemGap: 100,
-      //       textStyle: {
-      //         color: '#c9c9cc',
-      //       },
-      //       // width: 100,
-      //       // height: 10,
-      //
-      //       data:['路口一','路口二','','路口三','路口四','','路口五','路口六']
-      //     },
-      //     series: data,
-      //     textStyle: {
-      //       color: '#c9c9cc',
-      //     }
-      //   };
-      //   this.myChart.setOption(option);
-      },
-
     },
-
   }
 </script>
 
@@ -976,6 +952,17 @@
 
   }
 
+  .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {
+    color: #ffffff;
+    background-color: #2F2B39;
+  }
+  .el-select .el-tag {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    border-color: transparent;
+    margin: 2px 0 2px 6px;
+     background-color: #2F2B39;
+  }
   .hide {
     opacity: 0;
   }
