@@ -136,7 +136,7 @@
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
           <div class="Dashboard_card_body_two">
-            <mix-line-bar :trafficLightData="trafficLightData" :nodeName="nodeName"></mix-line-bar>
+            <mix-line-bar :trafficLightData="trafficLightData"></mix-line-bar>
           </div>
         </el-card>
       </el-col>
@@ -166,8 +166,37 @@
             <span>数据变化趋势对比分析</span>
             <i class="iconfont icon-webicon03" style="float: right; padding: 3px 0"></i>
           </div>
-          <div class="Dashboard_card_body_two">
+          <div class="Dashboard_card_body_two" style="position: relative;z-index: 1000">
+            <div>
+              <div class="Dashboard_card_time">
+                <el-date-picker
+                  size="mini"
+                  v-model="trendTime"
+                  type="daterange"
+                  format="yyyy/MM/dd"
+                  value-format="yyyyMMdd"
+                  range-separator=""
+                  start-placeholder="开始日期"
+                  end-placeholder="结束日期">
+                </el-date-picker>
+              </div>
+              <div style="position: absolute;top: 15px;right: 40px">
 
+                <el-select v-model="currentName" size="mini" class="area_titleSelect" placeholder="请选择"
+                           :popper-append-to-body="false">
+
+                  <el-option class="selectColor"
+                             v-for="item in nodeName"
+                             :key="item.id"
+                             :label="item.name"
+                             :value="item.id">
+                  </el-option>
+                </el-select>
+
+                <el-button icon="el-icon-edit" type="info" circle size="mini"
+                           @click="getRoadDataAnalysisFlow()"></el-button>
+              </div>
+            </div>
             <smooth-bar-line :data="someHourFlow"></smooth-bar-line>
           </div>
         </el-card>
@@ -574,6 +603,8 @@
           3: true
         },
         someHourFlow: [],
+        trendTime: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyyMMdd'), this.formatDate(new Date(), 'yyyyMMdd')],
+        currentName: 2,
       }
     },
     mounted() {
@@ -694,8 +725,9 @@
 
       getNodes() {
         this.$http.get('/nodeData/getNodes' + '?token=' + this.getHeader().token).then((response) => {
+          console.log(response)
           this.nodeName = response.data.map((node) => {
-            if (node.name) return node.name;
+            if (node.name) return node;
           }).filter((val) => {
             return val !== undefined
           });
@@ -736,7 +768,8 @@
           })
       },
       getRoadDataAnalysisFlow() {
-        this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=2&beginTime=2018092610&endTime=2018092611&token=' + this.getHeader().token)
+        this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.currentName + '&beginTime=' +
+          this.trendTime[0] + '&endTime='+ this.trendTime[1] +'&token=' + this.getHeader().token)
           .then((response) => {
             this.someHourFlow = response.data;
             this.loadingTrend = false;

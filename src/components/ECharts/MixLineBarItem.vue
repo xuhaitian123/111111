@@ -8,7 +8,6 @@
     name: "mix-line-bar",
     props: {
       trafficLightData: Object,
-      nodeName:Array,
     },
     data() {
       return {
@@ -186,10 +185,8 @@
           if (this.myChart) {
             if (newVal) {
               let option = this.myChart.getOption();
-              option.xAxis[0].data = this.nodeName;
-              option.series[0].data = newVal.beforeDelay.map((value => {
-                return value.value
-              }));
+              option.xAxis[0].data = newVal.beforeDelay.map((value => {return value.node_name}));
+              option.series[0].data = newVal.beforeDelay.map((value => {return value.value}));
               option.series[1].data = newVal.afterDelay.map((value => {
                 return value.value
               }));
