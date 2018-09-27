@@ -18,13 +18,13 @@
             <div class="right-container">
               <div class="road-select">
                 <span>路口</span><!--el-icon-caret-right-->
-                <el-select class="select-road-style" v-model="road_value" placeholder="请选择">
+                <el-select class="select-road-style" @change="changeNode()" v-model="road_value" placeholder="请选择">
                   <el-option
                     class="selectColor"
-                    v-for="item in load_options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="node_id in Object.keys(nodesInfo)"
+                    :key="node_id"
+                    :label="nodesInfo[node_id].name"
+                    :value="node_id">
                   </el-option>
                 </el-select>
               </div>
@@ -36,7 +36,7 @@
                   <!--<road-gauge :data="unuse_intel_score" class="Dashboard_card_roadGauge"></road-gauge>-->
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number red-text-color">{{unuse_intel_score}}</div>
+                      <div class="intel-score-number red-text-color">{{currentNodeInfo.beforeValue}}</div>
                     </div>
                   </div>
                 </div>
@@ -44,7 +44,7 @@
                   <div class="use-intel-score-text text-color">启用智能控制评分</div>
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number green-text-color">{{use_intel_score}}</div>
+                      <div class="intel-score-number green-text-color">{{currentNodeInfo.afterValue}}</div>
                     </div>
                   </div>
                 </div>
@@ -64,13 +64,13 @@
               </div>
               <div class="week-contrast">
                 <div class="week-show">
-                  <div class="week-day" id="monday" @click="get_week_day_data('monday',1)">周一</div>
-                  <div class="week-day" id="tuesday" @click="get_week_day_data('tuesday',2)">周二</div>
-                  <div class="week-day" id="wednesday" @click="get_week_day_data('wednesday',3)">周三</div>
-                  <div class="week-day" id="thursday" @click="get_week_day_data('thursday',4)">周四</div>
-                  <div class="week-day" id="friday" @click="get_week_day_data('friday',5)">周五</div>
-                  <div class="week-day" id="saturday" @click="get_week_day_data('saturday',6)">周六</div>
-                  <div class="week-day" id="sunday" @click="get_week_day_data('sunday',7)">周日</div>
+                  <div class="week-day" id="monday" @click="get_week_day_data('monday',0)">周一</div>
+                  <div class="week-day" id="tuesday" @click="get_week_day_data('tuesday',1)">周二</div>
+                  <div class="week-day" id="wednesday" @click="get_week_day_data('wednesday',2)">周三</div>
+                  <div class="week-day" id="thursday" @click="get_week_day_data('thursday',3)">周四</div>
+                  <div class="week-day" id="friday" @click="get_week_day_data('friday',4)">周五</div>
+                  <div class="week-day" id="saturday" @click="get_week_day_data('saturday',5)">周六</div>
+                  <div class="week-day" id="sunday" @click="get_week_day_data('sunday',6)">周日</div>
                 </div>
                 <div class="week-line"></div>
                 <div id="week_echart">
@@ -119,28 +119,51 @@
       },
       data() {
         return {
-          road_value:"珠海路-南京路",
+          road_value:"",
           load_options:[{value:'珠海路-南京路'}],
           unuse_intel_score:0,
           use_intel_score:0,
-          open_road_record_List:[]
+          open_road_record_List:[],
+          nodesInfo:{},
+          currentNodeInfo:{},
         }
       },
       mounted: function () {
+        this.getNodesInfoDate(()=>{
+
+          this.showEchartColumn();
+          this.showDayLineChart(0);
+
+          window.open_map_road_icon = (node_id,title) =>{
+            this.open_road_icon(node_id,title)
+          };
+          window.close_map_road_icon = (node_id,title) =>{
+            this.close_road_icon(node_id,title)
+          }
+
+          //获取路口数据
+          this.getAllRoadInfo();
+        })
+
+      },
+      beforeMount(){
         this.showEchartColumn();
-        this.showDayLineChart();
-
-        window.open_map_road_icon = (node_id,title) =>{
-          this.open_road_icon(node_id,title)
-        };
-        window.close_map_road_icon = (node_id,title) =>{
-          this.close_road_icon(node_id,title)
-        }
-
-        //获取路口数据
-        this.getAllRoadInfo();
+        this.showDayLineChart(0);
       },
       methods:{
+        changeNode(){
+
+        },
+        getNodesInfoDate(cb){
+          this.$http.get('http://localhost:8080/static/data.json').then((nodesInfo)=>{
+            this.nodesInfo =  nodesInfo.data;
+
+            this.currentNodeInfo = this.nodesInfo[Object.keys(this.nodesInfo)[0]]
+            this.road_value =   this.currentNodeInfo.name
+            cb()
+
+          })
+        },
 
         getAllRoadInfo(){
           console.log('getAllRoadInfo');
@@ -273,7 +296,8 @@
         get_week_day_data:function(week_day_id,index){
           this.remove_week_background();
           $("#"+week_day_id).addClass("week-day-background-color");
-          this.showDayLineChart();
+
+          this.showDayLineChart(index);
         },
         jumpPageToMain: function () {
 
@@ -287,40 +311,52 @@
           this.buildWeekData()
         },
         buildWeekData:function () {
+
           var legendData = ['', ''];
           var bgColorList = ['#ba4c48','#62ac82'];
-          var axisLabel = ['', '', '', '', '', '',''];
-          var seriesValue = [];
-          for (var i = 0; i < legendData.length; i++) {
-            var arrData = [];
-            var seriesDataVal = null;
-            for (var j = 0; j < axisLabel.length; j++) {
-              arrData.push(Math.floor(Math.random() * 100));
-            }
-            seriesDataVal = {
-              barWidth: 8,//柱状条宽度
-              name:'',
-              type:'bar',
-              itemStyle: {
-                normal: {
-                  show: true,//鼠标悬停时显示label数据
-                  barBorderRadius: [0, 0, 0, 0],//柱形图圆角，初始化效果
-                  color: bgColorList[i]
-                }
-              },
-              label: {
-                normal: {
-                  show: true, //显示数据
-                  position: 'right',//显示数据位置 'top/right/left/insideLeft/insideRight/insideTop/insideBottom'
-                  color:'#fff'
-                }
-              } ,
-              data:arrData
-            };
-            seriesValue.push(seriesDataVal);
+          var currentNodeInfo = this.currentNodeInfo.data;
+          var  beforeDataLine = {
+            barWidth: 8,//柱状条宽度
+            name: '',
+            type: 'bar',
+            itemStyle: {
+              normal: {
+                show: true,//鼠标悬停时显示label数据
+                barBorderRadius: [0, 0, 0, 0],//柱形图圆角，初始化效果
+                color: bgColorList[0]
+              }
+            },
+            label: {
+              normal: {
+                show: true, //显示数据
+                position: 'right',//显示数据位置 'top/right/left/insideLeft/insideRight/insideTop/insideBottom'
+                color: '#fff'
+              }
+            },
+            data: currentNodeInfo.map(item=> item.beforeValue)
+          }
+          var  afterDataLine = {
+            barWidth: 8,//柱状条宽度
+            name: '',
+            type: 'bar',
+            itemStyle: {
+              normal: {
+                show: true,//鼠标悬停时显示label数据
+                barBorderRadius: [0, 0, 0, 0],//柱形图圆角，初始化效果
+                color: bgColorList[1]
+              }
+            },
+            label: {
+              normal: {
+                show: true, //显示数据
+                position: 'right',//显示数据位置 'top/right/left/insideLeft/insideRight/insideTop/insideBottom'
+                color: '#fff'
+              }
+            },
+            data: currentNodeInfo.map(item=> item.afterValue)
           }
 
-          this.buildWeekChart(legendData, axisLabel, seriesValue);
+          this.buildWeekChart(legendData, ['','','','','','',''], [beforeDataLine, afterDataLine]);
         },
         buildWeekChart:function(legendData, axisLabel, seriesValue) {
           var chart = document.getElementById('week_echart');
@@ -353,12 +389,14 @@
             },
             xAxis: [{
               min: 0,
+              max: 100,
               type: 'value',
               splitLine:{show: false},
               splitArea : {show : false}//保留网格区域
             }],
             yAxis: [{
               min: 0,
+
               type: 'category', //纵向柱状图，若需要为横向，则此处值为'value'， 下面 yAxis 的type值为'category'
               splitLine:{show: false},
               splitArea : {show : false},//保留网格区域
@@ -381,10 +419,8 @@
           echart.setOption(option);
         },
         //每天的数据展示柱状图
-        showDayLineChart:function () {
-          this.buildDayData();
-        },
-        buildDayData:function () {
+        showDayLineChart:function (index) {
+          console.log(this.currentNodeInfo)
           var legendData = ['', ''];
           var bgColorList = ['#ba4c48','#62ac82'];
           var axisLabel = ['00:00', '06:00', '12:00', '18:00', '24:00'];
@@ -395,22 +431,44 @@
             for (var j = 0; j < axisLabel.length; j++) {
               arrData.push(Math.floor(Math.random() * 100));
             }
-            seriesDataVal = {
-              type: 'line',
-              showAllSymbol: true,
-              itemStyle: {
-                normal: {
-                  color: bgColorList[i],
-                  lineStyle: {
-                    color: bgColorList[i]
-                  }
-                }
-              },
-              data:arrData
-            };
+
             seriesValue.push(seriesDataVal);
           }
-          this.drawDayLine(legendData, axisLabel, seriesValue);
+
+
+          var beforeDate= {
+            type: 'line',
+            showAllSymbol: true,
+            itemStyle: {
+              normal: {
+                color: bgColorList[0],
+                lineStyle: {
+                  color: bgColorList[0]
+                }
+              }
+            },
+            data:this.currentNodeInfo.data[index].beforeList
+          };
+          var afterDate= {
+            type: 'line',
+            showAllSymbol: true,
+            itemStyle: {
+              normal: {
+                color: bgColorList[1],
+                lineStyle: {
+                  color: bgColorList[1]
+                }
+              }
+            },
+            data:this.currentNodeInfo.data[index].afterList
+          };
+
+
+
+
+
+
+          this.drawDayLine(legendData, axisLabel, [beforeDate,afterDate]);
         },
         drawDayLine:function(legendData, axisLabel, seriesValue) {
           var myLineChart = echarts.init(document.getElementById('day_chart_line'));
@@ -503,27 +561,27 @@
   .road-select{
     margin: 15px 0 34px 57px;
   }
-  .select-road-style{
-    width: 140px;
-    height: 22px !important;
-    line-height: 22px;
-    font-size: 18px;
+  /*.select-road-style{*/
+    /*width: 140px;*/
+    /*height: 22px !important;*/
+    /*line-height: 22px;*/
+    /*font-size: 18px;*/
 
-    /*很关键：将默认的select选择框样式清除*/
-    appearance:none;
-    -moz-appearance:none;
-    -webkit-appearance:none;
-  }
-  .selectColor{
-    color: white;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    margin: 0;
-    padding: 3px;
-    border-radius: 3px;
+    /*!*很关键：将默认的select选择框样式清除*!*/
+    /*appearance:none;*/
+    /*-moz-appearance:none;*/
+    /*-webkit-appearance:none;*/
+  /*}*/
+  /*.selectColor{*/
+    /*color: white;*/
+    /*font-size: 12px;*/
+    /*height: 16px;*/
+    /*line-height: 16px;*/
+    /*margin: 0;*/
+    /*padding: 3px;*/
+    /*border-radius: 3px;*/
 
-  }
+  /*}*/
 
 
   .CongestionMap_Legend li:last-child {
