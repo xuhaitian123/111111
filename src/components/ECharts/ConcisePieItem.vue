@@ -30,12 +30,13 @@
             hoverAnimation: false,
             avoidLabelOverlap: false,
             data: [
-              {value: 15, name: '', itemStyle: {color: '#47ad7d'}},
-              {value: 15, name: '', itemStyle: {color: '#525461'}},
+              {value: this.data.value, name: '', itemStyle: {color: '#47ad7d'}},
+              {value: 100-this.data.value, name: '', itemStyle: {color: '#525461'}},
             ]
           }
         ]
       };
+      console.log(this.data)
       chart.setOption(option, true);
     },
     watch: {
