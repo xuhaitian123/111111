@@ -1,31 +1,40 @@
 <template>
-  <div id="SmoothBarLine" style="height: 100%"></div>
+  <div id="SmoothBarLine" style="height: 90%"></div>
 </template>
 
 <script>
   export default {
-    data(){
+    props: {
+      data: Array
+    },
+    data() {
       return {
-
+        myChart:undefined,
       }
     },
     mounted() {
 
-      let myChart = this.$echarts.init(document.getElementById('SmoothBarLine'));
+      this.myChart = this.$echarts.init(document.getElementById('SmoothBarLine'));
       let option = {};
 
-      let colors = ['#5ebfba','#ff8539','#b14671'];
-
-
+      let colors = ['#5ebfba', '#ff8539', '#b14671'];
       option = {
         color: colors,
-
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            crossStyle: {
+              color: '#fff'
+            }
+          }
+        },
         legend: {
-          data:[ '']
+          data: ['']
         },
         grid: {
           top: 30,
-          bottom: 40
+          bottom: 50
         },
         xAxis: [
           {
@@ -41,9 +50,6 @@
         yAxis: [
           {
             type: 'value',
-            min: 0,
-            max: 5,
-            interval: 1,
             axisLine: {
               show: false,
               lineStyle: {
@@ -61,31 +67,29 @@
         ],
         series: [
           {
-            name:'通畅',
-            type:'line',
+            name: '流量',
+            type: 'line',
             smooth: true,
             symbol: 'circle',
-            data: [3, 5, 1, 7, 3, 6,4, 4, 3, 0.7]
+            data: [3, 5, 1, 7]
           },
-          {
-            name:'正常',
-            type:'line',
-            symbol: 'circle',
-            smooth: true,
-            data: [1,2, 1, 3, 1, 0.2, 12, 4, 4, 3, 0.7]
-          },
-          {
-            name:'拥堵',
-            type:'line',
-            symbol: 'circle',
-            smooth: true,
-            data: [12, 3, 1, 0, 4, 1, 5,4, 3, 0.7]
-          }
         ]
       };
-        myChart.setOption(option);
-
+      this.myChart.setOption(option);
     },
+    watch: {
+      data: {
+        handler(newVal, oldVal) {
+          if (this.myChart) {
+            let option = this.myChart.getOption();
+            option.xAxis[0].data = newVal.map((val)=>{return this.formatDate(new Date(val.start),'hh:mm');});
+            option.series[0].data = newVal.map((val)=>{return val.total;});
+            this.myChart.setOption(option);
+          }
+        },
+        deep: true //对象内部属性的监听，关键。
+      }
+    }
   }
 
 </script>

@@ -14,7 +14,7 @@
         }
       },
       mounted() {
-
+this.init()
       },
       watch: {
         good_speed() {
@@ -29,6 +29,7 @@
               trigger: 'axis'
             },
             legend: {
+              itemGap:200,
               data: [{
                 name: '优化前',
                 textStyle: {
@@ -88,7 +89,7 @@
                 type: 'line',
                 color: '#02d1d1',
                 symbol: 'circle',
-                data: []
+                data: [2,1,1,1,4,5,6,7,8,45,67,24,12,45,67,54,67,54,75,87,89,45,24]
               },
               {
                 name: '优化后',
@@ -99,7 +100,7 @@
               },
             ]
           };
-          this.data_processing(option_five);
+          // this.data_processing(option_five);
           this.goodSpeed = this.$echarts.init(document.getElementById('data_five'));
           this.goodSpeed.setOption(option_five);
         },

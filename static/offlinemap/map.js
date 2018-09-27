@@ -5457,7 +5457,7 @@ function my_log(s){
 	    //普通地图
         var tdir = offmapcfg.tiles_dir.length > 0 ? offmapcfg.tiles_dir : offmapcfg.home + "tiles";/*guoguo 使用本地的瓦片 */
         tdir =  tdir + "/" + b + "/" + d + "/" + a + offmapcfg.imgext; /*guoguo 使用本地的瓦片 */
-        //   tdir = 'http://47.52.57.26:3000/offlinemap/tiles'+ "/" + b + "/" + d + "/" + a + offmapcfg.imgext
+          // tdir = 'http://115.159.124.199:3000/offlinemap/tiles'+ "/" + b + "/" + d + "/" + a + offmapcfg.imgext
         my_log('普通地图:' + tdir);
         return tdir;
 	    /*

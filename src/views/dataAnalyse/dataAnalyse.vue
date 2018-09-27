@@ -15,11 +15,13 @@
           <div class="score_body_area" style="padding: 43px 43px 50px 43px;box-sizing: border-box;display: flex;flex-wrap: wrap;"
                v-loading="loading_score"
                element-loading-background="rgba(51, 54, 67, 1)">
-          <div id="before_road_net_score" style="height: 120px;width: 170px">
-            <RoadCondition></RoadCondition>
+          <div id="before_road_net_score" style="height: 120px;width: 170px;position: relative">
+            <RoadCondition :id ='"before"'></RoadCondition>
+            <div style="position: absolute;top:100px;left: 28px">优化前路网总评分</div>
           </div>
-          <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 52px">
-            <RoadCondition></RoadCondition>
+          <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 90px;position: relative">
+            <RoadCondition :id='"after"'></RoadCondition>
+            <div style="position: absolute;top:100px;left: 28px">优化后路网总评分</div>
           </div>
           <div id="before_road_net_proportion" style="height: 170px;width: 190px">
             <TrafficAccounting :id='"before_road_net_proportion"':data="data.before.values" :title = '"优化前"' ></TrafficAccounting>
@@ -59,7 +61,6 @@
           <div class="flowRate_body_area" style="padding: 35px 20px 0 30px;box-sizing: border-box"
                v-loading="loading_flow"
                element-loading-background="rgba(51, 54, 67, 1)">
-
          <flow-data :flow_rate_data=flow_rate_data :speed_data=speed_data></flow-data>
           </div>
         </div>
@@ -203,9 +204,9 @@
         },
         RoadCondition:[],
         loading_alarm:true,
-        loading_speed:true,
-        loading_flow:true,
-        loading_intersection:true,
+        loading_speed:false,
+        loading_flow:false,
+        loading_intersection:false,
         loading_score:false
 
       }
