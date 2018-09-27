@@ -1,29 +1,32 @@
 <template>
-    <div :id = 'id' style="width: 100%;height: 100%"></div>
+    <div :id = "id" style="width: 100%;height: 100%"></div>
 </template>
 
 <script>
     export default {
         name: "road-condition",
       props:{
-        RoadCondition: {
-          type: String,
-          default: '0',
-        },
-        color: {
-          type: String,
-          default: '#c94343'
-        },
+      //   RoadCondition: {
+      //     type: String,
+      //     default: '0',
+      //   },
+      //   color: {
+      //     type: String,
+      //     default: '#c94343'
+      //   },
           id:String
       },
       data(){
           return {
-            road:undefined
+            myChart:undefined
           }
+      },
+      mounted(){
+          this.init()
       },
       methods:{
         init() {
-          let myChart = this.$echarts.init(document.getElementById(this.id));
+          this.myChart = this.$echarts.init(document.getElementById(this.id));
           let option = {
             tooltip: {
               formatter: "{a} <br/>{b} : {c}%"
@@ -31,8 +34,9 @@
             series: [
               {
                 type: 'gauge',
+                center: ['50%', '70%'],//调位置
                 name: 'gaugeRoad',
-                radius: '70%',
+                radius: 70,//调大小
                 startAngle: '180',
                 endAngle: '0',
                 pointer: {
@@ -41,12 +45,12 @@
                 detail: {
                   show: false,
                 },
-                data: [{value: this.data, name: this.data}],
+                data: [{value: 50, name: '50'}],
                 title: {
                   show: true,
-                  offsetCenter: [0, -10],
+                  offsetCenter: [0, -20],
                   textStyle: {
-                    color: this.color,
+                    color: '#fff',
                     fontStyle: 'normal',
                     fontWeight: 'normal',
                     fontFamily: '微软雅黑',
@@ -56,12 +60,12 @@
                 axisLine: {
                   show: true,
                   lineStyle: {
-                    color: [[Number(this.data)/ 100, this.color], [1, '#fff']],
+                    color: [[0.5,'#B6434D'], [1, '#B6434D']],
                     width: 2,
-                    shadowBlur: 15,
-                    shadowColor: '#e2ea73',
-                    shadowOffsetX: 0,
-                    shadowOffsetY: 0,
+                    // shadowBlur: 15,
+                    // shadowColor: '#e2ea73',
+                    // shadowOffsetX: 0,
+                    // shadowOffsetY: 0,
                     opacity: 1
                   }
                 },
@@ -86,11 +90,11 @@
           this.myChart.setOption(option);
         }
       },
-      watch:{
-        data() {
-          this.init()
-        }
-      },
+      // watch:{
+      //   data() {
+      //     this.init()
+      //   }
+      // },
     }
 </script>
 
