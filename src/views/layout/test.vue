@@ -1,56 +1,63 @@
 <template>
-  <div>
-    <div class="area_titleCascader">
-      <div class="area_select_container">
-        <div>
-          省
-          <el-select v-model="prov" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
 
-            <el-option
-              v-for="item in arr"
-              :key="item.name"
-              :label="item.name"
-              :value="item.name"
-              :disabled="!item.available">
-            </el-option>
-          </el-select>
-        </div>
 
-        <div>城市
+    <div>
+      <div class="area_titleCascader">
+      <span>省
 
-          <el-select v-model="city" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
-            <el-option
-              v-for="item in cityArr"
-              :key="item.name"
-              :label="item.name"
-              :value="item.name"
-              :disabled="!item.available">
-            </el-option>
-          </el-select>
-        </div>
+        <el-select v-model="prov" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
 
-        <div>地区
+          <el-option
+            v-for="item in arr"
+            :key="item.name"
+            :label="item.name"
+            :value="item.name"
+            :disabled="!item.available">
+          </el-option>
+        </el-select>
+      </span>
 
-          <el-select v-model="district" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+        <span>城市
 
-            <el-option class="selectColor"
-                       v-for="item in districtArr"
-                       :key="item.name"
-                       :label="item.name"
-                       :value="item.name"
-                       :disabled="!item.available">
-            </el-option>
-          </el-select>
-        </div>
+        <el-select v-model="city" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+          <el-option
+            v-for="item in cityArr"
+            :key="item.name"
+            :label="item.name"
+            :value="item.name"
+            :disabled="!item.available">
+          </el-option>
+        </el-select>
+      </span>
+
+        <span>地区
+
+        <el-select v-model="district" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+
+          <el-option class="selectColor"
+                     v-for="item in districtArr"
+                     :key="item.name"
+                     :label="item.name"
+                     :value="item.name"
+                     :disabled="!item.available">
+          </el-option>
+        </el-select>
+      </span>
+
+
       </div>
 
-
-      <div class="area_time">{{ currentTime}}</div>
     </div>
 
-  </div>
+
+
+
+
 </template>
+
+
 <script>
+
   var arrAll =
     [
 
@@ -2065,45 +2072,10 @@
         city: '淮安',
         district: '淮阴区',
         cityArr: [],
-        districtArr: [],
-        currentTime: this.formatDate(new Date(),'yyyy.MM.dd hh:mm'),
-        timer : {}
+        districtArr: []
       }
     },
-    beforeDestroy(){
-      clearInterval(this.timer)
-    },
-    mounted(){
-      this.handleTime()
-    },
-    methods:{
-      handleTime(){
-          this.timer = setInterval(()=>{
-            this.currentTime =  this.formatDate(new Date(),'yyyy.MM.dd hh:mm')
-          },200)
-        },
-      formatDate (date, fmt) {
-        if (/(y+)/.test(fmt)) {
-          fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
-        }
-        let o = {
-          'M+': date.getMonth() + 1,
-          'd+': date.getDate(),
-          'h+': date.getHours(),
-          'm+': date.getMinutes(),
-          's+': date.getSeconds()
-        };
-        for (let k in o) {
-          if (new RegExp(`(${k})`).test(fmt)) {
-            let str = o[k] + '';
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : this.padLeftZero(str));
-          }
-        }
-        return fmt;
-      },
-      padLeftZero(str) {
-        return ('00' + str).substr(str.length);
-      },
+    methods: {
       updateCity: function (city) {
         for (var i in this.arr) {
           var obj = this.arr[i];
@@ -2146,43 +2118,3 @@
   }
 
 </script>
-<style scoped>
-  .area_titleCascader{
-    background: #282635;
-    color: white;
-    font-size: 12px;
-    height: 20px;
-    padding: 12.5px 20px;
-    margin: 0 10px;
-    border-radius: 1px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    /*background: #282635;*/
-    /*color: white;*/
-    /*height: 60px;*/
-    /*margin: 0 5px;*/
-    /*border-radius: 1px;*/
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*padding: 0 40px;*/
-    /*font-size: 16px;*/
-  }
-  .area_select_container{
-    display: flex;
-    justify-content: left;
-    
-  }
-
-  .area_titleSelect {
-    margin: 0 10px;
-  }
-
-  .area_time{
-    /*float: right;*/
-    align-items: right;
-    font-size: 20px;
-  }
-
-</style>

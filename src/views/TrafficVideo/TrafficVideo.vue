@@ -290,11 +290,14 @@
       warnPopover,
     },
     mounted(options) {
-      this.nodeId = this.$route.params.nodeId
-      this.getNodeInfo(this.nodeId)
-      this.linkId = 204
-      this.getBusRate()
-      this.getNodeList()
+      this.getNodeList().then(()=>{
+        this.nodeId = this.$route.params.nodeId
+        this.getNodeInfo(this.nodeId)
+        this.linkId = 204
+        this.getBusRate()
+      })
+
+
       this.trafficVideo_origin_ctx = document.getElementById("trafficVideo_origin").getContext("2d");
       this.trafficVideo_car_ctx = document.getElementById("trafficVideo_car").getContext("2d");
       this.trafficVideo_bus_ctx = document.getElementById("trafficVideo_bus").getContext("2d");
@@ -319,9 +322,13 @@
 
       },
       getNodeList() {
-        this.$http.get('/index/nodes' + '?token=' + this.getHeader().token).then(nodes => {
-          this.nodes = nodes.data.nodes
+        return new Promise(resolve => {
+          this.$http.get('/index/nodes' + '?token=' + this.getHeader().token).then(nodes => {
+            this.nodes = nodes.data.nodes
+            resolve();
+          })
         })
+
       },
       getNodeInfo(id) {
         Promise.all([this.getAllMovementsByNodeId(id), this.getNodeCameraLish(id), this.getAllLinksByNodeId(id)]).then(result => {
