@@ -12,7 +12,9 @@
           <div class="score_title">
             <div class="score_title_text">优化前后路网总评分/路网各类路况占比</div>
           </div>
-          <div class="score_body_area" style="padding: 43px 43px 50px 43px;box-sizing: border-box;display: flex;flex-wrap: wrap;">
+          <div class="score_body_area" style="padding: 43px 43px 50px 43px;box-sizing: border-box;display: flex;flex-wrap: wrap;"
+               v-loading="loading_score"
+               element-loading-background="rgba(51, 54, 67, 1)">
           <div id="before_road_net_score" style="height: 120px;width: 170px">
             <RoadCondition></RoadCondition>
           </div>
@@ -32,7 +34,11 @@
           <div class="alarmData_title">
             <div class="alarmData_title_text">路网拥堵报警次数月变化趋势</div>
           </div>
-          <div class="alarmData_body_area " style="padding-top: 44px;box-sizing: border-box">
+          <div class="alarmData_body_area"style="padding-top: 44px;box-sizing: border-box"
+               v-loading="loading_alarm"
+               element-loading-background="rgba(51, 54, 67, 1)">
+
+
             <alarm-data :alarm_data=alarm_data></alarm-data>
           </div>
         </div>
@@ -40,7 +46,9 @@
           <div class="IntersectionData_title">
             <div class="IntersectionData_title_text">各交叉口平均延误水平与拥堵报警次数</div>
           </div>
-          <div class="IntersectionData_body_area" style="padding-top: 44px;box-sizing: border-box">
+          <div class="IntersectionData_body_area" style="padding-top: 44px;box-sizing: border-box"
+               v-loading="loading_intersection"
+               element-loading-background="rgba(51, 54, 67, 1)">
             <intersection :intersection_data=intersection_data :trafficLightOptimizeAlarmTimes=trafficLightOptimizeAlarmTimes></intersection>
           </div>
         </div>
@@ -48,7 +56,10 @@
           <div class="flowRate_title">
             <div class="flowRate_title_text">路网流量、平均车速月变化趋势</div>
           </div>
-          <div class="flowRate_body_area" style="padding: 35px 20px 0 30px;box-sizing: border-box">
+          <div class="flowRate_body_area" style="padding: 35px 20px 0 30px;box-sizing: border-box"
+               v-loading="loading_flow"
+               element-loading-background="rgba(51, 54, 67, 1)">
+
          <flow-data :flow_rate_data=flow_rate_data :speed_data=speed_data></flow-data>
           </div>
         </div>
@@ -56,7 +67,9 @@
           <div class="goodSpeed_title">
             <div class="goodSpeed_title_text">优化前后平均车速日变化趋势</div>
           </div>
-          <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box">
+          <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box"
+               v-loading="loading_speed"
+               element-loading-background="rgba(51, 54, 67, 1)">
             <good-data :good_speed=good_speed></good-data>
           </div>
         </div>
@@ -188,7 +201,13 @@
           before:{},
           after:{}
         },
-        RoadCondition:[]
+        RoadCondition:[],
+        loading_alarm:true,
+        loading_speed:true,
+        loading_flow:true,
+        loading_intersection:true,
+        loading_score:true
+
       }
     },//
     methods: {
@@ -196,18 +215,18 @@
         let that = this;
         this.$http.get('/history/roadNetAlarmTimesByMonths?months=201806,201807,201808,201809,201810,201811,201812' +
           ''+ '&token=' + this.getHeader().token).then(function (item) {
-          that.alarm_data = item.data
-           var newdata = item.data
+          that.alarm_data = item.data;
+          that.loading_alarm = false;
+
         })
       },
       init_Intersection(){
         let that = this;
         this.get_init_Intersection_data().then(function (data) {
           that.$http.get('/history/trafficLightOptimizeAlarmTimes' + '?token=' + that.getHeader().token).then(function (item) {
-            var newdata = data;
-            var newdata2 = item.data;
-            that.intersection_data = newdata;
-            that.trafficLightOptimizeAlarmTimes =newdata2
+            that.intersection_data = data;
+            that.trafficLightOptimizeAlarmTimes =item.data
+            that. loading_intersection = false
           })
         })
       },
@@ -215,11 +234,9 @@
         let that = this;
         this.get_flowRate_data().then(function (data) {
           that.$http.get('/history/roadNetAvgSpeedByMonths?months=201808,201809' + '&token=' + that.getHeader().token).then(function (item) {
-
-           var newdata = data
-            var newdata2 = item.data
-            that.flow_rate_data = newdata
-            that.speed_data =  newdata2
+            that.flow_rate_data =  data
+            that.speed_data =  item.data
+            that.loading_flow = false
 
           })
         })
@@ -228,6 +245,7 @@
         let that = this;
         that.$http.get('history/trafficLightOptimizeDayAvgSpeed?token=?' + ''+ '&token=' + this.getHeader().token).then(function (item) {
           that.good_speed = item.data
+          that.loading_speed = false
         })
       },
       get_init_Intersection_data(){
@@ -249,6 +267,7 @@
         this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token).then(function (item) {
           that.data.before = item.data.before;
            that.data.after = item.data.after
+          that.loading_score = false
         })
       },
       get_RoadCondition_data(){

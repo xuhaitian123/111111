@@ -64,8 +64,6 @@
               {
                 type: 'value',
                 show: true,
-                min: 0,
-                max: 100,
                 axisLabel: {
                   formatter: '{value}',
                   color: '#c9c9cc',
@@ -83,8 +81,6 @@
               {
                 type: 'value',
                 show: true,
-                min: 0,
-                max: 1000,
                 position: 'left',
                 axisLabel: {
                   formatter: '{value}',
