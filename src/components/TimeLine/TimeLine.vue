@@ -138,7 +138,7 @@
         endPosition: 0,
         isChangeTime: false,
         timer: '',
-        left: -10,
+        left: -8,
         rate: 100,
         scale: 0,
         yearList: [{value: 2018, disable: true}, {value: 2017, disable: true}, {value: 2016, disable: true}],
@@ -167,7 +167,7 @@
     methods: {
       restart() {
         clearInterval(this.timer);
-        this.left = -10;
+        this.left = -8;
         this.start()
       },
       stopChange() {
@@ -183,18 +183,32 @@
           this.changePosition()
         }, this.rate)
       },
+
+      checkMaxHour(left){
+        left = (left <= -8 ? -8 : left);
+        do {
+          left-=this.space
+        } while (this.leftToTime(left).getTime()>= new Date().getTime())
+
+        left = (left >= (this.timeLineWidth-8) ? (this.timeLineWidth-8) :left );
+        return left
+
+      },
+
       changePosition() {
+        if (this.isChangeTime || this.left >= this.timeLineWidth - 8) return;
+        if (this.endPosition && this.startPosition) {
+          let left = this.left + this.endPosition - this.startPosition;
+          left = this.checkMaxHour(left)
+          this.left = parseInt(left / (this.space)) * (this.space)
+          this.endPosition = 0;
+          this.startPosition = 0;
+        }
+
         if (this.isPauseTime == true)
         {
           this.getTimer();
           return;
-        }
-        if (this.isChangeTime || this.left >= this.timeLineWidth - 10) return;
-        if (this.endPosition && this.startPosition) {
-          let left = this.left + this.endPosition - this.startPosition;
-          this.left = parseInt(left / (this.space)) * (this.space)
-          this.endPosition = 0;
-          this.startPosition = 0;
         }
 
         this.left += this.minSpace;
@@ -206,7 +220,11 @@
         this.startPosition = e.clientX;
       },
       getTimer() {
-        var seconds = (this.left + 10) / this.minSpace;
+        var time = this.leftToTime(this.left)
+        this.$emit('newTime', time.getTime())
+      },
+      leftToTime(left){
+        var seconds = (left + 8) / this.minSpace;
 
         var hour = parseInt(seconds / 60 / 60 / 10);
         var minuth = Math.floor(seconds / 60 / 10 % 60);
@@ -220,8 +238,8 @@
         time.setMinutes(minuth)
         time.setSeconds(second)
         time.setMilliseconds(milliseconds * 100)
+        return time
 
-        this.$emit('newTime', time.getTime())
       },
 
 
@@ -229,7 +247,9 @@
 
         if (!this.isChangeTime) return;
         this.endPosition = e.clientX;
-        document.getElementById('timeLine_line').style.left = this.left + this.endPosition - this.startPosition + 'px'
+        var left = this.left + this.endPosition - this.startPosition;
+
+        document.getElementById('timeLine_line').style.left =left+ 'px'
 
       },
       initPosition() {

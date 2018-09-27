@@ -63,6 +63,7 @@
               lineStyle: {
                 color: '#595B66'
               },
+
             },
             axisTick: {
               show: false
@@ -90,6 +91,7 @@
             axisTick: {
               show: false,
             },
+
 
 
           },

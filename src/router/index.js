@@ -8,7 +8,7 @@ import CongestionMap from  '../views/Dashboard/CongestionMap'
 import RoadSectionMap from  '../views/Dashboard/RoadSectionMap'
 import IntersectionsMap from  '../views/Dashboard/IntersectionsMap'
 import Map from '../views/Map/Map'
-import TrafficVideo from  '../views/test/TrafficVideoTest' //TODO
+import TrafficVideo from  '../views/TrafficVideo/TrafficVideo' //TODO
 import Login from '../views/Login/Login'
 import signalOptimization from '../views/signalOptimization/signalOptimization'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
@@ -109,7 +109,7 @@ export default new Router({
       name: 'Layout',
       children: [
         {
-          path: 'trafficVideo',
+          path: 'trafficVideo/:nodeId',
           component: TrafficVideo,
           name: 'trafficVideo'
         }

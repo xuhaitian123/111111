@@ -24,8 +24,8 @@ Vue.use(timelinepick);
 Vue.use(VueAxios, axios);
 Vue.use(ElementUI);
 
-axios.defaults.baseURL = 'http://47.52.57.26:3000/';
-// axios.defaults.baseURL = 'http://localhost:3000/';
+// axios.defaults.baseURL = 'http://47.52.57.26:3000/';
+axios.defaults.baseURL = 'http://localhost:3000/';
 
 Vue.config.productionTip = false;
 
@@ -55,6 +55,20 @@ Vue.prototype.formatDate = function (date, fmt) {
 function padLeftZero(str) {
   return ('00' + str).substr(str.length);
 }
+router.beforeEach((to, from, next) => {
+  const currentUser = Vue.prototype.getCookie('userToken')
+  if (to.path === '/login') {
+    next()
+  } else {
+    if (currentUser) {
+      next()
+    }
+    else {
+      next({path: '/login'})
+    }
+  }
+});
+
 
 
 /* eslint-disable no-new */
