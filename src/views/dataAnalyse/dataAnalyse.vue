@@ -206,7 +206,7 @@
         loading_speed:true,
         loading_flow:true,
         loading_intersection:true,
-        loading_score:true
+        loading_score:false
 
       }
     },//

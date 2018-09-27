@@ -70,6 +70,7 @@
                   margin:10
                 },
                 position: 'right',
+                interval:'',
                 splitLine: {
                   show: true,
                   interval: 'auto',//
@@ -82,6 +83,7 @@
                 type: 'value',
                 show: true,
                 position: 'left',
+                interval:'',
                 axisLabel: {
                   formatter: '{value}',
                   color: '#c9c9cc'//
@@ -128,12 +130,17 @@
           for( let i = 0;i<flow_number.length;i++){
             option_four.xAxis[0].data.push(month[flow_number[i].month-1])
           }
-          road_speed_number.forEach(function (data) {
-            option_four.series[1].data.push(data)
+          road_speed_number.forEach(function (data,index) {
+            option_four.series[1].data.push([data.value,index])
           })
-          flow_number.forEach(function (data) {
-            option_four.series[0].data.push(data)
+          flow_number.forEach(function (data,index) {
+            option_four.series[0].data.push([data.value,index])
           })
+          var min_max = [];
+          min_max.push(option_four.series[1].data);
+          min_max.push(option_four.series[0].data);
+          option_four.yAxis[0].interval = Math.max(min_max)/6;
+          option_four.yAxis[1].interval = Math.max(min_max)/6
         }
       },
     }
