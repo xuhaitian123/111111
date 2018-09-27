@@ -1,7 +1,7 @@
 <template>
   <div>
     <area-select></area-select>
-    <el-row :gutter="10" class="Dashboard_lineRow">
+    <el-row :gutter="10" class="Dashboard_lineRow" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
@@ -181,6 +181,8 @@
               <div @click="rotateNode(180)"
                    style="position: absolute;width: 250px;height: 175px;top: 20px;z-index: 11;left: 26%"></div>
             </div>
+
+            <div style="position: absolute;bottom: 10px;left: 38%">单位： {{currentTabs==='0'?'pcu':'s'}}</div>
 
             <div class="signal_left_block"
                  style="top: 50px;height: 60px;font-size: 23px;text-align: center;color: #c9c9cc;">
@@ -565,7 +567,7 @@
               <el-tabs type="border-card" :before-leave="setFlowOrDelay"
                        style="height: 290px;margin-top: 10px;background: #353644;text-align: center;font-size: 12px">
                 <el-tab-pane label="交叉口机动车/非机动车流量">
-                  <el-row>
+                  <el-row style="position: relative">
                     <el-col :span="10" :offset="1" style="display: flex;position: relative">
                       <div style="width: 20px;line-height: 220px;font-size: 12px">西</div>
 
@@ -1118,6 +1120,19 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                       <div style="width: 20px;line-height: 220px;font-size: 12px">东</div>
 
                     </el-col>
+
+                    <el-col :span="1">
+                      <div class=""
+                           style="font-size: 23px;text-align: center;color: #c9c9cc;">
+                        <div style="padding-top: 3px">N</div>
+                        <i class="iconfont icon-fangxiang" style="font-size: 22px"></i>
+                      </div>
+                    </el-col>
+
+                    <div style="position: absolute;
+    bottom: -12px;
+    width: 75px;
+    right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}</div>
                   </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="交叉口延误数据">
@@ -1404,6 +1419,12 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
                         </ul>
                       </div>
                     </el-col>
+
+
+                    <div style="position: absolute;
+    bottom: px;
+    width: 75px;
+    right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}</div>
                   </el-row>
                 </el-tab-pane>
               </el-tabs>
@@ -1465,6 +1486,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         currentTabs: '0',
         currentDirection: ['南', '东', '北', '西'],
         currentColor: {},
+        loading:false,
       }
     },
     mounted() {
@@ -1473,6 +1495,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     methods: {
       init() {
         this.getAllData();
+        // this.loading= true;
       },
       getAllData(startTime, endTime) {
         this.getNodeCongestionSource(startTime, endTime);
@@ -1556,6 +1579,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
           if (num === data.length - 1) {
             this.allMovementDelay = this.getMovementDirection(data);
+            this.loading= false;
           } else {
             num += 1;
             this.getAllMovementDelay(data, num, startTime, endTime);
