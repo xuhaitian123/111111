@@ -28,7 +28,7 @@
       id: String,
       tranelineInfo: {
         type: Array,
-        default: 0
+        default: [],
       },
       hour_data_picker_node:''
     },
@@ -42,13 +42,13 @@
       tranelineInfo(){
         this.tranelineData = []
         this.nodeNameList = [],
-        console.log(this.tranelineInfo)
+
           this.tranelineInfo.forEach((item,index)=>{
-            this.nodeNameList.push(index.toString())
+            this.nodeNameList.push(item.name)
             if((index+1)%2==0){
               this.nodeNameList.push('')
             }
-            this.tranelineData.push({name: index, type:'line', symbol: 'circle',data: item})
+            this.tranelineData.push({name: index, type:'line', symbol: 'circle',data: item.data})
         })
         this.init()
       }
@@ -86,8 +86,10 @@
           xAxis: {
             type: 'value',
             boundaryGap: false,
+            max:288,
             // data:[1,2,3,4,5,6,7,8,9],
             splitLine:{show:false},
+            interval: 71,
             axisLabel: {
               show: true,
               textStyle: {
@@ -95,7 +97,8 @@
                 "color": "#fff",
               },
               formatter: function (value, index) {
-                return value
+                console.log(value)
+                return parseInt((value)/72)*6+":00" ;
               },
             },
 
