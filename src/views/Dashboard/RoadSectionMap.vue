@@ -332,8 +332,8 @@
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
 
-        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=201&token='+this.getHeader().token)
-          .then((result)=>{
+        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=201&token=' + this.getHeader().token)
+          .then((result) => {
             console.log(result)
           })
       },
@@ -345,19 +345,18 @@
         this.$http.get('trafficCongestion/roadAvgDelay?linkId=' + this.$route.params.id + '&current=true&token=' + this.getHeader().token)
           .then((response) => {
             let linkName = response.data.link.link_name;
-            let url = '/roadDataAnalysis/getCorridorCongestionSource?token=' + this.getHeader().token;
-            url += this.setUrlDate(startTime, endTime);
-            // this.$http.get(url).then((result) => {
-            //   if (result.data.value[linkName]) {
-            //     this.allScore = Object.values(result.data.value[linkName]);
-            //     this.scoreName = Object.keys(result.data.value[linkName]);
-            //     if (this.scoreName.length > 4) {
-            //       this.scoreName.length = 4;
-            //     }
-            //   }
-            //   console.log(result)
+            let url = '/roadDataAnalysis/getCorridorCongestionSourceByRoadName?token=' + this.getHeader().token +
+              '&roadName=' + linkName+'&current=true';
+            this.$http.get(url).then((result) => {
+              if (result.data.value[linkName]) {
+                this.allScore = Object.values(result.data.value[linkName]);
+                this.scoreName = Object.keys(result.data.value[linkName]);
+                if (this.scoreName.length > 4) {
+                  this.scoreName.length = 4;
+                }
+              }
               this.loadingNode = false;
-            // });
+            });
           });
       },
       getAllDelay(startTime, endTime) {
@@ -494,6 +493,10 @@
             this.getAllData(this.startTime, val);
             this.startTime = 0;
           }
+        } else if (val < this.startTime) {
+          this.getAllData(val, val + 5 * 60 * 1000);
+          this.setRoadNetStatus(this.currentRoadNet, val, val + 5 * 60 * 1000);
+          this.startTime = 0;
         } else {
           this.startTime = val;
         }
