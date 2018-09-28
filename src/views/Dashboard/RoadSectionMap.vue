@@ -144,7 +144,7 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="" style="margin-top: 10px">
-                    <div v-for="name in linksInfo[0]" :key="name.link_id" style="padding: 24px 0">
+                    <div v-for="(name,i) in linksInfo[0]" :key="name.link_id" v-if="i <4" style="padding: 24px 0">
                       {{name.link_name}}
                     </div>
                   </div>
@@ -236,7 +236,8 @@
                       交通走廊
                     </div>
 
-                    <road-gauge style="height: 180px;padding-top: 80px" color="#c57426"></road-gauge>
+                    <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 80px"
+                                color="#c57426"></road-gauge>
                   </div>
                 </el-col>
                 <el-col :span="14">
@@ -316,6 +317,7 @@
         loadingNode: false,
         allScore: [],
         scoreName: [],
+        corridorScore: 0,
       }
     },
     mounted() {
@@ -325,28 +327,28 @@
       init() {
         this.getAllData();
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
+
+        this.$http.get('/index/roadCrossLinkByLinkId?linkId='+ this.$route.params.id  +'&token=' + this.getHeader().token)
+          .then((response) => {
+            console.log(response)
+          })
       },
       getAllData(startTime, endTime) {
         this.getAllLinkId();
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
-
-        this.$http.get('/index/roadAllLinksBySomeLinkId?linkId=201&token=' + this.getHeader().token)
-          .then((result) => {
-            console.log(result)
-          })
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
       },
-      getLinkByNodeScore(startTime, endTime) {
+      getLinkByNodeScore() {
         this.loadingNode = true;
         this.$http.get('trafficCongestion/roadAvgDelay?linkId=' + this.$route.params.id + '&current=true&token=' + this.getHeader().token)
           .then((response) => {
             let linkName = response.data.link.link_name;
             let url = '/roadDataAnalysis/getCorridorCongestionSourceByRoadName?token=' + this.getHeader().token +
-              '&roadName=' + linkName+'&current=true';
+              '&roadName=' + linkName + '&current=true';
             this.$http.get(url).then((result) => {
               if (result.data.value[linkName]) {
                 this.allScore = Object.values(result.data.value[linkName]);
@@ -354,6 +356,12 @@
                 if (this.scoreName.length > 4) {
                   this.scoreName.length = 4;
                 }
+
+                let num = 0;
+                this.allScore.forEach((val) => {
+                  num += (val[0].value + val[1].value);
+                });
+                this.corridorScore = num / (this.allScore.length * 2);
               }
               this.loadingNode = false;
             });

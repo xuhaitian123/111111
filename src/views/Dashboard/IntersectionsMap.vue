@@ -1937,8 +1937,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     }
 
     50% {
-      -webkit-transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 90deg);
-      transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 90deg);
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
     }
 
     to {
@@ -1961,8 +1961,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     }
 
     50% {
-      -webkit-transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 90deg);
-      transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 90deg);
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
     }
 
     to {
@@ -1997,8 +1997,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     }
 
     50% {
-      -webkit-transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, -90deg);
-      transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, -90deg);
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
     }
 
     to {
@@ -2021,8 +2021,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     }
 
     50% {
-      -webkit-transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, -90deg);
-      transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, -90deg);
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
     }
 
     to {
@@ -2051,8 +2051,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     }
 
     50% {
-      -webkit-transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 160deg);
-      transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 160deg);
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
     }
 
     to {
@@ -2075,8 +2075,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     }
 
     50% {
-      -webkit-transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 160deg);
-      transform: scale3d(1.5, 1.5, 1.3) rotate3d(0, 0, 1, 160deg);
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
     }
 
     to {
