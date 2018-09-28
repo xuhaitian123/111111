@@ -21,44 +21,44 @@
           <img  src="/static/map/left.png"/>
         </div>
         <div class="map-area-container-header-title">
-          <div class="Country">{{Country}} </div>
+          <div class="Country">{{country}} </div>
           <img class="image_next" src="/static/map/right.png">
-          <div class="province">{{map_info.Province}}</div>
+          <div class="province">{{province}}</div>
           <img class="image_next" src="/static/map/right.png">
-          <div class="city">{{map_info.city}}</div>
+          <div class="city">{{city}}</div>
           <img class="image_next_county" src="/static/map/right.png">
-          <div class="county">{{map_info.county}}</div>
+          <div class="county">{{county}}</div>
         </div>
       </div>
       <div class="map-area-container-main">
         <div class="lift">
           <div class="people-squre">
             <div class="people_countent" >总人口</div>
-            <div class="people-data" ><span class="count-size">{{map_info.people_count}}</span><span class="unit">人</span></div>
+            <div class="people-data" ><span class="count-size">{{showInfo.city_population}}</span><span class="unit">人</span></div>
           </div>
           <div class="data">
             <div class="squre" >总面积</div>
-            <div class="squre-data" ><span class="squre-size">{{map_info.squre}}</span><span class="unit">平方千米</span></div>
+            <div class="squre-data" ><span class="squre-size">{{showInfo.city_size}}</span><span class="unit">平方千米</span></div>
           </div>
         </div>
         <div class="countent">
           <div class="count">
             <div class="car-count" >汽车保有量</div>
-            <div class="car-data" ><span class="count-size">{{map_info.car_count}}</span><span class="unit">辆</span></div>
+            <div class="car-data" ><span class="count-size">{{showInfo.vehicle_par}}</span><span class="unit">辆</span></div>
           </div>
           <div class="monitor">
             <div class="monitor-count" >监控数量</div>
-            <div class=" monitor-data"><span class="count-size">{{map_info.monitor_count}}</span><span class="unit">个</span></div>
+            <div class=" monitor-data"><span class="count-size">{{showInfo.camera_num}}</span><span class="unit">个</span></div>
           </div>
         </div>
         <div class="license-score">
           <div class="license">
             <div class="license-number" >车牌代码</div>
-            <div class="license-data count-size">{{map_info.license_number}}</div>
+            <div class="license-data count-size">{{showInfo.licence_plate}}</div>
           </div>
           <div class="score">
             <div class="all-score" >总体评分</div>
-            <div class="score-data" ><span class="score-size">{{map_info.all_score}}</span><span class="unit">分</span></div>
+            <div class="score-data" ><span class="score-size">{{showInfo.cur_all_crowded_grade}}</span><span class="unit">分</span></div>
           </div>
         </div>
       </div>
@@ -318,77 +318,50 @@
     data() {
       return {
         marginTop: 0,
-        Country:"中国",
-        map_info:{
-          Province:"江苏省",
-          city:"淮安市",
-          county:"淮阴区",
-          people_count:50000,
-          car_count:25555,
-          monitor_count:"100",
-          license_number:"京Ａ88888",
-          all_score:"100",
-          squre:1.007
-        }
+        country:"中国",
+        province:"江苏省",
+        city:"淮安市",
+        county:"淮阴区",
+        showInfo:{},
+        map_info:[{
+          "node_num":'-',
+          "camera_num":'-',
+          "cur_all_crowded_grade":'-',
+          "city_population":'-',
+          "city_size":'-',
+          "vehicle_par":'-',
+          "area_total_mileage":'-',
+          "licence_plate":"-"
+        },{
+          "node_num":'-',
+          "camera_num":'-',
+          "cur_all_crowded_grade":'-',
+          "city_population":'-',
+          "city_size":'-',
+          "vehicle_par":'-',
+          "area_total_mileage":'-',
+          "licence_plate":"-"
+        }]
       }
+    },
+    beforeMount(){
+      this.$http.get('/dataB/getDataB?token=' + this.getHeader().token)
+        .then( (data) =>{
+          this.map_info =  data.data
+        })
+        .catch(function (data) {
+          console.log(data);
+        });
     },
     methods: {
       county_map_info_handler(){
         // var self = this
-        this.$http.get('/dataB/getDataB')
-          .then(function (data) {
-            console.log(data);
-          })
-          .catch(function (data) {
-            console.log(data);
-          });
-        var county ={
-          Province:"江苏省",
-          city:"淮安市",
-          county:"淮阴区",
-          people_count:50000,
-          car_count:25555,
-          monitor_count:"100",
-          license_number:"京Ａ99999",
-          all_score:"100",
-          squre:1.007
-        }
-        return county
+        return this.showInfo =this.map_info[1]
+        // return county
       },
       city_map_info_handler(){
-        // var self = this
-        // this.$http.get('/dataB/getDataB')
-        //   .then(function (data) {
-        //   对数据进行处理
-        //     var county ={
-        //       Province:"江苏省",
-        //       city:"淮安市",
-        //       county:"淮阴区",
-        //       people_count:50000,
-        //       car_count:25555,
-        //       monitor_count:"100",
-        //       license_number:"京Ａ99999",
-        //       all_score:"100",
-        //       squre:1.007
-        //     }
-        //     self.map_info = county
-        //     console.log(data);
-        //   })
-        //   .catch(function (data) {
-        //     console.log(data);
-        //   });
-        var city ={
-          Province:"江苏省",
-          city:"淮安市",
-          county:"淮阴区",
-          people_count:669985,
-          car_count:3333333,
-          monitor_count:"45878",
-          license_number:"京Ａ77777",
-          all_score:"95",
-          squre:1.007
-        }
-        return city
+        return this.showInfo = this.map_info[0]
+        // return city
       },
 
       back(){
@@ -403,7 +376,7 @@
         $('.map-contaienr').animate({width:'500%', height:'500%', left:'-340%','top':'-240%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr').animate({opacity: '0'},500,function(){
             $(".map-area-container").show()
-            self.map_info = self.city_map_info_handler()
+             self.city_map_info_handler()
             $('.map-contaienr').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr1').animate({opacity: '1'},500)
@@ -415,7 +388,7 @@
         $('.map-contaienr1').animate({width:'200%', height:'200%', left:'-50%','top':'-50%',opacity:'0.4'},  500, ()=>{
           $('.map-contaienr1').animate({opacity: '0'},300, function(){
             $(".map-area-container,.image_next_county,.county,.toMianPage_bag").show()
-            self.map_info = self.county_map_info_handler()
+            self.county_map_info_handler()
             $('.map-contaienr1').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr2').animate({opacity: '1'},1000)
@@ -429,7 +402,7 @@
           $('.map-contaienr2').animate({opacity: '0'},500,function(){
             $(".map-area-container").show()
             $(".county,.image_next_county,.toMianPage_bag").hide()
-            self.map_info = self.city_map_info_handler()
+             self.city_map_info_handler()
             $('.map-contaienr2').animate({width:'100%', height:'100%', left:'0','top':'0'})
           })
           $('.map-contaienr1').animate({opacity: '1'},500)

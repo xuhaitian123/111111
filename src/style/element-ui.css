@@ -27,6 +27,13 @@
 .el-select-dropdown {
   border: none;
 }
+.el-select-dropdown__item.is-disabled{
+  color: #c9c9cc;
+}
+
+.el-scrollbar__bar {
+  display: none;
+}
 
 .el-select-dropdown__list {
   background: rgb(41, 41, 53);
@@ -36,7 +43,7 @@
   padding: 0;
 
 }
-
+.el-select-dropdown__item.is-disabled:hover,
 .el-select-dropdown__item.hover, .el-select-dropdown__item:hover {
   background-color: rgb(41, 41, 53);
   color: #fff !important;
@@ -46,7 +53,7 @@
   height: 40px;
   line-height: 40px;
   color: #fff;
-  background: rgb(41, 41, 53);
+  /*background: rgb(41, 41, 53);*/
   margin: 0;
   border-bottom: 1px solid rgb(136, 136, 143);
   font-size: 14px;
@@ -81,27 +88,29 @@
 }
 
 .el-select {
-  width: 100px;
+  width: 120px;
   height: 30px;
-  background: black;
+  background: #353643;
 }
-
+.el-select-dropdown{
+  background:  rgb(41, 41, 53);
+}
 .el-select input {
   height: 30px;
-  background: black;
-  border: 1px solid black;
+  background: #353643;
+  border: 1px solid #353643;
   color: #ffffff;
 }
 
 .el-select input:hover {
   height: 30px;
-  background: black;
-  border: 1px solid black !important;
+  background: #353643;
+  border: 1px solid #353643 !important;
 }
 
 .el-select .el-input {
   height: 30px;
-  background: black;
+  background: #353643;
 
 }
 
@@ -141,12 +150,12 @@
 }
 
 .el-select-dropdown__list {
-  padding: 0 5px 5px 5px;
+  /*padding: 0 5px 5px 5px;*/
   background: #353644;
 }
 
 .el-select-dropdown__list li {
-  margin: 0;
+  margin: 0 10px;
   padding: 5px;
   border-bottom: 1px solid #949494;
 }
@@ -158,7 +167,7 @@
 .el-select-dropdown__item.selected {
   color: white;
   font-weight: 100;
-  background: #353644;
+  background: rgb(41, 41, 53);;
 }
 
 .el-card {
@@ -166,7 +175,8 @@
 }
 
 .el-select-dropdown__item.selected span {
-  font-size: 12px !important;
+  /*font-size: 12px !important;*/
+  color: #fff;
 }
 
 .el-select-dropdown__item {
@@ -175,7 +185,7 @@
 }
 
 .el-select .el-input, .el-select, .el-select input {
-  height: 20px !important;
+  height: 25px !important;
   font-size: 14px;
   background: #353643;
   border: 1px solid #353643;
@@ -214,4 +224,35 @@
 .el-tabs__item{
    height: 30px;
   line-height: 30px;
+}
+
+.Dashboard_card_time .el-input__inner,.Dashboard_card_time .el-input__inner input{
+  background: #545768;
+  border: 0;
+}
+
+.Dashboard_card_time{
+  padding: 15px 0 0 40px;
+  /*float: right;*/
+}
+
+.Dashboard_card_time .el-date-editor .el-range-input{
+  width: 39%;
+  color: white;
+}
+
+.Dashboard_card_time .el-date-editor--daterange.el-input__inner{
+  width: 200px;
+}
+
+.Dashboard_card_body_two .el-select{
+  width: 150px;
+}
+
+.Dashboard_card_body_two .el-select-dropdown{
+  background: initial!important;
+}
+
+.Dashboard_card_body_two .el-select-dropdown__list{
+  width: inherit;
 }
