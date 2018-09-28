@@ -26,7 +26,7 @@
           {
             name: '访问来源',
             type: 'pie',
-            radius: ['60%', '90%'],
+            radius: ['50%', '80%'],
             hoverAnimation: false,
             avoidLabelOverlap: false,
             data: [

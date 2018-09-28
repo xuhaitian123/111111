@@ -12,10 +12,10 @@
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
-          <div class="" style="height: 980px;position: relative">
+          <div class="" style="position: relative">
             <road-net-map :all-links-delay="allLinksDelay"
                           :all-node-delay="allNodeDelay" :all-links-flow="allLinksFlow" :all-node-flow="allNodeFlow"
-                          style="width: 100%"></road-net-map>
+                          style="width: 100%;height: 935px;"></road-net-map>
 
             <div style="position: absolute;top: 15px;width: 100%;text-align: center">
               <el-row
@@ -166,7 +166,7 @@
               </div>
             </div>
 
-            <div style="position:absolute;bottom: 80px;width: 100%">
+            <div style="position:absolute;bottom: 30px;width: 100%">
               <time-line @newTime="getNewTime"></time-line>
             </div>
           </div>
@@ -219,7 +219,6 @@
         this.getAllData();
       },
       getAllData(startTime, endTime) {
-        console.log('---')
         this.loading = true;
         this.getCongestionPercent(startTime, endTime);
         this.getRoadNetCongestionScore(startTime, endTime);
