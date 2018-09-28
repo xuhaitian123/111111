@@ -174,7 +174,7 @@
         getAllRoadInfo(){
           console.log('getAllRoadInfo');
           var self = this;
-          this.$http.get('/index/nodes'+ '?token=' + that.getHeader().token)
+          this.$http.get('/index/nodes'+ '?token=' + this.getHeader().token)
             .then((response) => {
               console.log(response.data);
               self.showBMapPoint(response.data.nodes);
