@@ -230,18 +230,6 @@
               "</ul>" +
               "</div>"
               +"</div>";
-            // var sContent = "<div style=''  class='box-content'>" +
-            //   "<div class='control-button'>" +
-            //   "<div class='open-button' onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
-            //   "<div class='close-button' onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
-            //   +"</div>"+
-            //   "<div class='select-options'><ul>" +
-            //   "<li>Default</li>"+
-            //   "<li>Minimize Delay</li>"+
-            //   "<li>Minimize</li>"+
-            //   "</ul>" +
-            //   "</div>"
-            //   +"</div>";
 
             var infoBox = new BMap.InfoWindow(sContent);
             map.openInfoWindow(infoBox, e.target.point)
