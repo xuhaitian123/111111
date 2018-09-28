@@ -120,9 +120,9 @@
       data() {
         return {
           road_value:"",
-          load_options:[{value:'珠海路-南京路'}],
-          unuse_intel_score:0,
-          use_intel_score:0,
+          // load_options:[],
+          // unuse_intel_score:0,
+          // use_intel_score:0,
           open_road_record_List:[],
           nodesInfo:{},
           currentNodeInfo:{},
@@ -178,7 +178,7 @@
         getAllRoadInfo(){
           console.log('getAllRoadInfo');
           var self = this;
-          this.$http.get('/index/nodes?token=693e9af84d3dfcc71e640e005bdc5e2e')
+          this.$http.get('/index/nodes'+ '?token=' + that.getHeader().token)
             .then((response) => {
               console.log(response.data);
               self.showBMapPoint(response.data.nodes);
@@ -245,7 +245,9 @@
 
             var infoBox = new BMap.InfoWindow(sContent);
             map.openInfoWindow(infoBox, e.target.point)
-            self.road_value = e.target.title;
+            self.road_value = e.target.id.toString();
+
+            self.changeNode()
           });
           return marker;
         },
