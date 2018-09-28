@@ -24,9 +24,10 @@ Vue.use(timelinepick);
 Vue.use(VueAxios, axios);
 Vue.use(ElementUI);
 
-
-axios.defaults.baseURL = 'http://115.159.124.199:3000/';
+axios.defaults.baseURL = 'http://115.159.124.199:3000';
 // axios.defaults.baseURL = 'http://localhost:3000/';
+
+
 
 
 Vue.config.productionTip = false;

@@ -243,7 +243,7 @@
       methods:{
         getAllRoadInfo(){
           var self = this;
-          this.$http.get('/index/nodes' + '?token=' + that.getHeader().token)
+          this.$http.get('/index/nodes' + '?token=' + this.getHeader().token)
             .then((response) => {
               self.showBMapPoint(response.data.nodes);
               return response.data;
