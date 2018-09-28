@@ -36,6 +36,8 @@
       return {
         tranelineData:[],
         hour_data_picker_node:'',
+        max:1000,
+
       }
     },
     watch:{
@@ -59,7 +61,8 @@
 
         let options = {
           tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            showContent: false
           },
           animation: false,
           legend: {
@@ -98,7 +101,7 @@
               },
               formatter: function (value, index) {
                 console.log(value)
-                return parseInt((value)/72)*6+":00" ;
+                return Math.round((value)/72)*6+":00" ;
               },
             },
 
@@ -106,6 +109,8 @@
           yAxis: {
             type: 'value',
             show:true,
+            min:0,
+            max:this.max,
             // data:[1,2,3,4,5,6,7,8,9],
             axisTick:{
               show: true
@@ -125,66 +130,20 @@
         };
 
         myChart.setOption(options, true);
+        this.max = undefined
       }
 
     },
     mounted() {
+      setTimeout(()=>{
+        var tranelineInfo = [];
+        for(var i =0;i <288; i++){
+          tranelineInfo.push([i+1,""])
+        }
+        // this.max = 2000;
+        this.tranelineInfo = [{name:'',data:tranelineInfo}]
 
-      //
-      // var data = [
-      //   {
-      //     name: '路口一',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]],
-      //
-      //   },
-      //   {
-      //     name: '路口二',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口三',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口四',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口五',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口六',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //
-      // ];
-
-
+      },500)
 
     },
   }

@@ -63,9 +63,25 @@
         this.init()
       }
     },
+    mounted(){
+      this.initDate()
+    },
 
     methods:{
+      initDate(){
+        setTimeout(()=>{
+          var i = 0;
+          var data  = []
+          for(var i=0;i<1;i++){
+            data.push([i,''])
+          }
+          this.heat_data =  [data,data.map(item=>item)]
+        },200)
+
+
+      },
       init(){
+        if(this.heat_data.length ===0) return
         let myChart = this.$echarts.init(document.getElementById(this.id));
         let i = 1;
         let data = [];
@@ -101,7 +117,6 @@
           weeks.push(i)
           i++
         } while (i <= 718)
-        console.log(data)
         let options = {
           tooltip: {
             position: 'top',
