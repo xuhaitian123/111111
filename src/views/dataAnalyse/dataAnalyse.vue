@@ -17,11 +17,11 @@
                element-loading-background="rgba(51, 54, 67, 1)">
           <div id="before_road_net_score" style="height: 120px;width: 170px;position: relative">
             <RoadCondition :id ='"before"':RoadCondition = RoadCondition.before :color='"#B3424C"'></RoadCondition>
-            <div style="position: absolute;top:100px;left: 28px">优化前路网总评分</div>
+            <div style="position: absolute;top:90px;left: 28px">优化前路网总评分</div>
           </div>
           <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 90px;position: relative">
             <RoadCondition :id='"after"':RoadCondition = RoadCondition.after :color='"#3EA579"'></RoadCondition>
-            <div style="position: absolute;top:100px;left: 28px">优化后路网总评分</div>
+            <div style="position: absolute;top:90px;left: 28px">优化后路网总评分</div>
           </div>
           <div id="before_road_net_proportion" style="height: 170px;width: 190px">
             <TrafficAccounting :id='"before_road_net_proportion"':data="data.before" :title = '"优化前"' ></TrafficAccounting>

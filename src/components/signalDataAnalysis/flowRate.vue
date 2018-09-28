@@ -28,6 +28,10 @@
             tooltip: {
               trigger: 'axis'
             },
+            grid:{
+             width:380,
+              left:60
+            },
             legend: {
               itemGap:70,
               data: [{
@@ -65,7 +69,9 @@
               {
                 type: 'value',
                 show: true,
+                max:'',
                 axisLabel: {
+                  show:true,
                   formatter: '{value}',
                   color: '#c9c9cc',
                   margin:10
@@ -84,6 +90,9 @@
                 type: 'value',
                 show: true,
                 position: 'left',
+                max:'',
+                name:'路网流量(vph)',
+                nameLocation:'end',
                 interval:'',
                 axisLabel: {
                   formatter: '{value}',
@@ -137,8 +146,10 @@
           flow_number.forEach(function (data,index) {
             option_four.series[0].data.push([index,data.value])
           })
-          option_four.yAxis[1].interval =this.get_max_value(flow_number,100000)/6;
-          option_four.yAxis[0].interval =this.get_max_value(road_speed_number,100)/6
+          option_four.yAxis[1].max = this.get_max_value(flow_number,100000)
+          option_four.yAxis[0].max = this.get_max_value(road_speed_number,100)
+          option_four.yAxis[1].interval =this.get_max_value(flow_number,100000)/5;
+          option_four.yAxis[0].interval =this.get_max_value(road_speed_number,100)/5
 
         },
         get_max_value(number, test){
