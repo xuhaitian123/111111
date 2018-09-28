@@ -40,7 +40,7 @@
 
                     <div style="position: absolute;bottom: 0;">
                       <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                           width="570px" height="475px" viewBox="0 0 2419.000000 2065.000000"
+                           width="570px" height="485px" viewBox="0 0 2419.000000 2065.000000"
                            preserveAspectRatio="xMidYMid meet">
 
                         <g transform="translate(0.000000,2065.000000) scale(0.100000,-0.100000)"
@@ -113,7 +113,7 @@
 
                     <div style="position: absolute;bottom: 0;">
                       <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                           width="570px" height="475px" viewBox="0 0 2419.000000 2065.000000"
+                           width="570px" height="485px" viewBox="0 0 2419.000000 2065.000000"
                            preserveAspectRatio="xMidYMid meet">
 
                         <g transform="translate(0.000000,2065.000000) scale(0.100000,-0.100000)"
@@ -186,7 +186,7 @@
 
             <div class="signal_left_block"
                  style="top: 50px;height: 60px;font-size: 23px;text-align: center;color: #c9c9cc;">
-              <div style="padding-top: 3px">N</div>
+              <div style="padding-top: 3px">{{currentDirectionLetter[currentDirection[0]]}}</div>
               <i class="iconfont icon-fangxiang" style="font-size: 22px"></i>
             </div>
 
@@ -569,7 +569,7 @@
                 <el-tab-pane label="交叉口机动车/非机动车流量" v-loading="loadingFlow" element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row style="position: relative">
                     <el-col :span="10" :offset="1" style="display: flex;position: relative">
-                      <div style="width: 20px;line-height: 220px;font-size: 12px">西</div>
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['西'].split("").join("\n")}}</div>
 
                       <div style="flex: 1;">
                         <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
@@ -842,10 +842,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                       </div>
 
-                      <div style="width: 20px;line-height: 220px;font-size: 12px">东</div>
+                      <div style="width: 20px;padding-top: 90px;font-size: 12px">{{allLinksName['东'].split("").join("\n")}}</div>
                     </el-col>
                     <el-col :span="10" :offset="2" style="display: flex;position: relative">
-                      <div style="width: 20px;line-height: 220px;font-size: 12px">西</div>
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['西'].split("").join("\n")}}</div>
 
                       <div style="flex: 1">
                         <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
@@ -1117,7 +1117,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                              style="width: 110px;height: 20px;position: absolute;bottom: -15px;left: 0;right: 0;margin: auto;"/>
                       </div>
 
-                      <div style="width: 20px;line-height: 220px;font-size: 12px">东</div>
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['东'].split("").join("\n")}}</div>
 
                     </el-col>
 
@@ -1485,6 +1485,9 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         allMovementFlow: {},
         currentTabs: '0',
         currentDirection: ['南', '东', '北', '西'],
+        currentDirectionLetter:{
+          '南': 'N', '东':'W', '北':'S', '西':'S'
+        },
         currentColor: {},
         loadingFlow:false,
         loadingDelay:false,
