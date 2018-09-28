@@ -200,20 +200,22 @@
           item.after.forEach(function (data,index) {
             option_one.series[3].data.push([index,data.value])
           });
-
-          option_one.yAxis[1].interval = Math.max.apply(null,y_value)/6
-          option_one.yAxis[0].interval = Math.max.apply(null,y_y_value)/6
+            var max_value_intersection_data_before= this.get_max_value(intersection_data.before,10)
+            var max_value_intersection_data_after  =this.get_max_value(intersection_data.after,10)
+            var max_value_item_before = this.get_max_value(item.before,100)
+            var max_value_item_after = this.get_max_value(item.after,100)
+          var max_value_intersection_data = Math.max(max_value_intersection_data_before,max_value_intersection_data_after)
+          var max_value_item_data = Math.max(max_value_item_before ,max_value_item_after)
+          option_one.yAxis[1].interval = max_value_intersection_data/6
+          option_one.yAxis[0].interval = max_value_item_data/6
         },
-        get_max_value(number, test){
+        get_max_value(number_one, test){
           let y_value = [];
-          let y_y_value = [];
-          number.forEach(function (data) {
+          number_one.forEach(function (data) {
             y_value.push(data.value)
           })
           var max_value = Math.max.apply(null,y_value)
-          console.log(max_value)
           var max_value_int = Math.ceil(max_value/test)
-          console.log(max_value_int)
           var max_value_val = max_value_int*test
           return max_value_val
         }

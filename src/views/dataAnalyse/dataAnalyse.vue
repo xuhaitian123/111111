@@ -159,6 +159,7 @@
   }
   .flowRate_title_text{
     width: 320px;
+    margin-left: 20px;
   }
 
   .score_body_area,
