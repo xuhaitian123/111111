@@ -438,6 +438,10 @@
             }
           }
           return isExist;
+        },
+
+        getPassRecord(){
+          // this.$http.get().then(())
         }
       }
     }
