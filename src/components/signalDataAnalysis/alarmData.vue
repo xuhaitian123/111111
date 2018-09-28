@@ -7,7 +7,7 @@
     name: "alarm-data",
     props:
       {
-        alarm_data: Array
+        alarm_data: Object
       },
     data() {
       return {
@@ -119,19 +119,22 @@
       },
       data_processing(options) {
         var data = this.alarm_data;
-        var number = data.map(function (item) {
-          return {month: parseInt(item.month), value: item.value}
-        });
+
         var month = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
-        for (var i = 0; i < number.length; i++) {
-          options.yAxis.data.push(month[number[i].month % 100 - 1])
+        for (var i = 0; i < data.after.length; i++) {
+          options.yAxis.data.push(month[data.after[i].month % 100 - 1])
         }
-        number.forEach(function (data, index) {
-          if (data.month >= 201809) {
-            options.series[1].data.push([data.value, index,])
-          } else {
-            options.series[0].data.push([data.value, index])
-          }
+        for (var i = 0; i < data.before.length; i++){
+          options.yAxis.data.push(month[data.before[i].month % 100 - 1])
+        }
+        var length = data.before.length
+        console.log(length)
+        data.after.forEach(function (data, index) {
+          options.series[1].data.push([data.value, index])
+
+        })
+        data.before.forEach(function (data, index) {
+          options.series[0].data.push([data.value, index+length])
         })
         return options
       }

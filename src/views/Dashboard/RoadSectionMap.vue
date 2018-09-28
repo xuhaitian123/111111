@@ -347,16 +347,17 @@
             let linkName = response.data.link.link_name;
             let url = '/roadDataAnalysis/getCorridorCongestionSource?token=' + this.getHeader().token;
             url += this.setUrlDate(startTime, endTime);
-            this.$http.get(url).then((result) => {
-              if (result.data.value[linkName]) {
-                this.allScore = Object.values(result.data.value[linkName]);
-                this.scoreName = Object.keys(result.data.value[linkName]);
-                if (this.scoreName.length > 4) {
-                  this.scoreName.length = 4;
-                }
-              }
+            // this.$http.get(url).then((result) => {
+            //   if (result.data.value[linkName]) {
+            //     this.allScore = Object.values(result.data.value[linkName]);
+            //     this.scoreName = Object.keys(result.data.value[linkName]);
+            //     if (this.scoreName.length > 4) {
+            //       this.scoreName.length = 4;
+            //     }
+            //   }
+            //   console.log(result)
               this.loadingNode = false;
-            });
+            // });
           });
       },
       getAllDelay(startTime, endTime) {

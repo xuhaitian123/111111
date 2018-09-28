@@ -86,7 +86,7 @@
           ],
           yAxis: [
             {
-              name: "平    (s)",
+              name: "平均延误时间(s)",
               nameTextStyle: {
                 color: "#7d7d7d",
                 align: 'left'
@@ -112,7 +112,7 @@
               }
             },
             {
-              "name": "报",
+              "name": "报警次数",
               "nameTextStyle": {
                 "color": "#7d7d7d"
               },

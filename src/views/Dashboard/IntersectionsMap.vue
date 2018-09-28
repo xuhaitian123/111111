@@ -564,12 +564,12 @@
                 </el-tab-pane>
               </el-tabs>
 
-              <el-tabs type="border-card" :before-leave="setFlowOrDelay"
+              <el-tabs type="border-card" :before-leave="setFlowOrDelay" v-loading="loadingFlow" element-loading-background="rgba(0, 0, 0, 0.8)"
                        style="height: 290px;margin-top: 10px;background: #353644;text-align: center;font-size: 12px">
-                <el-tab-pane label="交叉口机动车/非机动车流量" v-loading="loadingFlow" element-loading-background="rgba(0, 0, 0, 0.8)">
+                <el-tab-pane label="交叉口机动车/非机动车流量">
                   <el-row style="position: relative">
-                    <el-col :span="10" :offset="1" style="display: flex;position: relative">
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['西'].split("").join("\n")}}</div>
+                    <el-col :span="10" :offset="1" style="display: flex;position: relative" >
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['西']">{{allLinksName['西'].split("").join("\n")}}</div>
 
                       <div style="flex: 1;">
                         <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
@@ -842,10 +842,10 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                       </div>
 
-                      <div style="width: 20px;padding-top: 90px;font-size: 12px">{{allLinksName['东'].split("").join("\n")}}</div>
+                      <div style="width: 20px;padding-top: 90px;font-size: 12px" v-if="allLinksName['东']">{{allLinksName['东'].split("").join("\n")}}</div>
                     </el-col>
-                    <el-col :span="10" :offset="2" style="display: flex;position: relative">
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['西'].split("").join("\n")}}</div>
+                    <el-col :span="10" :offset="2" style="display: flex;position: relative" v-if="allLinksName['西']">
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['西']">{{allLinksName['西'].split("").join("\n")}}</div>
 
                       <div style="flex: 1">
                         <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
@@ -1117,7 +1117,7 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                              style="width: 110px;height: 20px;position: absolute;bottom: -15px;left: 0;right: 0;margin: auto;"/>
                       </div>
 
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['东'].split("").join("\n")}}</div>
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['东']">{{allLinksName['东'].split("").join("\n")}}</div>
 
                     </el-col>
 
@@ -1658,6 +1658,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
         this.loadingSignal=true;
+        console.log('----------')
         let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += endTime ? '&current=' + endTime : '&current=true';
         this.$http.get(url).then((response) => {
@@ -1885,7 +1886,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
     to {
       -webkit-transform: scale3d(1.05, 1.05, 1.05);
-      transform: scale3d(1.1, 1.1, 1.1);
+      transform: scale3d(1.3, 1.3, 1.3);
     }
   }
 
@@ -1897,7 +1898,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
     to {
       -webkit-transform: scale3d(1.1, 1.1, 1.1);
-      transform: scale3d(1.1, 1.1, 1.1);
+      transform: scale3d(1.3, 1.3, 1.3);
     }
   }
 

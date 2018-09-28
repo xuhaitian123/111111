@@ -14,7 +14,7 @@
         }
       },
       mounted() {
-this.init()
+// this.init()
       },
       watch: {
         good_speed() {
@@ -89,7 +89,7 @@ this.init()
                 type: 'line',
                 color: '#02d1d1',
                 symbol: 'circle',
-                data: [2,1,1,1,4,5,6,7,8,45,67,24,12,45,67,54,67,54,75,87,89,45,24]
+                data: []
               },
               {
                 name: '优化后',
@@ -100,16 +100,16 @@ this.init()
               },
             ]
           };
-          // this.data_processing(option_five);
+          this.data_processing(option_five);
           this.goodSpeed = this.$echarts.init(document.getElementById('data_five'));
           this.goodSpeed.setOption(option_five);
         },
         data_processing(option_five){
           let goodSpeedData = this.good_speed;
-          goodSpeedData.before.value.forEach(function (data) {
+          goodSpeedData.before.forEach(function (data) {
                option_five.series[0].data.push(data)
           })
-          goodSpeedData.after.value.forEach(function (data) {
+          goodSpeedData.after.forEach(function (data) {
             option_five.series[1].data.push(data)
           })
 

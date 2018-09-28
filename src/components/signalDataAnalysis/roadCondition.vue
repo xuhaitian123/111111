@@ -6,15 +6,9 @@
     export default {
         name: "road-condition",
       props:{
-      //   RoadCondition: {
-      //     type: String,
-      //     default: '0',
-      //   },
-      //   color: {
-      //     type: String,
-      //     default: '#c94343'
-      //   },
-          id:String
+        RoadCondition: Number,
+        color:String ,
+        id:String
       },
       data(){
           return {
@@ -45,7 +39,7 @@
                 detail: {
                   show: false,
                 },
-                data: [{value: 50, name: '50'}],
+                data: [{value:this.RoadCondition, name: this.RoadCondition.toString()}],
                 title: {
                   show: true,
                   offsetCenter: [0, -20],
@@ -60,7 +54,7 @@
                 axisLine: {
                   show: true,
                   lineStyle: {
-                    color: [[0.5,'#B6434D'], [1, '#B6434D']],
+                    color: [[this.RoadCondition/100, this.color], [1, '#fff']],
                     width: 2,
                     // shadowBlur: 15,
                     // shadowColor: '#e2ea73',
@@ -86,15 +80,19 @@
                 }
               }
             ]
+
           };
           this.myChart.setOption(option);
+          console.log(option.series[0].data)
+          console.log(option.series[0].axisLine.lineStyle.color)
+        }
+
+      },
+      watch:{
+        RoadCondition() {
+          this.init()
         }
       },
-      // watch:{
-      //   data() {
-      //     this.init()
-      //   }
-      // },
     }
 </script>
 
