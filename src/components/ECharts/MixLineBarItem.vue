@@ -32,7 +32,7 @@
           },
           grid: {
             top: 20,
-            bottom: 50,
+            bottom: '35%',
           },
           toolbox: {},
           legend: {
@@ -76,6 +76,7 @@
                   color: '#7d7d7d'
                 }
               },
+              axisLabel: {interval: 0, rotate: 320},
               type: 'category',
               data: [],
               axisPointer: {
@@ -185,8 +186,12 @@
           if (this.myChart) {
             if (newVal) {
               let option = this.myChart.getOption();
-              option.xAxis[0].data = newVal.beforeDelay.map((value => {return value.node_name}));
-              option.series[0].data = newVal.beforeDelay.map((value => {return value.value}));
+              option.xAxis[0].data = newVal.beforeDelay.map((value => {
+                return value.node_name
+              }));
+              option.series[0].data = newVal.beforeDelay.map((value => {
+                return value.value
+              }));
               option.series[1].data = newVal.afterDelay.map((value => {
                 return value.value
               }));
@@ -198,13 +203,13 @@
                 return value.value
               }));
 
-              let delayMax= Math.max(Math.max.apply(null,option.series[0].data ),Math.max.apply(null,option.series[1].data )).toFixed(0);
-              let alarmMax= Math.max(Math.max.apply(null,option.series[2].data ),Math.max.apply(null,option.series[3].data )).toFixed(0);
-              option.yAxis[0].max= delayMax;
-              option.yAxis[0].interval= delayMax/5;
+              let delayMax = Math.max(Math.max.apply(null, option.series[0].data), Math.max.apply(null, option.series[1].data)).toFixed(0);
+              let alarmMax = Math.max(Math.max.apply(null, option.series[2].data), Math.max.apply(null, option.series[3].data)).toFixed(0);
+              option.yAxis[0].max = delayMax;
+              option.yAxis[0].interval = delayMax / 5;
 
-              option.yAxis[1].max= alarmMax;
-              option.yAxis[1].interval= alarmMax/5;
+              option.yAxis[1].max = alarmMax;
+              option.yAxis[1].interval = alarmMax / 5;
 
               this.myChart.setOption(option);
             }
