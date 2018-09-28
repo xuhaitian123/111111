@@ -6,8 +6,8 @@
     export default {
         name: "intersection",
       props:{
-        intersection_data:Array,
-        trafficLightOptimizeAlarmTimes:Array
+        intersection_data:Object,
+        trafficLightOptimizeAlarmTimes:Object
       },
       data(){
         return{
@@ -15,7 +15,7 @@
         }
       },
       mounted(){
-this.init()
+// this.init()
       },
       watch: {
         intersection_data() {
@@ -74,7 +74,7 @@ this.init()
             },
             xAxis: {
               type: 'category',
-              data: ['仓丰路','仓盛路','槐安路','裕华路','中山路','槐北路'],
+              data: [],
               axisLine: {
                 lineStyle: {
                   color: '#595B66'
@@ -147,7 +147,7 @@ this.init()
                 type: 'bar',
                 color: '#e05f9a',
                 yAxisIndex: 1,
-                data: [[0,10],[1,20],[2,30],[3,40],[4,50],[5,60]]
+                data: []
               },
               {
                 name: '优化后延误',
@@ -163,7 +163,7 @@ this.init()
                 yAxisIndex: 0,
                 symbol: 'circle',
                 color: '#af69c9',
-                data: [[0,100],[1,200],[2,300],[3,400],[4,500],[5,600]]
+                data: []
               },
               {
                 name: '优化后报警',
@@ -180,28 +180,42 @@ this.init()
           this.Intersection.setOption(option_one);
         },
         data_processing(option_one){
-          option_one.yAxis[1].interval = Math.max(10,20,30,40,50,60)/6
-          option_one.yAxis[0].interval = Math.max(100,200,300,400,500,600)/6
-        //   let intersection_data = this.intersection_data;
-        //   let item = this.trafficLightOptimizeAlarmTimes;
-        //   let road_name = intersection_data.after.map(function (item) {
-        //     return item.node_name
-        //   });
-        //   road_name.forEach(function (data) {
-        //     option_one.xAxis.data.push (data)
-        //   })
-        //   intersection_data.before.forEach(function (data) {
-        //     option_one.series[0].data.push(data)
-        //   })
-        //   intersection_data.after.forEach(function (data) {
-        //     option_one.series[1].data.push(data)
-        //   })
-        //   item.before.forEach(function (data) {
-        //     option_one.series[2].data.push(data)
-        //   })
-        //   item.after.forEach(function (data) {
-        //     option_one.series[3].data.push(data)
-        //   })
+          let intersection_data = this.intersection_data;
+          let item = this.trafficLightOptimizeAlarmTimes;
+          let road_name = intersection_data.after.map(function (item) {
+            return item.name
+          });
+          road_name.forEach(function (data) {
+            option_one.xAxis.data.push (data)
+          })
+          intersection_data.before.forEach(function (data,index) {
+            option_one.series[0].data.push([index,data.value])
+          })
+          intersection_data.after.forEach(function (data,index) {
+            option_one.series[1].data.push([index,data.value])
+          })
+          item.before.forEach(function (data,index) {
+            option_one.series[2].data.push([index,data.value])
+          })
+          item.after.forEach(function (data,index) {
+            option_one.series[3].data.push([index,data.value])
+          });
+          let y_value  = []
+            item.before.forEach(function (data) {
+             y_value.push(data.value)
+          })
+          item.after.forEach(function (data) {
+            y_value.push(data.value)
+          })
+          let y_y_value = []
+          intersection_data.before.forEach(function (data) {
+            y_y_value.push(data.value)
+          })
+          intersection_data.after.forEach(function (data) {
+            y_y_value.push(data.value)
+          })
+          option_one.yAxis[1].interval = Math.max.apply(null,y_value)/6
+          option_one.yAxis[0].interval = Math.max.apply(null,y_y_value)/6
         }
         },
 

@@ -14,6 +14,7 @@ import signalOptimization from '../views/signalOptimization/signalOptimization'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
 import DataAnalyse from '../views/dataAnalyse/dataAnalyse'
+import Test1 from '../views/dataAnalyse/test1'
 
 import  test  from  '../views/layout/test'
 
@@ -25,6 +26,11 @@ export default new Router({
       path: '',
       component: Login,
       name: 'Layout'
+    },
+    {
+      path:'/test1',
+      component:Test1,
+      name:'test1'
     },
     {
       path: '/login',

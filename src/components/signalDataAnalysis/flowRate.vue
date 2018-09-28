@@ -6,8 +6,8 @@
     export default {
         name: "flow-rate",
       props:{
-        flow_rate_data:Array,
-        speed_data:Array
+        flow_rate_data:Object,
+        speed_data:Object
       },
       data(){
           return{
@@ -15,7 +15,7 @@
           }
       },
       mounted(){
-this.init()
+// this.init()
       },
       watch: {
         speed_data(){
@@ -47,7 +47,7 @@ this.init()
             },
             xAxis: [{
               type: 'category',
-              data: ['二月','三月','四月','五月'],
+              data: [],
               axisLine: {
                 lineStyle: {
                   color: '#595B66'
@@ -104,7 +104,7 @@ this.init()
                 color: '#02d1d1',
                 symbol: 'circle',
                 yAxisIndex: 1,
-                data: [[0,100],[1,200],[2,400],[3,599]]
+                data: []
               },
               {
                 name: '平均车速',
@@ -112,7 +112,7 @@ this.init()
                 color: '#eacc36',
                 symbol: 'circle',
                 yAxisIndex: 0,
-                data:[[0,20],[1,30],[2,40],[3,50]]
+                data:[]
               },
             ]
           };
@@ -121,29 +121,38 @@ this.init()
           this.flowRate.setOption(option_four);
         },
         data_processing(option_four){
-          option_four.yAxis[0].interval = Math.max(20,30,40,50)/4;
-          option_four.yAxis[1].interval = Math.max(100,200,400,599)/4
+          let road_speed_number = this.speed_data.map(function (item) {
+            return {month:parseInt(item.month.substring(4,6)),value:item.value}
+          })
+          let flow_number = this.flow_rate_data.map(function (item) {
+            return {month:parseInt(item.month.substring(4,6)),value:item.value}
+          })
+          console.log(flow_number)
+          console.log(road_speed_number)
+          let month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
+          for( let i = 0;i<flow_number.length;i++){
+            option_four.xAxis[0].data.push(month[flow_number[i].month-1])
+          }
+          road_speed_number.forEach(function (data,index) {
+            option_four.series[1].data.push([index,data.value])
+          })
+          console.log(option_four.series[1].data)
+          flow_number.forEach(function (data,index) {
+            option_four.series[0].data.push([index,data.value])
+          })
+          let y_value = [];
+          road_speed_number.forEach(function (data) {
+            y_value.push(data.value)
+          })
+          let y_y_value = [];
+          flow_number.forEach(function (data) {
+            y_y_value.push(data.value)
+          })
+          option_four.yAxis[0].interval = Math.max.apply(null,y_y_value)/6;
+          console.log( option_four.yAxis[0].interval)
+          option_four.yAxis[1].interval = Math.max.apply(null,y_value)/6
+          console.log(option_four.yAxis[1].interval)
         }
-      //     let road_speed_number = this.speed_data.map(function (item) {
-      //       return {month:parseInt(item.month.substring(4,6)),value:item.value}
-      //     })
-      //     let flow_number = this.flow_rate_data.map(function (item) {
-      //       return {month:parseInt(item.month.substring(4,6)),value:item.value}
-      //     })
-      //     let month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
-      //     for( let i = 0;i<flow_number.length;i++){
-      //       option_four.xAxis[0].data.push(month[flow_number[i].month-1])
-      //     }
-      //     road_speed_number.forEach(function (data,index) {
-      //       option_four.series[1].data.push([data.value,index])
-      //     })
-      //     flow_number.forEach(function (data,index) {
-      //       option_four.series[0].data.push([data.value,index])
-      //     })
-      //     var min_max = [];
-      //     option_four.yAxis[0].interval = Math.max(option_four.series[0].data)/6;
-      //     option_four.yAxis[1].interval = Math.max(option_four.series[1].data)/6
-      //   }
       },
     }
 </script>
