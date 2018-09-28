@@ -48,7 +48,7 @@
             if((index+1)%2==0){
               this.nodeNameList.push('')
             }
-            this.tranelineData.push({name: index, type:'line', symbol: 'circle',data: item.data})
+            this.tranelineData.push({name: item.name, type:'line', symbol: 'circle',data: item.data})
         })
         this.init()
       }

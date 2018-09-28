@@ -191,6 +191,15 @@
   border: 1px solid #353643;
 }
 
+.default-select .el-select .el-input,
+.default-select .el-select,
+.default-select .el-select input {
+  height: 25px !important;
+  font-size: 14px;
+  background: #545768;
+  border: 1px solid #545768;
+}
+
 .el-select .el-input__icon {
   line-height: 20px;
 }
@@ -225,10 +234,12 @@
    height: 30px;
   line-height: 30px;
 }
-
+.range-data .el-input__inner,.range-data .el-input__inner input,
+.default .el-input__inner,.default .el-input__inner input,
 .Dashboard_card_time .el-input__inner,.Dashboard_card_time .el-input__inner input{
   background: #545768;
   border: 0;
+  color:#fff
 }
 
 .Dashboard_card_time{
@@ -241,8 +252,35 @@
   color: white;
 }
 
+
+.default .el-date-editor.el-input,
+.default  .el-date-editor.el-input__inner{
+  width: 150px;
+  color: #fff;
+}
+.range-data .el-date-editor--daterange.el-input__inner{
+  width: 150px;
+  color: #fff;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.range-data .el-range-editor--mini .el-range-separator {
+  line-height: 22px;
+  font-size: 12px;
+  color: #fff;
+}
+.range-data .el-range-input{
+  width: 45%;
+}
+.range-data .el-input__icon,
+.range-data .el-range__icon,
+.range-data  .el-icon-date{
+  display: none;
+}
 .Dashboard_card_time .el-date-editor--daterange.el-input__inner{
   width: 200px;
+  color: #fff;
 }
 
 .Dashboard_card_body_two .el-select{
