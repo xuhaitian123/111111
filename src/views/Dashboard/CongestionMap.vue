@@ -102,8 +102,10 @@
                 </el-row>
               </div>
 
-              <div v-if="!currentRoadNet" style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
-                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+              <div v-if="!currentRoadNet"
+                   style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div
+                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
                   图例
                 </div>
 
@@ -132,8 +134,10 @@
               </div>
 
 
-              <div v-if="currentRoadNet" style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
-                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+              <div v-if="currentRoadNet"
+                   style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div
+                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
                   图例
                 </div>
 
@@ -204,7 +208,7 @@
         allLinksFlow: [],
         allNodeFlow: [],
         startTime: 0,
-        loading:false,
+        loading: false,
       }
     },
     mounted() {
@@ -215,6 +219,7 @@
         this.getAllData();
       },
       getAllData(startTime, endTime) {
+        console.log('---')
         this.loading = true;
         this.getCongestionPercent(startTime, endTime);
         this.getRoadNetCongestionScore(startTime, endTime);
@@ -252,8 +257,8 @@
         let url = '/trafficCongestion/roadAllLinksDelay?token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
-            cb(response.data.values)
-          })
+          cb(response.data.values)
+        })
       },
       getAllNodeD12s(startTime, endTime, cb) {  //所有交叉口延误数据
         let url = '/nodeData/getAllNodeD12s?token=' + this.getHeader().token;
@@ -317,7 +322,7 @@
           return "#c9c9cc"
         }
       },
-      alarmColor (val,is) {
+      alarmColor(val, is) {
         if (is) {
           return "#9a9bac";
         }
@@ -329,7 +334,7 @@
           return "#a43f43";
         }
       },
-      alarmText (val) {
+      alarmText(val) {
         if (val <= 60) {
           return "轻";
         } else if (val > 60 && val <= 80) {
@@ -346,6 +351,10 @@
             this.setRoadNetStatus(this.currentRoadNet, this.startTime, val);
             this.startTime = 0;
           }
+        } else if (val < this.startTime) {
+          this.getAllData(val, val + 5 * 60 * 1000);
+          this.setRoadNetStatus(this.currentRoadNet, val, val + 5 * 60 * 1000);
+          this.startTime = 0;
         } else {
           this.startTime = val;
         }

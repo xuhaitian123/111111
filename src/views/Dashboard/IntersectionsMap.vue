@@ -1886,6 +1886,10 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             this.getAllData(this.startTime, val);
             this.startTime = 0;
           }
+        } else if (val < this.startTime) {
+          this.getAllData(val, val + 5 * 60 * 1000);
+          this.setRoadNetStatus(this.currentRoadNet, val, val + 5 * 60 * 1000);
+          this.startTime = 0;
         } else {
           this.startTime = val;
         }
