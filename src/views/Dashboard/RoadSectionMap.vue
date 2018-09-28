@@ -144,7 +144,7 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="" style="margin-top: 10px">
-                    <div v-for="(name,i) in linksInfo[0]" :key="name.link_id" v-if="i <4" style="padding: 24px 0">
+                    <div v-for="(name,i) in crossLinks" :key="name.link_id" v-if="i <linksInfo[0].length+1" style="padding: 24px 0">
                       {{name.link_name}}
                     </div>
                   </div>
@@ -318,6 +318,7 @@
         allScore: [],
         scoreName: [],
         corridorScore: 0,
+        crossLinks:[],
       }
     },
     mounted() {
@@ -328,9 +329,9 @@
         this.getAllData();
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
 
-        this.$http.get('/index/roadCrossLinkByLinkId?linkId='+ this.$route.params.id  +'&token=' + this.getHeader().token)
+        this.$http.get('/index/roadCrossAllLinksByLinkId?linkId='+ this.$route.params.id  +'&token=' + this.getHeader().token)
           .then((response) => {
-            console.log(response)
+            this.crossLinks = response.data.cross_links;
           })
       },
       getAllData(startTime, endTime) {
