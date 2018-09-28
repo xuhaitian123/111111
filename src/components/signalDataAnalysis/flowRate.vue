@@ -28,6 +28,10 @@
             tooltip: {
               trigger: 'axis'
             },
+            grid:{
+             width:380,
+              left:60
+            },
             legend: {
               itemGap:70,
               data: [{
@@ -65,7 +69,9 @@
               {
                 type: 'value',
                 show: true,
+                max:'',
                 axisLabel: {
+                  show:true,
                   formatter: '{value}',
                   color: '#c9c9cc',
                   margin:10
@@ -84,6 +90,9 @@
                 type: 'value',
                 show: true,
                 position: 'left',
+                max:'',
+                name:'路网流量(vph)',
+                nameLocation:'end',
                 interval:'',
                 axisLabel: {
                   formatter: '{value}',
@@ -127,8 +136,6 @@
           let flow_number = this.flow_rate_data.map(function (item) {
             return {month:parseInt(item.month.substring(4,6)),value:item.value}
           })
-          console.log(flow_number)
-          console.log(road_speed_number)
           let month = ['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'];
           for( let i = 0;i<flow_number.length;i++){
             option_four.xAxis[0].data.push(month[flow_number[i].month-1])
@@ -136,22 +143,26 @@
           road_speed_number.forEach(function (data,index) {
             option_four.series[1].data.push([index,data.value])
           })
-          console.log(option_four.series[1].data)
           flow_number.forEach(function (data,index) {
             option_four.series[0].data.push([index,data.value])
           })
+          option_four.yAxis[1].max = this.get_max_value(flow_number,100000)
+          option_four.yAxis[0].max = this.get_max_value(road_speed_number,100)
+          option_four.yAxis[1].interval =this.get_max_value(flow_number,100000)/5;
+          option_four.yAxis[0].interval =this.get_max_value(road_speed_number,100)/5
+
+        },
+        get_max_value(number, test){
           let y_value = [];
-          road_speed_number.forEach(function (data) {
+          number.forEach(function (data) {
             y_value.push(data.value)
           })
-          let y_y_value = [];
-          flow_number.forEach(function (data) {
-            y_y_value.push(data.value)
-          })
-          option_four.yAxis[1].interval = Math.max.apply(null,y_y_value)/6;
-          console.log( option_four.yAxis[0].interval)
-          option_four.yAxis[0].interval = Math.max.apply(null,y_value)/6
-          console.log(option_four.yAxis[1].interval)
+          var max_value = Math.max.apply(null,y_value)
+          console.log(max_value)
+          var max_value_int = Math.ceil(max_value/test)
+          console.log(max_value_int)
+          var max_value_val = max_value_int*test
+          return max_value_val
         }
       },
     }

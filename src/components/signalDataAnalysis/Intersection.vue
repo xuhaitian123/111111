@@ -93,6 +93,7 @@
             yAxis: [
               {
                 name: "报警次数",
+                max:'',
                 nameTextStyle: {
                   color: "#c9c9cc"
                 },
@@ -118,6 +119,7 @@
               },
               {
                 name: '平均延误时间(s)',
+                max:'',
                 nameTextStyle: {
                   color: "#c9c9cc",
                   align: 'left'
@@ -200,22 +202,26 @@
           item.after.forEach(function (data,index) {
             option_one.series[3].data.push([index,data.value])
           });
-          let y_value  = []
-            item.before.forEach(function (data) {
-             y_value.push(data.value)
-          })
-          item.after.forEach(function (data) {
+            var max_value_intersection_data_before= this.get_max_value(intersection_data.before,10)
+            var max_value_intersection_data_after  =this.get_max_value(intersection_data.after,10)
+            var max_value_item_before = this.get_max_value(item.before,100)
+            var max_value_item_after = this.get_max_value(item.after,100)
+          var max_value_intersection_data = Math.max(max_value_intersection_data_before,max_value_intersection_data_after)
+          var max_value_item_data = Math.max(max_value_item_before ,max_value_item_after)
+          option_one.yAxis[1].max =  max_value_intersection_data
+          option_one.yAxis[0].max =  max_value_item_data
+          option_one.yAxis[1].interval = max_value_intersection_data/5
+          option_one.yAxis[0].interval = max_value_item_data/5
+        },
+        get_max_value(number_one, test){
+          let y_value = [];
+          number_one.forEach(function (data) {
             y_value.push(data.value)
           })
-          let y_y_value = []
-          intersection_data.before.forEach(function (data) {
-            y_y_value.push(data.value)
-          })
-          intersection_data.after.forEach(function (data) {
-            y_y_value.push(data.value)
-          })
-          option_one.yAxis[1].interval = Math.max.apply(null,y_value)/6
-          option_one.yAxis[0].interval = Math.max.apply(null,y_y_value)/6
+          var max_value = Math.max.apply(null,y_value)
+          var max_value_int = Math.ceil(max_value/test)
+          var max_value_val = max_value_int*test
+          return max_value_val
         }
         },
 
