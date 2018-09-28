@@ -92,7 +92,9 @@
   height: 30px;
   background: #353643;
 }
-
+.el-select-dropdown{
+  background:  rgb(41, 41, 53);
+}
 .el-select input {
   height: 30px;
   background: #353643;
@@ -222,4 +224,35 @@
 .el-tabs__item{
    height: 30px;
   line-height: 30px;
+}
+
+.Dashboard_card_time .el-input__inner,.Dashboard_card_time .el-input__inner input{
+  background: #545768;
+  border: 0;
+}
+
+.Dashboard_card_time{
+  padding: 15px 0 0 40px;
+  /*float: right;*/
+}
+
+.Dashboard_card_time .el-date-editor .el-range-input{
+  width: 39%;
+  color: white;
+}
+
+.Dashboard_card_time .el-date-editor--daterange.el-input__inner{
+  width: 200px;
+}
+
+.Dashboard_card_body_two .el-select{
+  width: 150px;
+}
+
+.Dashboard_card_body_two .el-select-dropdown{
+  background: initial!important;
+}
+
+.Dashboard_card_body_two .el-select-dropdown__list{
+  width: inherit;
 }

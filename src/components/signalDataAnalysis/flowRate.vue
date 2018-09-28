@@ -148,9 +148,9 @@
           flow_number.forEach(function (data) {
             y_y_value.push(data.value)
           })
-          option_four.yAxis[0].interval = Math.max.apply(null,y_y_value)/6;
+          option_four.yAxis[1].interval = Math.max.apply(null,y_y_value)/6;
           console.log( option_four.yAxis[0].interval)
-          option_four.yAxis[1].interval = Math.max.apply(null,y_value)/6
+          option_four.yAxis[0].interval = Math.max.apply(null,y_value)/6
           console.log(option_four.yAxis[1].interval)
         }
       },

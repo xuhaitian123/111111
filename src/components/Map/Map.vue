@@ -74,7 +74,7 @@
         label.id = id;
         label.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
-          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
+          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0,id.indexOf('_')));
         });
 
         window.congestionMap.addOverlay(label);
@@ -82,12 +82,12 @@
       addNodeMarker(long, lat, value, id, isAddUrl) {
         this.deletePoint(id);
         let pt = new window.BMap.Point(long, lat);
-        let myIcon = new window.BMap.Icon(isAddUrl ? this.getNodeDelayImg(value) : this.getNodeFlowImg(value), new window.BMap.Size(52, 51));
+        let myIcon = new window.BMap.Icon(isAddUrl ? this.getNodeDelayImg(value) : this.getNodeFlowImg(value), new window.BMap.Size(40, 40));
         let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
         marker.id = id;
         marker.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
-          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id);
+          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0,id.indexOf('_')));
         });
 
         window.congestionMap.addOverlay(marker);
@@ -96,7 +96,6 @@
         let allOverlay = window.congestionMap.getOverlays();
         for (let i = 0; i < allOverlay.length -1; i++){
           if(allOverlay[i].id=== id){
-            console.log(id)
             window.congestionMap.removeOverlay(allOverlay[i]);
             return false;
           }
@@ -115,10 +114,9 @@
           strokeColor: isAddUrl ? this.getDelayColor(value) : this.getFlowColor(value)//折线颜色
         });
         polyline.id = id;
-        polyline.name = id.substring(0,id.indexOf('_'));
         polyline.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
-          this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
+          this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id.substring(0,id.indexOf('_')) + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
         });
 
         window.congestionMap.addOverlay(polyline);          //增加折线
@@ -139,9 +137,9 @@
         this.$router.push(key);
       },
       getFlowColor(num) {
-        if (num < 1000) {
+        if (num <= 1000) {
           return "green"
-        } else if (num > 1000 && num < 3000) {
+        } else if (num > 1000 && num <= 3000) {
           return "darkorange"
         } else if (num > 3000) {
           return "red"
@@ -150,11 +148,11 @@
         }
       },
       getDelayColor(num) {
-        if (num < 30) {
+        if (num <= 30) {
           return "green"
-        } else if (num > 30 && num < 50) {
+        } else if (num > 30 && num <= 50) {
           return "#e7c936"
-        } else if (num > 50 && num < 60) {
+        } else if (num > 50 && num <= 60) {
           return "darkorange"
         } else if (num > 60) {
           return "red"
@@ -163,24 +161,20 @@
         }
       },
       getNodeDelayImg(num) {
-        if (num < 30) {
-          // return "/static/50.png"
+        if (num <= 30) {
           return "/static/image/map/green.png"
-        } else if (num > 30 && num < 50) {
-          // return "/static/53.png"
+        } else if (num > 30 && num <= 50) {
           return "/static/image/map/yellow.png"
-        } else if (num > 50 && num < 60) {
-          // return "/static/52.png"
+        } else if (num > 50 && num <= 60) {
           return "/static/image/map/orange.png"
         } else if (num > 60) {
-          // return "/static/51.png"
           return "/static/image/map/red.png"
         }
       },
       getNodeFlowImg(num) {
-        if (num < 1000) {
+        if (num <= 1000) {
           return "/static/image/map/green.png"
-        } else if (num > 1000 && num < 3000) {
+        } else if (num > 1000 && num <= 3000) {
           return "/static/image/map/orange.png"
         } else if (num > 3000) {
           return "/static/image/map/red.png"
@@ -205,7 +199,9 @@
         handler(newVal, oldVal) {
           console.log(newVal)
           newVal.forEach((flow) => {
+            let text = flow.node.node_name + "<br>总流量: " + flow.value + "pcu";
             this.addNodeMarker(flow.node.long, flow.node.lat, flow.value, flow.node.node_id+'_flow_node', false)
+            this.addLabel(flow.node.long, flow.node.lat, text, flow.value, flow.node_id+'_delay_label', false);
           })
         },
         deep: true //对象内部属性的监听，关键。

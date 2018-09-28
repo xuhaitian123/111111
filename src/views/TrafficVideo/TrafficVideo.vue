@@ -10,7 +10,7 @@
           <div class="trafficVideo-video-header-left font16">{{nodeLinkName[0]}}-{{nodeLinkName[1]}}监控视频</div>
           <div class="trafficVideo-video-header-right">
 
-            <el-select v-model="nodeId" @change="changeNode" class="area_titleSelect" placeholder="本区域所有监控视频路口"
+            <el-select v-model="nodeId" @change="changeNode" class="area_titleSelect trafficVideo-select" placeholder="本区域所有监控视频路口"
                        :popper-append-to-body="false">
               <el-option
                 v-for="item in nodes"
@@ -291,9 +291,8 @@
     },
     mounted(options) {
       this.getNodeList().then(()=>{
-        this.nodeId = this.$route.params.nodeId
+        this.nodeId = Number(this.$route.params.nodeId.toString())
         this.getNodeInfo(this.nodeId)
-        this.linkId = 204
         this.getBusRate()
       })
 
@@ -325,6 +324,7 @@
         return new Promise(resolve => {
           this.$http.get('/index/nodes' + '?token=' + this.getHeader().token).then(nodes => {
             this.nodes = nodes.data.nodes
+
             resolve();
           })
         })
@@ -363,11 +363,10 @@
       },
       clearImage() {
         this.restartCountNumber()
-
+        this.isPauseTime = false
         this.imageList = {}
       },
       changeLink(link) {
-        console.log(link)
         this.taskId = link.taskId;
         this.linkId = link.linkId
         this.imageList = {}
@@ -1028,6 +1027,7 @@
     width: 20px;
     height: 20px;
   }
+  
 
 
 </style>

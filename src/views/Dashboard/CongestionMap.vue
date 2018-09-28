@@ -76,9 +76,9 @@
                 </el-row>
 
                 <el-row class="Dashboard_alarm_list" v-for="(i,index) in allNodeAlarmInfo" :key="i.node_id"
-                        v-if="index <5">
+                        v-if="index <5&& !i.value[0].isMock">
                   <el-col :span="6" :offset="1">
-                    <div class=""
+                    <div class="" style="height: 30px"
                          :style="{'margin-top': '10%','border-left': '5px solid '+alarmColor(i.value[0].value,i.value[0].isMock)}">
                       <span>{{ formatDate(new Date(i.start),'yyyy MM dd')}}</span>
                       <br>
@@ -91,7 +91,7 @@
                     </div>
                   </el-col>
                   <el-col :span="9">
-                    <div class="Dashboard_alarm_info">
+                    <div class="Dashboard_alarm_info" style="height: 30px">
                       <span :style="{color:alarmColor(i.value[0].value,i.value[0].isMock)}">
                       {{flowText[i.value[0].movement_turning_direction]}}{{alarmText(i.value[0].value)}}度拥挤</span>
                       <br>
@@ -188,27 +188,7 @@
     },
     data() {
       return {
-        alarmColor: function (val,is) {
-          if(is){
-            return "#9a9bac";
-          }
-          if (val < 60) {
-            return "#ccccd0";
-          } else if (val > 60 && val < 80) {
-            return "#c8772a";
-          } else if (val > 80) {
-            return "#a43f43";
-          }
-        },
-        alarmText: function (val) {
-          if (val < 60) {
-            return "轻";
-          } else if (val > 60 && val < 80) {
-            return "中";
-          } else if (val > 80) {
-            return "重";
-          }
-        },
+
         flowText: {
           right: '右转',
           left: '左转',
@@ -229,13 +209,13 @@
     },
     mounted() {
       this.init();
-      this.loading = true;
     },
     methods: {
       init() {
         this.getAllData();
       },
       getAllData(startTime, endTime) {
+        this.loading = true;
         this.getCongestionPercent(startTime, endTime);
         this.getRoadNetCongestionScore(startTime, endTime);
         this.getAllNodeCongestionAlarm(startTime, endTime);
@@ -320,21 +300,42 @@
           this.getAllNodesFlow(startTime, endTime, (node) => {
             this.allLinksFlow = link.data;
             this.allNodeFlow = node.data;
-            this.loading = true;
+            this.loading = false;
           });
         });
       },
       getRoadAvgDelayColor(num) {
-        if (num < 30) {
+        if (num <= 30) {
           return "green"
-        } else if (num > 30 && num < 50) {
+        } else if (num > 30 && num <= 50) {
           return "#e7c936"
-        } else if (num > 50 && num < 60) {
+        } else if (num > 50 && num <= 60) {
           return "darkorange"
         } else if (num > 60) {
           return "red"
         } else {
           return "#c9c9cc"
+        }
+      },
+      alarmColor (val,is) {
+        if (is) {
+          return "#9a9bac";
+        }
+        if (val <= 60) {
+          return "#ccccd0";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "#a43f43";
+        }
+      },
+      alarmText (val) {
+        if (val <= 60) {
+          return "轻";
+        } else if (val > 60 && val <= 80) {
+          return "中";
+        } else if (val > 80) {
+          return "重";
         }
       },
       getNewTime(val) {

@@ -27,6 +27,9 @@ Vue.use(ElementUI);
 axios.defaults.baseURL = 'http://115.159.124.199:3000';
 // axios.defaults.baseURL = 'http://localhost:3000/';
 
+
+
+
 Vue.config.productionTip = false;
 
 Vue.prototype.$echarts = echarts;

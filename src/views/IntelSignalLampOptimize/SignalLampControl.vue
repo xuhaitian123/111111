@@ -18,13 +18,13 @@
             <div class="right-container">
               <div class="road-select">
                 <span>路口</span><!--el-icon-caret-right-->
-                <el-select class="select-road-style" v-model="road_value" placeholder="请选择">
+                <el-select class="select-road-style" @change="changeNode()" v-model="road_value" placeholder="请选择">
                   <el-option
                     class="selectColor"
-                    v-for="item in load_options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
+                    v-for="node_id in Object.keys(nodesInfo)"
+                    :key="node_id"
+                    :label="nodesInfo[node_id].name"
+                    :value="node_id">
                   </el-option>
                 </el-select>
               </div>
@@ -36,7 +36,7 @@
                   <!--<road-gauge :data="unuse_intel_score" class="Dashboard_card_roadGauge"></road-gauge>-->
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number red-text-color">{{unuse_intel_score}}</div>
+                      <div class="intel-score-number red-text-color">{{currentNodeInfo.beforeValue}}</div>
                     </div>
                   </div>
                 </div>
@@ -44,7 +44,7 @@
                   <div class="use-intel-score-text text-color">启用智能控制评分</div>
                   <div class="use-intel-score-image">
                     <div class="half-circle">
-                      <div class="intel-score-number green-text-color">{{use_intel_score}}</div>
+                      <div class="intel-score-number green-text-color">{{currentNodeInfo.afterValue}}</div>
                     </div>
                   </div>
                 </div>
@@ -64,13 +64,13 @@
               </div>
               <div class="week-contrast">
                 <div class="week-show">
-                  <div class="week-day" id="monday" @click="get_week_day_data('monday',1)">周一</div>
-                  <div class="week-day" id="tuesday" @click="get_week_day_data('tuesday',2)">周二</div>
-                  <div class="week-day" id="wednesday" @click="get_week_day_data('wednesday',3)">周三</div>
-                  <div class="week-day" id="thursday" @click="get_week_day_data('thursday',4)">周四</div>
-                  <div class="week-day" id="friday" @click="get_week_day_data('friday',5)">周五</div>
-                  <div class="week-day" id="saturday" @click="get_week_day_data('saturday',6)">周六</div>
-                  <div class="week-day" id="sunday" @click="get_week_day_data('sunday',7)">周日</div>
+                  <div class="week-day" id="monday" @click="get_week_day_data('monday',0)">周一</div>
+                  <div class="week-day" id="tuesday" @click="get_week_day_data('tuesday',1)">周二</div>
+                  <div class="week-day" id="wednesday" @click="get_week_day_data('wednesday',2)">周三</div>
+                  <div class="week-day" id="thursday" @click="get_week_day_data('thursday',3)">周四</div>
+                  <div class="week-day" id="friday" @click="get_week_day_data('friday',4)">周五</div>
+                  <div class="week-day" id="saturday" @click="get_week_day_data('saturday',5)">周六</div>
+                  <div class="week-day" id="sunday" @click="get_week_day_data('sunday',6)">周日</div>
                 </div>
                 <div class="week-line"></div>
                 <div id="week_echart">
@@ -94,7 +94,7 @@
               </div>
               <div id="day_chart_line">
               </div>
-              <div class="chart-title">周一</div>
+              <div class="chart-title">{{['周一','周二','周三','周四','周五','周六','周日'][showWeeksIndex]}}</div>
             </div>
           </div>
         </el-card>
@@ -119,17 +119,176 @@
       },
       data() {
         return {
-          road_value:"珠海路-南京路",
+          road_value:"",
           load_options:[{value:'珠海路-南京路'}],
           unuse_intel_score:0,
-          use_intel_score:0
+          use_intel_score:0,
+          open_road_record_List:[],
+          nodesInfo:{},
+          currentNodeInfo:{},
+          showWeeksIndex: 0,
         }
       },
       mounted: function () {
-        this.showEchartColumn();
-        this.showDayLineChart();
+        this.getNodesInfoDate(()=>{
+
+          this.showEchartColumn();
+          this.showDayLineChart(0);
+          this.get_week_day_data('monday',0)
+
+          window.open_map_road_icon = (node_id,title) =>{
+            this.open_road_icon(node_id,title)
+          };
+          window.close_map_road_icon = (node_id,title) =>{
+            this.close_road_icon(node_id,title)
+          }
+
+          //获取路口数据
+          this.getAllRoadInfo();
+        })
+
+      },
+      beforeMount(){
+        // this.showEchartColumn();
+        // this.showDayLineChart(0);
       },
       methods:{
+        changeNode(node_id){
+          this.currentNodeInfo = this.nodesInfo[this.road_value]
+          this.get_week_day_data('monday',0)
+          this.showEchartColumn();
+          this.showDayLineChart(0);
+
+        },
+        getNodesInfoDate(cb){
+          this.$http.get('http://localhost:8080/static/data.json').then((nodesInfo)=>{
+            this.nodesInfo =  nodesInfo.data;
+
+            this.currentNodeInfo = this.nodesInfo[Object.keys(this.nodesInfo)[0]]
+            this.road_value =   this.currentNodeInfo.name
+            cb()
+
+          })
+        },
+
+        getAllRoadInfo(){
+          console.log('getAllRoadInfo');
+          var self = this;
+          this.$http.get('/index/nodes?token=693e9af84d3dfcc71e640e005bdc5e2e')
+            .then((response) => {
+              console.log(response.data);
+              self.showBMapPoint(response.data.nodes);
+              return response.data;
+            })
+        },
+        createOverLay(map,node){
+          var self = this;
+          //创建图标
+          var pt = new BMap.Point(node.long, node.lat);
+          //
+          var isExist = this.findRoadIsOpen(node.node_id,node.node_name);
+          console.log(isExist);
+          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/red.png"
+          var myIcon = new BMap.Icon(str_icon_path, new BMap.Size(40,40));
+          var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
+          marker.title = node.node_name;
+          marker.id = node.node_id;
+          marker.addEventListener("click", function(e){
+            var title = "\"" +e.target.title + "\"";
+            var sContent = "<div style=''  class='box-content'>" +
+              "<div class='control-button'>" +
+              "<div class='open-button' onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
+              "<div class='close-button' onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
+              +"</div>"+
+              "<div class='select-options'><ul>" +
+              "<li>Default</li>"+
+              "<li>Minimize Delay</li>"+
+              "<li>Minimize</li>"+
+              "</ul>" +
+              "</div>"
+              +"</div>";
+
+            var infoBox = new BMap.InfoWindow(sContent);
+            map.openInfoWindow(infoBox, e.target.point)
+            self.road_value = e.target.title;
+          });
+          return marker;
+        },
+        showBMapPoint(nodes){
+          var self = this;
+          var map = window.congestionMap;
+          // 百度地图API功能
+          for (var i = 0; i < nodes.length; i ++)
+          {
+            var marker = self.createOverLay(map,nodes[i])
+            map.addOverlay(marker);
+
+          }
+        },
+
+        //地图标注打开按钮
+        open_road_icon(node_id,title){
+          var map = window.congestionMap;
+          var isExist = this.findRoadIsOpen(node_id,title);
+          if (isExist == -1) {
+            var arrMarkers = map.getOverlays();
+            this.open_road_record_List.push({node_id:node_id,road_name:title});
+            for (var i = 0; i < arrMarkers.length; i ++)
+            {
+              if (arrMarkers[i].id == node_id)
+              {
+                var node = {
+                  long:arrMarkers[i].point.lng,
+                  lat:arrMarkers[i].point.lat,
+                  title:arrMarkers[i].title,
+                  node_id:arrMarkers[i].id
+                };
+                map.removeOverlay(arrMarkers[i]);
+                var new_marker = this.createOverLay(map,node);
+                map.addOverlay(new_marker);
+              }
+            }
+          }
+          map.closeInfoWindow();
+        },
+        //地图图标关闭按钮
+        close_road_icon(node_id,title){
+          var map = window.congestionMap;
+          var index = this.findRoadIsOpen(node_id,title);
+          if (index != -1) {
+            var arrMarkers = map.getOverlays();
+            this.open_road_record_List.splice(index,1);
+            for (var i = 0; i < arrMarkers.length; i ++)
+            {
+              if (arrMarkers[i].id == node_id)
+              {
+                var node = {
+                  long:arrMarkers[i].point.lng,
+                  lat:arrMarkers[i].point.lat,
+                  title:arrMarkers[i].title,
+                  node_id:arrMarkers[i].id
+                };
+                map.removeOverlay(arrMarkers[i]);
+                var new_marker = this.createOverLay(map,node);
+                map.addOverlay(new_marker);
+              }
+            }
+          }
+          map.closeInfoWindow();
+        },
+        findRoadIsOpen(node_id,title){
+          var isExist = -1;
+          for (var i = 0; i < this.open_road_record_List.length; i ++)
+          {
+            if (this.open_road_record_List[i].node_id == node_id)
+            {
+              isExist = i;
+            }
+          }
+          return isExist;
+        },
+
+
         remove_week_background:function(){
           $("#monday").removeClass("week-day-background-color");
           $("#tuesday").removeClass("week-day-background-color");
@@ -143,7 +302,8 @@
         get_week_day_data:function(week_day_id,index){
           this.remove_week_background();
           $("#"+week_day_id).addClass("week-day-background-color");
-          this.showDayLineChart();
+          this.showWeeksIndex = index;
+          this.showDayLineChart(index);
         },
         jumpPageToMain: function () {
 
@@ -157,40 +317,52 @@
           this.buildWeekData()
         },
         buildWeekData:function () {
+
           var legendData = ['', ''];
           var bgColorList = ['#ba4c48','#62ac82'];
-          var axisLabel = ['', '', '', '', '', '',''];
-          var seriesValue = [];
-          for (var i = 0; i < legendData.length; i++) {
-            var arrData = [];
-            var seriesDataVal = null;
-            for (var j = 0; j < axisLabel.length; j++) {
-              arrData.push(Math.floor(Math.random() * 100));
-            }
-            seriesDataVal = {
-              barWidth: 8,//柱状条宽度
-              name:'',
-              type:'bar',
-              itemStyle: {
-                normal: {
-                  show: true,//鼠标悬停时显示label数据
-                  barBorderRadius: [0, 0, 0, 0],//柱形图圆角，初始化效果
-                  color: bgColorList[i]
-                }
-              },
-              label: {
-                normal: {
-                  show: true, //显示数据
-                  position: 'right',//显示数据位置 'top/right/left/insideLeft/insideRight/insideTop/insideBottom'
-                  color:'#fff'
-                }
-              } ,
-              data:arrData
-            };
-            seriesValue.push(seriesDataVal);
+          var currentNodeInfo = this.currentNodeInfo.data;
+          var  beforeDataLine = {
+            barWidth: 8,//柱状条宽度
+            name: '',
+            type: 'bar',
+            itemStyle: {
+              normal: {
+                show: true,//鼠标悬停时显示label数据
+                barBorderRadius: [0, 0, 0, 0],//柱形图圆角，初始化效果
+                color: bgColorList[0]
+              }
+            },
+            label: {
+              normal: {
+                show: true, //显示数据
+                position: 'right',//显示数据位置 'top/right/left/insideLeft/insideRight/insideTop/insideBottom'
+                color: '#fff'
+              }
+            },
+            data: currentNodeInfo.map(item=> item.beforeValue)
+          }
+          var  afterDataLine = {
+            barWidth: 8,//柱状条宽度
+            name: '',
+            type: 'bar',
+            itemStyle: {
+              normal: {
+                show: true,//鼠标悬停时显示label数据
+                barBorderRadius: [0, 0, 0, 0],//柱形图圆角，初始化效果
+                color: bgColorList[1]
+              }
+            },
+            label: {
+              normal: {
+                show: true, //显示数据
+                position: 'right',//显示数据位置 'top/right/left/insideLeft/insideRight/insideTop/insideBottom'
+                color: '#fff'
+              }
+            },
+            data: currentNodeInfo.map(item=> item.afterValue)
           }
 
-          this.buildWeekChart(legendData, axisLabel, seriesValue);
+          this.buildWeekChart(legendData, ['','','','','','',''], [beforeDataLine, afterDataLine]);
         },
         buildWeekChart:function(legendData, axisLabel, seriesValue) {
           var chart = document.getElementById('week_echart');
@@ -223,12 +395,14 @@
             },
             xAxis: [{
               min: 0,
+              max: 100,
               type: 'value',
               splitLine:{show: false},
               splitArea : {show : false}//保留网格区域
             }],
             yAxis: [{
               min: 0,
+
               type: 'category', //纵向柱状图，若需要为横向，则此处值为'value'， 下面 yAxis 的type值为'category'
               splitLine:{show: false},
               splitArea : {show : false},//保留网格区域
@@ -251,10 +425,8 @@
           echart.setOption(option);
         },
         //每天的数据展示柱状图
-        showDayLineChart:function () {
-          this.buildDayData();
-        },
-        buildDayData:function () {
+        showDayLineChart:function (index) {
+          console.log(this.currentNodeInfo)
           var legendData = ['', ''];
           var bgColorList = ['#ba4c48','#62ac82'];
           var axisLabel = ['00:00', '06:00', '12:00', '18:00', '24:00'];
@@ -265,22 +437,44 @@
             for (var j = 0; j < axisLabel.length; j++) {
               arrData.push(Math.floor(Math.random() * 100));
             }
-            seriesDataVal = {
-              type: 'line',
-              showAllSymbol: true,
-              itemStyle: {
-                normal: {
-                  color: bgColorList[i],
-                  lineStyle: {
-                    color: bgColorList[i]
-                  }
-                }
-              },
-              data:arrData
-            };
+
             seriesValue.push(seriesDataVal);
           }
-          this.drawDayLine(legendData, axisLabel, seriesValue);
+
+
+          var beforeDate= {
+            type: 'line',
+            showAllSymbol: true,
+            itemStyle: {
+              normal: {
+                color: bgColorList[0],
+                lineStyle: {
+                  color: bgColorList[0]
+                }
+              }
+            },
+            data:this.currentNodeInfo.data[index].beforeList
+          };
+          var afterDate= {
+            type: 'line',
+            showAllSymbol: true,
+            itemStyle: {
+              normal: {
+                color: bgColorList[1],
+                lineStyle: {
+                  color: bgColorList[1]
+                }
+              }
+            },
+            data:this.currentNodeInfo.data[index].afterList
+          };
+
+
+
+
+
+
+          this.drawDayLine(legendData, axisLabel, [beforeDate,afterDate]);
         },
         drawDayLine:function(legendData, axisLabel, seriesValue) {
           var myLineChart = echarts.init(document.getElementById('day_chart_line'));
@@ -373,27 +567,27 @@
   .road-select{
     margin: 15px 0 34px 57px;
   }
-  .select-road-style{
-    width: 140px;
-    height: 22px !important;
-    line-height: 22px;
-    font-size: 18px;
+  /*.select-road-style{*/
+    /*width: 140px;*/
+    /*height: 22px !important;*/
+    /*line-height: 22px;*/
+    /*font-size: 18px;*/
 
-    /*很关键：将默认的select选择框样式清除*/
-    appearance:none;
-    -moz-appearance:none;
-    -webkit-appearance:none;
-  }
-  .selectColor{
-    color: white;
-    font-size: 12px;
-    height: 16px;
-    line-height: 16px;
-    margin: 0;
-    padding: 3px;
-    border-radius: 3px;
+    /*!*很关键：将默认的select选择框样式清除*!*/
+    /*appearance:none;*/
+    /*-moz-appearance:none;*/
+    /*-webkit-appearance:none;*/
+  /*}*/
+  /*.selectColor{*/
+    /*color: white;*/
+    /*font-size: 12px;*/
+    /*height: 16px;*/
+    /*line-height: 16px;*/
+    /*margin: 0;*/
+    /*padding: 3px;*/
+    /*border-radius: 3px;*/
 
-  }
+  /*}*/
 
 
   .CongestionMap_Legend li:last-child {
