@@ -200,22 +200,22 @@
           item.after.forEach(function (data,index) {
             option_one.series[3].data.push([index,data.value])
           });
-          let y_value  = []
-            item.before.forEach(function (data) {
-             y_value.push(data.value)
-          })
-          item.after.forEach(function (data) {
-            y_value.push(data.value)
-          })
-          let y_y_value = []
-          intersection_data.before.forEach(function (data) {
-            y_y_value.push(data.value)
-          })
-          intersection_data.after.forEach(function (data) {
-            y_y_value.push(data.value)
-          })
+
           option_one.yAxis[1].interval = Math.max.apply(null,y_value)/6
           option_one.yAxis[0].interval = Math.max.apply(null,y_y_value)/6
+        },
+        get_max_value(number, test){
+          let y_value = [];
+          let y_y_value = [];
+          number.forEach(function (data) {
+            y_value.push(data.value)
+          })
+          var max_value = Math.max.apply(null,y_value)
+          console.log(max_value)
+          var max_value_int = Math.ceil(max_value/test)
+          console.log(max_value_int)
+          var max_value_val = max_value_int*test
+          return max_value_val
         }
         },
 
