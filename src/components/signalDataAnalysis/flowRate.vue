@@ -91,12 +91,10 @@
                 show: true,
                 position: 'left',
                 max:'',
-                name:'路网流量(vph)',
-                nameLocation:'end',
                 interval:'',
                 axisLabel: {
                   formatter: '{value}',
-                  color: '#c9c9cc'//
+                  color: '#c9c9cc'
                 },
                 splitLine: {
                   show: true,
