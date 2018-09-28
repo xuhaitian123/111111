@@ -25,7 +25,7 @@
               </div>
               <div class="show-filter-item_road">
                 <div class="selected_road">选择路口</div>
-                <el-select v-model="week_date_1_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+                <el-select v-model="week_date_1_picker_node" size="mini" class="area_titleSelect"  placeholder="请选择" :popper-append-to-body="false">
                 <el-option
                 v-for="item in nodes"
                 :key="item.node_id"
@@ -38,7 +38,7 @@
             <div class="main_up_left_right_head">
               <div class="show-filter-item_road">
                 <div class="selected_road">选择路口</div>
-                <el-select v-model="week_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+                <el-select v-model="week_date_2_picker_node" size="mini" class="area_titleSelect"  placeholder="请选择" :popper-append-to-body="false">
                 <el-option
                 v-for="item in nodes"
                 :key="item.node_id"
@@ -65,7 +65,7 @@
             <div class="hot_map_view">
               <div class="hot_map_view_date"
                    style="width: 95%;height: 62px;display: flex;align-items: center;margin-left: 5%">
-                <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-left: 165px" v-on:click="heatChart_map_left_select">确定</el-button>
+                <button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-left: 165px;outline: none;padding: 0" v-on:click="heatChart_map_left_select">确定</button>
 
                 <!--<div class="contrast_left">-->
                   <!--<div class="time_right">对比时段</div>-->
@@ -109,7 +109,7 @@
             <div class="main-search-item">
               <div class="main-search-title">路口</div>
               <div>
-                <el-select v-model="sheet_date_1_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+                <el-select v-model="sheet_date_1_picker_node" size="mini" class="area_titleSelect"  placeholder="请选择" :popper-append-to-body="false">
                   <el-option
                     v-for="item in nodes"
                     :key="item.node_id"
@@ -119,7 +119,7 @@
                 </el-select>
               </div>
             </div>
-            <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-top: 18px" v-on:click="heatChart_map_right_select">确定</el-button>
+            <button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-top: 18px;outline: none;padding: 0" v-on:click="heatChart_map_right_select">确定</button>
           </div>
           <div class="main-search-action">
             <div class="main-search-item">
@@ -151,13 +151,13 @@
             <div style="padding-right: 40px">
               <div class="time_right">道路</div>
               <div>
-                <el-select v-model="sheet_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false" >
+                <el-select v-model="sheet_date_2_picker_node" size="mini" class="area_titleSelect"   placeholder="请选择" :popper-append-to-body="false" >
                   <!--<el-option :label="请选择" :key='1' :value='1' :disabled="false"></el-option>-->
                   <el-option
-                    v-for="item in nodes"
-                    :key="item.node_id"
-                    :label="item.node_name"
-                    :value="item.node_id">
+                    v-for="item in sheets"
+                    :key="item.id"
+                    :label="item.sheet_name"
+                    :value="item.sheet_name">
                   </el-option>
                 </el-select>
               </div>
@@ -166,7 +166,7 @@
               <div class="time_left">结束时间</div>
               <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_end" id="sheet_date_2_picker_end" type="text"/>
             </div>
-            <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="pie_map_select">确定</el-button>
+            <button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;outline: none;padding: 0" v-on:click="pie_map_select">确定</button>
           </div>
           <div v-for="(intersections, index) in intersectionsList" v-if="index*2 < intersectionsList.length"
                class="rate-container">
@@ -200,10 +200,7 @@
 
               <div class="rate-container-item-title"> {{intersectionsList[intersectionsList.length-1-index].rate}}%</div>
             </div>
-
           </div>
-
-
         </div>
       </div>
 
@@ -223,8 +220,7 @@
             </div>
             <div class="show-filter-item_road">
               <div class="selected_road">选择路口</div>
-              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" multiple
-                         collapse-tags placeholder="请选择" :popper-append-to-body="false">
+              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" multiple collapse-tags placeholder="请选择" :popper-append-to-body="false">
                 <el-option
                   v-for="item in sheets"
               :key="item.id"
@@ -233,7 +229,19 @@
               </el-option>
               </el-select>
             </div>
-              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="line_map_select">确定</el-button>
+              <button style="background:#57546B;border: none;color: #94949a;height: 20px;margin-top: 20px;outline:none;padding:0;width: 60px;text-align: center" v-on:click="line_map_select">确定</button>
+          </div>
+          <div style="z-index: 20;position: absolute;width: 600px;height: 88px;margin: 92px 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
+            <ul id="example-1" v-if="sheets.length">
+              <!--<li v-for="item in sheets">-->
+                <!--{{ item.sheet_name }}-->
+              <!--</li>-->
+              <div v-for="item in nodes">
+                  <!--<span><img src="../../../static/image/2login/user.png" style="height: 10px;width: 10px"></span>-->
+                <span v-on:click="select_road(item.node_id)" v-model="item.node_id">{{ item.node_name }}</span>
+                <!--<el-radio v-model="radio" label="1" v-on:click="select_road(item.sheet_name)">{{ item.sheet_name }}</el-radio>-->
+              </div>
+            </ul>
           </div>
         </div>
       </div>
@@ -250,6 +258,7 @@
     name: "signal-optimization",
     data() {
       return {
+        radio: '0',
         nodes: [],
         trendLineData:[],
         left_date_picker_start: "",
@@ -280,11 +289,9 @@
         left_date_picker_start_line_map: "",
         right_date_picker_start_line_map: "",
         myChart: undefined,
-        intersectionsList: [{id: '1', rate: 20}, {id: '2', rate: 30}, {id: '3', rate: 30}, {
-          id: '4',
-          rate: 40
-        }, {id: '11', rate: 20}, {id: '22', rate: 30}, {id: '33', rate: 30}, {id: '44', rate: 40},
-           {id: '41', rate: 20}, {id: '42', rate: 30}, {id: '53', rate: 30}, {id: '54', rate: 40}],
+        intersectionsList: [{id: '1', rate: 20}, {id: '2', rate: 30}, {id: '3', rate: 30}, {id: '4', rate: 40},
+          {id: '11', rate: 20}, {id: '22', rate: 30}, {id: '33', rate: 30}, {id: '44', rate: 40},
+           {id: '41', rate: 20}, {id: '42', rate: 30}, {id: '53', rate: 30}, {id: '52', rate: 80}],
       data:[]
       }
     },
@@ -303,16 +310,32 @@
       // this.road()
       this.add_date_picker_show()
       this.init()
-      // this.heatChart_map_right()
+      this.heatChart_map_right()
         // this.line_map_init()
-      // this.pie_map_init()
+      this.pie_map_init()
     },
     methods: {
+      pie_map_init(){
+        this.$http.get('/roadDataAnalysis/getCorridorCongestionSource?current=true' +
+          ''+ '&token=' + this.getHeader().token).then(data=>{
+          console.log(data)
+        })
+      },
+      select_road(index){
+        console.log(index)
+      },
       heatChart_map_left_select(){
         this.week_date_1_picker_start = $("#week_date_1_picker_start").val()
         this.week_date_1_picker_end = $("#week_date_1_picker_end").val()
         this.week_date_2_picker_start = $("#week_date_2_picker_start").val()
         this.week_date_2_picker_end = $("#week_date_2_picker_end").val()
+        this.$http.get(//接口
+          ''+ '&token=' + this.getHeader().token).then(function (data) {
+          console.log(data.data.value)
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
         console.log(this.week_date_1_picker_start)
         console.log(this.week_date_1_picker_end)
         console.log(this.week_date_2_picker_start)
@@ -338,8 +361,15 @@
       pie_map_select(){
         this.sheet_date_2_picker_start = $("#sheet_date_2_picker_start").val()
         this.sheet_date_2_picker_end = $("#sheet_date_2_picker_end").val()
-        console.log(this.sheet_date_2_picker_start)
-        console.log(this.sheet_date_2_picker_end)
+        this.$http.get(
+           '/roadDataAnalysis/getCorridorCongestionSource?current=true'+'&token=' + this.getHeader().token).then(function (data) {
+          console.log(data)
+        })
+          .catch(function (data) {
+            console.log(data);
+          });
+        console.log(this.sheet_date_2_picker_start.replace(/\W/g,''))
+        console.log(this.sheet_date_2_picker_end.replace(/\W/g,''))
         console.log(this.sheet_date_2_picker_node)
       },
       line_map_select(){
@@ -373,7 +403,7 @@
           });
       },
       heatChart_map_right(){
-        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180914&endDay=20180921' +
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180921&endDay=20180921' +
             ''+ '&token=' + this.getHeader().token).then(function (data) {
           console.log(data.data.value)
         })
