@@ -12,70 +12,71 @@
             <span>周拥堵情况查看，对比</span>
           </div>
           <div class="main_up_left_middle">
-            <div class="main_up_left_left_head">
-              <div class="show_time_left">
-                <div class="time_left">开始时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="week_date_1_picker_start"
-                       id="week_date_1_picker_start" type="text"/>
-              </div>
-              <div class="show_time_left">
-                <div class="time_left">结束时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="week_date_1_picker_end"
-                       id="week_date_1_picker_end" type="text"/>
-              </div>
-              <div class="show-filter-item_road">
-                <div class="selected_road">选择路口</div>
-                <el-select v-model="week_date_1_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
-                <el-option
-                v-for="item in nodes"
-                :key="item.node_id"
-                :label="item.node_name"
-                :value="item.node_id">
-                </el-option>
-                </el-select>
-              </div>
+            <!--<div class="main_up_left_left_head">-->
+            <div class="show_time_left">
+              <div class="time_left">开始时间</div>
+              <input class="time_left_show" placeholder="选择日期" v-model="week_date_1_picker_start"
+                     id="week_date_1_picker_start" type="text"/>
             </div>
-            <div class="main_up_left_right_head">
-              <div class="show-filter-item_road">
-                <div class="selected_road">选择路口</div>
-                <el-select v-model="week_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
-                <el-option
-                v-for="item in nodes"
-                :key="item.node_id"
-                :label="item.node_name"
-                :value="item.node_id">
-                </el-option>
-                </el-select>
-              </div>
-              <div class="show_time_right">
-                <div class="time_right">开始时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="week_date_2_picker_start"
-                       id="week_date_2_picker_start" type="text"/>
-              </div>
-              <div class="show_time_right">
-                <div class="time_right">结束时间</div>
-                <input class="time_left_show" placeholder="选择日期" v-model="week_date_2_picker_end"
-                       id="week_date_2_picker_end" type="text"/>
-              </div>
+            <div class="show_time_left">
+              <div class="time_left">结束时间</div>
+              <input class="time_left_show" placeholder="选择日期" v-model="week_date_1_picker_end"
+                     id="week_date_1_picker_end" type="text"/>
             </div>
+            <div class="show-filter-item_road">
+              <div class="selected_road">选择路口</div>
+              <el-select v-model="week_date_1_picker_node" size="mini" class="area_titleSelect min" placeholder="请选择"
+                         :popper-append-to-body="false">
+                <el-option
+                  v-for="item in nodes"
+                  :key="item.node_id"
+                  :label="item.node_name"
+                  :value="item.node_id">
+                </el-option>
+              </el-select>
+            </div>
+            <!--</div>-->
+            <!--<div class="main_up_left_right_head">-->
+            <!--<div class="show-filter-item_road">-->
+            <!--<div class="selected_road">选择路口</div>-->
+            <!--<el-select v-model="week_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">-->
+            <!--<el-option-->
+            <!--v-for="item in nodes"-->
+            <!--:key="item.node_id"-->
+            <!--:label="item.node_name"-->
+            <!--:value="item.node_id">-->
+            <!--</el-option>-->
+            <!--</el-select>-->
+            <!--</div>-->
+            <div class="show_time_right">
+              <div class="time_right">开始时间</div>
+              <input class="time_left_show" placeholder="选择日期" v-model="week_date_2_picker_start"
+                     id="week_date_2_picker_start" type="text"/>
+            </div>
+            <div class="show_time_right">
+              <div class="time_right">结束时间</div>
+              <input class="time_left_show" placeholder="选择日期" v-model="week_date_2_picker_end"
+                     id="week_date_2_picker_end" type="text"/>
+            </div>
+            <!--</div>-->
 
           </div>
 
           <div class="hot_map">
             <div class="hot_map_view">
               <div class="hot_map_view_date"
-                   style="width: 95%;height: 62px;display: flex;align-items: center;margin-left: 5%">
-                <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-left: 165px" v-on:click="heatChart_map_left_select">确定</el-button>
+                   style="width: 95%;height: 62px;display: flex;align-items: center;justify-content: center;margin-left: 5%">
+                <el-button class="search-button" v-on:click="heatChart_map_left_select">确定</el-button>
 
                 <!--<div class="contrast_left">-->
-                  <!--<div class="time_right">对比时段</div>-->
-                  <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start"-->
-                         <!--id="sheet_date_1_picker_start" type="text"/>-->
+                <!--<div class="time_right">对比时段</div>-->
+                <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start"-->
+                <!--id="sheet_date_1_picker_start" type="text"/>-->
                 <!--</div>-->
                 <!--<div class="contrast_right">-->
-                  <!--<div class="time_right">对比时段</div>-->
-                  <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_end"-->
-                         <!--id="sheet_date_1_picker_end" type="text"/>-->
+                <!--<div class="time_right">对比时段</div>-->
+                <!--<input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_end"-->
+                <!--id="sheet_date_1_picker_end" type="text"/>-->
                 <!--</div>-->
               </div>
               <div id="hot_map"></div>
@@ -93,23 +94,26 @@
             <div class="main-search-item">
               <div class="main-search-title">开始时间</div>
               <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start" id="sheet_date_1_picker_start"
-                        type="text"/>
+                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_start"
+                       id="sheet_date_1_picker_start"
+                       type="text"/>
               </div>
             </div>
 
             <div class="main-search-item">
               <div class="main-search-title">结束时间</div>
               <div>
-                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_end" id="sheet_date_1_picker_end"
+                <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_1_picker_end"
+                       id="sheet_date_1_picker_end"
                        type="text"/>
               </div>
             </div>
 
-            <div class="main-search-item">
+            <div class="main-search-item ">
               <div class="main-search-title">路口</div>
               <div>
-                <el-select v-model="sheet_date_1_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
+                <el-select v-model="sheet_date_1_picker_node" size="mini" class="area_titleSelect min" placeholder="请选择"
+                           :popper-append-to-body="false">
                   <el-option
                     v-for="item in nodes"
                     :key="item.node_id"
@@ -119,15 +123,15 @@
                 </el-select>
               </div>
             </div>
-            <el-button style="background:#57546B;border: none;color: #94949a;height: 20px;width: 60px;margin-top: 18px" v-on:click="heatChart_map_right_select">确定</el-button>
+            <div class="main-search-item">
+              <div class="main-search-title"></div>
+
+              <el-button class="search-button" v-on:click="heatChart_map_right_select">确定</el-button>
+            </div>
+
           </div>
           <div class="main-search-action">
             <div class="main-search-item">
-              <!--<div class="main-search-title">开始时间</div>-->
-              <!--<div>-->
-                <!--<input class="time_left_show" placeholder="选择日期" v-model="right_date_picker_start"-->
-                       <!--type="text"/>-->
-              <!--</div>-->
             </div>
           </div>
           <div>
@@ -144,61 +148,69 @@
             <span>道路协同分析</span>
           </div>
           <div class="main_up_right_pie_head">
-            <div style="margin-left: 70px;padding-right: 40px">
-              <div class="time_left">开始时间</div>
-              <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_start" id="sheet_date_2_picker_start" type="text"/>
+            <div class="main-search-item">
+              <div class="main-search-title">开始时间</div>
+              <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_start"
+                     id="sheet_date_2_picker_start" type="text"/>
             </div>
-            <div style="padding-right: 40px">
-              <div class="time_right">道路</div>
+
+            <div class="main-search-item">
+              <div class="main-search-title">结束时间</div>
+              <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_end"
+                     id="sheet_date_2_picker_end" type="text"/>
+            </div>
+            <div class="main-search-item">
+              <div class="main-search-title">道路</div>
               <div>
-                <el-select v-model="sheet_date_2_picker_node" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false" >
+                <el-select v-model="sheet_date_2_picker_node" size="mini" class="area_titleSelect min" placeholder="请选择"
+                           :popper-append-to-body="false">
                   <!--<el-option :label="请选择" :key='1' :value='1' :disabled="false"></el-option>-->
                   <el-option
-                    v-for="item in nodes"
-                    :key="item.node_id"
-                    :label="item.node_name"
-                    :value="item.node_id">
+                    v-for="item in roadList"
+                    :key="item.road_name"
+                    :label="item.road_name"
+                    :value="item.road_name">
                   </el-option>
                 </el-select>
               </div>
             </div>
-            <div style="padding-right: 70px">
-              <div class="time_left">结束时间</div>
-              <input class="time_left_show" placeholder="选择日期" v-model="sheet_date_2_picker_end" id="sheet_date_2_picker_end" type="text"/>
+            <div class="main-search-item">
+              <div class="main-search-title"></div>
+              <el-button class="search-button" v-on:click="pie_map_select">确定</el-button>
+
             </div>
-            <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="pie_map_select">确定</el-button>
           </div>
-          <div v-for="(intersections, index) in intersectionsList" v-if="index*2 < intersectionsList.length"
+          <div v-for="(intersections, index) in Object.keys(intersectionsList)"
                class="rate-container">
-            <div class="rate-container-item" @click="changeRoadRate(  intersections.id, $event)">
-              <div class="rate-container-item-title"> {{intersections.rate}}%</div>
+            <div class="rate-container-item" >
+              <div class="rate-container-item-title"> {{intersectionsList[intersections][0].value.toFixed(2) }}</div>
               <div class="rate-container-cavans-container">
-                <rate :id="intersections.id" :rate="intersections.rate"></rate>
+                <rate :id="'rate_'+index+'_left'" :rate="intersectionsList[intersections][0].value "></rate>
               </div>
             </div>
-            <div class="rate-container-action-contaienr" >
+            <div class="rate-container-action-contaienr">
               <div class="rate-item-top" :class="{'hide': index === 0}"></div>
               <div class="rate-container-action">
                 <div class="rate-container-action-line"></div>
                 <div class="rate-container-action-option">
-                   <div class="rate-container-action-title">光源路</div>
-                  <div class="rate-container-action-selected"> </div>
+                  <div class="rate-container-action-title">{{intersections}}</div>
+                  <div class="rate-container-action-selected"></div>
 
                 </div>
                 <div class="rate-container-action-line"></div>
 
               </div>
-              <div class="rate-item-bottom" :class="{'hide': index+1 === intersectionsList.length
-            /2}"></div>
+              <div class="rate-item-bottom" :class="{'hide': index+1 === Object.keys(intersectionsList).length}"></div>
 
             </div>
-            <div class="rate-container-item" @click="changeRoadRate(  intersectionsList[intersectionsList.length-1-index].id, $event)">
+            <div class="rate-container-item">
               <div class="rate-container-cavans-container">
-                <rate :id="intersectionsList[intersectionsList.length-1-index].id"
-                      :rate="intersectionsList[intersectionsList.length-1-index].rate"></rate>
+                <rate :id="'rate_'+index+'_right'"
+                      :rate="intersectionsList[intersections][1].value"></rate>
               </div>
 
-              <div class="rate-container-item-title"> {{intersectionsList[intersectionsList.length-1-index].rate}}%</div>
+              <div class="rate-container-item-title"> {{intersectionsList[intersections][1].value.toFixed(2) }}
+              </div>
             </div>
 
           </div>
@@ -214,8 +226,10 @@
         </div>
         <div class="main_down_down">
           <!--<div id="line_map" style="width: 100%;height: 100%;position: absolute;z-index: 10"></div>-->
-          <trendLine  :tranelineInfo="trendLineData" :node_name= "hour_data_picker_node" style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
-          <div style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
+          <trendLine :tranelineInfo="trendLineData" :node_name="hour_data_picker_node"
+                     style="width:90%;height: 100%;position: absolute;z-index: 10" :id="'trendLine'"></trendLine>
+          <div
+            style="z-index: 20;position: absolute;width: 600px;height: 92px;margin: 0 0 120px 1018px ;display: flex;align-items: center;justify-content: space-around">
             <div class="contrast_right">
               <div class="time_right">选择时间</div>
               <input class="time_left_show" placeholder="选择日期" v-model="hour_data_picker"
@@ -223,17 +237,19 @@
             </div>
             <div class="show-filter-item_road">
               <div class="selected_road">选择路口</div>
-              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect" multiple
+              <el-select v-model="hour_data_picker_node" size="mini" class="area_titleSelect min" multiple
                          collapse-tags placeholder="请选择" :popper-append-to-body="false">
                 <el-option
-                  v-for="item in sheets"
-              :key="item.id"
-              :label="item.sheet_name"
-              :value="item.id">
-              </el-option>
+                  v-for="item in nodes"
+                  :key="item.node_id"
+                  :label="item.node_name"
+                  :value="item.node_id">
+                </el-option>
               </el-select>
             </div>
-              <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px" v-on:click="line_map_select">确定</el-button>
+            <el-button style="background:#57546B;border: none;color: #94949a;height: 12px;width: 60px"
+                       v-on:click="line_map_select">确定
+            </el-button>
           </div>
         </div>
       </div>
@@ -245,33 +261,35 @@
   import Area from '../../components/Area/Area'
   import rate from '../../components/ECharts/rate'
   import heatChart from '../../components/ECharts/heatChart'
-  import trendLine from  '../../components/ECharts/trendLine'
+  import trendLine from '../../components/ECharts/trendLine'
+
   export default {
     name: "signal-optimization",
     data() {
       return {
         nodes: [],
-        trendLineData:[],
+        trendLineData: [],
         left_date_picker_start: "",
         week_date_1_picker_start: "",
         week_date_1_picker_end: '',
-        week_date_1_picker_node:'',
+        week_date_1_picker_node: '',
 
         week_date_2_picker_start: "",
         week_date_2_picker_end: '',
-        week_date_2_picker_node:'',
+        week_date_2_picker_node: '',
 
         sheet_date_1_picker_start: "",
         sheet_date_1_picker_end: '',
-        sheet_date_1_picker_node:'',
+        sheet_date_1_picker_node: '',
 
         sheet_date_2_picker_start: "",
         sheet_date_2_picker_end: '',
-        sheet_date_2_picker_node:'',
+        sheet_date_2_picker_node: '',
 
-        hour_data_picker_node:'',
-        hour_data_picker:'',
-        sheets:[{id:1,sheet_name:'梁红玉路'},{id:2, sheet_name:'沈坤路'}],
+
+        hour_data_picker_node: '',
+        hour_data_picker: '',
+        roadList: [{id: 1, road_name: '梁红玉路'}, {id: 2, road_name: '沈坤路'}],
         left_date_picker_end: "",
         left_filter_road_name: "",
         right_date_picker_start: "",
@@ -280,12 +298,8 @@
         left_date_picker_start_line_map: "",
         right_date_picker_start_line_map: "",
         myChart: undefined,
-        intersectionsList: [{id: '1', rate: 20}, {id: '2', rate: 30}, {id: '3', rate: 30}, {
-          id: '4',
-          rate: 40
-        }, {id: '11', rate: 20}, {id: '22', rate: 30}, {id: '33', rate: 30}, {id: '44', rate: 40},
-           {id: '41', rate: 20}, {id: '42', rate: 30}, {id: '53', rate: 30}, {id: '54', rate: 40}],
-      data:[]
+        intersectionsList: {},
+        data: []
       }
     },
     components: {
@@ -296,7 +310,7 @@
     },
     mounted: function () {
       this.$http.get('/index/nodes' +
-        ''+ '?token=' + this.getHeader().token).then(nodes=>{
+        '' + '?token=' + this.getHeader().token).then(nodes => {
         this.nodes = nodes.data.nodes
         console.log(nodes)
       })
@@ -304,102 +318,99 @@
       this.add_date_picker_show()
       this.init()
       // this.heatChart_map_right()
-        // this.line_map_init()
+      // this.line_map_init()
       // this.pie_map_init()
     },
     methods: {
-      heatChart_map_left_select(){
+      heatChart_map_left_select() {
         this.week_date_1_picker_start = $("#week_date_1_picker_start").val()
         this.week_date_1_picker_end = $("#week_date_1_picker_end").val()
         this.week_date_2_picker_start = $("#week_date_2_picker_start").val()
         this.week_date_2_picker_end = $("#week_date_2_picker_end").val()
-        console.log(this.week_date_1_picker_start)
-        console.log(this.week_date_1_picker_end)
-        console.log(this.week_date_2_picker_start)
-        console.log(this.week_date_2_picker_end)
-        console.log(this.week_date_1_picker_node)
-        console.log(this.week_date_2_picker_node)
+
       },
-      heatChart_map_right_select(){
+      heatChart_map_right_select() {
         var self = this
         this.sheet_date_1_picker_start = $("#sheet_date_1_picker_start").val()
         this.sheet_date_1_picker_end = $("#sheet_date_1_picker_end").val()
-        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName='+self.sheet_date_1_picker_node+'&beginDay='+self.sheet_date_1_picker_start.replace(/\W/g,'')+'&endDay='+self.sheet_date_1_picker_end.replace(/\W/g,'')+
-          ''+ '&token=' + this.getHeader().token).then(function (data) {
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=' + self.sheet_date_1_picker_node + '&beginDay=' + self.sheet_date_1_picker_start.replace(/\W/g, '') + '&endDay=' + self.sheet_date_1_picker_end.replace(/\W/g, '') +
+          '' + '&token=' + this.getHeader().token).then(function (data) {
           console.log(data.data.value)
         })
           .catch(function (data) {
             console.log(data);
           });
-        console.log(this.sheet_date_1_picker_start.replace(/\W/g,''))
-        console.log(this.sheet_date_1_picker_end.replace(/\W/g,''))
+        console.log(this.sheet_date_1_picker_start.replace(/\W/g, ''))
+        console.log(this.sheet_date_1_picker_end.replace(/\W/g, ''))
         console.log(this.sheet_date_1_picker_node)
       },
-      pie_map_select(){
-        this.sheet_date_2_picker_start = $("#sheet_date_2_picker_start").val()
-        this.sheet_date_2_picker_end = $("#sheet_date_2_picker_end").val()
-        console.log(this.sheet_date_2_picker_start)
+      pie_map_select() {
+        var start = new Date(this.sheet_date_2_picker_start).getTime();
+        var end = new Date(this.sheet_date_2_picker_end).getTime()
         console.log(this.sheet_date_2_picker_end)
-        console.log(this.sheet_date_2_picker_node)
+        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + start + '&end=' + end + '&roadName=' + this.sheet_date_2_picker_node + '&token=' + this.getHeader().token)
+          .then((result) => {
+            this.intersectionsList = result.data.value[this.sheet_date_2_picker_node]
+          }).catch(function (data) {
+          console.log(data);
+        });
       },
-      line_map_select(){
+      line_map_select() {
         this.hour_data_picker = $("#line_map_top_right_date_picker_start").val()
         var road_id = ''
-        for( var i = 0 ;i<this.hour_data_picker_node.length;i++){
-          if( i< this.hour_data_picker_node.length-1){
-            road_id += this.hour_data_picker_node[i]+','
-          }else {
+        for (var i = 0; i < this.hour_data_picker_node.length; i++) {
+          if (i < this.hour_data_picker_node.length - 1) {
+            road_id += this.hour_data_picker_node[i] + ','
+          } else {
             road_id += this.hour_data_picker_node[i]
           }
         }
-        console.log(road_id)
-        console.log(this.hour_data_picker.replace(/\W/g,''))
-        console.log(this.hour_data_picker_node)
+
         var self = this
-        this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds='+road_id+'&days='+self.hour_data_picker.replace(/\W/g,'')+
-          ''+ '&token=' + this.getHeader().token).then(function (data) {
+        this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=' + road_id + '&days=' + self.hour_data_picker.replace(/\W/g, '') +
+          '' + '&token=' + this.getHeader().token).then(function (data) {
           var trendLineData = []
-          for(var j = 0;j<data.data.length;j++){
-            var line_map_info =[]
-            for ( var i=0;i<data.data[j].values.length;i++){
-              line_map_info.push([i+1,data.data[j].values[i].value])
+          for (var j = 0; j < data.data.length; j++) {
+            var line_map_info = []
+            for (var i = 0; i < data.data[j].values.length; i++) {
+              line_map_info.push([i + 1, data.data[j].values[i].value])
             }
             trendLineData.push(line_map_info)
           }
-          self.trendLineData=trendLineData;
+          self.trendLineData = trendLineData;
         })
           .catch(function (data) {
             console.log(data);
           });
       },
-      heatChart_map_right(){
+      heatChart_map_right() {
         this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=梁红玉路&beginDay=20180914&endDay=20180921' +
-            ''+ '&token=' + this.getHeader().token).then(function (data) {
+          '' + '&token=' + this.getHeader().token).then(function (data) {
           console.log(data.data.value)
         })
           .catch(function (data) {
             console.log(data);
           });
       },
-      road(){
+      road() {
         var self = this
         this.$http.get('/roadDataAnalysis/daysAvgSaturateOfLink?linkIds=201,202&days=20180922' +
-          ''+ '&token=' + this.getHeader().token).then(function (data) {
-            var trendLineData = []
-            for(var j = 0;j<data.data.length;j++){
-              var line_map_info =[]
-              for ( var i=0;i<data.data[j].values.length;i++){
-                line_map_info.push([i+1,data.data[j].values[i].value])
-              }
-              trendLineData.push(line_map_info)
+          '' + '&token=' + this.getHeader().token).then(function (data) {
+          var trendLineData = []
+          for (var j = 0; j < data.data.length; j++) {
+            var line_map_info = []
+            for (var i = 0; i < data.data[j].values.length; i++) {
+              line_map_info.push([i + 1, data.data[j].values[i].value])
             }
-            self.trendLineData=trendLineData;
-          })
+            trendLineData.push(line_map_info)
+          }
+          self.trendLineData = trendLineData;
+        })
           .catch(function (data) {
             console.log(data);
           });
       },
-      changeRoadRate(id, event){
+      changeRoadRate(id, event) {
         $(".rate-container-item").removeClass('is-active');
         $(event.currentTarget).addClass('is-active');
         $('.rate-container-action-contaienr').removeClass('is-active');
@@ -558,23 +569,23 @@
         // myChart.setOption(option);
         this.myChart.setOption(option);
       },
-      weekAnalyse(){
+      weekAnalyse() {
         let node = 2;
         let startTime = '20180910';
-        let dayEnd= '20180916';
-        this.$http.get('/roadDataAnalysis/weekCongestionSaturate?nodeId=2&dayBegin=20180910&dayEnd=20180916').then(function(result){
+        let dayEnd = '20180916';
+        this.$http.get('/roadDataAnalysis/weekCongestionSaturate?nodeId=2&dayBegin=20180910&dayEnd=20180916').then(function (result) {
           console.log(result.data)
         })
       },
-      hRoladAnalyse(){
-          this.$http.get('/roadDataAnalysis/daysSaturateOfLinks?linkIds=201,202&days=20180921，20180922&token=693e9af84d3dfcc71e640e005bdc5e2e')
-            .then((result)=>{
-              console.log(result.data)
-        })
-      },
-      hInterAnalyse(){
+      hRoladAnalyse() {
         this.$http.get('/roadDataAnalysis/daysSaturateOfLinks?linkIds=201,202&days=20180921，20180922&token=693e9af84d3dfcc71e640e005bdc5e2e')
-          .then((result)=>{
+          .then((result) => {
+            console.log(result.data)
+          })
+      },
+      hInterAnalyse() {
+        this.$http.get('/roadDataAnalysis/daysSaturateOfLinks?linkIds=201,202&days=20180921，20180922&token=693e9af84d3dfcc71e640e005bdc5e2e')
+          .then((result) => {
             console.log(result.data)
           })
       },
@@ -677,6 +688,7 @@
     height: 30px;
     padding-top: 25px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding-left: 37px;
   }
@@ -711,14 +723,14 @@
 
   .show_time_left {
     width: 60px;
-    height: 30px;
+    /*height: 30px;*/
     margin-right: 10px;
     align-items: center;
   }
 
   .show-filter-item_road {
-    width: 75px;
-    height: 30px;
+    width: 150px;
+    /*height: 30px;*/
     align-items: center;
   }
 
@@ -736,7 +748,8 @@
   }
 
   .time_left_show {
-    width: 60px;
+    /*width: 60px;*/
+    width: 100%;
     height: 20px;
     background: #54576a;
     margin-top: 3px;
@@ -750,7 +763,7 @@
   }
 
   .area_titleSelect {
-    width: 75px;
+    width: 100%;
     height: 20px;
     margin-top: 3px;
     background-color: #505666;
@@ -764,12 +777,15 @@
 
   .main_up_left_middle {
     display: flex;
+    align-items: center;
+    padding: 20px 20px 0 20px;
+    justify-content: space-between;
   }
 
   .hot_map {
     height: 482px;
     padding: 0 80px 0 40px;
-    margin-top: 10px;
+    /*margin-top: 10px;*/
     display: flex
   }
 
@@ -817,10 +833,13 @@
 
   .main_up_right_pie_head {
     width: 530px;
-    height: 55px;
+    /*height: 55px;*/
     display: flex;
     align-items: center;
-    padding-top: 20px
+    justify-content: space-between;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    /*padding-top: 20px*/
   }
 
   input:focus::-webkit-input-placeholder {
@@ -840,10 +859,11 @@
     align-items: right;
   }
 
-  .is-active.rate-container-item{
-    background: rgb(71,74,87);
+  .is-active.rate-container-item {
+    background: rgb(71, 74, 87);
     border-radius: 15px;
   }
+
   .rate-container-item {
     padding: 5px;
     width: 30%;
@@ -860,15 +880,16 @@
     justify-content: center;
   }
 
-  .rate-container-item-title{
+  .rate-container-item-title {
     flex-grow: 1;
     text-align: center;
     padding: 0 10px;
     font-size: 20px;
 
   }
+
   /*.rate-container-item-title:nth-child(2n){*/
-    /*text-align: left;*/
+  /*text-align: left;*/
   /*}*/
   .rate-container-cavans-container {
     width: 50px;
@@ -883,9 +904,10 @@
     padding: 0 5px;
   }
 
-  .is-active .rate-container-action-line{
-      opacity: 1;
+  .is-active .rate-container-action-line {
+    opacity: 1;
   }
+
   .rate-container-action-line {
     flex-grow: 1;
     height: 1px;
@@ -905,18 +927,20 @@
     padding: 5px;
     position: relative;
   }
-  .rate-container-action-title{
+
+  .rate-container-action-title {
     position: absolute;
     font-size: 10px;
-    right: -35px;
+    right: -54px;
     top: -5px;
+    width: 50px;
   }
-  .is-active .rate-container-action-selected{
+
+  .is-active .rate-container-action-selected {
     opacity: 1;
   }
 
-
-  .rate-container-action-selected{
+  .rate-container-action-selected {
     width: 14px;
     height: 14px;
     background: rgb(221, 129, 41);
@@ -933,20 +957,24 @@
     border: 1px solid rgb(221, 129, 41);
   }
 
-  .main-search-header{
+  .main-search-header {
     display: flex;
     padding: 20px 60px 0 60px;
     height: 45px;
     justify-content: space-between;
+    align-items: center;
   }
-  .main-search-action{
+
+  .main-search-action {
     display: flex;
     padding: 5px 60px 15px 60px;
     height: 40px;
     justify-content: center;
   }
-  .main-search-title{
+
+  .main-search-title {
     font-size: 10px;
+    height: 12px;
     margin-bottom: 2px;
     text-align: center;
 
@@ -956,14 +984,46 @@
     color: #ffffff;
     background-color: #2F2B39;
   }
+
   .el-select .el-tag {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     border-color: transparent;
     margin: 2px 0 2px 6px;
-     background-color: #2F2B39;
+    background-color: #2F2B39;
   }
+
   .hide {
     opacity: 0;
+  }
+
+  .search-button {
+    background: #54576a;
+    border: none;
+    color: rgb(148, 148, 154);
+    /* height: 20px; */
+    /* width: 60px; */
+    /* line-height: 20px; */
+    /* padding: 0; */
+    /*margin: auto;*/
+    height: 27px;
+    padding: 0 20px;
+    border-radius: 0;
+  }
+
+  .main-search-item {
+    width: 75px;
+  }
+
+  .main-search-item:nth-child(3) {
+    width: 150px;
+  }
+
+</style>
+<style>
+  .min .el-input__inner,
+  .min .el-select-dropdown__item {
+    font-size: 11px !important;
+    text-align: left;
   }
 </style>
