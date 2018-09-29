@@ -105,10 +105,8 @@
     },
     watch: {
       '$route' (to, from) {
-        this.$router.go({
-          path: this.$route.path,
-          force: true
-        });
+        this.$router.replace({
+          path: this.$route.path});
         console.log(this.$route.path)
       }
     }
