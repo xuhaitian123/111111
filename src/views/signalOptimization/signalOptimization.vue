@@ -338,6 +338,7 @@
     },
     methods: {
       heatChart_map_left_select() {
+
       },
       heatChart_map_right_select() {
         this.road_24h_loading = true;
