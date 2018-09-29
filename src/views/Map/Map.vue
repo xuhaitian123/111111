@@ -37,7 +37,7 @@
           <div class="people-squre">
             <div class="people_countent">总人口</div>
             <div class="people-data"><span class="count-size">{{showInfo.city_population}}</span><span
-              class="unit">人</span></div>
+              class="unit">万人</span></div>
           </div>
           <div class="data">
             <div class="squre">总面积</div>

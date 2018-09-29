@@ -61,7 +61,7 @@
 
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
-                <div class="Dashboard_card_title">路网拥堵评分</div>
+                <div class="Dashboard_card_title">路网交通运行指数</div>
                 <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent.toFixed(0)"></road-gauge>
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id"
