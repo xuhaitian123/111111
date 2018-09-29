@@ -1,5 +1,5 @@
 <template>
-  <div id="data_four" style="height: 100%;width: 100%"></div>
+  <div id="data_four" style="height: 100%;width: 100%;padding: 10px; box-sizing: border-box"></div>
 </template>
 
 <script>
