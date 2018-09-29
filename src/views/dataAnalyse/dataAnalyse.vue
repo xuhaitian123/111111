@@ -76,7 +76,6 @@
                v-loading="loading_speed"
                element-loading-background="rgba(51, 54, 67, 1)">
             <good-data :good_speed=good_speed></good-data>
-            <div style="position: absolute;top:;"></div>
           </div>
         </div>
 
