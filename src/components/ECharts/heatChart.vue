@@ -149,7 +149,6 @@
                   if(value<=288){
                     return  parseInt((value)/72)*6+":00" ;
                   }else{
-                    console.log(parseInt((value-430)/72)*6+"")
                     return  parseInt((value-430)/72)*6+":00" ;
                   }
 
