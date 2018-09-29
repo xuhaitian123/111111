@@ -118,23 +118,22 @@
                       <div class="Road_chart_line">| | | | |</div>
 
                       <div v-for="(link,i) in linksInfo[0]"
-                           style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden" v-if="i <4">
-                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow)}"
-                             style="height: 65px;float: right;"></div>
+                           style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden">
+                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow),height: 250 / linksInfo[0].length +'px'}"
+                             style="float: right;"></div>
                       </div>
 
                     </div>
-                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px"
-                         :style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"></div>
+                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px;height: 250px"></div>
+                    <!--:style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"-->
 
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
                       <div> < 50 100 150 ></div>
                       <div class="Road_chart_line">| | | | |</div>
 
-                      <div style="border-bottom: 1px solid;overflow: hidden" v-for="(link ,i) in linksInfo[1]"
-                           v-if="i <4">
-                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow)}"
-                             style="width: 30px;height: 65px;"></div>
+                      <div style="border-bottom: 1px solid;overflow: hidden" v-for="(link ,i) in linksInfo[1]">
+                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow),height: 250 / linksInfo[0].length +'px'}"
+                             style="width: 30px;"></div>
                       </div>
 
                     </div>
@@ -143,8 +142,9 @@
                   </div>
                 </el-col>
                 <el-col :span="3">
-                  <div class="" style="margin-top: 10px">
-                    <div v-for="(name,i) in crossLinks" :key="name.link_id" v-if="i <linksInfo[0].length+1" style="padding: 24px 0">
+                  <div class="" style="margin-top: 35px">
+                    <div v-for="(name,i) in crossLinks" :key="name.link_id"
+                         :style="{paddingBottom: 219 /(linksInfo[0].length) +  'px'}">
                       {{name.link_name}}
                     </div>
                   </div>
@@ -155,25 +155,23 @@
                       <div> > 25 12 0</div>
                       <div class="Road_chart_line">| | | | |</div>
 
-                      <div v-for="(link,i) in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;"
-                           v-if="i <4">
+                      <div v-for="(link,i) in linksInfo[0]" style="border-bottom: 1px solid;width: 100%;float: right;">
                         <div
-                          :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
-                          style="height: 65px;float: right;"></div>
+                          :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength),height: 250 / linksInfo[0].length +'px'}"
+                          style="float: right;"></div>
                       </div>
 
                     </div>
-                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px"
-                         :style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"></div>
-
+                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px;height: 250px"></div>
+                    <!--:style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"-->
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
                       <div> 0 12 25 ></div>
                       <div class="Road_chart_line">| | | |</div>
 
-                      <div style="border-bottom: 1px solid" v-for="(link ,i) in linksInfo[1]" v-if="i <4">
+                      <div style="border-bottom: 1px solid" v-for="(link ,i) in linksInfo[1]">
                         <div
-                          :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength)}"
-                          style="width: 30px;height: 65px;"></div>
+                          :style="{width: getFlowNum(link.lineLength)+'px',background: getFlowColor(link.lineLength),height: 250 / linksInfo[0].length +'px'}"
+                          style="width: 30px;"></div>
                       </div>
 
                     </div>
@@ -246,6 +244,7 @@
                   </div>
 
                   <el-row style="margin: 0 20px">
+                    <div v-if="!allScore[0]" style="position: absolute;top: 40px;text-align: center;width: 100%;font-size: 20px;color: #7c7c7c">暂无数据</div>
                     <el-col :span="10">
                       <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px;padding: 0 10px">
                         <div style="float: left;line-height: 40px;font-size: 12px">{{item[0].value.toFixed(0)}}</div>
@@ -342,6 +341,7 @@
       getCrossAllLinks(){
         this.$http.get('/index/roadCrossAllLinksByLinkId?linkId='+ this.$route.params.id  +'&token=' + this.getHeader().token)
           .then((response) => {
+            console.log(response.data)
             this.crossLinks = response.data.cross_links;
           })
       },

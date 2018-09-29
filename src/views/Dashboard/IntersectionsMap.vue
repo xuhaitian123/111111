@@ -195,7 +195,7 @@
 
               <img src="/static/image/map/40.png"
                    style="width: 50px;height: 50px;padding: 5px;border-bottom: 1px solid #acacaf"/>
-              <img src="/static/image/map/camera.png" @click="jumpPage('/main/trafficVideo/2')" style="width: 30px;height: 30px;padding: 12px;"/>
+              <img src="/static/image/map/camera.png" @click="jumpPage('/main/trafficVideo/'+$route.params.id)" style="width: 30px;height: 30px;padding: 12px;"/>
             </div>
 
             <div class="Road_row_link">
