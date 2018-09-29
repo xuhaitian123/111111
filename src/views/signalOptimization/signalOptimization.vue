@@ -77,7 +77,7 @@
 
         <div class="main_up_middle" v-loading="road_24h_loading" element-loading-background="rgba(0, 0, 0, 0.8)">
           <div class="main_up_child_head">
-            <span>道路天（24hr）趋势分析</span>
+            <span>交通走廊天（24hr）拥堵变化趋势分析</span>
           </div>
 
           <div class="main_up_left_middle min-header">
@@ -133,7 +133,7 @@
 
         <div class="main_up_right" v-loading="road_ratio_loading" element-loading-background="rgba(0, 0, 0, 0.8)">
           <div class="main_up_child_head">
-            <span>道路协同分析</span>
+            <span>交通走廊交通运行指数评分</span>
           </div>
 
           <div class="main_up_left_middle min-header">
@@ -219,7 +219,7 @@
 
       <div class="main_down" v-loading="flow_hour_loading" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="main_down_head">
-          <span>天（24hr）趋势分析</span>
+          <span>路口流量天（24hr）趋势分析</span>
         </div>
         <div class="main_down_down">
           <!--<div id="line_map" style="width: 100%;height: 100%;position: absolute;z-index: 10"></div>-->
