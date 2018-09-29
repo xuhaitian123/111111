@@ -172,12 +172,9 @@
                 <el-date-picker
                   size="mini"
                   v-model="trendTime"
-                  type="daterange"
                   format="yyyy/MM/dd"
-                  value-format="yyyyMMdd"
                   range-separator=""
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期">
+                  placeholder="选择日期">
                 </el-date-picker>
               </div>
               <div style="position: absolute;top: 15px;right: 40px">
@@ -603,7 +600,7 @@
           3: true
         },
         someHourFlow: [],
-        trendTime: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyyMMdd'), this.formatDate(new Date(), 'yyyyMMdd')],
+        trendTime: new Date(),
         currentName: 2,
       }
     },
@@ -763,7 +760,7 @@
       getRoadDataAnalysisFlow() { //某段时间内某个交叉路口的实时流量
         this.loadingTrend = true;
         this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.currentName + '&beginTime=' +
-          this.trendTime[0] + '&endTime='+ this.trendTime[1] +'&token=' + this.getHeader().token)
+          this.formatDate(this.trendTime, 'yyyyMMdd') + '&endTime=' + this.formatDate(new Date(new Date(this.trendTime).getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd') + '&token=' + this.getHeader().token)
           .then((response) => {
             this.someHourFlow = response.data;
             this.loadingTrend = false;
