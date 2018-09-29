@@ -310,12 +310,12 @@
           '梁红玉路': {
             linksLeftInfo: [102, 202, 402, 502, 702, 902],
             linksRightInfo: [104, 204, 404, 504, 704, 904],
-            linksName: ['had', 'asdasd', 'asdas', 'asdass', 'asdas', 'asdas12']
+            linksName: ['翔宇大道', '镇海路', '华西路', '永怀东路', '樱桃园路', '关天培路']
           },
           '沈坤路': {
             linksLeftInfo: [302, 602, 802, 1002],
             linksRightInfo: [304, 604, 804, 1004],
-            linksName: ['had1', 'asdasd2', 'asda3s', 'asd4ass']
+            linksName: ['翔宇大道', '镇海路', '华西路', '永怀东路']
           }
         },
 
