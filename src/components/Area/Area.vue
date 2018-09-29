@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="area_titleCascader">
+      <div class="area_title_text">
+        <img src="../../../static/image/header/policeBadge.png" class="policeBadge"/><span class="text">淮安市淮安区交通大数据研判平台</span>
+      </div>
       <div class="area_select_container">
         <div>
           省
@@ -2148,6 +2151,7 @@
 </script>
 <style scoped>
   .area_titleCascader{
+    position: relative;
     background: #282635;
     color: white;
     font-size: 12px;
@@ -2169,6 +2173,26 @@
     /*padding: 0 40px;*/
     /*font-size: 16px;*/
   }
+  .area_title_text{
+    position: absolute;
+    background: #282635;
+    color: white;
+    height: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 20px;
+  }
+  .policeBadge{
+    height: 40px;
+  }
+  .text{
+    padding-left: 15px;
+    display: block;
+    font-size: 20px;
+  }
+
   .area_select_container{
     display: flex;
     justify-content: left;
