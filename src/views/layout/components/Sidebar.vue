@@ -27,16 +27,16 @@
           <div class="item-line"></div>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="/dataAnalyse/dataAnalyse">信号灯优化前后数据<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+          <el-menu-item index="/dataAnalyse/dataAnalyse">智能优化效果分析<div class="active-item"></div><div class="item-line"></div></el-menu-item>
           <el-menu-item index="/signalOptimization/signalOptimization">拥堵情况变化趋势<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
       <el-submenu index="">
         <template slot="title">
-          <span>监控视频</span>
+          <span>视频监控与分析</span>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="/main/trafficVideo/2">监控视频 <div class="active-item"></div></el-menu-item>
+          <el-menu-item index="/main/trafficVideo/2">视频监控与分析<div class="active-item"></div></el-menu-item>
           <!--<el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>-->
         <!--</el-menu-item-group>-->
       </el-submenu>

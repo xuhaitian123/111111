@@ -2,7 +2,6 @@
   <div>
     <Area></Area>
     <div class="trafficVideo-container-header">
-
     </div>
     <div class="trafficVideo-container" >
       <div class="trafficVideo-container-left"  v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
