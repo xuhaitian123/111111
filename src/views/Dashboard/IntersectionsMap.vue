@@ -1703,6 +1703,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度
         this.loadingLength = true;
+
         let url = '/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
@@ -1712,7 +1713,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
         this.loadingSignal = true;
-        console.log('----------')
         let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += endTime ? '&current=' + endTime : '&current=true';
         this.$http.get(url).then((response) => {
