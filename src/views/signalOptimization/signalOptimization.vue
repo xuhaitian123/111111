@@ -370,7 +370,8 @@
       },
       pie_map_select() {
         this.road_ratio_loading = true;
-        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + this.road_24h_date[0] + '&end=' + this.road_24h_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
+
+        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + this.road_ratio_date[0] + '&end=' + this.road_ratio_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
           .then((result) => {
             this.intersectionsList = result.data.value[this.road_ratio_node]
             this.road_ratio_loading = false;
