@@ -108,7 +108,7 @@
               {
                 name: '流量',
                 type: 'line',
-                color: '#02d1d1',
+                color: '#43AF7E',
                 symbol: 'circle',
                 yAxisIndex: 1,
                 data: []

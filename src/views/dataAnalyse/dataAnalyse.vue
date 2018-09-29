@@ -72,10 +72,11 @@
           <div class="goodSpeed_title">
             <div class="goodSpeed_title_text">优化前后平均车速日变化趋势</div>
           </div>
-          <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box"
+          <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box;position: relative"
                v-loading="loading_speed"
                element-loading-background="rgba(51, 54, 67, 1)">
             <good-data :good_speed=good_speed></good-data>
+            <div style="position: absolute;top:;"></div>
           </div>
         </div>
 
@@ -103,7 +104,6 @@
   }
 
   .title_text {
-    font-size: 19px;
     display: block;
     margin-left: 20px;
   }
@@ -159,7 +159,6 @@
   .goodSpeed_title_text {
     width: 320px;
     margin-left: 20px;
-    font-size: 16px;
   }
   /*.flowRate_title_text{*/
     /*width: 200px;*/

@@ -164,7 +164,7 @@
                 type: 'line',
                 yAxisIndex: 0,
                 symbol: 'circle',
-                color: '#af69c9',
+                color: '#F98C23',
                 data: []
               },
               {
@@ -172,7 +172,7 @@
                 type: 'line',
                 yAxisIndex: 0,
                 symbol: 'circle',
-                color: '#02d1d1',
+                color: '#43AF7E',
                 data: []
               },
             ]

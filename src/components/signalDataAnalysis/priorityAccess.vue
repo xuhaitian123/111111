@@ -35,6 +35,7 @@
           },
           radar:{
             indicator: [],
+            radius: 100,
             shape: 'circle',
             splitNumber: 5,
             name:{
