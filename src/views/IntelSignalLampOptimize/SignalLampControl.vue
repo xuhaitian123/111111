@@ -120,9 +120,9 @@
       data() {
         return {
           road_value:"",
-          load_options:[{value:'珠海路-南京路'}],
-          unuse_intel_score:0,
-          use_intel_score:0,
+          // load_options:[],
+          // unuse_intel_score:0,
+          // use_intel_score:0,
           open_road_record_List:[],
           nodesInfo:{},
           currentNodeInfo:{},
@@ -141,6 +141,10 @@
           };
           window.close_map_road_icon = (node_id,title) =>{
             this.close_road_icon(node_id,title)
+          }
+
+          window.close_map_window = ()=>{
+            this.close_map_window()
           }
 
           //获取路口数据
@@ -174,7 +178,7 @@
         getAllRoadInfo(){
           console.log('getAllRoadInfo');
           var self = this;
-          this.$http.get('/index/nodes?token=693e9af84d3dfcc71e640e005bdc5e2e')
+          this.$http.get('/index/nodes'+ '?token=' + this.getHeader().token)
             .then((response) => {
               console.log(response.data);
               self.showBMapPoint(response.data.nodes);
@@ -194,23 +198,44 @@
           marker.title = node.node_name;
           marker.id = node.node_id;
           marker.addEventListener("click", function(e){
+            var index = self.findRoadIsOpen(node.node_id,node.node_name);
+            var open_class;
+            var close_class;
+            var open_li_status;
+            var close_window;
+            if (index == -1)
+            {
+              open_class = "'close-button'";
+              close_class = "'open-button'";
+              open_li_status = '';
+              close_window = '';
+            }
+            else
+            {
+              open_class = "'open-button'";
+              close_class = "'close-button'";
+              open_li_status = " class='open-road-li-color'";
+              close_window = " onclick='close_map_window()'"
+            }
             var title = "\"" +e.target.title + "\"";
             var sContent = "<div style=''  class='box-content'>" +
               "<div class='control-button'>" +
-              "<div class='open-button' onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
-              "<div class='close-button' onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
+              "<div class="+open_class+" onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
+              "<div class="+close_class+" onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
               +"</div>"+
               "<div class='select-options'><ul>" +
-              "<li>Default</li>"+
-              "<li>Minimize Delay</li>"+
-              "<li>Minimize</li>"+
+              "<li"+open_li_status+close_window+">Default</li>"+
+              "<li"+open_li_status+close_window+">Minimize Delay</li>"+
+              "<li"+open_li_status+close_window+">Minimize</li>"+
               "</ul>" +
               "</div>"
               +"</div>";
 
             var infoBox = new BMap.InfoWindow(sContent);
             map.openInfoWindow(infoBox, e.target.point)
-            self.road_value = e.target.title;
+            self.road_value = e.target.id.toString();
+
+            self.changeNode()
           });
           return marker;
         },
@@ -274,6 +299,10 @@
               }
             }
           }
+          map.closeInfoWindow();
+        },
+        close_map_window(){
+          var map = window.congestionMap;
           map.closeInfoWindow();
         },
         findRoadIsOpen(node_id,title){

@@ -10,8 +10,8 @@
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
-          <div class="" style="position: relative;background: #1f1f2c" >
-            <div style="width: 65%;height: 720px;position: relative">
+          <div class="" style="position: relative;background: #1f1f2c">
+            <div style="width: 65%;height: 720px;position: relative;overflow: hidden;">
               <img class="animated " src="/static/image/map/node_map_cross.png" id="node_animated"
                    style="height: 100%;width: 100%"/>
 
@@ -40,7 +40,7 @@
 
                     <div style="position: absolute;bottom: 0;">
                       <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                           width="570px" height="485px" viewBox="0 0 2419.000000 2065.000000"
+                           width="565px" height="485px" viewBox="0 0 2419.000000 2065.000000"
                            preserveAspectRatio="xMidYMid meet">
 
                         <g transform="translate(0.000000,2065.000000) scale(0.100000,-0.100000)"
@@ -113,7 +113,7 @@
 
                     <div style="position: absolute;bottom: 0;">
                       <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
-                           width="570px" height="485px" viewBox="0 0 2419.000000 2065.000000"
+                           width="565px" height="485px" viewBox="0 0 2419.000000 2065.000000"
                            preserveAspectRatio="xMidYMid meet">
 
                         <g transform="translate(0.000000,2065.000000) scale(0.100000,-0.100000)"
@@ -242,52 +242,53 @@
             </div>
 
             <!--<div>-->
-              <!--<div-->
-                <!--style="position: absolute;bottom: 200px;width: 250px;height: 40px;background: #1f1f2c;border-radius: 10px;left: 28%">-->
-                <!--<div style="width: 50%;float: left;">-->
-                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
-                  <!--:style="{background : currentColor['d5']==='green'?'green':'yellow'}"></div>-->
-                <!--</div>-->
-                <!--<div style="width: 50%;float: left;">-->
-                  <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
-                       <!--:style="{background : currentColor['d2']==='green'?'green':'yellow'}"></div>-->
-                <!--</div>-->
-              <!--</div>-->
+            <!--<div-->
+            <!--style="position: absolute;bottom: 200px;width: 250px;height: 40px;background: #1f1f2c;border-radius: 10px;left: 28%">-->
+            <!--<div style="width: 50%;float: left;">-->
+            <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
+            <!--:style="{background : currentColor['d5']==='green'?'green':'yellow'}"></div>-->
+            <!--</div>-->
+            <!--<div style="width: 50%;float: left;">-->
+            <!--<div style="height: 20px;width: 70%;margin: 10px auto;border-radius: 10px"-->
+            <!--:style="{background : currentColor['d2']==='green'?'green':'yellow'}"></div>-->
+            <!--</div>-->
+            <!--</div>-->
 
-              <!--<div-->
-                <!--style="position: absolute;top: 130px;width: 150px;height: 30px;background: #1f1f2c;border-radius: 10px;left: 26%">-->
-                <!--<div style="width: 50%;float: left;">-->
-                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
-                <!--</div>-->
-                <!--<div style="width: 50%;float: left;">-->
-                  <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
-                <!--</div>-->
-              <!--</div>-->
+            <!--<div-->
+            <!--style="position: absolute;top: 130px;width: 150px;height: 30px;background: #1f1f2c;border-radius: 10px;left: 26%">-->
+            <!--<div style="width: 50%;float: left;">-->
+            <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+            <!--</div>-->
+            <!--<div style="width: 50%;float: left;">-->
+            <!--<div style="height: 15px;width: 70%;margin: 7.5px auto;background: red;border-radius: 10px"></div>-->
+            <!--</div>-->
+            <!--</div>-->
 
-              <!--<div-->
-                <!--style="position: absolute;top: 38%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;left: 9%;transform: rotate(44deg);">-->
-                <!--<div style="width: 75%;margin: auto">-->
-                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-                <!--</div>-->
-                <!--<div style="width: 75%;margin: auto">-->
-                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-                <!--</div>-->
-              <!--</div>-->
+            <!--<div-->
+            <!--style="position: absolute;top: 38%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;left: 9%;transform: rotate(44deg);">-->
+            <!--<div style="width: 75%;margin: auto">-->
+            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+            <!--</div>-->
+            <!--<div style="width: 75%;margin: auto">-->
+            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+            <!--</div>-->
+            <!--</div>-->
 
-              <!--<div-->
-                <!--style="position: absolute;top: 28%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;right: 49%;transform: rotate(-20deg);">-->
-                <!--<div style="width: 75%;margin: auto">-->
-                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-                <!--</div>-->
-                <!--<div style="width: 75%;margin: auto">-->
-                  <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
-                <!--</div>-->
-              <!--</div>-->
+            <!--<div-->
+            <!--style="position: absolute;top: 28%;width: 30px;height: 100px;background: #1f1f2c;border-radius: 10px;right: 49%;transform: rotate(-20deg);">-->
+            <!--<div style="width: 75%;margin: auto">-->
+            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+            <!--</div>-->
+            <!--<div style="width: 75%;margin: auto">-->
+            <!--<div style="height: 40px;width: 70%;    margin:5px auto;background: red;border-radius: 10px"></div>-->
+            <!--</div>-->
+            <!--</div>-->
             <!--</div>-->
 
             <div class="Node_right_top">
               <el-tabs type="border-card" style="height: 420px;background: #353644">
-                <el-tab-pane label="当前信号灯配时方案" v-loading="loadingSignal" element-loading-background="rgba(0, 0, 0, 0.8)">
+                <el-tab-pane label="当前信号灯配时方案" v-loading="loadingSignal"
+                             element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row style="padding: 40px 20px 0;text-align: center">
                     <el-col :span="3" v-for="(value,index) in currentSignal" :key="index">
                       <div class="" style="margin-bottom: 5px">{{signalText[value.key]}}</div>
@@ -456,8 +457,9 @@
                       </el-row>
                     </div>
                   </div>
-                </el-tab-pane >
-                <el-tab-pane label="交叉口饱和度/排队长度数据展示" v-loading="loadingLength" element-loading-background="rgba(0, 0, 0, 0.8)">
+                </el-tab-pane>
+                <el-tab-pane label="交叉口饱和度/排队长度数据展示" v-loading="loadingLength"
+                             element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row>
                     <el-col :span="6" style="padding: 20px 10px ">
                       <div class="Node_row_list">
@@ -564,12 +566,15 @@
                 </el-tab-pane>
               </el-tabs>
 
-              <el-tabs type="border-card" :before-leave="setFlowOrDelay"
+              <el-tabs type="border-card" :before-leave="setFlowOrDelay" v-loading="loadingFlow"
+                       element-loading-background="rgba(0, 0, 0, 0.8)"
                        style="height: 290px;margin-top: 10px;background: #353644;text-align: center;font-size: 12px">
-                <el-tab-pane label="交叉口机动车/非机动车流量" v-loading="loadingFlow" element-loading-background="rgba(0, 0, 0, 0.8)">
+                <el-tab-pane label="交叉口机动车/非机动车流量">
                   <el-row style="position: relative">
                     <el-col :span="10" :offset="1" style="display: flex;position: relative">
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['西'].split("").join("\n")}}</div>
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['西']">
+                        {{allLinksName['西'].split("").join("\n")}}
+                      </div>
 
                       <div style="flex: 1;">
                         <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
@@ -577,7 +582,8 @@
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
 
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '南'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -596,7 +602,8 @@
                                 {{allMovementFlow['南']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '南'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -611,11 +618,13 @@
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['南']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '南'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -624,7 +633,7 @@
                                 </metadata>
                                 <g transform="translate(0.000000,179.200000) scale(0.080000,-0.080000)"
                                    :fill="getSaturationColor(allMovementFlow['南']['右'].car)"
-                                   :opacity="currentDirection[0] === '南' ? '':'0.2'"  stroke="none">
+                                   :opacity="currentDirection[0] === '南' ? '':'0.2'" stroke="none">
                                   <path d="M310 2226 c-122 -34 -224 -116 -276 -221 l-29 -60 -3 -972 -2 -973
 95 0 95 0 2 943 c3 855 5 945 20 972 25 46 68 86 118 109 44 21 56 21 855 24
 l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
@@ -640,7 +649,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(90deg);left: -7px">
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '西'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -660,7 +670,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['西']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '西'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -676,11 +687,13 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['西']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '西'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -706,7 +719,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -14px;transform: rotate(180deg);">
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '北'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -726,7 +740,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['北']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '北'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -742,11 +757,13 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['北']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '北'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -772,7 +789,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(270deg);left: 8px">
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '东'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -792,7 +810,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['东']['左'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '东'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -808,11 +827,13 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
                                 {{allMovementFlow['东']['直'].car}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '东'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -842,10 +863,14 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                       </div>
 
-                      <div style="width: 20px;padding-top: 90px;font-size: 12px">{{allLinksName['东'].split("").join("\n")}}</div>
+                      <div style="width: 20px;padding-top: 90px;font-size: 12px" v-if="allLinksName['东']">
+                        {{allLinksName['东'].split("").join("\n")}}
+                      </div>
                     </el-col>
-                    <el-col :span="10" :offset="2" style="display: flex;position: relative">
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['西'].split("").join("\n")}}</div>
+                    <el-col :span="10" :offset="2" style="display: flex;position: relative" v-if="allLinksName['西']">
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['西']">
+                        {{allLinksName['西'].split("").join("\n")}}
+                      </div>
 
                       <div style="flex: 1">
                         <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
@@ -853,7 +878,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
 
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '南'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -872,7 +898,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['南']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '南'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -887,11 +914,13 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['南']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '南'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '南'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -916,7 +945,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(90deg);left: -7px">
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '西'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -936,7 +966,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['西']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '西'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -952,11 +983,13 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['西']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '西'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '西'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -982,7 +1015,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -14px;transform: rotate(180deg);">
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '北'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1002,7 +1036,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['北']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '北'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1018,11 +1053,13 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(-90deg)">
                                 {{allMovementFlow['北']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '北'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '北'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1048,7 +1085,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
 
                           <div
                             style="width: 100%;height: 180px;position: absolute;top: -7px;transform: rotate(270deg);left: 8px">
-                            <div style="position: absolute;bottom: 0;" :style="{zIndex:currentDirection[0] === '东'?10:''}">
+                            <div style="position: absolute;bottom: 0;"
+                                 :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="111px" height="111px" viewBox="0 0 366.000000 373.000000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1068,7 +1106,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 {{allMovementFlow['东']['左'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 69px" :style="{zIndex:currentDirection[0] === '东'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 69px"
+                                 :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="7px" height="190px" viewBox="0 0 16.000000 495.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1084,11 +1123,13 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                                 </g>
                               </svg>
 
-                              <div style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
+                              <div
+                                style="position: absolute;top: 30px;    transform: translateX(-30%) translateY(-0%) rotate(90deg)">
                                 {{allMovementFlow['东']['直'].bike}}
                               </div>
                             </div>
-                            <div style="position: absolute;bottom: 0;right: 0" :style="{zIndex:currentDirection[0] === '东'?10:''}">
+                            <div style="position: absolute;bottom: 0;right: 0"
+                                 :style="{zIndex:currentDirection[0] === '东'?10:''}">
                               <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
                                    width="70px" height="70px" viewBox="0 0 173.600000 179.200000"
                                    preserveAspectRatio="xMidYMid meet" position="relative">
@@ -1117,7 +1158,9 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                              style="width: 110px;height: 20px;position: absolute;bottom: -15px;left: 0;right: 0;margin: auto;"/>
                       </div>
 
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;">{{allLinksName['东'].split("").join("\n")}}</div>
+                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['东']">
+                        {{allLinksName['东'].split("").join("\n")}}
+                      </div>
 
                     </el-col>
 
@@ -1132,7 +1175,8 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                     <div style="position: absolute;
     bottom: -12px;
     width: 75px;
-    right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}</div>
+    right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}
+                    </div>
                   </el-row>
                 </el-tab-pane>
                 <el-tab-pane label="交叉口延误数据" v-loading="loadingDelay" element-loading-background="rgba(0, 0, 0, 0.8)">
@@ -1424,7 +1468,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
                     <div style="position: absolute;
     bottom: 10px;
     width: 75px;
-    right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}</div>
+    right: 0;">单位：{{currentTabs==='0'?'pcu':'s'}}
+                    </div>
                   </el-row>
                 </el-tab-pane>
               </el-tabs>
@@ -1485,14 +1530,14 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         allMovementFlow: {},
         currentTabs: '0',
         currentDirection: ['南', '东', '北', '西'],
-        currentDirectionLetter:{
-          '南': 'N', '东':'W', '北':'S', '西':'S'
+        currentDirectionLetter: {
+          '南': 'N', '东': 'W', '北': 'S', '西': 'S'
         },
         currentColor: {},
-        loadingFlow:false,
-        loadingDelay:false,
-        loadingLength:false,
-        loadingSignal:false,
+        loadingFlow: false,
+        loadingDelay: false,
+        loadingLength: false,
+        loadingSignal: false,
       }
     },
     mounted() {
@@ -1528,8 +1573,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           })
       },
       getNodeMovement(startTime, endTime) {
-        this.loadingFlow=true;
-        this.loadingDelay=true;
+        this.loadingFlow = true;
+        this.loadingDelay = true;
         this.$http.get('/index/getAllMovementsByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token)
           .then((response) => {
             this.getAllMovementFlow(response.data.movements, 0, startTime, endTime);
@@ -1544,7 +1589,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
           if (num === data.length - 1) {
             this.allMovementFlow = this.getMovementDirectionFlow(data);
-            this.loadingFlow=false;
+            this.loadingFlow = false;
           } else {
             num += 1;
             this.getAllMovementFlow(data, num, startTime, endTime);
@@ -1587,7 +1632,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
           if (num === data.length - 1) {
             this.allMovementDelay = this.getMovementDirection(data);
-            this.loadingDelay=false;
+            this.loadingDelay = false;
           } else {
             num += 1;
             this.getAllMovementDelay(data, num, startTime, endTime);
@@ -1648,16 +1693,17 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         })
       },
       getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度
-        this.loadingLength=true;
+        this.loadingLength = true;
         let url = '/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
           this.nodeLength = response.data;
-          this.loadingLength=false;
+          this.loadingLength = false;
         })
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
-        this.loadingSignal=true;
+        this.loadingSignal = true;
+        console.log('----------')
         let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += endTime ? '&current=' + endTime : '&current=true';
         this.$http.get(url).then((response) => {
@@ -1673,7 +1719,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           return 'true'
         }).then((val) => {
           this.getSignalColor(0);
-          this.loadingSignal=false;
+          this.loadingSignal = false;
         })
       },
       setFlowOrDelay(val) {
@@ -1840,36 +1886,37 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             this.getAllData(this.startTime, val);
             this.startTime = 0;
           }
+        } else if (val < this.startTime) {
+          this.getAllData(val, val + 5 * 60 * 1000);
+          this.setRoadNetStatus(this.currentRoadNet, val, val + 5 * 60 * 1000);
+          this.startTime = 0;
         } else {
           this.startTime = val;
         }
       },
       rotateNode(deg) {
-        document.getElementById('node_animated').className = 'animated pulse';
         document.getElementById('node_animated_float').style.display = 'none';
+        if (deg === 90) {
+          document.getElementById('node_animated').className = 'animated rotateLeft';
+        } else if (deg === 270) {
+          document.getElementById('node_animated').className = 'animated rotateRight';
+        } else if (deg === 180) {
+          document.getElementById('node_animated').className = 'animated rotateTop';
+        }
+
         setTimeout(() => {
-          if (deg === 90) {
-            document.getElementById('node_animated').className = 'animated rotateLeft';
-          } else if (deg === 270) {
-            document.getElementById('node_animated').className = 'animated rotateRight';
-          } else if (deg === 180) {
-            document.getElementById('node_animated').className = 'animated rotateTop';
+          document.getElementById('node_animated').className = 'animated fadeIn';
+
+          for (let i = 0; i < (deg / 90); i++) {
+            console.log(deg)
+            this.currentDirection.push(this.currentDirection.shift())
           }
 
           setTimeout(() => {
-            document.getElementById('node_animated').className = 'animated zoomIn';
+            document.getElementById('node_animated_float').style.display = 'block';
+          }, 200)
 
-            for (let i = 0; i < (deg / 90); i++) {
-              console.log(deg)
-              this.currentDirection.push(this.currentDirection.shift())
-            }
-
-            setTimeout(() => {
-              document.getElementById('node_animated_float').style.display = 'block';
-            }, 200)
-
-          }, 500)
-        }, 500)
+        }, 1000)
       },
     },
   }
@@ -1877,143 +1924,165 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
 
 <style scoped>
 
-  @-webkit-keyframes pulse {
-    from {
-      -webkit-transform: scale3d(1, 1, 1);
-      transform: scale3d(1, 1, 1);
-    }
-
-    to {
-      -webkit-transform: scale3d(1.05, 1.05, 1.05);
-      transform: scale3d(1.1, 1.1, 1.1);
-    }
-  }
-
-  @keyframes pulse {
-    from {
-      -webkit-transform: scale3d(1, 1, 1);
-      transform: scale3d(1, 1, 1);
-    }
-
-    to {
-      -webkit-transform: scale3d(1.1, 1.1, 1.1);
-      transform: scale3d(1.1, 1.1, 1.1);
-    }
-  }
-
-  .pulse {
-    -webkit-animation-name: pulse;
-    animation-name: pulse;
-  }
-
-  .rotateLeft {
-    -webkit-animation-name: rotateLeft;
-    animation-name: rotateLeft;
-  }
-
   @-webkit-keyframes rotateLeft {
     from {
-      -webkit-transform-origin: center;
-      transform-origin: center;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
       opacity: 1;
     }
 
+    20% {
+      -webkit-transform: scale3d(1.3, 1.3, 1.3);
+      transform: scale3d(1.3, 1.3, 1.3);
+    }
+
+    50% {
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
+    }
+
     to {
-      -webkit-transform-origin: center;
-      transform-origin: center;
-      -webkit-transform: rotate3d(0, 0, 1, 90deg);
-      transform: rotate3d(0, 0, 1, 90deg);
       opacity: 0;
+      -webkit-transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 90deg);
+      transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 90deg);
     }
   }
 
   @keyframes rotateLeft {
     from {
-      -webkit-transform-origin: center;
-      transform-origin: center;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
       opacity: 1;
     }
 
-    to {
-      -webkit-transform-origin: center;
-      transform-origin: center;
-      -webkit-transform: rotate3d(0, 0, 1, 90deg);
-      transform: rotate3d(0, 0, 1, 90deg);
-      opacity: 0;
+    20% {
+      -webkit-transform: scale3d(1.3, 1.3, 1.3);
+      transform: scale3d(1.3, 1.3, 1.3);
     }
+
+    50% {
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 90deg);
+    }
+
+    to {
+      opacity: 0;
+      -webkit-transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 90deg);
+      transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 90deg);
+    }
+  }
+
+  .rotateLeft {
+    -webkit-animation-name: rotateLeft;
+    animation-name: rotateLeft;
+    animation-duration: 2s;
   }
 
   .rotateRight {
     -webkit-animation-name: rotateRight;
     animation-name: rotateRight;
+    animation-duration: 2s;
   }
 
   @-webkit-keyframes rotateRight {
     from {
-      -webkit-transform-origin: center;
-      transform-origin: center;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
       opacity: 1;
     }
 
+    20% {
+      -webkit-transform: scale3d(1.3, 1.3, 1.3);
+      transform: scale3d(1.3, 1.3, 1.3);
+    }
+
+    50% {
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
+    }
+
     to {
-      -webkit-transform-origin: center;
-      transform-origin: center;
-      -webkit-transform: rotate3d(0, 0, 1, -90deg);
-      transform: rotate3d(0, 0, 1, -90deg);
       opacity: 0;
+      -webkit-transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, -90deg);
+      transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, -90deg);
     }
   }
 
   @keyframes rotateRight {
     from {
-      -webkit-transform-origin: center;
-      transform-origin: center;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
       opacity: 1;
     }
 
+    20% {
+      -webkit-transform: scale3d(1.3, 1.3, 1.3);
+      transform: scale3d(1.3, 1.3, 1.3);
+    }
+
+    50% {
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, -90deg);
+    }
+
     to {
-      -webkit-transform-origin: center;
-      transform-origin: center;
-      -webkit-transform: rotate3d(0, 0, 1, -90deg);
-      transform: rotate3d(0, 0, 1, -90deg);
       opacity: 0;
+      -webkit-transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, -90deg);
+      transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, -90deg);
     }
   }
 
   .rotateTop {
     -webkit-animation-name: rotateTop;
     animation-name: rotateTop;
+    animation-duration: 2s;
   }
 
   @-webkit-keyframes rotateTop {
     from {
-      -webkit-transform-origin: center;
-      transform-origin: center;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
       opacity: 1;
     }
 
+    20% {
+      -webkit-transform: scale3d(1.3, 1.3, 1.3);
+      transform: scale3d(1.3, 1.3, 1.3);
+    }
+
+    50% {
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
+    }
+
     to {
-      -webkit-transform-origin: center;
-      transform-origin: center;
-      -webkit-transform: rotate3d(0, 0, 1, 120deg);
-      transform: rotate3d(0, 0, 1, 120deg);
       opacity: 0;
+      -webkit-transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 160deg);
+      transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 160deg);
     }
   }
 
   @keyframes rotateTop {
     from {
-      -webkit-transform-origin: center;
-      transform-origin: center;
+      -webkit-transform: scale3d(1, 1, 1);
+      transform: scale3d(1, 1, 1);
       opacity: 1;
     }
 
+    20% {
+      -webkit-transform: scale3d(1.3, 1.3, 1.3);
+      transform: scale3d(1.3, 1.3, 1.3);
+    }
+
+    50% {
+      -webkit-transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
+      transform: scale3d(2.5, 2, 1.7) rotate3d(0, 0, 1, 160deg);
+    }
+
     to {
-      -webkit-transform-origin: center;
-      transform-origin: center;
-      -webkit-transform: rotate3d(0, 0, 1, 120deg);
-      transform: rotate3d(0, 0, 1, 120deg);
       opacity: 0;
+      -webkit-transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 160deg);
+      transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 160deg);
     }
   }
 

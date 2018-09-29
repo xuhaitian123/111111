@@ -28,7 +28,7 @@
       id: String,
       tranelineInfo: {
         type: Array,
-        default: 0
+        default: [],
       },
       hour_data_picker_node:''
     },
@@ -36,19 +36,21 @@
       return {
         tranelineData:[],
         hour_data_picker_node:'',
+        max:1000,
+
       }
     },
     watch:{
       tranelineInfo(){
         this.tranelineData = []
         this.nodeNameList = [],
-        console.log(this.tranelineInfo)
+
           this.tranelineInfo.forEach((item,index)=>{
-            this.nodeNameList.push(index.toString())
+            this.nodeNameList.push(item.name)
             if((index+1)%2==0){
               this.nodeNameList.push('')
             }
-            this.tranelineData.push({name: index, type:'line', symbol: 'circle',data: item})
+            this.tranelineData.push({name: item.name, type:'line', symbol: 'circle',data: item.data})
         })
         this.init()
       }
@@ -59,7 +61,8 @@
 
         let options = {
           tooltip: {
-            trigger: 'axis'
+            trigger: 'axis',
+            showContent: false
           },
           animation: false,
           legend: {
@@ -86,8 +89,10 @@
           xAxis: {
             type: 'value',
             boundaryGap: false,
+            max:288,
             // data:[1,2,3,4,5,6,7,8,9],
             splitLine:{show:false},
+            interval: 71,
             axisLabel: {
               show: true,
               textStyle: {
@@ -95,7 +100,8 @@
                 "color": "#fff",
               },
               formatter: function (value, index) {
-                return value
+                console.log(value)
+                return Math.round((value)/72)*6+":00" ;
               },
             },
 
@@ -103,6 +109,8 @@
           yAxis: {
             type: 'value',
             show:true,
+            min:0,
+            max:this.max,
             // data:[1,2,3,4,5,6,7,8,9],
             axisTick:{
               show: true
@@ -122,66 +130,20 @@
         };
 
         myChart.setOption(options, true);
+        this.max = undefined
       }
 
     },
     mounted() {
+      setTimeout(()=>{
+        var tranelineInfo = [];
+        for(var i =0;i <288; i++){
+          tranelineInfo.push([i+1,""])
+        }
+        // this.max = 2000;
+        this.tranelineInfo = [{name:'',data:tranelineInfo}]
 
-      //
-      // var data = [
-      //   {
-      //     name: '路口一',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]],
-      //
-      //   },
-      //   {
-      //     name: '路口二',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口三',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口四',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口五',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //   {
-      //     name: '路口六',
-      //     type: 'line',
-      //     smooth: true,
-      //     symbol: 'circle',
-      //     symbolSize: 8,
-      //     data: [[1,2], [2,3], [3,1], [4,4], [5,12], [6,12], [7,1], [8,10], [9,14], [10,3], [11,15], [12,10]]
-      //   },
-      //
-      // ];
-
-
+      },500)
 
     },
   }

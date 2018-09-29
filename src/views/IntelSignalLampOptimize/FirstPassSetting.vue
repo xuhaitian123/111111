@@ -242,11 +242,9 @@
       },
       methods:{
         getAllRoadInfo(){
-          console.log('getAllRoadInfo');
           var self = this;
-          this.$http.get('/index/nodes?token=693e9af84d3dfcc71e640e005bdc5e2e')
+          this.$http.get('/index/nodes' + '?token=' + this.getHeader().token)
             .then((response) => {
-              console.log(response.data);
               self.showBMapPoint(response.data.nodes);
               return response.data;
             })
@@ -257,7 +255,6 @@
           var pt = new BMap.Point(node.long, node.lat);
           //
           var isExist = this.findRoadIsOpen(node.node_id,node.node_name);
-          console.log(isExist);
           var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/red.png"
           var myIcon = new BMap.Icon(str_icon_path, new BMap.Size(40,40));
           var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
@@ -441,6 +438,10 @@
             }
           }
           return isExist;
+        },
+
+        getPassRecord(){
+          // this.$http.get().then(())
         }
       }
     }

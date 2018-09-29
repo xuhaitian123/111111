@@ -12,10 +12,10 @@
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
-          <div class="" style="height: 980px;position: relative">
+          <div class="" style="position: relative">
             <road-net-map :all-links-delay="allLinksDelay"
                           :all-node-delay="allNodeDelay" :all-links-flow="allLinksFlow" :all-node-flow="allNodeFlow"
-                          style="width: 100%"></road-net-map>
+                          style="width: 100%;height: 935px;"></road-net-map>
 
             <div style="position: absolute;top: 15px;width: 100%;text-align: center">
               <el-row
@@ -102,8 +102,10 @@
                 </el-row>
               </div>
 
-              <div v-if="!currentRoadNet" style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
-                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+              <div v-if="!currentRoadNet"
+                   style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div
+                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
                   图例
                 </div>
 
@@ -132,8 +134,10 @@
               </div>
 
 
-              <div v-if="currentRoadNet" style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
-                <div style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
+              <div v-if="currentRoadNet"
+                   style="height: 190px;width: 160px;background: rgba(41,41,54,0.9);margin-top: 10px;float: right">
+                <div
+                  style="color: #c9c9cc;font-size: 14px;border-bottom: 2px solid #9c9c9c;text-align: center;line-height: 30px">
                   图例
                 </div>
 
@@ -162,7 +166,7 @@
               </div>
             </div>
 
-            <div style="position:absolute;bottom: 80px;width: 100%">
+            <div style="position:absolute;bottom: 30px;width: 100%">
               <time-line @newTime="getNewTime"></time-line>
             </div>
           </div>
@@ -204,7 +208,7 @@
         allLinksFlow: [],
         allNodeFlow: [],
         startTime: 0,
-        loading:false,
+        loading: false,
       }
     },
     mounted() {
@@ -252,8 +256,8 @@
         let url = '/trafficCongestion/roadAllLinksDelay?token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
-            cb(response.data.values)
-          })
+          cb(response.data.values)
+        })
       },
       getAllNodeD12s(startTime, endTime, cb) {  //所有交叉口延误数据
         let url = '/nodeData/getAllNodeD12s?token=' + this.getHeader().token;
@@ -317,7 +321,7 @@
           return "#c9c9cc"
         }
       },
-      alarmColor (val,is) {
+      alarmColor(val, is) {
         if (is) {
           return "#9a9bac";
         }
@@ -329,7 +333,7 @@
           return "#a43f43";
         }
       },
-      alarmText (val) {
+      alarmText(val) {
         if (val <= 60) {
           return "轻";
         } else if (val > 60 && val <= 80) {
@@ -346,6 +350,10 @@
             this.setRoadNetStatus(this.currentRoadNet, this.startTime, val);
             this.startTime = 0;
           }
+        } else if (val < this.startTime) {
+          this.getAllData(val, val + 5 * 60 * 1000);
+          this.setRoadNetStatus(this.currentRoadNet, val, val + 5 * 60 * 1000);
+          this.startTime = 0;
         } else {
           this.startTime = val;
         }

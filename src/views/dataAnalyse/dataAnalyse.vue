@@ -16,18 +16,18 @@
                v-loading="loading_score"
                element-loading-background="rgba(51, 54, 67, 1)">
           <div id="before_road_net_score" style="height: 120px;width: 170px;position: relative">
-            <RoadCondition :id ='"before"'></RoadCondition>
-            <div style="position: absolute;top:100px;left: 28px">优化前路网总评分</div>
+            <RoadCondition :id ='"before"':RoadCondition = RoadCondition.before :color='"#B3424C"'></RoadCondition>
+            <div style="position: absolute;top:90px;left: 28px">优化前路网总评分</div>
           </div>
           <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 90px;position: relative">
-            <RoadCondition :id='"after"'></RoadCondition>
-            <div style="position: absolute;top:100px;left: 28px">优化后路网总评分</div>
+            <RoadCondition :id='"after"':RoadCondition = RoadCondition.after :color='"#3EA579"'></RoadCondition>
+            <div style="position: absolute;top:90px;left: 28px">优化后路网总评分</div>
           </div>
           <div id="before_road_net_proportion" style="height: 170px;width: 190px">
-            <TrafficAccounting :id='"before_road_net_proportion"':data="data.before.values" :title = '"优化前"' ></TrafficAccounting>
+            <TrafficAccounting :id='"before_road_net_proportion"':data="data.before" :title = '"优化前"' ></TrafficAccounting>
           </div>
           <div id="after_road_net_proportion" style="height: 170px;width: 190px;margin-left: 52px">
-            <TrafficAccounting :id='"after_road_net_proportion"':data="data.after.values" :title = '"优化后"' ></TrafficAccounting>
+            <TrafficAccounting :id='"after_road_net_proportion"':data="data.after" :title = '"优化后"' ></TrafficAccounting>
           </div>
 
           </div>
@@ -56,14 +56,18 @@
         </div>
         <div class="flowRate">
           <div class="flowRate_title">
-            <div class="flowRate_title_text">路网流量、平均车速月变化趋势</div>
-          </div>
-          <div class="flowRate_body_area" style="padding: 35px 20px 0 30px;box-sizing: border-box"
-               v-loading="loading_flow"
-               element-loading-background="rgba(51, 54, 67, 1)">
+            <input class="flowRate_title_text" type="radio" name="tab_radio"id="tab_radio_1" checked>
+            <label for="tab_radio_1" class="tab_handler tab_handler_1">路网流量、平均车速月变化趋势</label>
+            <div class=" flowRate_body_area flowRate_body_area_1" style="padding: 35px 20px 0 30px;box-sizing: border-box;">
          <flow-data :flow_rate_data=flow_rate_data :speed_data=speed_data></flow-data>
-          </div>
         </div>
+            <input class="flowRate_title_text" type="radio" name="tab_radio"id="tab_radio_2">
+            <label for="tab_radio_2" class="tab_handler tab_handler_2">优先通行系统效果图</label>
+            <div class="flowRate_body_area  flowRate_body_area_2" style="padding: 35px 20px 0 30px;box-sizing: border-box;">
+             <PriorityAccess :priority_access_data=PriorityAccess></PriorityAccess>
+            </div>
+          </div>
+          </div>
         <div class="goodSpeed">
           <div class="goodSpeed_title">
             <div class="goodSpeed_title_text">优化前后平均车速日变化趋势</div>
@@ -141,7 +145,6 @@
   .score_title,
   .alarmData_title,
   .IntersectionData_title,
-  .flowRate_title,
   .goodSpeed_title {
     background: #1D1D2C;
     height: 30px;
@@ -152,20 +155,62 @@
   .score_title_text,
   .alarmData_title_text,
   .IntersectionData_title_text,
-  .flowRate_title_text,
   .goodSpeed_title_text {
     width: 320px;
     margin-left: 20px;
     font-size: 16px;
   }
+  /*.flowRate_title_text{*/
+    /*width: 200px;*/
+    /*height: 30px;*/
+    /*line-height: 30px;*/
+    /*padding-left: 20px;*/
+    /*background-color:#333643;*/
+  /*}*/
 
   .score_body_area,
   .alarmData_body_area,
   .IntersectionData_body_area,
-  .flowRate_body_area,
   .goodSpeed_body_area {
     height: 390px;
     background: #333643;
+  }
+  .flowRate_title{
+    position: relative;
+    width: 530px;
+    height: 30px;
+    background-color:#1D1D2C;
+  }
+  .flowRate_title .flowRate_title_text{
+    display: none;
+  }
+  .tab_handler{
+    position: relative;
+    z-index: 2;
+    display: block;
+    float: left;
+    height: 30px;
+    width: 245px;
+    padding-left:20px;
+    color: #ffffff;
+    line-height: 30px;
+  }
+  .flowRate_title_text:checked + .tab_handler{
+    color: #fff;
+    background-color: #333643;
+  }
+  .flowRate_title_text:checked + .tab_handler + .flowRate_body_area{
+    visibility: visible;
+    opacity: 1;
+  }
+  .flowRate_title .flowRate_body_area{
+    visibility: hidden;
+    position: absolute;
+    top: 30px;
+    width: 530px;
+    height: 390px;
+    background-color: #333643;
+    opacity: 0;
   }
 
 </style>
@@ -178,16 +223,18 @@
   import  goodData from '../../components/signalDataAnalysis/goodSpeed'
   import  Intersection from '../../components/signalDataAnalysis/Intersection'
   import  RoadCondition from '../../components/signalDataAnalysis/roadCondition'
+  import  PriorityAccess from '../../components/signalDataAnalysis/priorityAccess'
 
   export default {
     name: "DataAnalyse",
     mounted() {
-      this.init();
-      this.init_flowRate();
-      this.init_goodSpeed();
-      this.init_Intersection();
-      this.get_PieDoughnutItem();
-      this.get_RoadCondition_data()
+      // this.init();
+      // this.init_flowRate();
+      // this.init_goodSpeed();
+      // this.init_Intersection();
+      // this.get_PieDoughnutItem();
+      // this.get_RoadCondition_data();
+      this.get_all_data();
 
     },
     data() {
@@ -202,8 +249,12 @@
           before:{},
           after:{}
         },
-        RoadCondition:[],
-        loading_alarm:true,
+        RoadCondition:{
+          before:'',
+          after:''
+        },
+        PriorityAccess:[],
+        loading_alarm:false,
         loading_speed:false,
         loading_flow:false,
         loading_intersection:false,
@@ -212,72 +263,119 @@
       }
     },//
     methods: {
-      init() {
-        let that = this;
-        this.$http.get('/history/roadNetAlarmTimesByMonths?months=201806,201807,201808,201809,201810,201811,201812' +
-          ''+ '&token=' + this.getHeader().token).then(function (item) {
-          that.alarm_data = item.data;
-          that.loading_alarm = false;
+     //  init() {
+     //    let that = this;
+     //    this.$http.get('/history/roadNetAlarmTimesByMonths?months=201806,201807,201808,201809,201810,201811,201812' +
+     //      ''+ '&token=' + this.getHeader().token).then(function (item) {
+     //      that.alarm_data = item.data;
+     //      that.loading_alarm = false;
+     //
+     //    })
+     //  },
+     //  init_Intersection(){
+     //    let that = this;
+     //    this.get_init_Intersection_data().then(function (data) {
+     //      that.$http.get('/history/trafficLightOptimizeAlarmTimes' + '?token=' + that.getHeader().token).then(function (item) {
+     //        that.intersection_data = data;
+     //        that.trafficLightOptimizeAlarmTimes =item.data
+     //        that. loading_intersection = false
+     //      })
+     //    })
+     //  },
+     //  init_flowRate(){
+     //    let that = this;
+     //    this.get_flowRate_data().then(function (data) {
+     //      that.$http.get('/history/roadNetAvgSpeedByMonths?months=201808,201809' + '&token=' + that.getHeader().token).then(function (item) {
+     //        that.flow_rate_data =  data
+     //        that.speed_data =  item.data
+     //        that.loading_flow = false
+     //
+     //      })
+     //    })
+     //  },
+     //  init_goodSpeed(){
+     //    let that = this;
+     //    that.$http.get('history/trafficLightOptimizeDayAvgSpeed?token=?' + ''+ '&token=' + this.getHeader().token).then(function (item) {
+     //      that.good_speed = item.data
+     //      that.loading_speed = false
+     //    })
+     //  },
+     //  get_init_Intersection_data(){
+     //      return new Promise((resolve, reject) => {
+     //        this.$http.get('/history/trafficLightOptimizeDelay?' + '&token=' + this.getHeader().token).then(function (item) {
+     //          resolve(item.data)
+     //        })
+     //      })
+     // },
+     //  get_flowRate_data(){
+     //    return new Promise((resolve, reject) => {
+     //      this.$http.get('/history/roadNetAllFlowByMonths?months=201808,201809' + '&token=' + this.getHeader().token).then(function (item) {
+     //        resolve(item.data)
+     //      })
+     //    })
+     //  },
+     //  get_PieDoughnutItem(){
+     //    let that = this;
+     //    this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token).then(function (item) {
+     //      that.data.before = item.data.before;
+     //       that.data.after = item.data.after
+     //      console.log(item.data.before)
+     //      that.loading_score = false
+     //    })
+     //  },
+     //  get_RoadCondition_data(){
+     //    let that = this;
+     //    this.$http.get('/trafficCongestion/roadNetCongestionScore?current=true' + this.getHeader().token).then(function (item) {
+     //    console.log(item)
+     //    })
+     //
+     //  },
+      get_all_data(){
+        let all_data = {
+           score_data:{
+            after:67,
+            before:88
+          },
+         road_data :{
+            after:{'三级':5.1,'二级':51.1,'一级':43.7},
+            before:{'三级':11.6,'二级':47.7,'一级':40.7}
+          },
+          alarm_data : {
+            after:[{month:'201806',value:10830},{month:'201807',value:10271},{month:'201808',value:9603},{month:'201809',value:10045}],
+            before:[{month:'201801',value:15013},{month:'201802',value:14721},{month:'201803',value:14223},{month:'201804',value:13674}]
+          },
+          intersection_data : {
+            after:[{name:'梁红玉路关天培路',value:20.3},{name:'梁红玉路樱桃园路',value:22.3},{name:'沈坤路樱桃园路',value:17.9},{name:'梁红玉路永怀东路',value:17.2},{name:'梁红玉路华西路',value:26.3},{name:'沈坤路华西路',value:20.8},{name:'梁红玉路镇海路',value:32.5},{name:'沈坤路镇海路',value:35.7},{name:'梁红玉路翔宇大道',value:28.6},{name:'沈坤路翔宇大道',value:27.5}],
+            before:[{name:'梁红玉路关天培路',value:25.2},{name:'梁红玉路樱桃园路',value:24.2},{name:'沈坤路樱桃园路',value:20.3},{name:'梁红玉路永怀东路',value:21.9},{name:'梁红玉路华西路',value:38.4},{name:'沈坤路华西路',value:23.9},{name:'梁红玉路镇海路',value:30.2},{name:'沈坤路镇海路',value:29.0},{name:'梁红玉路翔宇大道',value:24.4},{name:'沈坤路翔宇大道',value:26.3}]
+          },
+          intersection_alarm_data :{
+            after:[{name:'梁红玉路关天培路',value:42},{name:'梁红玉路樱桃园路',value:58},{name:'沈坤路樱桃园路',value:39},{name:'梁红玉路永怀东路',value:50},{name:'梁红玉路华西路',value:56},{name:'沈坤路华西路',value:39},{name:'梁红玉路镇海路',value:45},{name:'沈坤路镇海路',value:62},{name:'梁红玉路翔宇大道',value:49},{name:'沈坤路翔宇大道',value:54}],
+            before:[{name:'梁红玉路关天培路',value:65},{name:'梁红玉路樱桃园路',value:86},{name:'沈坤路樱桃园路',value:57},{name:'梁红玉路永怀东路',value:88},{name:'梁红玉路华西路',value:90},{name:'沈坤路华西路',value:53},{name:'梁红玉路镇海路',value:72},{name:'沈坤路镇海路',value:85},{name:'梁红玉路翔宇大道',value:63},{name:'沈坤路翔宇大道',value:87}]
+          },
+          flow_speed_data :{
+            flow:[{month:'201804',value:248879},{month:'201805',value:251879},{month:'201806',value:249879},{month:'201807',value:252879},{month:'201808',value:250879},{month:'201809',value:251879}],
+            speed:[{month:'201804',value:34.4},{month:'201805',value:33.2},{month:'201806',value:36.9},{month:'201807',value:43.2},{month:'201808',value:44.1},{month:'201809',value:42.8}]
+          },
+          access_system_data :[{type:0,name:'社会车辆',value:45.6},{type:1,name:'警务车辆',value:63.4},{type:2,name:'领导外宾车辆',value:65.6},{type:3,name:'救援车辆',value:78.6},{type:4,name:'公交车辆',value:55.3}],
+          everyday_score_data:{
+            after:[94,97,96,98,97,96,94,78,70,75,83,92,85,83,84,80,76,73,74,83,86,89,93,95],
+            before:[94,96,97,96,98,94,85,66,58,67,70,75,79,75,72,75,70,65,68,71,78,81,86,90]
+          }
+        }
+        this.alarm_data =all_data.alarm_data
+        this.intersection_data = all_data.intersection_data
+        this.trafficLightOptimizeAlarmTimes=all_data.intersection_alarm_data
+        this.flow_rate_data = all_data.flow_speed_data.flow
+        this.speed_data = all_data.flow_speed_data.speed
+        this.good_speed = all_data.everyday_score_data
+        this.RoadCondition= all_data.road_data
+        this.data.before = all_data.road_data.before
+        this.data.after = all_data.road_data.after
+        this.RoadCondition.after = all_data.score_data.after
+        this.RoadCondition.before = all_data.score_data.before
+        this.PriorityAccess = all_data.access_system_data
+        }
 
-        })
-      },
-      init_Intersection(){
-        let that = this;
-        this.get_init_Intersection_data().then(function (data) {
-          that.$http.get('/history/trafficLightOptimizeAlarmTimes' + '?token=' + that.getHeader().token).then(function (item) {
-            that.intersection_data = data;
-            that.trafficLightOptimizeAlarmTimes =item.data
-            that. loading_intersection = false
-          })
-        })
-      },
-      init_flowRate(){
-        let that = this;
-        this.get_flowRate_data().then(function (data) {
-          that.$http.get('/history/roadNetAvgSpeedByMonths?months=201808,201809' + '&token=' + that.getHeader().token).then(function (item) {
-            that.flow_rate_data =  data
-            that.speed_data =  item.data
-            that.loading_flow = false
-
-          })
-        })
-      },
-      init_goodSpeed(){
-        let that = this;
-        that.$http.get('history/trafficLightOptimizeDayAvgSpeed?token=?' + ''+ '&token=' + this.getHeader().token).then(function (item) {
-          that.good_speed = item.data
-          that.loading_speed = false
-        })
-      },
-      get_init_Intersection_data(){
-          return new Promise((resolve, reject) => {
-            this.$http.get('/history/trafficLightOptimizeDelay?' + '&token=' + this.getHeader().token).then(function (item) {
-              resolve(item.data)
-            })
-          })
-     },
-      get_flowRate_data(){
-        return new Promise((resolve, reject) => {
-          this.$http.get('/history/roadNetAllFlowByMonths?months=201808,201809' + '&token=' + this.getHeader().token).then(function (item) {
-            resolve(item.data)
-          })
-        })
-      },
-      get_PieDoughnutItem(){
-        let that = this;
-        this.$http.get('/history/trafficLightOptimizeD14sl?token=' + this.getHeader().token).then(function (item) {
-          that.data.before = item.data.before;
-           that.data.after = item.data.after
-          that.loading_score = false
-        })
-      },
-      get_RoadCondition_data(){
-        let that = this;
-        this.$http.get('/trafficCongestion/roadNetCongestionScore?current=true' + this.getHeader().token).then(function (item) {
-        console.log(item)
-        })
-
-      }
 
   },
   components: {
@@ -287,7 +385,8 @@
     FlowData,
     goodData,
     Intersection,
-    RoadCondition
+    RoadCondition,
+    PriorityAccess
 
   }
   ,

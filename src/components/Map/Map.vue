@@ -1,5 +1,5 @@
 <template>
-  <div id="bigMap" style="height: 980px"></div>
+  <div id="bigMap" ></div>
 </template>
 
 <script>
@@ -69,12 +69,13 @@
           boxShadow: "5px 5px 5px #111",
           padding: "5px",
           lineHeight: "20px",
+          // display: 'none'
         });
 
         label.id = id;
         label.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
-          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0,id.indexOf('_')));
+          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0, id.indexOf('_')));
         });
 
         window.congestionMap.addOverlay(label);
@@ -87,15 +88,24 @@
         marker.id = id;
         marker.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
-          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0,id.indexOf('_')));
+          this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0, id.indexOf('_')));
         });
+
+        // marker.addEventListener('mouseover',(pt)=>{
+        //   console.log(pt.currentTarget.id.substring(0, id.lastIndexOf('_'))+'_label')
+        //   console.log(document.getElementById(pt.currentTarget.id.substring(0, id.lastIndexOf('_'))+'_label'))
+        // });
+        //
+        // marker.addEventListener('mouseleave',(pt)=>{
+        //   document.getElementById(pt.currentTarget.id.substring(0, id.indexOf('_'))+'_delay_label').style.display='node'
+        // });
 
         window.congestionMap.addOverlay(marker);
       },
-      deletePoint(id){
+      deletePoint(id) {
         let allOverlay = window.congestionMap.getOverlays();
-        for (let i = 0; i < allOverlay.length -1; i++){
-          if(allOverlay[i].id=== id){
+        for (let i = 0; i < allOverlay.length - 1; i++) {
+          if (allOverlay[i].id === id) {
             window.congestionMap.removeOverlay(allOverlay[i]);
             return false;
           }
@@ -116,21 +126,21 @@
         polyline.id = id;
         polyline.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
-          this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id.substring(0,id.indexOf('_')) + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
+          this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id.substring(0, id.indexOf('_')) + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
         });
 
         window.congestionMap.addOverlay(polyline);          //增加折线
       },
       addNodeDelay(allNodeDelay) {
         allNodeDelay.forEach((delay) => {
-          let text = delay.node.node_name + "<br>交叉口延误时间 " + delay.value + "s";
-          this.addNodeMarker(delay.node.long, delay.node.lat, delay.value, delay.node_id+'_delay_node', true);
-          this.addLabel(delay.node.long, delay.node.lat, text, delay.value, delay.node_id+'_delay_label', true);
+          let text = delay.node.node_name + "<br>交叉口延误时间 " + delay.value.toFixed(0) + "s";
+          this.addNodeMarker(delay.node.long, delay.node.lat, delay.value, delay.node_id + '_delay_node', true);
+          this.addLabel(delay.node.long, delay.node.lat, text, delay.value, delay.node_id + '_delay_label', true);
         })
       },
       addRoadDelay(allLinksDelay) {
         allLinksDelay.forEach((delay) => {
-          this.addPloyline(delay.link.link_nodes, delay.value, delay.link_id+'_delay_line', true);
+          this.addPloyline(delay.link.link_nodes, delay.value, delay.link_id + '_delay_line', true);
         });
       },
       jumpPage(key) {
@@ -199,9 +209,9 @@
         handler(newVal, oldVal) {
           console.log(newVal)
           newVal.forEach((flow) => {
-            let text = flow.node.node_name + "<br>总流量: " + flow.value + "pcu";
-            this.addNodeMarker(flow.node.long, flow.node.lat, flow.value, flow.node.node_id+'_flow_node', false)
-            this.addLabel(flow.node.long, flow.node.lat, text, flow.value, flow.node_id+'_delay_label', false);
+            let text = flow.node.node_name + "<br>总流量: " + flow.value.toFixed(0) + "pcu";
+            this.addNodeMarker(flow.node.long, flow.node.lat, flow.value, flow.node.node_id + '_flow_node', false)
+            this.addLabel(flow.node.long, flow.node.lat, text, flow.value, flow.node_id + '_flow_label', false);
           })
         },
         deep: true //对象内部属性的监听，关键。
@@ -209,7 +219,7 @@
       allLinksFlow: {
         handler(newVal, oldVal) {
           newVal.forEach((flow) => {
-            this.addPloyline(flow.link.link_nodes, flow.value, flow.link_id+'_flow_line', false);
+            this.addPloyline(flow.link.link_nodes, flow.value, flow.link_id + '_flow_line', false);
           })
         },
         deep: true //对象内部属性的监听，关键。
