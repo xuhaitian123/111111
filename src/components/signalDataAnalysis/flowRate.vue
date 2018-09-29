@@ -1,5 +1,5 @@
 <template>
-  <div id="data_four" style="height: 100%;width: 100%"></div>
+  <div id="data_four" style="height: 100%;width: 100%;padding: 10px; box-sizing: border-box"></div>
 </template>
 
 <script>
@@ -108,7 +108,7 @@
               {
                 name: '流量',
                 type: 'line',
-                color: '#02d1d1',
+                color: '#43AF7E',
                 symbol: 'circle',
                 yAxisIndex: 1,
                 data: []

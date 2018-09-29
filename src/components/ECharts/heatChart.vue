@@ -99,12 +99,6 @@
               // console.log(index)
               data.push([i, index+1, this.heat_data[0][index][i]])
             })
-            // data.push([i, -1, ''])
-            // data.push([i, 1, ''])
-            // data.push([i, 2, ''])
-            // data.push([i, 3, ''])
-            // data.push([i, 4, ''])
-            // data.push([i, 5, ''])
           }else  if((i >= 430 && i<=718 )){
             linkNumber.forEach((item,index)=>{
               data.push([i, index+1, this.heat_data[1][index][i-430]])
@@ -149,7 +143,6 @@
                   if(value<=288){
                     return  parseInt((value)/72)*6+":00" ;
                   }else{
-                    console.log(parseInt((value-430)/72)*6+"")
                     return  parseInt((value-430)/72)*6+":00" ;
                   }
 

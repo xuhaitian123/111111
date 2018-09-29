@@ -54,28 +54,29 @@
             <intersection :intersection_data=intersection_data :trafficLightOptimizeAlarmTimes=trafficLightOptimizeAlarmTimes></intersection>
           </div>
         </div>
-        <div class="flowRate">
-          <div class="flowRate_title">
-            <input class="flowRate_title_text" type="radio" name="tab_radio"id="tab_radio_1" checked>
-            <label for="tab_radio_1" class="tab_handler tab_handler_1">路网流量、平均车速月变化趋势</label>
-            <div class=" flowRate_body_area flowRate_body_area_1" style="padding: 35px 20px 0 30px;box-sizing: border-box;">
-         <flow-data :flow_rate_data=flow_rate_data :speed_data=speed_data></flow-data>
-        </div>
-            <input class="flowRate_title_text" type="radio" name="tab_radio"id="tab_radio_2">
-            <label for="tab_radio_2" class="tab_handler tab_handler_2">优先通行系统效果图</label>
-            <div class="flowRate_body_area  flowRate_body_area_2" style="padding: 35px 20px 0 30px;box-sizing: border-box;">
-             <PriorityAccess :priority_access_data=PriorityAccess></PriorityAccess>
-            </div>
-          </div>
+        <div class="flowRate dataAnalyse">
+          <el-tabs type="border-card" style="padding: 0;">
+            <el-tab-pane label="路网流量、平均车速月变化趋势" >
+              <el-row style="padding:0;background: #333643;height: 390px;text-align: center">
+                <FlowData :flow_rate_data=flow_rate_data :speed_data=speed_data></FlowData>
+            </el-row>
+            </el-tab-pane>
+            <el-tab-pane label="优先通行系统效果图" >
+              <el-row style="padding:0;background:#333643;height:390px;width: 530px;text-align: center">
+                <PriorityAccess style="padding: 10px; box-sizing: border-box" :priority_access_data=PriorityAccess></PriorityAccess>
+              </el-row>
+            </el-tab-pane>
+            </el-tabs>
           </div>
         <div class="goodSpeed">
           <div class="goodSpeed_title">
             <div class="goodSpeed_title_text">优化前后平均车速日变化趋势</div>
           </div>
-          <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box"
+          <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box;position: relative"
                v-loading="loading_speed"
                element-loading-background="rgba(51, 54, 67, 1)">
             <good-data :good_speed=good_speed></good-data>
+            <div style="position: absolute;top:;"></div>
           </div>
         </div>
 
@@ -103,7 +104,6 @@
   }
 
   .title_text {
-    font-size: 19px;
     display: block;
     margin-left: 20px;
   }
@@ -135,6 +135,7 @@
     margin-top: 10px;
   }
 
+
   .goodSpeed {
     height: 420px;
     width: 1070px;
@@ -158,7 +159,6 @@
   .goodSpeed_title_text {
     width: 320px;
     margin-left: 20px;
-    font-size: 16px;
   }
   /*.flowRate_title_text{*/
     /*width: 200px;*/
@@ -175,43 +175,7 @@
     height: 390px;
     background: #333643;
   }
-  .flowRate_title{
-    position: relative;
-    width: 530px;
-    height: 30px;
-    background-color:#1D1D2C;
-  }
-  .flowRate_title .flowRate_title_text{
-    display: none;
-  }
-  .tab_handler{
-    position: relative;
-    z-index: 2;
-    display: block;
-    float: left;
-    height: 30px;
-    width: 245px;
-    padding-left:20px;
-    color: #ffffff;
-    line-height: 30px;
-  }
-  .flowRate_title_text:checked + .tab_handler{
-    color: #fff;
-    background-color: #333643;
-  }
-  .flowRate_title_text:checked + .tab_handler + .flowRate_body_area{
-    visibility: visible;
-    opacity: 1;
-  }
-  .flowRate_title .flowRate_body_area{
-    visibility: hidden;
-    position: absolute;
-    top: 30px;
-    width: 530px;
-    height: 390px;
-    background-color: #333643;
-    opacity: 0;
-  }
+
 
 </style>
 
@@ -392,3 +356,9 @@
   ,
   }
 </script>
+
+<style>
+  .dataAnalyse .el-tabs--border-card>.el-tabs__content{
+    padding: 0;
+  }
+</style>
