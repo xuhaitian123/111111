@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="" style="position: relative;background: #282a37;">
-            <road-net-map style="width: 65%;height: 870px;" :all-node-delay="allNodeDelay"
+            <road-net-map style="width: 65%;height: 935px;" :all-node-delay="allNodeDelay"
                           :all-links-delay="allLinksDelay"></road-net-map>
 
             <div class="Road_row_link">
@@ -119,12 +119,14 @@
 
                       <div v-for="(link,i) in linksInfo[0]"
                            style="border-bottom: 1px solid;width: 100%;float: right;overflow: hidden">
-                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow),height: 250 / linksInfo[0].length +'px'}"
-                             style="float: right;"></div>
+                        <div
+                          :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow),height: 250 / linksInfo[0].length +'px'}"
+                          style="float: right;"></div>
                       </div>
 
                     </div>
-                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px;height: 250px"></div>
+                    <div
+                      style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px;height: 250px"></div>
                     <!--:style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"-->
 
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
@@ -132,8 +134,9 @@
                       <div class="Road_chart_line">| | | | |</div>
 
                       <div style="border-bottom: 1px solid;overflow: hidden" v-for="(link ,i) in linksInfo[1]">
-                        <div :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow),height: 250 / linksInfo[0].length +'px'}"
-                             style="width: 30px;"></div>
+                        <div
+                          :style="{width: getFlowNum(link.flow)+'%',background: getFlowColor(link.flow),height: 250 / linksInfo[0].length +'px'}"
+                          style="width: 30px;"></div>
                       </div>
 
                     </div>
@@ -142,10 +145,10 @@
                   </div>
                 </el-col>
                 <el-col :span="3">
-                  <div class="" style="margin-top: 35px">
-                    <div v-for="(name,i) in crossLinks" :key="name.link_id"
-                         :style="{paddingBottom: 219 /(linksInfo[0].length) +  'px'}">
-                      {{name.link_name}}
+                  <div class="" style="margin-top: 20px">
+                    <div v-for="(name,i) in scoreName" :key="name"
+                         :style="{lineHeight: (250 / scoreName.length) +  'px'}">
+                      {{name}}
                     </div>
                   </div>
                 </el-col>
@@ -162,8 +165,8 @@
                       </div>
 
                     </div>
-                    <div style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px;height: 250px"></div>
-                    <!--:style="{height: 65 * (linksInfo[0].length > 4 ? 4 : linksInfo[0].length ) +'px'}"-->
+                    <div
+                      style="float: left;width: 1%;background: #c9c9cc;margin-top: 20px;padding-top: 40px;height: 250px"></div>
                     <div class="" style="width: 49%;float: right;color: #c9c9cc;">
                       <div> 0 12 25 ></div>
                       <div class="Road_chart_line">| | | |</div>
@@ -234,7 +237,7 @@
                       交通走廊
                     </div>
 
-                    <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 35px"
+                    <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 80px"
                                 color="#c57426"></road-gauge>
                   </div>
                 </el-col>
@@ -244,26 +247,30 @@
                   </div>
 
                   <el-row style="margin: 0 20px">
-                    <div v-if="!allScore[0]" style="position: absolute;top: 40px;text-align: center;width: 100%;font-size: 20px;color: #7c7c7c">暂无数据</div>
+                    <div v-if="!allScore[0]"
+                         style="position: absolute;top: 40px;text-align: center;width: 100%;font-size: 20px;color: #7c7c7c">
+                      暂无数据
+                    </div>
                     <el-col :span="10">
-                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px;padding: 0 10px">
+                      <div class="" v-for="(item,i) in allScore" style="margin-bottom: 10px;padding: 0 10px">
                         <div style="float: left;line-height: 40px;font-size: 12px">{{item[0].value.toFixed(0)}}</div>
                         <concise-pie :id="'pie_left_'+item[0].link.link_id" :data="item[0]"
                                      style="width: 40px;height: 40px;margin: auto"></concise-pie>
                       </div>
                     </el-col>
                     <el-col :span="4" style="padding-top: 15px">
-                      <div class="" v-for="(item,i) in scoreName" v-if="i <4" style="position: relative;">
+                      <div class="" v-for="(item,i) in scoreName" style="position: relative;">
                         <div
                           style="width: 14px;height: 14px;border-radius: 50%;border: 1px solid #f98d21;margin: auto;"></div>
                         <div style="font-size: 12px;position: absolute;top: -5px;margin-left: 35px;width: 60px">
                           {{item}}
                         </div>
-                        <div v-if="i < 3 " style="height: 33px;width: 1px;background: #f98d21;margin: auto"></div>
+                        <div v-if="i < scoreName.length -1 "
+                             style="height: 33px;width: 1px;background: #f98d21;margin: auto"></div>
                       </div>
                     </el-col>
                     <el-col :span="10">
-                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px;padding: 0 10px">
+                      <div class="" v-for="(item,i) in allScore" style="margin-bottom: 10px;padding: 0 10px">
                         <div style="float: right;line-height: 40px;font-size: 12px">{{item[1].value.toFixed(0)}}</div>
                         <concise-pie :id="'pie_right_'+item[1].link.link_id" :data="item[1]"
                                      style="width: 40px;height: 40px;margin: auto"></concise-pie>
@@ -317,7 +324,7 @@
         allScore: [],
         scoreName: [],
         corridorScore: 0,
-        crossLinks:[],
+        crossLinks: [],
       }
     },
     mounted() {
@@ -338,8 +345,8 @@
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
       },
-      getCrossAllLinks(){
-        this.$http.get('/index/roadCrossAllLinksByLinkId?linkId='+ this.$route.params.id  +'&token=' + this.getHeader().token)
+      getCrossAllLinks() {
+        this.$http.get('/index/roadCrossAllLinksByLinkId?linkId=' + this.$route.params.id + '&token=' + this.getHeader().token)
           .then((response) => {
             console.log(response.data)
             this.crossLinks = response.data.cross_links;
@@ -356,15 +363,13 @@
               if (result.data.value[linkName]) {
                 this.allScore = Object.values(result.data.value[linkName]);
                 this.scoreName = Object.keys(result.data.value[linkName]);
-                if (this.scoreName.length > 4) {
-                  this.scoreName.length = 4;
-                }
 
                 let num = 0;
                 this.allScore.forEach((val) => {
                   num += (val[0].value + val[1].value);
                 });
                 this.corridorScore = num / (this.allScore.length * 2);
+                console.log(this.corridorScore)
               }
               this.loadingNode = false;
             });
@@ -583,7 +588,7 @@
   .Road_right_bottom {
     position: absolute;
     width: 34%;
-    height: 290px;
+    height: 350px;
     background: #353644;
     top: 440px;
     right: 10px;
@@ -641,7 +646,7 @@
   }
 
   .Road_row_subtitle {
-    margin-top: 25px;
+    margin-top: 10px;
     text-align: center;
     font-size: 14px;
     color: #c9c9cc

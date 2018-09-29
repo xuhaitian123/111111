@@ -1,5 +1,5 @@
 <template>
-  <div id="bigMap" ></div>
+  <div id="bigMap"></div>
 </template>
 
 <script>
@@ -32,7 +32,9 @@
       }
     },
     data() {
-      return {}
+      return {
+        road: ['201','202', '302']
+      }
     },
     mounted() {
       this.init()
@@ -89,25 +91,23 @@
           this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0, id.indexOf('_')));
         });
 
-        marker.addEventListener('mouseover',(pt)=>{
+        marker.addEventListener('mouseover', (pt) => {
           let all = window.congestionMap.getOverlays();
-          all.forEach((val)=>{
-            if(val.id=== pt.currentTarget.id.substring(0, id.lastIndexOf('_'))+'_label'){
-              console.log(val)
+          all.forEach((val) => {
+            if (val.id === pt.currentTarget.id.substring(0, id.lastIndexOf('_')) + '_label') {
               val.setStyle({
                 display: 'block',
               })
             }
           });
-          console.log(pt.currentTarget.id.substring(0, id.lastIndexOf('_'))+'_label')
+          console.log(pt.currentTarget.id.substring(0, id.lastIndexOf('_')) + '_label')
         });
 
-        marker.addEventListener('mouseout',(pt)=>{
+        marker.addEventListener('mouseout', (pt) => {
           let all = window.congestionMap.getOverlays();
-          all.forEach((val)=>{
+          all.forEach((val) => {
 
-            if(val.id=== pt.currentTarget.id.substring(0, id.lastIndexOf('_'))+'_label'){
-              console.log(val)
+            if (val.id === pt.currentTarget.id.substring(0, id.lastIndexOf('_')) + '_label') {
               val.setStyle({
                 display: 'none',
               })
@@ -140,8 +140,11 @@
         });
         polyline.id = id;
         polyline.addEventListener('click', (pt) => {
-          console.log(pt.currentTarget)
-          this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id.substring(0, id.indexOf('_')) + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
+          console.log(pt.currentTarget.id)
+          let idNum =pt.currentTarget.id.substring(0, id.indexOf('_'));
+          if (this.road.indexOf(idNum) !== -1) {
+            this.jumpPage('/main/RoadSectionMap/' + idNum + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
+          }
         });
 
         window.congestionMap.addOverlay(polyline);          //增加折线
