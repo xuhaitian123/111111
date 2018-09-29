@@ -11,7 +11,7 @@
             </div>
           </div>
           <div class="" style="position: relative;background: #1f1f2c">
-            <road-net-map style="width: 65%" :all-node-delay="allNodeDelay"
+            <road-net-map style="width: 65%;height: 870px" :all-node-delay="allNodeDelay"
                           :all-links-delay="allLinksDelay"></road-net-map>
 
             <div class="Road_row_link">
@@ -144,7 +144,7 @@
                 </el-col>
                 <el-col :span="3">
                   <div class="" style="margin-top: 10px">
-                    <div v-for="(name,i) in linksInfo[0]" :key="name.link_id" v-if="i <4" style="padding: 24px 0">
+                    <div v-for="(name,i) in crossLinks" :key="name.link_id" v-if="i <linksInfo[0].length+1" style="padding: 24px 0">
                       {{name.link_name}}
                     </div>
                   </div>
@@ -236,7 +236,7 @@
                       交通走廊
                     </div>
 
-                    <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 80px"
+                    <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 35px"
                                 color="#c57426"></road-gauge>
                   </div>
                 </el-col>
@@ -245,12 +245,12 @@
                     交叉口
                   </div>
 
-                  <el-row style="margin: 20px">
+                  <el-row style="margin: 0 20px">
                     <el-col :span="10">
-                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px">
-                        <div style="float: left;line-height: 50px;font-size: 12px">{{item[0].value.toFixed(0)}}</div>
+                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px;padding: 0 10px">
+                        <div style="float: left;line-height: 40px;font-size: 12px">{{item[0].value.toFixed(0)}}</div>
                         <concise-pie :id="'pie_left_'+item[0].link.link_id" :data="item[0]"
-                                     style="width: 50px;height: 50px;margin: auto"></concise-pie>
+                                     style="width: 40px;height: 40px;margin: auto"></concise-pie>
                       </div>
                     </el-col>
                     <el-col :span="4" style="padding-top: 15px">
@@ -260,14 +260,14 @@
                         <div style="font-size: 12px;position: absolute;top: -5px;margin-left: 35px;width: 60px">
                           {{item}}
                         </div>
-                        <div v-if="i < 3 " style="height: 45px;width: 1px;background: #f98d21;margin: auto"></div>
+                        <div v-if="i < 3 " style="height: 33px;width: 1px;background: #f98d21;margin: auto"></div>
                       </div>
                     </el-col>
                     <el-col :span="10">
-                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px">
-                        <div style="float: right;line-height: 50px;font-size: 12px">{{item[1].value.toFixed(0)}}</div>
+                      <div class="" v-for="(item,i) in allScore" v-if="i <4" style="margin-bottom: 10px;padding: 0 10px">
+                        <div style="float: right;line-height: 40px;font-size: 12px">{{item[1].value.toFixed(0)}}</div>
                         <concise-pie :id="'pie_right_'+item[1].link.link_id" :data="item[1]"
-                                     style="width: 50px;height: 50px;margin: auto"></concise-pie>
+                                     style="width: 40px;height: 40px;margin: auto"></concise-pie>
                       </div>
                     </el-col>
                   </el-row>
@@ -275,7 +275,7 @@
               </el-row>
             </div>
 
-            <div style="position:absolute;bottom: 80px;width: 100%">
+            <div style="position:absolute;bottom: 30px;width: 100%">
               <time-line @newTime="getNewTime"></time-line>
             </div>
           </div>
@@ -318,6 +318,7 @@
         allScore: [],
         scoreName: [],
         corridorScore: 0,
+        crossLinks:[],
       }
     },
     mounted() {
@@ -327,20 +328,22 @@
       init() {
         this.getAllData();
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
-
-        this.$http.get('/index/roadCrossLinkByLinkId?linkId='+ this.$route.params.id  +'&token=' + this.getHeader().token)
-          .then((response) => {
-            console.log(response)
-          })
       },
       getAllData(startTime, endTime) {
         this.getAllLinkId();
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
+        this.getCrossAllLinks();
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
+      },
+      getCrossAllLinks(){
+        this.$http.get('/index/roadCrossAllLinksByLinkId?linkId='+ this.$route.params.id  +'&token=' + this.getHeader().token)
+          .then((response) => {
+            this.crossLinks = response.data.cross_links;
+          })
       },
       getLinkByNodeScore() {
         this.loadingNode = true;
@@ -579,7 +582,7 @@
   .Road_right_bottom {
     position: absolute;
     width: 35%;
-    height: 360px;
+    height: 290px;
     background: #353644;
     top: 420px;
     right: 0;

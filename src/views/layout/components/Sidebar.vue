@@ -105,7 +105,11 @@
     },
     watch: {
       '$route' (to, from) {
-        console.log(this.$route.path)
+        // this.$router.go({
+        //   path: this.$route.path,
+        //   force: true
+        // });
+        // console.log(this.$route.path)
       }
     }
   }

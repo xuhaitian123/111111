@@ -1,5 +1,5 @@
 <template>
-  <div id="bigMap" style="height: 980px"></div>
+  <div id="bigMap" ></div>
 </template>
 
 <script>
@@ -133,7 +133,7 @@
       },
       addNodeDelay(allNodeDelay) {
         allNodeDelay.forEach((delay) => {
-          let text = delay.node.node_name + "<br>交叉口延误时间 " + delay.value + "s";
+          let text = delay.node.node_name + "<br>交叉口延误时间 " + delay.value.toFixed(0) + "s";
           this.addNodeMarker(delay.node.long, delay.node.lat, delay.value, delay.node_id + '_delay_node', true);
           this.addLabel(delay.node.long, delay.node.lat, text, delay.value, delay.node_id + '_delay_label', true);
         })
@@ -209,7 +209,7 @@
         handler(newVal, oldVal) {
           console.log(newVal)
           newVal.forEach((flow) => {
-            let text = flow.node.node_name + "<br>总流量: " + flow.value + "pcu";
+            let text = flow.node.node_name + "<br>总流量: " + flow.value.toFixed(0) + "pcu";
             this.addNodeMarker(flow.node.long, flow.node.lat, flow.value, flow.node.node_id + '_flow_node', false)
             this.addLabel(flow.node.long, flow.node.lat, text, flow.value, flow.node_id + '_flow_label', false);
           })
