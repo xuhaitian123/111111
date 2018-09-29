@@ -190,6 +190,7 @@
     display: block;
     float: left;
     height: 30px;
+    width: 245px;
     padding-left:20px;
     color: #ffffff;
     line-height: 30px;

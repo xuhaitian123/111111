@@ -105,9 +105,11 @@
     },
     watch: {
       '$route' (to, from) {
-        this.$router.replace({
-          path: this.$route.path});
-        console.log(this.$route.path)
+        // this.$router.go({
+        //   path: this.$route.path,
+        //   force: true
+        // });
+        // console.log(this.$route.path)
       }
     }
   }

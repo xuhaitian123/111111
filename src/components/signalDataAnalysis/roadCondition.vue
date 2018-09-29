@@ -56,10 +56,10 @@
                   lineStyle: {
                     color: [[this.RoadCondition/100, this.color], [1, '#fff']],
                     width: 2,
-                    // shadowBlur: 15,
-                    // shadowColor: '#e2ea73',
-                    // shadowOffsetX: 0,
-                    // shadowOffsetY: 0,
+                    shadowBlur: 15,
+                    shadowColor: '#e2ea73',
+                    shadowOffsetX: 0,
+                    shadowOffsetY: 0,
                     opacity: 1
                   }
                 },

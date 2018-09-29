@@ -27,13 +27,7 @@
             }
           },
           radar: {
-            indicator: [
-              {name: '公交车辆', max:100 },
-              {name: '警务车辆', max: 100},
-              {name: '救援车辆', max: 100},
-              {name: '领导外宾车辆', max:100},
-              {name: '社会车辆', max: 200}
-            ],
+            indicator: [],
             shape: 'circle',
             splitNumber: 5,
             name:{
@@ -59,7 +53,7 @@
               },
               type:'radar',
               symbol: 'none',
-              data:[[82,63,44,52,94]],
+              data:[],
               itemStyle: {
                 normal: {
                   color: '#FADE63'
@@ -73,10 +67,24 @@
             }
           ]
         }
+          this.data_processing(option)
+
          this.priority = this.$echarts.init(document.getElementById('main'));
          this.priority.setOption(option)
        },
+        data_processing(option){
+          var sort_out_data = this.priority_access_data;
+          var indicator =sort_out_data.map(function (data) {
+            return {name:data.name,max:150}
+          })
+          option.radar.indicator = indicator;
+          var sort_out_value = sort_out_data.map(function (data) {
+            return data.value
+          })
+          option.series[0].data.push(sort_out_value)
+        },
        },
+
 
       watch:{
         priority_access_data(){
