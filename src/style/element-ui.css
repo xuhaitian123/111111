@@ -231,6 +231,14 @@
   border-left-color: #353644;
 }
 
+.Node_right .el-tabs--border-card>.el-tabs__content{
+  padding: 5px 15px;
+}
+
+.Node_right_bottom .el-tabs__content{
+  height: 280px;
+}
+
 .el-tabs--border-card>.el-tabs__header #tab-1.is-active{
   color: #fff;
   background: linear-gradient(126deg, transparent 16px, #353544 0);

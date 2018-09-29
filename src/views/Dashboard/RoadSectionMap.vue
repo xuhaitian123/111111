@@ -10,8 +10,8 @@
               <i class="iconfont icon-webicon03"></i>
             </div>
           </div>
-          <div class="" style="position: relative;background: #1f1f2c">
-            <road-net-map style="width: 65%;height: 870px" :all-node-delay="allNodeDelay"
+          <div class="" style="position: relative;background: #282a37;">
+            <road-net-map style="width: 65%;height: 870px;" :all-node-delay="allNodeDelay"
                           :all-links-delay="allLinksDelay"></road-net-map>
 
             <div class="Road_row_link">
@@ -108,7 +108,7 @@
             </div>
 
             <div class="Road_right_top" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.8)">
-              <div class="Road_row_title">道路流量/排队长度/饱和度数据展示</div>
+              <div class="Road_row_title">交通走廊流量/排队长度/饱和度数据展示</div>
 
               <el-row class="Road_right_link">
                 <el-col :span="8">
@@ -572,30 +572,30 @@
   }
 
   .Road_row_link {
-    width: 65%;
+    width: 63%;
     position: absolute;
-    top: 0;
+    top: 10px;
+    left: 1%;
     background: #1f1f2c;
     line-height: 60px;
   }
 
   .Road_right_bottom {
     position: absolute;
-    width: 35%;
+    width: 34%;
     height: 290px;
     background: #353644;
-    top: 420px;
-    right: 0;
-    margin-top: 10px
+    top: 440px;
+    right: 10px;
   }
 
   .Road_right_top {
     position: absolute;
-    width: 35%;
+    width: 34%;
     height: 420px;
     background: #353644;
-    top: -1px;
-    right: 0
+    top: 10px;
+    right: 10px
   }
 
   .Road_row_list {
