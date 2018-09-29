@@ -5,7 +5,7 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>路段数据展示</span>
+            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>交叉口数据</span>
             <div style="float: right; padding: 3px 0">
               <i class="iconfont icon-webicon03"></i>
             </div>
@@ -195,7 +195,8 @@
 
               <img src="/static/image/map/40.png"
                    style="width: 50px;height: 50px;padding: 5px;border-bottom: 1px solid #acacaf"/>
-              <img src="/static/image/map/camera.png" @click="jumpPage('/main/trafficVideo/2')" style="width: 30px;height: 30px;padding: 12px;"/>
+              <img src="/static/image/map/camera.png" @click="jumpPage('/main/trafficVideo/'+$route.params.id)"
+                   style="width: 30px;height: 30px;padding: 12px;"/>
             </div>
 
             <div class="Road_row_link">
@@ -237,8 +238,8 @@
             </div>
 
             <div class="signal_road_score">
-              <div style="font-size: 14px;margin-top: 10px">路网拥堵评分</div>
-              <road-gauge :data="roadNetCongestionScore.toFixed(0)" class="Dashboard_card_roadGauge"></road-gauge>
+              <div style="font-size: 14px;margin-top: 10px">交叉口交通运行评分</div>
+              <road-gauge :data="roadNetCongestionScore.toFixed(0)" :color="getSaturationColor(roadNetCongestionScore)" class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
             <!--<div>-->
@@ -285,8 +286,8 @@
             <!--</div>-->
             <!--</div>-->
 
-            <div class="Node_right_top">
-              <el-tabs type="border-card" style="height: 420px;background: #353644">
+            <div class="Node_right">
+              <el-tabs type="border-card" style="height: 400px;background: #353644">
                 <el-tab-pane label="当前信号灯配时方案" v-loading="loadingSignal"
                              element-loading-background="rgba(0, 0, 0, 0.8)">
                   <el-row style="padding: 40px 20px 0;text-align: center">
@@ -294,9 +295,9 @@
                       <div class="" style="margin-bottom: 5px">{{signalText[value.key]}}</div>
                       <div style="height: 86px;border-radius: 10px;width: 30px;background: #2a2b36;margin: auto">
                         <ul class="Node_signal_lamp">
-                          <li :style="{background : value.value === 'Red' ? 'red':''}"></li>
+                          <li :style="{background : !currentColor[value.key] ? 'red':''}"></li>
                           <li
-                            :style="{background : currentColor[value.key]==='yellow'? 'yellow':'' || currentColor[value.key]!=='green'?'yellow':''}"></li>
+                            :style="{background : currentColor[value.key]==='yellow'? 'yellow':''}"></li>
                           <li :style="{background : currentColor[value.key]==='green'?'green':''}"></li>
                         </ul>
                       </div>
@@ -568,16 +569,17 @@
 
               <el-tabs type="border-card" :before-leave="setFlowOrDelay" v-loading="loadingFlow"
                        element-loading-background="rgba(0, 0, 0, 0.8)"
-                       style="height: 290px;margin-top: 10px;background: #353644;text-align: center;font-size: 12px">
+                       class="Node_right_bottom">
                 <el-tab-pane label="交叉口机动车/非机动车流量">
                   <el-row style="position: relative">
-                    <el-col :span="10" :offset="1" style="display: flex;position: relative">
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['西']">
+                    <el-col :span="11" style="display: flex;position: relative">
+                      <div style="width: 20px;font-size: 12px;padding-top: 80px;margin-right: 10px"
+                           v-if="allLinksName['西']">
                         {{allLinksName['西'].split("").join("\n")}}
                       </div>
 
                       <div style="flex: 1;">
-                        <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
+                        <div class="" style="margin-bottom: 20px">{{allLinksName['北']}}</div>
 
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
@@ -858,22 +860,26 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                           </div>
                         </div>
 
+                        <div class="" style="margin-top: 5px">{{allLinksName['南']}}</div>
+
                         <img src="/static/image/map/flow_car.png"
-                             style="width: 110px;height: 20px;position: absolute;bottom: -15px;left: 0;right: 0;margin: auto;"/>
+                             style="width: 110px;height: 20px;position: absolute;bottom: -25px;left: 0;right: 0;margin: auto;"/>
 
                       </div>
 
-                      <div style="width: 20px;padding-top: 90px;font-size: 12px" v-if="allLinksName['东']">
+                      <div style="width: 20px;padding-top: 80px;font-size: 12px;padding-left: 12px"
+                           v-if="allLinksName['东']">
                         {{allLinksName['东'].split("").join("\n")}}
                       </div>
                     </el-col>
-                    <el-col :span="10" :offset="2" style="display: flex;position: relative" v-if="allLinksName['西']">
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['西']">
+                    <el-col :span="11" :offset="1" style="display: flex;position: relative" v-if="allLinksName['西']">
+                      <div style="width: 20px;font-size: 12px;padding-top: 80px;margin-right: 10px"
+                           v-if="allLinksName['西']">
                         {{allLinksName['西'].split("").join("\n")}}
                       </div>
 
                       <div style="flex: 1">
-                        <div class="" style="margin-bottom: 15px">{{allLinksName['北']}}</div>
+                        <div class="" style="margin-bottom: 20px">{{allLinksName['北']}}</div>
 
                         <div style="position: relative;" v-if="allMovementFlow['南']">
                           <div style="width: 100%;height: 180px;">
@@ -1154,11 +1160,14 @@ l810 3 78 77 c43 42 83 85 88 95 9 16 -36 17 -898 16 -695 -1 -919 -4 -953
                           </div>
                         </div>
 
+                        <div class="" style="margin-top: 5px">{{allLinksName['南']}}</div>
+
                         <img src="/static/image/map/flow_bike.png"
-                             style="width: 110px;height: 20px;position: absolute;bottom: -15px;left: 0;right: 0;margin: auto;"/>
+                             style="width: 110px;height: 20px;position: absolute;bottom: -25px;left: 0;right: 0;margin: auto;"/>
                       </div>
 
-                      <div style="width: 20px;font-size: 12px;padding-top: 90px;" v-if="allLinksName['东']">
+                      <div style="width: 20px;font-size: 12px;padding-top: 80px;padding-left: 12px"
+                           v-if="allLinksName['东']">
                         {{allLinksName['东'].split("").join("\n")}}
                       </div>
 
@@ -1685,8 +1694,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           });
         })
       },
-      getRoadNetCongestionScore(startTime, endTime) { //路网拥堵评分
-        let url = '/TrafficCongestion/roadNetCongestionScore?token=' + this.getHeader().token;
+      getRoadNetCongestionScore(startTime, endTime) { //交叉口拥堵评分
+        let url = '/nodeData/getNodeDataD22ByNodeId?nodeId='+ this.$route.params.id +'&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
           this.roadNetCongestionScore = response.data.value;
@@ -1863,8 +1872,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             this.currentColor[this.signalPlan['222'].key] = 'yellow';
           }
         }
-
-        console.log(this.currentColor)
       },
       stopChange() {
         if (this.isChangeTime) {
@@ -2135,12 +2142,20 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
     margin-bottom: -70px
   }
 
-  .Node_right_top {
+  .Node_right {
     position: absolute;
     width: 35%;
     background: #1f1f2c;
     top: -1px;
     right: 0
+  }
+
+  .Node_right_bottom {
+    height: 310px;
+    margin-top: 10px;
+    background: #353644;
+    text-align: center;
+    font-size: 12px
   }
 
   .Node_signal_lamp {
@@ -2189,7 +2204,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
   }
 
   .block {
-    height: 110px;
+    height: 105px;
     width: 30%;
     color: #c9c9cc;
     line-height: 25px;

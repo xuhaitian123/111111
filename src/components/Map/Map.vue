@@ -1,5 +1,5 @@
 <template>
-  <div id="bigMap" ></div>
+  <div id="bigMap"></div>
 </template>
 
 <script>
@@ -32,7 +32,9 @@
       }
     },
     data() {
-      return {}
+      return {
+        road: ['201','202', '302']
+      }
     },
     mounted() {
       this.init()
@@ -45,7 +47,7 @@
         map.setMinZoom(12);
         map.setMaxZoom(18);
         map.addControl(new window.BMap.NavigationControl({
-          offset: new BMap.Size(10, 60)
+          offset: new BMap.Size(10, 80)
         }));   //缩放按钮
         let b = new window.BMap.Bounds(new window.BMap.Point(118.19214, 32.717855), new window.BMap.Point(119.648976, 34.184862));
         try {
@@ -69,9 +71,8 @@
           boxShadow: "5px 5px 5px #111",
           padding: "5px",
           lineHeight: "20px",
-          // display: 'none'
+          display: 'none'
         });
-
         label.id = id;
         label.addEventListener('click', (pt) => {
           console.log(pt.currentTarget)
@@ -87,18 +88,32 @@
         let marker = new window.BMap.Marker(pt, {icon: myIcon});  // 创建标注
         marker.id = id;
         marker.addEventListener('click', (pt) => {
-          console.log(pt.currentTarget)
           this.jumpPage('/main/intersectionsMap/' + pt.currentTarget.id.substring(0, id.indexOf('_')));
         });
 
-        // marker.addEventListener('mouseover',(pt)=>{
-        //   console.log(pt.currentTarget.id.substring(0, id.lastIndexOf('_'))+'_label')
-        //   console.log(document.getElementById(pt.currentTarget.id.substring(0, id.lastIndexOf('_'))+'_label'))
-        // });
-        //
-        // marker.addEventListener('mouseleave',(pt)=>{
-        //   document.getElementById(pt.currentTarget.id.substring(0, id.indexOf('_'))+'_delay_label').style.display='node'
-        // });
+        marker.addEventListener('mouseover', (pt) => {
+          let all = window.congestionMap.getOverlays();
+          all.forEach((val) => {
+            if (val.id === pt.currentTarget.id.substring(0, id.lastIndexOf('_')) + '_label') {
+              val.setStyle({
+                display: 'block',
+              })
+            }
+          });
+          console.log(pt.currentTarget.id.substring(0, id.lastIndexOf('_')) + '_label')
+        });
+
+        marker.addEventListener('mouseout', (pt) => {
+          let all = window.congestionMap.getOverlays();
+          all.forEach((val) => {
+
+            if (val.id === pt.currentTarget.id.substring(0, id.lastIndexOf('_')) + '_label') {
+              val.setStyle({
+                display: 'none',
+              })
+            }
+          })
+        });
 
         window.congestionMap.addOverlay(marker);
       },
@@ -125,8 +140,11 @@
         });
         polyline.id = id;
         polyline.addEventListener('click', (pt) => {
-          console.log(pt.currentTarget)
-          this.jumpPage('/main/RoadSectionMap/' + pt.currentTarget.id.substring(0, id.indexOf('_')) + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
+          console.log(pt.currentTarget.id)
+          let idNum =pt.currentTarget.id.substring(0, id.indexOf('_'));
+          if (this.road.indexOf(idNum) !== -1) {
+            this.jumpPage('/main/RoadSectionMap/' + idNum + '?lng=' + pt.currentTarget.nI.lng + '&lat=' + pt.currentTarget.nI.lat);
+          }
         });
 
         window.congestionMap.addOverlay(polyline);          //增加折线

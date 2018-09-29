@@ -164,7 +164,7 @@
                 type: 'line',
                 yAxisIndex: 0,
                 symbol: 'circle',
-                color: '#af69c9',
+                color: '#F98C23',
                 data: []
               },
               {
@@ -172,7 +172,7 @@
                 type: 'line',
                 yAxisIndex: 0,
                 symbol: 'circle',
-                color: '#02d1d1',
+                color: '#43AF7E',
                 data: []
               },
             ]
@@ -185,7 +185,7 @@
           let intersection_data = this.intersection_data;
           let item = this.trafficLightOptimizeAlarmTimes;
           let road_name = intersection_data.after.map(function (item) {
-            return item.name
+            return item.node_name
           });
           road_name.forEach(function (data) {
             option_one.xAxis.data.push (data)

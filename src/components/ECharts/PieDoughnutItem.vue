@@ -99,7 +99,7 @@
             option.series[0].data = [
               {value: newVal['一级'], name: '通畅', itemStyle: {color: '#5ebfba'}},
               {value: newVal['二级'], name: '正常', itemStyle: {color: '#ff8539'}},
-              {value: newVal['三级'] + newVal['四级'], name: '拥堵', itemStyle: {color: '#b14671'}}
+              {value: newVal['三级'], name: '拥堵', itemStyle: {color: '#b14671'}}
             ];
             this.myChart.setOption(option);
           }

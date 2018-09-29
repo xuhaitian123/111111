@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div id="data" style="height: 100%;width: 100%"></div>
 </template>
 
@@ -107,7 +107,7 @@
               name: '优化后',
               type: 'bar',
               barGap: '-100%',
-              color: '#02d1d1',
+              color: '#43AF7E',
               barWidth: '12',
               data: []
             }

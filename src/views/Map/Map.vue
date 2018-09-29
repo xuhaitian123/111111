@@ -37,18 +37,18 @@
           <div class="people-squre">
             <div class="people_countent">总人口</div>
             <div class="people-data"><span class="count-size">{{showInfo.city_population}}</span><span
-              class="unit">人</span></div>
+              class="unit">万人</span></div>
           </div>
           <div class="data">
             <div class="squre">总面积</div>
-            <div class="squre-data"><span class="squre-size">{{showInfo.city_size}}</span><span class="unit">平方千米</span>
+            <div class="squre-data"><span class="squre-size">{{showInfo.city_size}}</span><span class="unit">万平方千米</span>
             </div>
           </div>
         </div>
         <div class="countent">
           <div class="count">
             <div class="car-count">汽车保有量</div>
-            <div class="car-data"><span class="count-size">{{showInfo.vehicle_par}}</span><span class="unit">辆</span>
+            <div class="car-data"><span class="count-size">{{showInfo.vehicle_par}}</span><span class="unit">万辆</span>
             </div>
           </div>
           <div class="monitor">
@@ -392,7 +392,7 @@
         country: "中国",
         province: "江苏省",
         city: "淮安市",
-        county: "淮阴区",
+        county: "淮安区",
         showInfo: {},
         height: document.getElementById('app').style.height - 60,
         map_info: [{

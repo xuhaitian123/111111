@@ -9,7 +9,7 @@
     <div class="logo-nav">
       <div class="logo-nav-action" @click="logout">
         <img class="logo-nav-img" src="/static/image/header/11.png">
-        <div>李警官</div>
+        <div>{{name}}</div>
       </div>
 
 
@@ -20,7 +20,9 @@
 
   export  default {
     data(){
-      return {}
+      return {
+        name: '管理员'||window.localStorage.getItem("username")
+      }
     },
     components:{
 

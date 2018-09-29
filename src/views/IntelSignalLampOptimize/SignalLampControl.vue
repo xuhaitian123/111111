@@ -5,7 +5,7 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPageToMain()"></i>拥堵地图</span>
+            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPageToMain()"></i>智能信号灯控制</span>
             <div class="nav-right-style">
               <i class="iconfont icon-webicon03"></i>
             </div>
@@ -165,7 +165,7 @@
 
         },
         getNodesInfoDate(cb){
-          this.$http.get('http://localhost:8080/static/data.json').then((nodesInfo)=>{
+          this.$http.get('/static/data.json').then((nodesInfo)=>{
             this.nodesInfo =  nodesInfo.data;
 
             this.currentNodeInfo = this.nodesInfo[Object.keys(this.nodesInfo)[0]]

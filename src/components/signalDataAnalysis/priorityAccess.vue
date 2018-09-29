@@ -1,5 +1,5 @@
 <template>
-    <div id = 'main' style="height: 100%;width: 100%"></div>
+    <div id = 'main' style="height: 390px;width: 530px;"></div>
 </template>
 
 <script>
@@ -13,21 +13,29 @@
             priority:undefined
           }
       },
+      mounted(){
+        // this.init()
+      },
       methods:{
        init(){
         let option = {
-          legend:{
-            data:{
-              name:'平均车速',
-              bottom:100
-            },
-            textStyle:{
-              color: '#fff',
-              fontSize:14
-            }
+          grid: {
+            height: '390px',
+            width: "530px",
           },
-          radar: {
+          legend:{
+            show:false,
+            data:[
+              {
+                name:'平均车速'
+              }
+            ],
+            bottom:10,
+            itemGap:100
+          },
+          radar:{
             indicator: [],
+            radius: 100,
             shape: 'circle',
             splitNumber: 5,
             name:{
@@ -38,12 +46,15 @@
             splitLine:{
               lineStyle:{
                 color:'#fff'
-         }
+              }
             },
             splitArea: {
               show: false
             },
-
+            axisLabel:{
+              show:false,
+              color:'red'
+            },
           },
           series:[
             {
@@ -67,8 +78,8 @@
             }
           ]
         }
-          this.data_processing(option)
-
+         this.data_processing(option)
+         console.log(option)
          this.priority = this.$echarts.init(document.getElementById('main'));
          this.priority.setOption(option)
        },

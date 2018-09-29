@@ -39,7 +39,7 @@
               <div style="height: 150px;background: rgba(41,41,54,0.8);">
                 <el-row class="Dashboard_card_alarm">
                   <el-col :span="12">
-                    <div class="fs14">路网拥堵评分</div>
+                    <div class="fs14">路网交通运行指数</div>
                   </el-col>
                   <el-col :span="12">
                     <div class="fs14">拥堵里程比例</div>
@@ -48,14 +48,14 @@
 
                 <el-row class="">
                   <el-col :span="12">
-                    <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent.toFixed(0)"></road-gauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="getRoadAvgDelayColor(roadNetCongestionScore)"></road-gauge>
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
                       <div class="Dashboard_card_score" style="margin-top: 20%">
-                        <b class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</b>
+                        <b class="Dashboard_score_num">{{congestionPercent.toFixed(0)}}</b>
                       </div>
-                      <el-progress :percentage="roadNetCongestionScore" :stroke-width="8" color="#ff8539"
+                      <el-progress :percentage="congestionPercent" :stroke-width="8" color="#ff8539"
                                    :show-text="false" style="width: 80%;margin: auto;margin-top: 5%"></el-progress>
                     </div>
                   </el-col>
@@ -71,7 +71,7 @@
                     <div class="fs14">交叉口</div>
                   </el-col>
                   <el-col :span="9">
-                    <div class="fs14">拥堵报警</div>
+                    <div class="fs14">报警内容</div>
                   </el-col>
                 </el-row>
 
