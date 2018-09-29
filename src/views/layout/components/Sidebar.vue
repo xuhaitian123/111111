@@ -27,7 +27,7 @@
           <div class="item-line"></div>
         </template>
         <!--<el-menu-item-group>-->
-          <el-menu-item index="/dataAnalyse/dataAnalyse">智能优化效果分析<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+
           <el-menu-item index="/signalOptimization/signalOptimization">拥堵情况变化趋势<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
@@ -44,9 +44,11 @@
         <template slot="title">
           <span>智能信号灯优化</span>
         </template>
+
         <!--<el-menu-item-group>-->
-        <el-menu-item index="/main/signalLampControl">智能信号灯控制<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/main/firstPassSetting">优先通行设置<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/intelSignalLampOptimize/dataAnalyse">智能优化效果分析<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/intelSignalLampOptimize/signalLampControl">智能信号灯控制<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/intelSignalLampOptimize/firstPassSetting">优先通行设置<div class="active-item"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
     </el-menu>

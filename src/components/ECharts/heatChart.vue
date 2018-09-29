@@ -170,7 +170,7 @@
             calculable: false,
             orient: 'horizontal',
             inRange: {
-              color: ['#B7C3C4', '#C89498', '#C44E83']
+              color: ['#08D1D1', '#55D2D1', '#BCD2D0', '#D497B6','#DE639C']
             },
 
             symbolSize: '1',

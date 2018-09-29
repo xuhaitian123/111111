@@ -13,7 +13,7 @@ import Login from '../views/Login/Login'
 import signalOptimization from '../views/signalOptimization/signalOptimization'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
-import DataAnalyse from '../views/dataAnalyse/dataAnalyse'
+import DataAnalyse from '../views/IntelSignalLampOptimize/dataAnalyse'
 
 
 import  test  from  '../views/layout/test'
@@ -32,18 +32,18 @@ export default new Router({
       component: Login,
       name: 'Layout'
     },
-    {
-      path:'/dataAnalyse',
-      component:Layout,
-      name:'dataAnalyse',
-      children:[
-        {
-          path: 'dataAnalyse',
-          component: DataAnalyse,
-          name: 'dataAnalyse'
-        }
-      ]
-    },
+    // {
+    //   path:'/dataAnalyse',
+    //   component:Layout,
+    //   name:'dataAnalyse',
+    //   children:[
+    //     {
+    //       path: 'dataAnalyse',
+    //       component: DataAnalyse,
+    //       name: 'dataAnalyse'
+    //     }
+    //   ]
+    // },
     {
       path: '/main',
       component: LayoutMap,
@@ -119,7 +119,7 @@ export default new Router({
       ],
     },
     {
-      path: '/main',
+      path: '/intelSignalLampOptimize',
       component: Layout,
       name: 'Layout',
       children: [
@@ -127,21 +127,28 @@ export default new Router({
           path: 'firstPassSetting',
           component: FirstPassSetting,
           name: 'FirstPassSetting'
-        }
-      ],
-    },
-    {
-      path: '/main',
-      component: Layout,
-      name: 'Layout',
-      children: [
+        },
         {
           path: 'signalLampControl',
           component: SignalLampControl,
           name: 'SignalLampControl'
+        },
+        {
+          path: 'dataAnalyse',
+          component: DataAnalyse,
+          name: 'dataAnalyse'
         }
+
       ],
     },
+    // {
+    //   path: '/main',
+    //   component: Layout,
+    //   name: 'Layout',
+    //   children: [
+    //
+    //   ],
+    // },
     {
       path: '/signalOptimization',
       component: Layout,
