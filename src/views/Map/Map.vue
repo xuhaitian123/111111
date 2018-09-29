@@ -392,7 +392,7 @@
         country: "中国",
         province: "江苏省",
         city: "淮安市",
-        county: "淮阴区",
+        county: "淮安区",
         showInfo: {},
         height: document.getElementById('app').style.height - 60,
         map_info: [{
