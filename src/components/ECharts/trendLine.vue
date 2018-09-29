@@ -28,26 +28,28 @@
       id: String,
       tranelineInfo: {
         type: Array,
-        default: [],
+        default: function(){
+          return []
+        },
       },
       hour_data_picker_node:''
     },
     data() {
       return {
         tranelineData:[],
-        hour_data_picker_node:'',
         max:1000,
 
       }
     },
     watch:{
       tranelineInfo(){
-        this.tranelineData = []
-        this.nodeNameList = [],
-
-          this.tranelineInfo.forEach((item,index)=>{
-            this.nodeNameList.push(item.name)
-            if((index+1)%2==0){
+        this.tranelineData = [];
+        this.nodeNameList = [];
+        if(this.tranelineInfo.length === 0) return;
+        var tranelineInfo = JSON.parse(JSON.stringify(this.tranelineInfo));
+        tranelineInfo.forEach((item,index)=>{
+            this.nodeNameList.push(item.name);
+            if((index+1)%2 === 0){
               this.nodeNameList.push('')
             }
             this.tranelineData.push({name: item.name, type:'line', symbol: 'circle',data: item.data})

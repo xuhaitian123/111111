@@ -19,57 +19,67 @@
     data() {
       return {}
     },
+    watch:{
+      rate(){
+        this.init()
+      }
+    },
     mounted() {
+      this.init()
+    },
+    methods:{
+      init(){
 
-      let myChart = this.$echarts.init(document.getElementById(this.id));
-      let maxRate = 100;
+        let myChart = this.$echarts.init(document.getElementById(this.id));
+        let maxRate = 100;
 
-      let option = {
+        let option = {
 
-        gird: {
-          width: 50,
-          height: 50,
-        },
-        series: [
-          {
-            name: '',
-            type: 'pie',
-            radius: ['70%', '90%'],
-            avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: false,
+          gird: {
+            width: 50,
+            height: 50,
+          },
+          series: [
+            {
+              name: '',
+              type: 'pie',
+              radius: ['70%', '90%'],
+              avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: false,
+                },
               },
-            },
-            labelLine: {
-              normal: {
-                show: false
-              }
-            },
-            data: [
-              {
-                value: this.rate,
-                name: '',
-                hoverAnimation: false,
-                itemStyle: {
-                  normal: {
-                    color: "#43AF7E"
-                  }
+              labelLine: {
+                normal: {
+                  show: false
                 }
               },
-              {value: maxRate - this.rate, name: '', hoverAnimation: false,
-                itemStyle: {
-                  normal: {
-                    color: "#595B66"
+              data: [
+                {
+                  value: this.rate,
+                  name: '',
+                  hoverAnimation: false,
+                  itemStyle: {
+                    normal: {
+                      color: "#43AF7E"
+                    }
                   }
-                }}
-            ]
-          }
-        ]
-      };
+                },
+                {value: maxRate - this.rate, name: '', hoverAnimation: false,
+                  itemStyle: {
+                    normal: {
+                      color: "#595B66"
+                    }
+                  }}
+              ]
+            }
+          ]
+        };
 
-      myChart.setOption(option, true);
-    },
+        myChart.setOption(option, true);
+      }
+    }
   }
 </script>
 
