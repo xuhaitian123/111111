@@ -4,7 +4,7 @@
     <div class="contianer_body">
       <div class="contianer_body_title">
         <div class="title">
-          <img class="toLeft" src="../../../static/map/toLeft.png"/><span class="title_text">信号灯优化前后数据</span>
+          <img class="toLeft" src="../../../static/map/toLeft.png"/><span class="title_text">智能优化效果分析</span>
         </div>
       </div>
       <div class="contianer_body_layout">
@@ -70,13 +70,12 @@
           </div>
         <div class="goodSpeed">
           <div class="goodSpeed_title">
-            <div class="goodSpeed_title_text">优化前后平均车速日变化趋势</div>
+            <div class="goodSpeed_title_text">优化前后交通运行评分日变化趋势</div>
           </div>
           <div class="goodSpeed_body_area" style="padding-top: 35px;box-sizing: border-box;position: relative"
                v-loading="loading_speed"
                element-loading-background="rgba(51, 54, 67, 1)">
             <good-data :good_speed=good_speed></good-data>
-            <div style="position: absolute;top:;"></div>
           </div>
         </div>
 
