@@ -2063,7 +2063,7 @@
         arr: arrAll,
         prov: '江苏',
         city: '淮安',
-        district: '淮阴区',
+        district: '淮安区',
         cityArr: [],
         districtArr: [],
         currentTime: this.formatDate(new Date(),'yyyy.MM.dd hh:mm'),
