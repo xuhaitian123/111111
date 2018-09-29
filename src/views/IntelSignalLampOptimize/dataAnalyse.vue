@@ -7,7 +7,7 @@
           <img class="toLeft" src="../../../static/map/toLeft.png"/><span class="title_text">智能优化效果分析</span>
         </div>
       </div>
-      <div class="contianer_body_layout">
+      <div class="contianer_body_layout" v-loading="is_loading">
         <div class="score">
           <div class="score_title">
             <div class="score_title_text">优化前后路网总评分/路网各类路况占比</div>
@@ -208,6 +208,7 @@
         flow_rate_data:[],
         speed_data:[],
         good_speed:{},
+
         data:{
           before:{},
           after:{}
@@ -294,49 +295,77 @@
      //
      //  },
       get_all_data(){
-        let all_data = {
-           score_data:{
-            after:67,
-            before:88
-          },
-         road_data :{
-            after:{'三级':5.1,'二级':51.1,'一级':43.7},
-            before:{'三级':11.6,'二级':47.7,'一级':40.7}
-          },
-          alarm_data : {
-            after:[{month:'201806',value:10830},{month:'201807',value:10271},{month:'201808',value:9603},{month:'201809',value:10045}],
-            before:[{month:'201801',value:15013},{month:'201802',value:14721},{month:'201803',value:14223},{month:'201804',value:13674}]
-          },
-          intersection_data : {
-            after:[{name:'梁红玉路关天培路',value:20.3},{name:'梁红玉路樱桃园路',value:22.3},{name:'沈坤路樱桃园路',value:17.9},{name:'梁红玉路永怀东路',value:17.2},{name:'梁红玉路华西路',value:26.3},{name:'沈坤路华西路',value:20.8},{name:'梁红玉路镇海路',value:32.5},{name:'沈坤路镇海路',value:35.7},{name:'梁红玉路翔宇大道',value:28.6},{name:'沈坤路翔宇大道',value:27.5}],
-            before:[{name:'梁红玉路关天培路',value:25.2},{name:'梁红玉路樱桃园路',value:24.2},{name:'沈坤路樱桃园路',value:20.3},{name:'梁红玉路永怀东路',value:21.9},{name:'梁红玉路华西路',value:38.4},{name:'沈坤路华西路',value:23.9},{name:'梁红玉路镇海路',value:30.2},{name:'沈坤路镇海路',value:29.0},{name:'梁红玉路翔宇大道',value:24.4},{name:'沈坤路翔宇大道',value:26.3}]
-          },
-          intersection_alarm_data :{
-            after:[{name:'梁红玉路关天培路',value:42},{name:'梁红玉路樱桃园路',value:58},{name:'沈坤路樱桃园路',value:39},{name:'梁红玉路永怀东路',value:50},{name:'梁红玉路华西路',value:56},{name:'沈坤路华西路',value:39},{name:'梁红玉路镇海路',value:45},{name:'沈坤路镇海路',value:62},{name:'梁红玉路翔宇大道',value:49},{name:'沈坤路翔宇大道',value:54}],
-            before:[{name:'梁红玉路关天培路',value:65},{name:'梁红玉路樱桃园路',value:86},{name:'沈坤路樱桃园路',value:57},{name:'梁红玉路永怀东路',value:88},{name:'梁红玉路华西路',value:90},{name:'沈坤路华西路',value:53},{name:'梁红玉路镇海路',value:72},{name:'沈坤路镇海路',value:85},{name:'梁红玉路翔宇大道',value:63},{name:'沈坤路翔宇大道',value:87}]
-          },
-          flow_speed_data :{
-            flow:[{month:'201804',value:248879},{month:'201805',value:251879},{month:'201806',value:249879},{month:'201807',value:252879},{month:'201808',value:250879},{month:'201809',value:251879}],
-            speed:[{month:'201804',value:34.4},{month:'201805',value:33.2},{month:'201806',value:36.9},{month:'201807',value:43.2},{month:'201808',value:44.1},{month:'201809',value:42.8}]
-          },
-          access_system_data :[{type:0,name:'社会车辆',value:45.6},{type:1,name:'警务车辆',value:63.4},{type:2,name:'领导外宾车辆',value:65.6},{type:3,name:'救援车辆',value:78.6},{type:4,name:'公交车辆',value:55.3}],
-          everyday_score_data:{
-            after:[94,97,96,98,97,96,94,78,70,75,83,92,85,83,84,80,76,73,74,83,86,89,93,95],
-            before:[94,96,97,96,98,94,85,66,58,67,70,75,79,75,72,75,70,65,68,71,78,81,86,90]
-          }
-        }
-        this.alarm_data =all_data.alarm_data
-        this.intersection_data = all_data.intersection_data
-        this.trafficLightOptimizeAlarmTimes=all_data.intersection_alarm_data
-        this.flow_rate_data = all_data.flow_speed_data.flow
-        this.speed_data = all_data.flow_speed_data.speed
-        this.good_speed = all_data.everyday_score_data
-        this.RoadCondition= all_data.road_data
-        this.data.before = all_data.road_data.before
-        this.data.after = all_data.road_data.after
-        this.RoadCondition.after = all_data.score_data.after
-        this.RoadCondition.before = all_data.score_data.before
-        this.PriorityAccess = all_data.access_system_data
+        this.loading_alarm=true;
+          this.loading_speed=true;
+          this.loading_flow=true;
+          this.loading_intersection=true;
+          this.loading_score=true
+        this.$http.get('/optimizationData.json').then((optimizationData)=>{
+          let all_data = optimizationData.data;
+
+          this.alarm_data =all_data.alarm_data
+          this.intersection_data = all_data.intersection_data
+          this.trafficLightOptimizeAlarmTimes=all_data.intersection_alarm_data
+          this.flow_rate_data = all_data.flow_speed_data.flow
+          this.speed_data = all_data.flow_speed_data.speed
+          this.good_speed = all_data.everyday_score_data
+          this.RoadCondition= all_data.road_data
+          this.data.before = all_data.road_data.before.values
+          this.data.after = all_data.road_data.after.values
+          this.RoadCondition.after = all_data.score_data.after
+          this.RoadCondition.before = all_data.score_data.before
+          this.PriorityAccess = all_data.access_system_data
+
+          this.loading_alarm= false;
+            this.loading_speed=false;
+            this.loading_flow=false;
+            this.loading_intersection=false;
+            this.loading_score=false;
+
+        })
+        // let all_data = {
+        //    score_data:{
+        //     after:67,
+        //     before:88
+        //   },
+        //  road_data :{
+        //     after:{'三级':5.1,'二级':51.1,'一级':43.7},
+        //     before:{'三级':11.6,'二级':47.7,'一级':40.7}
+        //   },
+        //   alarm_data : {
+        //     after:[{month:'201806',value:10830},{month:'201807',value:10271},{month:'201808',value:9603},{month:'201809',value:10045}],
+        //     before:[{month:'201801',value:15013},{month:'201802',value:14721},{month:'201803',value:14223},{month:'201804',value:13674}]
+        //   },
+        //   intersection_data : {
+        //     after:[{name:'梁红玉路关天培路',value:20.3},{name:'梁红玉路樱桃园路',value:22.3},{name:'沈坤路樱桃园路',value:17.9},{name:'梁红玉路永怀东路',value:17.2},{name:'梁红玉路华西路',value:26.3},{name:'沈坤路华西路',value:20.8},{name:'梁红玉路镇海路',value:32.5},{name:'沈坤路镇海路',value:35.7},{name:'梁红玉路翔宇大道',value:28.6},{name:'沈坤路翔宇大道',value:27.5}],
+        //     before:[{name:'梁红玉路关天培路',value:25.2},{name:'梁红玉路樱桃园路',value:24.2},{name:'沈坤路樱桃园路',value:20.3},{name:'梁红玉路永怀东路',value:21.9},{name:'梁红玉路华西路',value:38.4},{name:'沈坤路华西路',value:23.9},{name:'梁红玉路镇海路',value:30.2},{name:'沈坤路镇海路',value:29.0},{name:'梁红玉路翔宇大道',value:24.4},{name:'沈坤路翔宇大道',value:26.3}]
+        //   },
+        //   intersection_alarm_data :{
+        //     after:[{name:'梁红玉路关天培路',value:42},{name:'梁红玉路樱桃园路',value:58},{name:'沈坤路樱桃园路',value:39},{name:'梁红玉路永怀东路',value:50},{name:'梁红玉路华西路',value:56},{name:'沈坤路华西路',value:39},{name:'梁红玉路镇海路',value:45},{name:'沈坤路镇海路',value:62},{name:'梁红玉路翔宇大道',value:49},{name:'沈坤路翔宇大道',value:54}],
+        //     before:[{name:'梁红玉路关天培路',value:65},{name:'梁红玉路樱桃园路',value:86},{name:'沈坤路樱桃园路',value:57},{name:'梁红玉路永怀东路',value:88},{name:'梁红玉路华西路',value:90},{name:'沈坤路华西路',value:53},{name:'梁红玉路镇海路',value:72},{name:'沈坤路镇海路',value:85},{name:'梁红玉路翔宇大道',value:63},{name:'沈坤路翔宇大道',value:87}]
+        //   },
+        //   flow_speed_data :{
+        //     flow:[{month:'201804',value:248879},{month:'201805',value:251879},{month:'201806',value:249879},{month:'201807',value:252879},{month:'201808',value:250879},{month:'201809',value:251879}],
+        //     speed:[{month:'201804',value:34.4},{month:'201805',value:33.2},{month:'201806',value:36.9},{month:'201807',value:43.2},{month:'201808',value:44.1},{month:'201809',value:42.8}]
+        //   },
+        //   access_system_data :[{type:0,name:'社会车辆',value:45.6},{type:1,name:'警务车辆',value:63.4},{type:2,name:'领导外宾车辆',value:65.6},{type:3,name:'救援车辆',value:78.6},{type:4,name:'公交车辆',value:55.3}],
+        //   everyday_score_data:{
+        //     after:[94,97,96,98,97,96,94,78,70,75,83,92,85,83,84,80,76,73,74,83,86,89,93,95],
+        //     before:[94,96,97,96,98,94,85,66,58,67,70,75,79,75,72,75,70,65,68,71,78,81,86,90]
+        //   }
+        // }
+        // this.alarm_data =all_data.alarm_data
+        // this.intersection_data = all_data.intersection_data
+        // this.trafficLightOptimizeAlarmTimes=all_data.intersection_alarm_data
+        // this.flow_rate_data = all_data.flow_speed_data.flow
+        // this.speed_data = all_data.flow_speed_data.speed
+        // this.good_speed = all_data.everyday_score_data
+        // this.RoadCondition= all_data.road_data
+        // this.data.before = all_data.road_data.before
+        // this.data.after = all_data.road_data.after
+        // this.RoadCondition.after = all_data.score_data.after
+        // this.RoadCondition.before = all_data.score_data.before
+        // this.PriorityAccess = all_data.access_system_data
         }
 
 

@@ -165,7 +165,7 @@
 
         },
         getNodesInfoDate(cb){
-          this.$http.get('http://localhost:8080/static/data.json').then((nodesInfo)=>{
+          this.$http.get('/static/data.json').then((nodesInfo)=>{
             this.nodesInfo =  nodesInfo.data;
 
             this.currentNodeInfo = this.nodesInfo[Object.keys(this.nodesInfo)[0]]
