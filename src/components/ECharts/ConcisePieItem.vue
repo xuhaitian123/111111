@@ -28,6 +28,18 @@
             type: 'pie',
             radius: ['50%', '80%'],
             hoverAnimation: false,
+            label: {
+              normal: {
+                show: false,
+                position: 'inside'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '12',
+                }
+              }
+            },
             avoidLabelOverlap: false,
             data: [
               {value: this.data.value, name: '', itemStyle: {color: '#47ad7d'}},

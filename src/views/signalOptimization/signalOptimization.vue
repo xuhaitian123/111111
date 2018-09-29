@@ -80,7 +80,7 @@
             <span>道路天（24hr）趋势分析</span>
           </div>
 
-          <div class="main_up_left_middle">
+          <div class="main_up_left_middle min-header">
             <div class="show_time_left big-item range-data">
               <div class="range-time-title">
                 <div class="selected_road">开始时间</div>
@@ -110,7 +110,7 @@
                 </el-option>
               </el-select>
             </div>
-            <div class="show_time_left big-item range-data">
+            <div class="show_time_left  range-data">
               <div class="range-time-title">
 
               </div>
@@ -136,7 +136,7 @@
             <span>道路协同分析</span>
           </div>
 
-          <div class="main_up_left_middle">
+          <div class="main_up_left_middle min-header">
             <div class="show_time_left big-item range-data">
               <div class="range-time-title">
                 <div class="selected_road">开始时间</div>
@@ -165,7 +165,7 @@
                 </el-option>
               </el-select>
             </div>
-            <div class="show_time_left big-item range-data">
+            <div class="show_time_left  range-data">
               <div class="range-time-title">
 
               </div>
@@ -242,7 +242,7 @@
               <!--id="line_map_top_right_date_picker_start" type="text"/>-->
             </div>
             <div class="show-filter-item_road default-select">
-              <div class="selected_road">选择路口</div>
+              <div class="time_right">选择路口</div>
               <el-select v-model="flow_hour_node_1" size="mini" class="area_titleSelect min"
                          collapse-tags placeholder="请选择" :popper-append-to-body="false">
                 <el-option
@@ -254,7 +254,7 @@
               </el-select>
             </div>
             <div class="show-filter-item_road default-select">
-              <div class="selected_road">选择路口</div>
+              <div class="time_right">选择路口</div>
               <el-select v-model="flow_hour_node_2" size="mini" class="area_titleSelect min"
                          collapse-tags placeholder="请选择" :popper-append-to-body="false">
                 <el-option
@@ -266,9 +266,14 @@
               </el-select>
             </div>
 
-            <el-button class="search-button"
-                       v-on:click="line_map_select">确定
-            </el-button>
+            <div class="">
+              <div class="time_right"></div>
+              <el-button class="search-button"
+                         v-on:click="line_map_select">确定
+              </el-button>
+            </div>
+
+
           </div>
         </div>
       </div>
@@ -600,6 +605,9 @@
     color: #fff;
     line-height: 10px;
     font-size: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    height: 20px;
   }
 
   .time_left_show {
@@ -880,6 +888,9 @@
     padding-bottom: 10px;
     height: 20px;
     box-sizing: border-box;
+  }
+  .min-header{
+    padding:  20px 40px 0 40px;
   }
 
 
