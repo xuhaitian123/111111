@@ -51,9 +51,9 @@
                 <div>
                   <div class="Dashboard_card_title mt10">拥堵里程比例</div>
                   <div class="Dashboard_card_score">
-                    <span class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</span>
+                    <span class="Dashboard_score_num">{{congestionPercent.toFixed(0)}}</span>
                   </div>
-                  <el-progress :percentage="roadNetCongestionScore" :stroke-width="6" color="#ff8539"
+                  <el-progress :percentage="congestionPercent" :stroke-width="6" color="#ff8539"
                                :show-text="false"></el-progress>
                 </div>
               </div>
@@ -62,7 +62,7 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">路网交通运行指数</div>
-                <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent.toFixed(0)"></road-gauge>
+                <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="getRoadFlowColor(roadNetCongestionScore)"></road-gauge>
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id"
                      v-if="i <5">

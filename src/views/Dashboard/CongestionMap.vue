@@ -48,14 +48,14 @@
 
                 <el-row class="">
                   <el-col :span="12">
-                    <road-gauge class="Dashboard_card_roadGauge" :data="congestionPercent.toFixed(0)"></road-gauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="getRoadAvgDelayColor(roadNetCongestionScore)"></road-gauge>
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
                       <div class="Dashboard_card_score" style="margin-top: 20%">
-                        <b class="Dashboard_score_num">{{roadNetCongestionScore.toFixed(0)}}</b>
+                        <b class="Dashboard_score_num">{{congestionPercent.toFixed(0)}}</b>
                       </div>
-                      <el-progress :percentage="roadNetCongestionScore" :stroke-width="8" color="#ff8539"
+                      <el-progress :percentage="congestionPercent" :stroke-width="8" color="#ff8539"
                                    :show-text="false" style="width: 80%;margin: auto;margin-top: 5%"></el-progress>
                     </div>
                   </el-col>
