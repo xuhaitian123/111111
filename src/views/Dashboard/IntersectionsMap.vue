@@ -238,7 +238,7 @@
             </div>
 
             <div class="signal_road_score">
-              <div style="font-size: 14px;margin-top: 10px">路网拥堵评分</div>
+              <div style="font-size: 14px;margin-top: 10px">交叉口交通运行评分</div>
               <road-gauge :data="roadNetCongestionScore.toFixed(0)" class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
