@@ -12,13 +12,11 @@
             <span>周拥堵情况查看，对比</span>
           </div>
           <div class="main_up_left_middle">
-
             <div class="show_time_left big-item range-data">
               <div class="range-time-title">
                 <div class="selected_road">开始时间</div>
                 <div class="selected_road">结束时间</div>
               </div>
-
               <el-date-picker
                 v-model="week_data_picker_1"
                 type="daterange"
@@ -112,12 +110,9 @@
             </div>
             <div class="show_time_left  range-data">
               <div class="range-time-title">
-
               </div>
               <el-button class="search-button" v-on:click="heatChart_map_right_select">确定</el-button>
-            </div>
-
-          </div>
+            </div></div>
           <div class="main-search-action">
             <div class="main-search-item">
             </div>
@@ -135,14 +130,12 @@
           <div class="main_up_child_head">
             <span>交通走廊交通运行指数评分</span>
           </div>
-
           <div class="main_up_left_middle min-header">
             <div class="show_time_left big-item range-data">
               <div class="range-time-title">
                 <div class="selected_road">开始时间</div>
                 <div class="selected_road">结束时间</div>
               </div>
-
               <el-date-picker
                 v-model="road_ratio_date"
                 type="daterange"
@@ -171,10 +164,8 @@
               </div>
               <el-button class="search-button" v-on:click="pie_map_select">确定</el-button>
             </div>
-
           </div>
           <div class="road-direction">
-
           </div>
 
           <div v-for="(intersections, index) in Object.keys(intersectionsList)"
@@ -209,10 +200,7 @@
               <div class="rate-container-item-title"> {{intersectionsList[intersections][1].value.toFixed(2) }}
               </div>
             </div>
-
           </div>
-
-
         </div>
       </div>
 
@@ -265,15 +253,12 @@
                 </el-option>
               </el-select>
             </div>
-
             <div class="">
               <div class="time_right"></div>
               <el-button class="search-button"
                          v-on:click="line_map_select">确定
               </el-button>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -292,6 +277,7 @@
     name: "signal-optimization",
     data() {
       return {
+
         week_loading: false,
         road_24h_loading: false,
         road_ratio_loading: false,
@@ -356,7 +342,6 @@
     },
     methods: {
       init() {
-
 
       },
       heatChart_map_right_select() {

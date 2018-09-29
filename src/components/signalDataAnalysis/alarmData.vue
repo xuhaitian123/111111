@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div id="data" style="height: 100%;width: 100%"></div>
 </template>
 
