@@ -1,38 +1,42 @@
 <template>
-  <div class="container-login">
+  <div class="">
     <div class="nav">
       <img src="../../../static/image/login/logo.png" class="logo">
       <span class="text-image">交通数据平台系统</span>
     </div>
-  <div class="container">
-    <div class="content">
-      <div class="content-img">
-<img src="../../../static/image/login/logo.png" class="login-logo">
-      </div>
-      <div class="user">
-        <div class="user-input">
-          <img src="../../../static/image/login/user.png" class="user-img">
-          <input class="user-text" v-model="username" type="text"/>
+    <div class="container-login">
+      <div class="container-block">
+        <div class="container">
+          <div class="content">
+            <div class="content-img">
+              <img src="../../../static/image/login/logo.png" class="login-logo">
+            </div>
+            <div class="user">
+              <div class="user-input">
+                <img src="../../../static/image/login/user.png" class="user-img">
+                <input class="user-text" v-model="username" type="text"/>
+              </div>
+              <div class="user-name">用户名</div>
+            </div>
+            <div class="passward">
+              <div class="passward-input">
+                <img src="../../../static/image/login/0919-41.png" class="user-img">
+                <input class="passward-text" v-model="password" type="password"/>
+              </div>
+              <div class="passward-name">密码</div>
+            </div>
+            <div class="save_password">
+              <div class="save_password_el">
+                <input type="checkbox" class="square" v-model="isRecordUser" @change="save_password"/><span
+                style="color: #ffffff;font-size: 13px">保存密码</span>
+              </div>
+            </div>
+            <button class="login-button" @click="login">登录</button>
+          </div>
         </div>
-        <div class="user-name">用户名</div>
       </div>
-      <div class="passward">
-        <div class="passward-input">
-          <img src="../../../static/image/login/user.png" class="user-img">
-          <input class="passward-text" v-model="password" type="password"/>
-        </div>
-        <div class="passward-name">密码</div>
-      </div>
-      <div class="save_password">
-        <div  class="save_password_el">
-          <input type="checkbox"  class="square" v-model="isRecordUser" @change="save_password" /><span style="color: #ffffff;font-size: 13px">保存密码</span>
-        </div>
-      </div>
-      <button class="login-button" @click="login">登录</button>
     </div>
-
   </div>
-    </div>
 </template>
 <!--import $ from 'jquery'-->
 import { Message } from 'element-ui';
@@ -42,19 +46,19 @@ import { Message } from 'element-ui';
     data() {
       return {
         isRecordUser: false,
-        message:"",
-        username:'',
-        password:''
+        message: "",
+        username: '',
+        password: ''
       }
     },
-    mounted:function () {
+    mounted: function () {
       this.get_username()
     },
     methods: {
-      get_username(){
-        var username = window.localStorage.getItem("username")|| "";
-        this.username =  username;
-        this.isRecordUser =  !!this.username;
+      get_username() {
+        var username = window.localStorage.getItem("username") || "";
+        this.username = username;
+        this.isRecordUser = !!this.username;
         // $(".user-text").val(username)
       },
       save_password() {
@@ -64,15 +68,15 @@ import { Message } from 'element-ui';
         //   this.checked =true
         // }
       },
-      login(){
-        var self =this;
-        if(this.isRecordUser&& this.username){
-          window.localStorage.setItem("username",this.username)
+      login() {
+        var self = this;
+        if (this.isRecordUser && this.username) {
+          window.localStorage.setItem("username", this.username)
         }
 
-        this.$http.post('/login/login',{username:this.username,password:this.password})
-          .then((user)=>{
-            if(user.data.code===1) {
+        this.$http.post('/login/login', {username: this.username, password: this.password})
+          .then((user) => {
+            if (user.data.code === 1) {
               self.$message({
                 message: '恭喜你,登陆成功',
                 type: 'success',
@@ -80,7 +84,7 @@ import { Message } from 'element-ui';
               });
               this.setStorageInfo(user);
               self.$router.push({path: '/main/map'});
-            }else {
+            } else {
               self.$message.error('用户名或密码错误');
             }
           })
@@ -133,26 +137,37 @@ import { Message } from 'element-ui';
   }
 </script>
 
-<style  scoped>
+<style scoped>
   .container {
     height: 420px;
     width: 400px;
-    margin: 270px auto 290px;
-    background-color: #353D4F;
+    margin: auto;
+    background-color: rgba(53,61,79,0.7);
+    box-shadow: 5px 5px 5px #222;
   }
-  .content{
+
+  .container-block{
+    position: absolute;
+    width: 100%;
+    margin: auto;
+    top: 25%;
+  }
+
+  .content {
     padding: 45px 60px 50px 60px;
   }
-  .content-img{
+
+  .content-img {
     height: 40px;
   }
 
   .container-login {
     width: 100%;
     height: 1080px;
-    background-image: url("../../../static/image/login/bkg.png");
+    background-image: url("../../../static/image/login/0919-46.png");
     background-size: 100% 1080px;
   }
+
   .nav {
     height: 80px;
     display: flex;
@@ -169,32 +184,36 @@ import { Message } from 'element-ui';
   .login-logo {
     height: 40px;
   }
-  .user
-  {
+
+  .user {
     padding-top: 40px;
   }
-  .passward{
+
+  .passward {
     padding-top: 30px;
   }
+
   .user-input,
-  .passward-input{
+  .passward-input {
     display: flex;
     flex-direction: row;
     border-bottom: 1px solid #94949a;
     height: 20px;
     padding-bottom: 3px;
   }
-  .user-img{
+
+  .user-img {
     height: 20px;
   }
+
   .user-text,
-  .passward-text{
-    border:none;
+  .passward-text {
+    border: none;
     display: block;
     height: 20px;
-    background-color:#353D4F;
+    background-color: #353D4F;
     width: 240px;
-      outline:none;
+    outline: none;
     margin-left: 20px;
     color: #ffffff !important;
     font-size: 20px;
@@ -207,7 +226,8 @@ import { Message } from 'element-ui';
     padding-left: 10px;
     border-left: 2px solid #94949a;
   }
-  .login-button{
+
+  .login-button {
     height: 40px;
     width: 280px;
     font-size: 20px;
@@ -220,7 +240,8 @@ import { Message } from 'element-ui';
     border: none;
     line-height: 40px;
   }
-  .save_password_el{
+
+  .save_password_el {
     display: flex;
     align-items: center;
     height: 12px;
@@ -230,27 +251,30 @@ import { Message } from 'element-ui';
     line-height: 12px;
 
   }
+
   .user-name,
-  .passward-name{
-    padding-top:10px;
+  .passward-name {
+    padding-top: 10px;
     height: 16px;
     color: #94949a;
 
   }
-  span{
+
+  span {
     display: block;
     margin-left: 10px;
   }
-  .square{
-    ]
-    background-color: #000;
+
+  .square {
+  ] background-color: #000;
     border: 1px solid white;
     margin: 0;
   }
+
   input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #353D4F inset;
     -webkit-text-fill-color: #ffffff;
     outline: 0 !important;
-    border:none !important;
+    border: none !important;
   }
 </style>
