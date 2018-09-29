@@ -39,7 +39,7 @@
               <div style="height: 150px;background: rgba(41,41,54,0.8);">
                 <el-row class="Dashboard_card_alarm">
                   <el-col :span="12">
-                    <div class="fs14">路网拥堵评分</div>
+                    <div class="fs14">路网交通运行指数</div>
                   </el-col>
                   <el-col :span="12">
                     <div class="fs14">拥堵里程比例</div>
@@ -71,7 +71,7 @@
                     <div class="fs14">交叉口</div>
                   </el-col>
                   <el-col :span="9">
-                    <div class="fs14">拥堵报警</div>
+                    <div class="fs14">报警内容</div>
                   </el-col>
                 </el-row>
 
