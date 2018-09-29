@@ -64,10 +64,11 @@
           <div class="hot_map">
             <div class="hot_map_view">
               <div class="hot_map_view_date"
-                   style="width: 95%;height: 62px;display: flex;align-items: center;justify-content: center;margin-left: 5%">
-                <el-button class="search-button" v-on:click="heatChart_map_left_select">确定</el-button>
+                   style="width: 95%;height: 62px;display: flex;align-items: center;justify-content: center;">
+                <el-button class="search-button" v-on:click="getWeekCongestionDate">确定</el-button>
               </div>
-              <div id="hot_map"></div>
+              <!--<div class="hot_map"></div>-->
+              <week-congestion id="'hot_map'" :weekCongestionDate="weekCongestionDate" class="hot_map_canvas"> </week-congestion>
               <div class="keep_up_div"></div>
             </div>
           </div>
@@ -280,6 +281,7 @@
   import rate from '../../components/ECharts/rate'
   import heatChart from '../../components/ECharts/heatChart'
   import trendLine from '../../components/ECharts/trendLine'
+  import weekCongestion from  '../../components/ECharts/weekCongestion'
 
   export default {
     name: "signal-optimization",
@@ -326,9 +328,7 @@
           "  ":[{"link_id":3,"value":0,"isMock":1},{"link_id":33,"value":0,"isMock":1}],
           "   ":[{"link_id":4,"value":0,"isMock":1},{"link_id":44,"value":0,"isMock":1}]},
 
-        myChart: undefined,
-        // intersectionsList: {},
-        // data: [],
+        weekCongestionDate:[],
         road_head_data: [],
       }
     },
@@ -337,11 +337,12 @@
       rate,
       heatChart,
       trendLine,
+      weekCongestion
     },
     mounted: function () {
       this.$http.get('/index/nodes' +
         '' + '?token=' + this.getHeader().token).then(nodes => {
-        this.nodes = nodes.data.nodes
+        this.nodes = nodes.data.nodes;
         this.week_date_picker_node = this.nodes[0].node_id;
         this.flow_hour_node_1 = this.nodes[0].node_id;
         this.flow_hour_node_2 = this.nodes[1].node_id
@@ -349,7 +350,7 @@
       this.init()
     },
     methods: {
-      heatChart_map_left_select() {
+      init() {
 
 
       },
@@ -424,125 +425,11 @@
         return this.nodes.find(item => item.node_id == id).node_name
       },
 
-      init() {
-
+      getWeekCongestionDate() {
+        this.week_loading =  true;
         this.$http.get('http://localhost:8080/static/week.json').then((weekInfo)=>{
-
-          weekInfo= weekInfo.data
-          this.myChart = this.$echarts.init(document.getElementById('hot_map'));//
-          var weeks = ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '', '周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-
-          var weekData = [];
-             weekInfo.left.forEach(function (dayInfo,index) {
-
-               var newIndex = ((index-1) === -1) ? 6  : index-1;
-
-               dayInfo.forEach((item, dayIndex)=>{
-
-                weekData.push( [newIndex, dayIndex+1, Number(item)]);
-              })
-            });
-
-          weekInfo.right.forEach(function (dayInfo,index) {
-            var newIndex = ((index-1) === -1) ? 6  : (index-1);
-
-            dayInfo.forEach((item, dayIndex)=>{
-              weekData.push( [newIndex+8, dayIndex+1, Number(item)]);
-            })
-          });
-
-          var option = {
-            tooltip: {
-              position: 'top',
-              showContent:false
-            },
-            animation: false,
-            grid: {
-              height: '400px',
-              width: "370px",
-              y: '10%',
-              left: "40px",
-              top: "23px"
-            },
-            xAxis: {
-              type: 'category',
-              data: weeks,
-              position: 'top',
-              max: '17',
-              axisLabel: {
-                width: '1px',
-                showMinLabel: true,
-                interval: 0,
-                show: true,
-                // rotate:30,
-                textStyle: {
-                  fontSize: '8'
-                },
-                formatter: function (value, index) {
-
-                  return value;
-                }
-              },
-              splitArea: {
-                show: true,
-                interval: 0,
-              }
-            },
-            yAxis: {
-              type: 'category',
-              max:288,
-              axisLabel: {
-                interval: 70,
-                show: true,
-                formatter: function (value, index) {
-                  console.log(parseInt((value)/72))
-                  console.log(value)
-
-                  return Math.round((value)/72)*6+":00";
-
-                },
-              },
-              showMinLabel: true,
-              showMaxLabel: true,
-
-              splitArea: {
-                show: true
-              },
-            },
-            visualMap: {
-              min: 0,
-              max: 100,
-              itemWidth: 10,
-              itemHeight: 370,
-              calculable: false,
-              orient: 'horizontal',
-              inRange: {
-                color: ['#B7C3C4', '#C89498', '#C44E83']
-              },
-              left: '35',
-              bottom: '5%',
-              symbolSize: '1'
-            },
-            series: [{
-              name: 'Punch Card',
-              type: 'heatmap',
-              data: weekData,
-              itemStyle: {
-                emphasis: {
-                  shadowBlur: 10,
-                  shadowColor: 'rgba(255,255,255,255)'
-                }
-              }
-            }],
-            textStyle: {
-              color: '#c9c9cc',
-            }
-          };
-          // 使用刚指定的配置项和数据显示图表。
-          // myChart.setOption(option);
-          this.myChart.setOption(option);
-
-
+         this.weekCongestionDate = weekInfo.data
+          this.week_loading = false;
         })
 
       },
@@ -795,7 +682,7 @@
     z-index: 100
   }
 
-  #hot_map {
+  .hot_map_canvas {
     width: 100%;
     height: 493px;
     position: absolute;
@@ -948,7 +835,6 @@
     height: 12px;
     margin-bottom: 5px;
     text-align: center;
-
   }
 
   .el-select-dropdown.is-multiple .el-select-dropdown__item.selected {

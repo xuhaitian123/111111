@@ -223,7 +223,7 @@
         </div>
       </div>
     </div>
-    <TimeLine :isPauseTime="isPauseTime" @newTime="updataVideo" @changeTime="clearImage"></TimeLine>
+    <TimeLine :isPauseTime="isPauseTime" @newTime="updateTime" @changeTime="clearImage"></TimeLine>
   </div>
 
 </template>
@@ -307,15 +307,18 @@
     },
     methods: {
       getBusRate(link_id){
+        console.log(this.linkId)
         if(!this.linkId) return
         this.$http.get('/nodeData/getNodeDataD8ByLinkId?linkId='+ this.linkId+'&current=true' + '&token=' + this.getHeader().token).then(rate => {
           this.ratio = parseInt(rate.data.value * 100)
+          console.log(rate)
           // this.busRate =
         })
       },
       changeNode() {
         this.taskId =null;
         this.ratio = null;
+        this.loadingTime = true
         this.clearImage();
         this.getNodeInfo(this.nodeId)
 
@@ -353,7 +356,8 @@
             }
           })
           this.isLoadingInfo = false;
-          this.linkId = nodeInfo['北'].linkId
+          console.log(nodeInfo['北'])
+          this.linkId = nodeInfo['北'].link_id
 
           this.taskId = nodeInfo['北'].taskId
           this.nodeInfo = nodeInfo;
@@ -368,18 +372,18 @@
       },
       changeLink(link) {
         this.taskId = link.taskId;
-        this.linkId = link.linkId
+        this.linkId = link.link_id
         this.imageList = {}
         this.restartCountNumber()
       },
-      updataVideo(time) {
+      updateTime(time) {
         let millSecond = time % 1000;
 
         let startTime = time - this.delay_show;
 
         if (time % 1000 === 0) {
           this.loadImage(startTime);
-          this.loadingTime = startTime
+          this.loading = startTime
         }
         if((this.ratio&&time%5000===0)|| (!this.ratio&&time%1000==0)){
           this.getBusRate()
@@ -441,7 +445,7 @@
         this.imageList[startTime] = {isLoading: 0, imageList: [], index: -2, startTime: new Date()};
         this.getCountOfNode(endTime).then((flow) => {
 
-          this.$http.get('http://localhost:3000/video/videoImage?task_id=' + this.taskId + '&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then(
+          this.$http.get('/video/videoImage?task_id=' + this.taskId + '&start=' + startTime + '&end=' + endTime + '&token=' + this.getHeader().token).then(
             (images) => {
               images = images.data
               if (images.length === 0) {
