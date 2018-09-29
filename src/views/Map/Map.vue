@@ -41,7 +41,7 @@
           </div>
           <div class="data">
             <div class="squre">总面积</div>
-            <div class="squre-data"><span class="squre-size">{{showInfo.city_size}}</span><span class="unit">平方千米</span>
+            <div class="squre-data"><span class="squre-size">{{showInfo.city_size}}</span><span class="unit">万平方千米</span>
             </div>
           </div>
         </div>
