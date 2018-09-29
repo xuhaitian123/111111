@@ -92,7 +92,7 @@
                   <div class="">交叉口</div>
                 </el-col>
                 <el-col :span="10">
-                  <div class="">拥堵报警</div>
+                  <div class="">报警内容</div>
                 </el-col>
               </el-row>
 
