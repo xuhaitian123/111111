@@ -239,7 +239,8 @@
 
             <div class="signal_road_score">
               <div style="font-size: 14px;margin-top: 10px">交叉口交通运行评分</div>
-              <road-gauge :data="roadNetCongestionScore.toFixed(0)" :color="getSaturationColor(roadNetCongestionScore)" class="Dashboard_card_roadGauge"></road-gauge>
+              <road-gauge :data="roadNetCongestionScore.toFixed(0)" :color="scoreColor(roadNetCongestionScore)"
+                          class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
             <!--<div>-->
@@ -1695,7 +1696,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         })
       },
       getRoadNetCongestionScore(startTime, endTime) { //交叉口拥堵评分
-        let url = '/nodeData/getNodeDataD22ByNodeId?nodeId='+ this.$route.params.id +'&token=' + this.getHeader().token;
+        let url = '/nodeData/getNodeDataD22ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
           this.roadNetCongestionScore = response.data.value;
@@ -1713,8 +1714,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
         this.loadingSignal = true;
-        let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
-        url += endTime ? '&current=' + endTime : '&current=true';
+        let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token + '&current=true';
         this.$http.get(url).then((response) => {
           this.currentSignal = response.data.value;
           let obj = {};
@@ -1722,8 +1722,10 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             value.total = value.AllRed + value.MaxGreen + value.Yellow;
             obj[value.BRP] = value;
           });
-          obj.first = obj['111'].total + obj['112'].total + obj['121'].total + obj['122'].total;
-          obj.second = obj['211'].total + obj['212'].total + obj['221'].total + obj['222'].total;
+          if (obj['111'] && obj['112'] && obj['121'] && obj['122']) {
+            obj.first = obj['111'].total + obj['112'].total + obj['121'].total + obj['122'].total;
+            obj.second = obj['211'].total + obj['212'].total + obj['221'].total + obj['222'].total;
+          }
           this.signalPlan = obj;
           return 'true'
         }).then((val) => {
@@ -1733,6 +1735,15 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       setFlowOrDelay(val) {
         this.currentTabs = val;
+      },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
+        }
       },
       getRoadFlow(key) {
         let text = '';
@@ -1821,8 +1832,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         let d8 = document.getElementById('222_red').offsetWidth;
         let d8S = document.getElementById('222_yellow').offsetWidth;
         this.currentColor = {};
-        console.log(left)
-        console.log(width122)
         if (left <= width111) {
           if (left <= d1) {
             this.currentColor[this.signalPlan['111'].key] = 'green';
@@ -1897,7 +1906,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           }
         } else if (val < this.startTime) {
           this.getAllData(val, val + 5 * 60 * 1000);
-          this.setRoadNetStatus(this.currentRoadNet, val, val + 5 * 60 * 1000);
           this.startTime = 0;
         } else {
           this.startTime = val;

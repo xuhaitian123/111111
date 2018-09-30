@@ -238,7 +238,7 @@
                     </div>
 
                     <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 80px"
-                                color="#c57426"></road-gauge>
+                                :color="scoreColor(corridorScore)"></road-gauge>
                   </div>
                 </el-col>
                 <el-col :span="14">
@@ -324,7 +324,6 @@
         allScore: [],
         scoreName: [],
         corridorScore: 0,
-        crossLinks: [],
       }
     },
     mounted() {
@@ -340,17 +339,9 @@
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
-        this.getCrossAllLinks();
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
-      },
-      getCrossAllLinks() {
-        this.$http.get('/index/roadCrossAllLinksByLinkId?linkId=' + this.$route.params.id + '&token=' + this.getHeader().token)
-          .then((response) => {
-            console.log(response.data)
-            this.crossLinks = response.data.cross_links;
-          })
       },
       getLinkByNodeScore() {
         this.loadingNode = true;
@@ -487,6 +478,15 @@
           return "red"
         } else {
           return "#c9c9cc"
+        }
+      },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
         }
       },
       getRoadAvgDelayColor(num) {
