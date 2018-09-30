@@ -62,7 +62,8 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">路网交通运行指数</div>
-                <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="scoreColor(roadNetCongestionScore)"></road-gauge>
+                <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)"
+                            :color="scoreColor(roadNetCongestionScore)"></road-gauge>
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id"
                      v-if="i <5">
@@ -171,6 +172,7 @@
               <div class="Dashboard_card_time">
                 <el-date-picker
                   size="mini"
+                  :picker-options="pickerOptions"
                   v-model="trendTime"
                   format="yyyy/MM/dd"
                   range-separator=""
@@ -190,8 +192,9 @@
                   </el-option>
                 </el-select>
 
-                <el-button  type="info"  size="mini"
-                           @click="getRoadDataAnalysisFlow()">确定</el-button>
+                <el-button type="info" size="mini"
+                           @click="getRoadDataAnalysisFlow()">确定
+                </el-button>
               </div>
             </div>
             <smooth-bar-line :data="someHourFlow"></smooth-bar-line>
@@ -600,8 +603,9 @@
           3: true
         },
         someHourFlow: [],
-        trendTime: new Date(new Date().getTime()-24*60*60*1000),
+        trendTime: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
         currentName: 2,
+        pickerOptions: this.pickerOptionsDate(),
       }
     },
     mounted() {
@@ -639,6 +643,14 @@
         });
 
       },
+      pickerOptionsDate() {
+        let self = this;
+        return {
+          disabledDate(time) {
+            return time.getTime() > new Date(self.trendTime).getTime();
+          }
+        }
+      },
       getCongestionPercent() { //拥堵里程比例
         return new Promise((resolve, reject) => {
           this.$http.get('/TrafficCongestion/congestionPercent?current=true' + '&token=' + this.getHeader().token)
@@ -661,9 +673,9 @@
         return new Promise((resolve, reject) => {
           this.$http.get('/TrafficCongestion/roadNetCongestionScore?current=true' + '&token=' + this.getHeader().token)
             .then((response) => {
-              if(response.data.isMock === 1 && response.data.value === 0){
+              if (response.data.isMock === 1 && response.data.value === 0) {
                 this.roadNetCongestionScore = 100;
-              }else {
+              } else {
                 this.roadNetCongestionScore = response.data.value;
               }
               resolve('score');
@@ -859,7 +871,7 @@
   }
 </script>
 <style>
-  .data_views .el-button--info{
+  .data_views .el-button--info {
     background: #54576a;
     border: none;
   }

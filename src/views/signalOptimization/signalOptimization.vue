@@ -1,13 +1,13 @@
 <template>
   <div>
     <Area></Area>
-    <div class="main" >
+    <div class="main">
       <div class="header">
         <img src="../../../static/map/toLeft.png" class="header_img">
         <span class="header-span">拥堵情况变化趋势分析</span>
       </div>
       <div class="main_up">
-        <div class="main_up_left" v-loading="week_loading"element-loading-background="rgba(0, 0, 0, 0.8)">
+        <div class="main_up_left" v-loading="week_loading" element-loading-background="rgba(0, 0, 0, 0.8)">
           <div class="main_up_child_head">
             <span>周拥堵情况查看，对比</span>
           </div>
@@ -66,7 +66,8 @@
                 <el-button class="search-button" v-on:click="getWeekCongestionDate">确定</el-button>
               </div>
               <!--<div class="hot_map"></div>-->
-              <week-congestion id="'hot_map'" :weekCongestionDate="weekCongestionDate" class="hot_map_canvas"> </week-congestion>
+              <week-congestion id="'hot_map'" :weekCongestionDate="weekCongestionDate"
+                               class="hot_map_canvas"></week-congestion>
               <div class="keep_up_div"></div>
             </div>
           </div>
@@ -112,7 +113,8 @@
               <div class="range-time-title">
               </div>
               <el-button class="search-button" v-on:click="heatChart_map_right_select">确定</el-button>
-            </div></div>
+            </div>
+          </div>
           <div class="main-search-action">
             <div class="main-search-item">
             </div>
@@ -271,7 +273,7 @@
   import rate from '../../components/ECharts/rate'
   import heatChart from '../../components/ECharts/heatChart'
   import trendLine from '../../components/ECharts/trendLine'
-  import weekCongestion from  '../../components/ECharts/weekCongestion'
+  import weekCongestion from '../../components/ECharts/weekCongestion'
 
   export default {
     name: "signal-optimization",
@@ -302,13 +304,20 @@
             linksLeftInfo: [102, 202, 402, 502, 702, 902],
             linksRightInfo: [104, 204, 404, 504, 704, 904],
             linksName: ['翔宇大道', '镇海路', '华西路', '永怀东路', '樱桃园路', '关天培路'],
-            allInfo:{'翔宇大道':[902,904], '镇海路': [702,704], '华西路':[502,504],'永怀东路':[402, 404], '樱桃园路':[202, 204], '关天培路': [102, 104]}
+            allInfo: {
+              '翔宇大道': [902, 904],
+              '镇海路': [702, 704],
+              '华西路': [502, 504],
+              '永怀东路': [402, 404],
+              '樱桃园路': [202, 204],
+              '关天培路': [102, 104]
+            }
           },
           '沈坤路': {
             linksLeftInfo: [302, 602, 802, 1002],
             linksRightInfo: [304, 604, 804, 1004],
             linksName: ['翔宇大道', '镇海路', '华西路', '樱桃园路'],
-            allInfo:{'翔宇大道':[1002,1004], '镇海路': [802,804], '华西路':[602,604],'樱桃园路':[302, 304]}
+            allInfo: {'翔宇大道': [1002, 1004], '镇海路': [802, 804], '华西路': [602, 604], '樱桃园路': [302, 304]}
           }
         },
 
@@ -317,12 +326,14 @@
         flow_hour_node_2: '',
         flow_hour_date: this.formatDate(new Date(), 'yyyy/MM/dd'),
         roadList: [{id: 1, road_name: '梁红玉路'}, {id: 2, road_name: '沈坤路'}],
-        intersectionsList: {"":[{"link_id":1,"value":0,"isMock":1},{"link_id":11,"value":0,"isMock":1}],
-          " ":[{"link_id":2,"value":0,"isMock":1},{"link_id":22,"value":0,"isMock":1}],
-          "  ":[{"link_id":3,"value":0,"isMock":1},{"link_id":33,"value":0,"isMock":1}],
-          "   ":[{"link_id":4,"value":0,"isMock":1},{"link_id":44,"value":0,"isMock":1}]},
+        intersectionsList: {
+          "": [{"link_id": 1, "value": 0, "isMock": 1}, {"link_id": 11, "value": 0, "isMock": 1}],
+          " ": [{"link_id": 2, "value": 0, "isMock": 1}, {"link_id": 22, "value": 0, "isMock": 1}],
+          "  ": [{"link_id": 3, "value": 0, "isMock": 1}, {"link_id": 33, "value": 0, "isMock": 1}],
+          "   ": [{"link_id": 4, "value": 0, "isMock": 1}, {"link_id": 44, "value": 0, "isMock": 1}]
+        },
 
-        weekCongestionDate:[],
+        weekCongestionDate: [],
         road_head_data: [],
       }
     },
@@ -378,17 +389,17 @@
           .then((result) => {
             console.log(result)
 
-            var intersection =  JSON.parse(JSON.stringify(this.map[this.road_ratio_node].allInfo))
+            var intersection = JSON.parse(JSON.stringify(this.map[this.road_ratio_node].allInfo))
             console.log(result.data)
-            result.data.value.forEach(item=>{
+            result.data.value.forEach(item => {
 
               var index = intersection[item.link_name].indexOf(item.link_id);
               console.log(intersection[item.link_name])
               console.log(item.link_id)
               console.log(index)
-              if(index>-1){
+              if (index > -1) {
                 console.log(item)
-                intersection[item.link_name][index] =  item;
+                intersection[item.link_name][index] = item;
               }
             })
             console.log(intersection)
@@ -403,9 +414,9 @@
 
         var flow_hour_data = new Date(this.flow_hour_date);
         var endTime = this.formatDate(new Date(flow_hour_data.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
-        var beginTime =this.formatDate(flow_hour_data, 'yyyyMMdd');
+        var beginTime = this.formatDate(flow_hour_data, 'yyyyMMdd');
         var line_1_promise = new Promise(resolve => {
-          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_1 + '&beginTime='+beginTime+'&endTime='+ endTime
+          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_1 + '&beginTime=' + beginTime + '&endTime=' + endTime
             + '&token=' + this.getHeader().token).then((result) => {
             console.log(result)
             resolve({
@@ -417,7 +428,7 @@
           });
         })
         var line_2_promise = new Promise(resolve => {
-          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_2  + '&beginTime='+beginTime+'&endTime='+ endTime
+          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_2 + '&beginTime=' + beginTime + '&endTime=' + endTime
             + '&token=' + this.getHeader().token).then((result) => {
             resolve({
               data: result.data.map((item, index) => [index + 1, item.total]),
@@ -440,9 +451,9 @@
       },
 
       getWeekCongestionDate() {
-        this.week_loading =  true;
-        this.$http.get('http://localhost:8080/static/week.json').then((weekInfo)=>{
-         this.weekCongestionDate = weekInfo.data
+        this.week_loading = true;
+        this.$http.get('http://localhost:8080/static/week.json').then((weekInfo) => {
+          this.weekCongestionDate = weekInfo.data
           this.week_loading = false;
         })
 
@@ -646,6 +657,7 @@
     height: 555px;
     position: relative
   }
+
   .hot_map {
     height: 482px;
     box-sizing: border-box;
@@ -661,8 +673,6 @@
     padding: 20px 20px 0 20px;
     justify-content: space-between;
   }
-
-
 
   .hot_map_left {
     width: 440px;
@@ -883,7 +893,8 @@
   .main-search-item {
     width: 75px;
   }
-  .road-direction{
+
+  .road-direction {
     height: 35px;
   }
 
@@ -898,8 +909,9 @@
     height: 20px;
     box-sizing: border-box;
   }
-  .min-header{
-    padding:  20px 40px 0 40px;
+
+  .min-header {
+    padding: 20px 40px 0 40px;
   }
 
 
