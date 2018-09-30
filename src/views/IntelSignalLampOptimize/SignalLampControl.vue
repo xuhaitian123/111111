@@ -181,9 +181,15 @@
         getAllRoadInfo(){
           console.log('getAllRoadInfo');
           var self = this;
+          var road_info = [];
           this.$http.get('/index/nodes'+ '?token=' + this.getHeader().token)
             .then((response) => {
-              console.log(response.data);
+              var roadInfo = (response.data).nodes
+              for(var i= 0 ;i<roadInfo.length;i++){
+                road_info.push({node_id:roadInfo[i].node_id,road_name:roadInfo[i].node_name});
+              }
+              self.open_road_record_List = road_info;
+              console.log(road_info)
               self.showBMapPoint(response.data.nodes);
               return response.data;
             })
@@ -227,9 +233,9 @@
               "<div class="+close_class+" onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
               +"</div>"+
               "<div class='select-options'><ul>" +
-              "<li"+open_li_status+close_window+">Default</li>"+
-              "<li"+open_li_status+close_window+">Minimize Delay</li>"+
-              "<li"+open_li_status+close_window+">Minimize</li>"+
+              "<li"+open_li_status+close_window+">默认</li>"+
+              "<li"+open_li_status+close_window+">降低延误</li>"+
+              "<li"+open_li_status+close_window+">降低停车次数</li>"+
               "</ul>" +
               "</div>"
               +"</div>";
@@ -308,7 +314,7 @@
           var map = window.congestionMap;
           map.closeInfoWindow();
         },
-        findRoadIsOpen(node_id,title){
+          findRoadIsOpen(node_id,title){
           var isExist = -1;
           for (var i = 0; i < this.open_road_record_List.length; i ++)
           {

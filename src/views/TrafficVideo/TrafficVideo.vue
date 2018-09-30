@@ -135,7 +135,9 @@
               <div class="trafficVideo-title-content">开始时间： {{startTime}}</div>
               <div class="trafficVideo-title-content">进程时间： {{totalTime}}</div>
 
-              <div class="trafficVideo-title-action" @click="restartCountNumber">归零</div>
+              <div class="trafficVideo-title-action" @click="restartCountNumber">
+                <img class="bell_img" src="../../../static/image/trafficVideo/bell.png"/>
+                归零</div>
 
             </div>
 
@@ -872,9 +874,7 @@
   .trafficVideo-table {
     padding: 10px 20px;
     box-sizing: border-box;
-
   }
-
   .trafficVideo-row {
     display: flex;
     margin-bottom: 10px;
@@ -889,17 +889,30 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding: 0 0 10px 0;
 
   }
 
   .trafficVideo-title-content {
     width: 150px;
+    height: 25px;
   }
 
   .trafficVideo-title-action {
     flex-grow: 1;
+    background: rgb(83, 87, 104);
     text-align: center;
+    height: 25px;
+    line-height: 25px;
+    position: relative;
+  }
+  .bell_img{
+    display: block;
+    position: absolute;
+    height: 20px;
+    left: 10px;
+    top: 2px;
+
   }
 
   .trafficVideo-row:nth-child(3) .trafficVideo-li {
