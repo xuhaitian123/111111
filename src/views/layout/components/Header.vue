@@ -21,7 +21,7 @@
   export  default {
     data(){
       return {
-        name: '管理员'||window.localStorage.getItem("username")
+        name: '辉略熊光辉'||window.localStorage.getItem("username")
       }
     },
     components:{
