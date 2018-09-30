@@ -172,10 +172,11 @@
               <div class="Dashboard_card_time">
                 <el-date-picker
                   size="mini"
+                  type="date"
                   :picker-options="pickerOptions"
+                  :clearable="false"
                   v-model="trendTime"
                   format="yyyy/MM/dd"
-                  range-separator=""
                   placeholder="选择日期">
                 </el-date-picker>
               </div>
