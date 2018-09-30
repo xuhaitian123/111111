@@ -886,7 +886,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding: 5px 0;
 
   }
 
@@ -896,7 +896,10 @@
 
   .trafficVideo-title-action {
     flex-grow: 1;
+    background: rgb(83, 87, 104);
     text-align: center;
+    height: 25px;
+    line-height: 25px;
   }
 
   .trafficVideo-row:nth-child(3) .trafficVideo-li {
