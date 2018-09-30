@@ -222,7 +222,7 @@
                 v-model="flow_hour_date"
                 size="mini"
                 format="yyyy/MM/dd"
-                value-format="yyyyMMdd"
+                value-format="yyyy/MM/dd"
                 type="date"
                 placeholder="选择日期">
               </el-date-picker>
@@ -312,7 +312,7 @@
 
         flow_hour_node_1: '',
         flow_hour_node_2: '',
-        flow_hour_date: this.formatDate(new Date(), 'yyyyMMdd'),
+        flow_hour_date: this.formatDate(new Date(), 'yyyy/MM/dd'),
         roadList: [{id: 1, road_name: '梁红玉路'}, {id: 2, road_name: '沈坤路'}],
         intersectionsList: {"":[{"link_id":1,"value":0,"isMock":1},{"link_id":11,"value":0,"isMock":1}],
           " ":[{"link_id":2,"value":0,"isMock":1},{"link_id":22,"value":0,"isMock":1}],
@@ -370,7 +370,8 @@
       },
       pie_map_select() {
         this.road_ratio_loading = true;
-        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + this.road_24h_date[0] + '&end=' + this.road_24h_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
+
+        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + this.road_ratio_date[0] + '&end=' + this.road_ratio_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
           .then((result) => {
             this.intersectionsList = result.data.value[this.road_ratio_node]
             this.road_ratio_loading = false;
@@ -380,8 +381,12 @@
       },
       line_map_select() {
         this.flow_hour_loading = true;
+
+        var flow_hour_data = new Date(this.flow_hour_date);
+        var endTime = this.formatDate(new Date(flow_hour_data.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
+        var beginTime =this.formatDate(flow_hour_data, 'yyyyMMdd');
         var line_1_promise = new Promise(resolve => {
-          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_1 + '&beginTime=20180926&endTime=20180927'
+          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_1 + '&beginTime='+beginTime+'&endTime='+ endTime
             + '&token=' + this.getHeader().token).then((result) => {
             console.log(result)
             resolve({
@@ -393,7 +398,7 @@
           });
         })
         var line_2_promise = new Promise(resolve => {
-          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_2 + '&beginTime=20180926&endTime=20180927'
+          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_2  + '&beginTime='+beginTime+'&endTime='+ endTime
             + '&token=' + this.getHeader().token).then((result) => {
             resolve({
               data: result.data.map((item, index) => [index + 1, item.total]),

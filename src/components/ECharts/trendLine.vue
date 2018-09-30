@@ -45,6 +45,7 @@
       tranelineInfo(){
         this.tranelineData = [];
         this.nodeNameList = [];
+        var colorList =['#D54F82','#47AD7E']
         if(this.tranelineInfo.length === 0) return;
         var tranelineInfo = JSON.parse(JSON.stringify(this.tranelineInfo));
         tranelineInfo.forEach((item,index)=>{
@@ -52,7 +53,7 @@
             if((index+1)%2 === 0){
               this.nodeNameList.push('')
             }
-            this.tranelineData.push({name: item.name, type:'line', symbol: 'circle',data: item.data})
+            this.tranelineData.push({name: item.name, type:'line', symbol: 'circle',data: item.data,lineStyle:{color: colorList[index]}})
         })
         this.init()
       }
@@ -152,8 +153,10 @@
 </script>
 
 <style scoped>
+  /*47AD7E*/
+  D54F82
   .color {
-    color: rgb(89, 91, 102);
+    color: rgb(213, 79, 130);
   }
-
 </style>
+
