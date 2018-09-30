@@ -239,7 +239,7 @@
 
             <div class="signal_road_score">
               <div style="font-size: 14px;margin-top: 10px">交叉口交通运行评分</div>
-              <road-gauge :data="roadNetCongestionScore.toFixed(0)" class="Dashboard_card_roadGauge"></road-gauge>
+              <road-gauge :data="roadNetCongestionScore.toFixed(0)" :color="getSaturationColor(roadNetCongestionScore)" class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
             <!--<div>-->
@@ -295,9 +295,9 @@
                       <div class="" style="margin-bottom: 5px">{{signalText[value.key]}}</div>
                       <div style="height: 86px;border-radius: 10px;width: 30px;background: #2a2b36;margin: auto">
                         <ul class="Node_signal_lamp">
-                          <li :style="{background : value.value === 'Red' ? 'red':''}"></li>
+                          <li :style="{background : !currentColor[value.key] ? 'red':''}"></li>
                           <li
-                            :style="{background : currentColor[value.key]==='yellow'? 'yellow':'' || currentColor[value.key]!=='green'?'yellow':''}"></li>
+                            :style="{background : currentColor[value.key]==='yellow'? 'yellow':''}"></li>
                           <li :style="{background : currentColor[value.key]==='green'?'green':''}"></li>
                         </ul>
                       </div>
@@ -1694,8 +1694,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
           });
         })
       },
-      getRoadNetCongestionScore(startTime, endTime) { //路网拥堵评分
-        let url = '/TrafficCongestion/roadNetCongestionScore?token=' + this.getHeader().token;
+      getRoadNetCongestionScore(startTime, endTime) { //交叉口拥堵评分
+        let url = '/nodeData/getNodeDataD22ByNodeId?nodeId='+ this.$route.params.id +'&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
           this.roadNetCongestionScore = response.data.value;
@@ -1703,6 +1703,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度
         this.loadingLength = true;
+
         let url = '/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
@@ -1712,7 +1713,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
         this.loadingSignal = true;
-        console.log('----------')
         let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += endTime ? '&current=' + endTime : '&current=true';
         this.$http.get(url).then((response) => {
@@ -1872,8 +1872,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
             this.currentColor[this.signalPlan['222'].key] = 'yellow';
           }
         }
-
-        console.log(this.currentColor)
       },
       stopChange() {
         if (this.isChangeTime) {

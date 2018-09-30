@@ -28,7 +28,7 @@
             <div class="save_password">
               <div class="save_password_el">
                 <input type="checkbox" class="square" v-model="isRecordUser" @change="save_password"/><span
-                style="color: #ffffff;font-size: 13px">保存密码</span>
+                style="color: #ffffff;font-size: 13px">记住账号</span>
               </div>
             </div>
             <button class="login-button" @click="login">登录</button>

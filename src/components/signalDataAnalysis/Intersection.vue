@@ -185,7 +185,7 @@
           let intersection_data = this.intersection_data;
           let item = this.trafficLightOptimizeAlarmTimes;
           let road_name = intersection_data.after.map(function (item) {
-            return item.name
+            return item.node_name
           });
           road_name.forEach(function (data) {
             option_one.xAxis.data.push (data)

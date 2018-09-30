@@ -17,7 +17,7 @@
             <div class="Road_row_link">
               <el-row type="flex" justify="space-around">
                 <el-col :span="5">
-                  <div class="">路段 <span>{{linkData.data.link.link_name}}</span></div>
+                  <div class="">交通走廊 <span>{{linkData.data.link.link_name}}</span></div>
                 </el-col>
                 <el-col :span="5">
                   <div class="">总流量 <span>{{linkData.data.link.link_lane_capacity}}vph</span></div>

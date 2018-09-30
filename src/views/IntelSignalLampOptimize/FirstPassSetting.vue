@@ -84,59 +84,72 @@
               <div class="find-first-record" >
                 <div class="control-setting-title">查询优先通行车辆记录</div>
                 <div class="filter-condition">
-                  <div class="show-filter-item">
-                    <div class="item-key-intro">日期</div>
-                    <input class="item-info-show" placeholder="选择日期" v-model="filter_date" id="date_picker" type="text"  />
-                  </div>
-                  <div class="show-filter-item">
-                    <div class="item-key-intro">开始时间</div>
-                    <input class="item-info-show" type="text" v-model="filter_start_time" @blur="judge_input_time_correct(filter_start_time)"/>
-                  </div>
-                  <div class="show-filter-item">
-                    <div class="item-key-intro">结束时间</div>
-                    <input class="item-info-show" v-model="filter_end_time" @blur="judge_input_time_correct(filter_end_time)"/>
+                  <div class="show_time_left big-item range-data">
+                    <div class="range-time-title">
+                      <div class="selected_road">开始时间</div>
+                      <div class="selected_road">结束时间</div>
+                    </div>
+                    <el-date-picker
+                      v-model="week_data_picker_1"
+                      type="daterange"
+                      size="mini"
+                          format="yyyy/MM/dd"
+                      value-format="yyyy/MM/dd"
+                      range-separator="至"
+                      placeholder="选择日期">
+                    </el-date-picker>
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">路口</div>
-                    <input class="item-info-show" v-model="filter_road_name" />
-                  </div>
-                  <div class="show-filter-item">
-                    <div class="item-key-intro">车辆ID</div>
-                    <input class="item-info-show" v-model="filter_carID" />
+                    <el-select v-model="week_date_picker_node" size="mini" class="area_titleSelect min" placeholder="请选择"
+                               :popper-append-to-body="false">
+                      <el-option
+                        v-for="item in nodes"
+                        :key="item.node_id"
+                        :label="item.node_name"
+                        :value="item.node_id">
+                      </el-option>
+                    </el-select>
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">车辆类型</div>
-                    <input class="item-info-show" v-model="filter_car_type" />
+                    <el-select v-model="filter_car_type" size="mini" class="area_titleSelect min" placeholder="请选择"
+                               :popper-append-to-body="false">
+                      <el-option
+                        v-for="item in car_style"
+                        :key="item.type"
+                        :label="item.name"
+                        :value="item.type">
+                      </el-option>
+                    </el-select>
                   </div>
+
                 </div>
-                <div class="filter-input">
-                  <input class="item-info-show" />
-                  <div class="filter-button" @click="filter_button_click()">查询</div>
-                </div>
+              <div class="search_button_div">
+                <el-button class="search-button" v-on:click="filter_button_click()">确定</el-button>
+              </div>
               </div>
               <div class="history-record" >
-                <div class="control-setting-title">优先通行车辆历史记录区间段：{{filter_date}}  {{filter_start_time}}-{{filter_end_time}}
-                  <span class="right-record-number">找到记录：{{history_record_number}}</span>
+                <div class="control-setting-title">优先通行历史记录： {{week_data_picker_1[0]}}-{{week_data_picker_1[1]}}
+                  <span class="right-record-number">找到记录：{{filter_all_record_info.length}}</span>
                 </div>
                 <div class="show-record-title">
                   <div class="record-item">时间</div>
-                  <div class="record-item">路口</div>
-                  <div class="record-item">车辆ID</div>
+                  <div class="record-item_road">路口</div>
                   <div class="record-item">车辆类型</div>
-                  <div class="record-item">优先级别</div>
+                  <!--<div class="record-item">优先级别</div>-->
                   <div class="record-item">延误时间</div>
                   <div class="record-item">平均车速</div>
                 </div>
                 <div class="record-split-line"></div>
                 <div class="show-all-record-content">
-                  <div class="show-record-item" v-for="(record, i) in filter_all_record">
-                    <div class="record-item">{{record.time}}</div>
-                    <div class="record-item">{{record.road}}</div>
-                    <div class="record-item">{{record.car_id}}</div>
-                    <div class="record-item">{{record.car_type}}</div>
-                    <div class="record-item">{{record.first_level}}</div>
-                    <div class="record-item">{{record.delay_time}}</div>
-                    <div class="record-item">{{record.avg_speed}}</div>
+                  <div class="show-record-item" v-for="(record, i) in filter_all_record_info">
+                    <div class="record-item">{{time_stamp_to_data(record.time)}}</div>
+                    <div class="record-item_road">{{get_road_name(record.crossId,nodes)}}</div>
+                    <div class="record-item">{{get_car_type(record.type)}}</div>
+                    <!--<div class="record-item">{{record.priority}}</div>-->
+                    <div class="record-item">{{record.delayTime}}</div>
+                    <div class="record-item">{{record.speed}}</div>
                   </div>
                 </div>
               </div>
@@ -162,6 +175,7 @@
       },
       data() {
         return {
+          week_data_picker_1: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy-MM-dd'), this.formatDate(new Date(), 'yyyy-MM-dd')],
           road_name:'人民路-珠海路',
           radio2: 3,
           first_items:{
@@ -177,6 +191,9 @@
               }
               ]
           },
+          nodes:[],
+          week_date_picker_node:'沈坤路樱桃园路路口',
+          car_style:[{type:'Police',name:'警卫车辆'},{type:'Police_1',name:'警务车辆'},{type:'LeadingVehicle',name:'领导车辆'},{type:'RescueVehicle',name:'救护车'},{type:'Bus',name:'公交车'}],
           open_road_record_List:[],
           current_road:'人民路-珠海路',
           start_open_first_pass:true,
@@ -188,6 +205,7 @@
           history_record_number:9,
           filter_road_name:'人民路-珠海路',
           filter_car_type:'警卫车辆',
+          filter_all_record_info:[],
           filter_all_record:[{
             time:'9:00',
             road:'人民路',
@@ -241,10 +259,45 @@
         this.getAllRoadInfo();
       },
       methods:{
+        get_car_type(id){
+          var type = this.car_style
+          for(var i=0 ;i<type.length;i++){
+            if(id==type[i].type){
+              var car_type_name =type[i].name
+            }
+          }
+          return car_type_name
+        },
+        data_to_time_stamp(date_string){
+         var date =  new Date(date_string.replace(/-/g, "/"))
+          console.log(date)
+          return date/1000
+        },
+          time_stamp_to_data(time_stamp){
+          var date = new Date(time_stamp);
+          var Y = date.getFullYear() + '-';
+          var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+          var D = date.getDate() + ' ';
+          var h = date.getHours() + ':';
+          var m = date.getMinutes();
+          var s = date.getSeconds();
+          return (M+D+h+m);
+        },
+        get_road_name(index,road_info){
+          for(var i =0; i<road_info.length;i++){
+            var name = ''
+            if(index==i){
+              name =road_info[i-1].node_name
+            }
+          }
+          return name
+        },
         getAllRoadInfo(){
           var self = this;
           this.$http.get('/index/nodes' + '?token=' + this.getHeader().token)
             .then((response) => {
+              self.nodes = response.data.nodes
+              console.log(this.nodes)
               self.showBMapPoint(response.data.nodes);
               return response.data;
             })
@@ -366,7 +419,17 @@
           this.is_global = !this.is_global;
         },
         filter_button_click :function () {
-          this.filter_date = $("#date_picker").val()
+          var self =this
+          console.log(this.week_data_picker_1[0])
+          var a =this.week_data_picker_1[0]
+          var start_time = self.data_to_time_stamp(a)
+          var end_time = this.data_to_time_stamp((self.week_data_picker_1)[1])
+          console.log(this.week_date_picker_node)
+          this.$http.get('/priorityVehicle/getPriorityVehicleData?startTime='+start_time+'&endTime='+end_time+'&cross='+this.week_date_picker_node+'&type='+this.filter_car_type+
+            '&token=' + this.getHeader().token).then((result) => {
+            this.filter_all_record_info = result.data
+            console.log(result)
+            })
         },
         //判断数据事件是否合法
         judge_input_time_correct:function(time){
@@ -637,14 +700,18 @@
   .filter-condition{
     width: 450px;
     display: flex;
-    height: 53px;
+    height: 55px;
     margin: 0 auto;
     padding-top: 18px;
+    align-items: center;
   }
   .show-filter-item{
-    width: 80px;
+    width:150px;
     height: 100%;
-    margin-right: 8px;
+    /*margin-right: 8px;*/
+    margin-left: 10px;
+    align-items: center;
+    margin-top: 5px;
   }
   .filter-condition :last-child{
     margin-right: 0;
@@ -708,6 +775,8 @@
     margin: 20px 15px;
     display: flex;
     color: #c9c9cc;
+    display: flex;
+    align-items: center;
   }
   .show-record-item{
     margin: 20px 15px;
@@ -720,6 +789,11 @@
     padding: 0 10px 0 0;
     text-align: center;
   }
+  .record-item_road{
+    width: 140px;
+    padding: 0 10px 0 0;
+    text-align: center;
+  }
   .record-split-line{
     width: 475px;
     margin: 0 auto;
@@ -729,6 +803,55 @@
   .show-all-record-content{
     height: 190px;
     overflow-y: auto;
+    display: flex;
+  }
+  .show_time_left {
+    width: 60px;
+    /*margin-right: 10px;*/
+    align-items: center;
+  }
+
+  .big-item {
+    width: 150px;
+    text-align: center;
+    align-items: center;
+  }
+  .search-button {
+    background: #54576a;
+    border: none;
+    color: rgb(148, 148, 154);
+    height: 28px;
+    padding: 0 20px;
+    border-radius: 0;
+    margin: auto;
+  }
+  .selected_road {
+    text-align: center;
+    color: #fff;
+    line-height: 10px;
+    font-size: 10px;
+    width: 50%;
+  }
+  .range-time-title {
+    display: flex;
+    justify-content: space-between;
+    /*padding-bottom: 5px;*/
+    height: 15px;
+    box-sizing: border-box;
+  }
+  .area_titleSelect {
+    width: 100%;
+    height: 20px;
+    margin-top: 3px;
+    background-color: #505666;
+  }
+  .search_button_div{
+    width: 450px;
+    display: flex;
+    height: 40px;
+    margin: 0 auto;
+    padding-top: 10px;
+    align-items: center;
   }
   /*.show-all-record-content ::-webkit-scrollbar{*/
     /*width: 5px;*/
@@ -738,4 +861,19 @@
     /*background-color: #eee;*/
   /*}*/
 
+</style>
+<style>
+  .min .el-input__inner,
+  .min .el-select-dropdown__item {
+    font-size: 11px !important;
+    text-align: left;
+    /*background-color: #545768;*/
+    /*border: 1px solid #545768;*/
+    background-color: #545768;
+    border: none;
+  }
+
+  .min input {
+    padding-left: 10px
+  }
 </style>

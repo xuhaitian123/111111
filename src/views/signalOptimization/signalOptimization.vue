@@ -12,13 +12,11 @@
             <span>周拥堵情况查看，对比</span>
           </div>
           <div class="main_up_left_middle">
-
             <div class="show_time_left big-item range-data">
               <div class="range-time-title">
                 <div class="selected_road">开始时间</div>
                 <div class="selected_road">结束时间</div>
               </div>
-
               <el-date-picker
                 v-model="week_data_picker_1"
                 type="daterange"
@@ -112,12 +110,9 @@
             </div>
             <div class="show_time_left  range-data">
               <div class="range-time-title">
-
               </div>
               <el-button class="search-button" v-on:click="heatChart_map_right_select">确定</el-button>
-            </div>
-
-          </div>
+            </div></div>
           <div class="main-search-action">
             <div class="main-search-item">
             </div>
@@ -135,14 +130,12 @@
           <div class="main_up_child_head">
             <span>交通走廊交通运行指数评分</span>
           </div>
-
           <div class="main_up_left_middle min-header">
             <div class="show_time_left big-item range-data">
               <div class="range-time-title">
                 <div class="selected_road">开始时间</div>
                 <div class="selected_road">结束时间</div>
               </div>
-
               <el-date-picker
                 v-model="road_ratio_date"
                 type="daterange"
@@ -171,10 +164,8 @@
               </div>
               <el-button class="search-button" v-on:click="pie_map_select">确定</el-button>
             </div>
-
           </div>
           <div class="road-direction">
-
           </div>
 
           <div v-for="(intersections, index) in Object.keys(intersectionsList)"
@@ -209,10 +200,7 @@
               <div class="rate-container-item-title"> {{intersectionsList[intersections][1].value.toFixed(2) }}
               </div>
             </div>
-
           </div>
-
-
         </div>
       </div>
 
@@ -234,7 +222,7 @@
                 v-model="flow_hour_date"
                 size="mini"
                 format="yyyy/MM/dd"
-                value-format="yyyyMMdd"
+                value-format="yyyy/MM/dd"
                 type="date"
                 placeholder="选择日期">
               </el-date-picker>
@@ -265,15 +253,12 @@
                 </el-option>
               </el-select>
             </div>
-
             <div class="">
               <div class="time_right"></div>
               <el-button class="search-button"
                          v-on:click="line_map_select">确定
               </el-button>
             </div>
-
-
           </div>
         </div>
       </div>
@@ -292,6 +277,7 @@
     name: "signal-optimization",
     data() {
       return {
+
         week_loading: false,
         road_24h_loading: false,
         road_ratio_loading: false,
@@ -326,7 +312,7 @@
 
         flow_hour_node_1: '',
         flow_hour_node_2: '',
-        flow_hour_date: this.formatDate(new Date(), 'yyyyMMdd'),
+        flow_hour_date: this.formatDate(new Date(), 'yyyy/MM/dd'),
         roadList: [{id: 1, road_name: '梁红玉路'}, {id: 2, road_name: '沈坤路'}],
         intersectionsList: {"":[{"link_id":1,"value":0,"isMock":1},{"link_id":11,"value":0,"isMock":1}],
           " ":[{"link_id":2,"value":0,"isMock":1},{"link_id":22,"value":0,"isMock":1}],
@@ -357,7 +343,6 @@
     methods: {
       init() {
 
-
       },
       heatChart_map_right_select() {
         this.road_24h_loading = true;
@@ -385,7 +370,8 @@
       },
       pie_map_select() {
         this.road_ratio_loading = true;
-        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + this.road_24h_date[0] + '&end=' + this.road_24h_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
+
+        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + this.road_ratio_date[0] + '&end=' + this.road_ratio_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
           .then((result) => {
             this.intersectionsList = result.data.value[this.road_ratio_node]
             this.road_ratio_loading = false;
@@ -395,8 +381,12 @@
       },
       line_map_select() {
         this.flow_hour_loading = true;
+
+        var flow_hour_data = new Date(this.flow_hour_date);
+        var endTime = this.formatDate(new Date(flow_hour_data.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
+        var beginTime =this.formatDate(flow_hour_data, 'yyyyMMdd');
         var line_1_promise = new Promise(resolve => {
-          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_1 + '&beginTime=20180926&endTime=20180927'
+          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_1 + '&beginTime='+beginTime+'&endTime='+ endTime
             + '&token=' + this.getHeader().token).then((result) => {
             console.log(result)
             resolve({
@@ -408,7 +398,7 @@
           });
         })
         var line_2_promise = new Promise(resolve => {
-          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_2 + '&beginTime=20180926&endTime=20180927'
+          this.$http.get('/roadDataAnalysis/someHourFlowByNodeId?nodeId=' + this.flow_hour_node_2  + '&beginTime='+beginTime+'&endTime='+ endTime
             + '&token=' + this.getHeader().token).then((result) => {
             resolve({
               data: result.data.map((item, index) => [index + 1, item.total]),
