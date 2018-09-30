@@ -892,6 +892,7 @@
 
   .trafficVideo-title-content {
     width: 150px;
+    height: 25px;
   }
 
   .trafficVideo-title-action {
