@@ -301,14 +301,17 @@
           '梁红玉路': {
             linksLeftInfo: [102, 202, 402, 502, 702, 902],
             linksRightInfo: [104, 204, 404, 504, 704, 904],
-            linksName: ['翔宇大道', '镇海路', '华西路', '永怀东路', '樱桃园路', '关天培路']
+            linksName: ['翔宇大道', '镇海路', '华西路', '永怀东路', '樱桃园路', '关天培路'],
+            allInfo:{'翔宇大道':[902,904], '镇海路': [702,704], '华西路':[502,504],'永怀东路':[402, 404], '樱桃园路':[202, 204], '关天培路': [102, 104]}
           },
           '沈坤路': {
             linksLeftInfo: [302, 602, 802, 1002],
             linksRightInfo: [304, 604, 804, 1004],
-            linksName: ['翔宇大道', '镇海路', '华西路', '永怀东路']
+            linksName: ['翔宇大道', '镇海路', '华西路', '樱桃园路'],
+            allInfo:{'翔宇大道':[1002,1004], '镇海路': [802,804], '华西路':[602,604],'樱桃园路':[302, 304]}
           }
         },
+
 
         flow_hour_node_1: '',
         flow_hour_node_2: '',
@@ -370,10 +373,26 @@
       },
       pie_map_select() {
         this.road_ratio_loading = true;
-
-        this.$http.get('roadDataAnalysis/getCorridorCongestionSourceByRoadName?current=false&start=' + this.road_ratio_date[0] + '&end=' + this.road_ratio_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
+        console.log()
+        this.$http.get('roadDataAnalysis/getAvgCorridorCongestionOfDaysByRoadName?current=false&beginDay=' + this.road_ratio_date[0] + '&endDay=' + this.road_ratio_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
           .then((result) => {
-            this.intersectionsList = result.data.value[this.road_ratio_node]
+            console.log(result)
+
+            var intersection =  JSON.parse(JSON.stringify(this.map[this.road_ratio_node].allInfo))
+            console.log(result.data)
+            result.data.value.forEach(item=>{
+
+              var index = intersection[item.link_name].indexOf(item.link_id);
+              console.log(intersection[item.link_name])
+              console.log(item.link_id)
+              console.log(index)
+              if(index>-1){
+                console.log(item)
+                intersection[item.link_name][index] =  item;
+              }
+            })
+            console.log(intersection)
+            this.intersectionsList = intersection
             this.road_ratio_loading = false;
           }).catch(function (data) {
           console.log(data);
