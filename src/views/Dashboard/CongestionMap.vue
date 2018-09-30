@@ -242,7 +242,11 @@
         let url = '/trafficCongestion/roadNetCongestionScore?token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
-          this.roadNetCongestionScore = response.data.value;
+          if(response.data.isMock === 1 && response.data.value === 0){
+            this.roadNetCongestionScore = 100;
+          }else {
+            this.roadNetCongestionScore = response.data.value;
+          }
         })
       },
       getAllNodeCongestionAlarm(startTime, endTime) {  //交叉口报警信息

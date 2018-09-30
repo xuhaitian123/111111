@@ -324,7 +324,6 @@
         allScore: [],
         scoreName: [],
         corridorScore: 0,
-        crossLinks: [],
       }
     },
     mounted() {
@@ -344,13 +343,6 @@
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
-      },
-      getCrossAllLinks() {
-        this.$http.get('/index/roadCrossAllLinksByLinkId?linkId=' + this.$route.params.id + '&token=' + this.getHeader().token)
-          .then((response) => {
-            console.log(response.data)
-            this.crossLinks = response.data.cross_links;
-          })
       },
       getLinkByNodeScore() {
         this.loadingNode = true;

@@ -661,7 +661,11 @@
         return new Promise((resolve, reject) => {
           this.$http.get('/TrafficCongestion/roadNetCongestionScore?current=true' + '&token=' + this.getHeader().token)
             .then((response) => {
-              this.roadNetCongestionScore = response.data.value;
+              if(response.data.isMock === 1 && response.data.value === 0){
+                this.roadNetCongestionScore = 100;
+              }else {
+                this.roadNetCongestionScore = response.data.value;
+              }
               resolve('score');
             })
         });
