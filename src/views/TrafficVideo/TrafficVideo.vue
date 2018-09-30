@@ -886,7 +886,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 0;
+    padding: 0 0 10px 0;
 
   }
 
