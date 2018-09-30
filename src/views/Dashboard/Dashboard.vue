@@ -62,7 +62,7 @@
             <div class="Dashboard_card_right">
               <div class="Dashboard_card_current">
                 <div class="Dashboard_card_title">路网交通运行指数</div>
-                <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="getRoadFlowColor(roadNetCongestionScore)"></road-gauge>
+                <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="scoreColor(roadNetCongestionScore)"></road-gauge>
                 <div class="Dashboard_card_title">交叉口拥堵评分</div>
                 <div class="Dashboard_card_progressList_score" v-for="(item,i) in allNodeScore" :key="item.node_id"
                      v-if="i <5">
@@ -826,6 +826,15 @@
           return "#c8772a";
         } else if (val > 80) {
           return "#a43f43";
+        }
+      },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
         }
       },
       alarmText(val) {

@@ -48,7 +48,7 @@
 
                 <el-row class="">
                   <el-col :span="12">
-                    <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="getRoadAvgDelayColor(roadNetCongestionScore)"></road-gauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="scoreColor(roadNetCongestionScore)"></road-gauge>
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
@@ -340,6 +340,15 @@
           return "中";
         } else if (val > 80) {
           return "重";
+        }
+      },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
         }
       },
       getNewTime(val) {

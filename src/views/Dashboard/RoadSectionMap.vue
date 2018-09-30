@@ -238,7 +238,7 @@
                     </div>
 
                     <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 80px"
-                                color="#c57426"></road-gauge>
+                                :color="scoreColor(corridorScore)"></road-gauge>
                   </div>
                 </el-col>
                 <el-col :span="14">
@@ -487,6 +487,15 @@
           return "red"
         } else {
           return "#c9c9cc"
+        }
+      },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
         }
       },
       getRoadAvgDelayColor(num) {
