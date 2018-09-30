@@ -91,7 +91,7 @@
                 type="daterange"
                 size="mini"
                 format="yyyy/MM/dd"
-                value-format="yyyyMMdd"
+                value-format="yyyy/MM/dd"
                 range-separator="至"
                 placeholder="选择日期">
               </el-date-picker>
@@ -143,7 +143,7 @@
                 type="daterange"
                 size="mini"
                 format="yyyy/MM/dd"
-                value-format="yyyyMMdd"
+                value-format="yyyy/MM/dd"
                 range-separator="至"
                 placeholder="选择日期">
               </el-date-picker>
@@ -360,7 +360,12 @@
       },
       heatChart_map_right_select() {
         this.road_24h_loading = true;
-        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=' + this.road_24h_picker_node + '&beginDay=' + this.road_24h_date[0] + '&endDay=' + this.road_24h_date[1] + '&token=' + this.getHeader().token).then((result) => {
+        var time = new Date(this.road_24h_date[0])
+        var startTime = this.formatDate(new Date(time.getTime()), 'yyyyMMdd')
+        var endTime = this.formatDate(new Date(time.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
+
+
+        this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=' + this.road_24h_picker_node + '&beginDay=' + startTime + '&endDay=' + endTime + '&token=' + this.getHeader().token).then((result) => {
           var linksLeftInfo = this.map[this.road_24h_picker_node].linksLeftInfo;
           var linksRightInfo = this.map[this.road_24h_picker_node].linksRightInfo;
           var linksName = this.map[this.road_24h_picker_node].linksName
@@ -384,8 +389,12 @@
       },
       pie_map_select() {
         this.road_ratio_loading = true;
-        console.log()
-        this.$http.get('roadDataAnalysis/getAvgCorridorCongestionOfDaysByRoadName?current=false&beginDay=' + this.road_ratio_date[0] + '&endDay=' + this.road_ratio_date[1] + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
+        var time = new Date(this.road_ratio_date[0])
+        var startTime = this.formatDate(new Date(time.getTime()), 'yyyyMMdd')
+        var endTime = this.formatDate(new Date(time.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
+        // var beginTime =this.formatDate(flow_hour_data, 'yyyyMMdd');
+
+        this.$http.get('roadDataAnalysis/getAvgCorridorCongestionOfDaysByRoadName?current=false&beginDay=' + startTime + '&endDay=' + endTime + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
           .then((result) => {
             console.log(result)
 
@@ -451,9 +460,9 @@
       },
 
       getWeekCongestionDate() {
-        this.week_loading = true;
-        this.$http.get('http://localhost:8080/static/week.json').then((weekInfo) => {
-          this.weekCongestionDate = weekInfo.data
+        this.week_loading =  true;
+        this.$http.get('/static/week.json').then((weekInfo)=>{
+         this.weekCongestionDate = weekInfo.data
           this.week_loading = false;
         })
 

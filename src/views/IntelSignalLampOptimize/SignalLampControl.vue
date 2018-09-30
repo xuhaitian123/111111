@@ -16,9 +16,9 @@
             </div>
 
             <div class="right-container">
-              <div class="road-select">
+              <div class="road-select Dashboard_card_body_two">
                 <span>路口</span><!--el-icon-caret-right-->
-                <el-select class="select-road-style" @change="changeNode()" v-model="road_value" placeholder="请选择">
+                <el-select class="select-road-style" @change="changeNode()" v-model="road_value" placeholder="请选择" :popper-append-to-body="false">
                   <el-option
                     class="selectColor"
                     v-for="node_id in Object.keys(nodesInfo)"
@@ -35,17 +35,19 @@
                   <div class="use-intel-score-text">未启用智能控制评分</div>
                   <!--<road-gauge :data="unuse_intel_score" class="Dashboard_card_roadGauge"></road-gauge>-->
                   <div class="use-intel-score-image">
-                    <div class="half-circle">
-                      <div class="intel-score-number red-text-color">{{currentNodeInfo.beforeValue}}</div>
-                    </div>
+                    <road-gauge class="Dashboard_card_roadGauge" :id="'before'" :data="currentNodeInfo.beforeValue" :color="getRoadFlowColor(currentNodeInfo.beforeValue)"></road-gauge>
+                    <!--<div class="half-circle">-->
+                      <!--<div class="intel-score-number red-text-color">{{currentNodeInfo.beforeValue}}</div>-->
+                    <!--</div>-->
                   </div>
                 </div>
                 <div class="use-intel-score">
                   <div class="use-intel-score-text text-color">启用智能控制评分</div>
                   <div class="use-intel-score-image">
-                    <div class="half-circle">
-                      <div class="intel-score-number green-text-color">{{currentNodeInfo.afterValue}}</div>
-                    </div>
+                    <road-gauge class="Dashboard_card_roadGauge" :id="'after'" :data="currentNodeInfo.afterValue" :color="getRoadFlowColor(currentNodeInfo.afterValue)"></road-gauge>
+                    <!--<div class="half-circle">-->
+                      <!--<div class="intel-score-number green-text-color">{{currentNodeInfo.afterValue}}</div>-->
+                    <!--</div>-->
                   </div>
                 </div>
               </div>
@@ -107,6 +109,7 @@
   import AreaSelect from '../../components/Area/Area'
   import RoadGauge from '../../components/ECharts/RoadGaugeItem'
   import RoadNetMap from '../../components/Map/Map'
+
   var echarts = require('echarts/lib/echarts');
   // 引入柱状图
   require('echarts/lib/chart/bar');
@@ -198,7 +201,7 @@
           //
           var isExist = this.findRoadIsOpen(node.node_id,node.node_name);
           console.log(isExist);
-          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/red.png"
+          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/close.png"
           var myIcon = new BMap.Icon(str_icon_path, new BMap.Size(40,40));
           var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
           marker.title = node.node_name;
@@ -343,10 +346,15 @@
         jumpPageToMain: function () {
 
         },
-        // closeScoreInfo: function () {
-        //   console.log("关闭评分页面");
-        // },
-        //每周的数据展示柱状图
+        getRoadFlowColor(num) {
+
+          if (num <= 80) {
+            return "red"
+          } else  {
+            return "green"
+          }
+        },
+
         showEchartColumn:function () {
           /*ECharts图表*/
           this.buildWeekData()
@@ -461,7 +469,7 @@
         },
         //每天的数据展示柱状图
         showDayLineChart:function (index) {
-          console.log(this.currentNodeInfo)
+          // console.log(this.currentNodeInfo)
           var legendData = ['', ''];
           var bgColorList = ['#ba4c48','#62ac82'];
           var axisLabel = ['00:00', '06:00', '12:00', '18:00', '24:00'];

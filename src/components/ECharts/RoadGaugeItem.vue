@@ -1,11 +1,15 @@
 <template>
-  <div id="main">
+  <div :id="id">
   </div>
 </template>
 
 <script>
   export default {
     props: {
+      id:{
+        type: String,
+        default:'main'
+      },
       data: {
         type: String,
         default: '0',
@@ -23,7 +27,7 @@
     },
     methods: {
       init() {
-        let myChart = this.$echarts.init(document.getElementById('main'));
+        let myChart = this.$echarts.init(document.getElementById(this.id));
 
         let option = {
           tooltip: {
