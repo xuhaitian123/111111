@@ -2175,7 +2175,7 @@
   }
   .area_title_text{
     position: absolute;
-   
+
     color: white;
     height: 20px;
     width: 100%;
