@@ -343,13 +343,13 @@
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
       },
-      getLinkByNodeScore() {
+      getLinkByNodeScore(startTime, endTime) {
         this.loadingNode = true;
         this.$http.get('trafficCongestion/roadAvgDelay?linkId=' + this.$route.params.id + '&current=true&token=' + this.getHeader().token)
           .then((response) => {
             let linkName = response.data.link.link_name;
-            let url = '/roadDataAnalysis/getCorridorCongestionSourceByRoadName?token=' + this.getHeader().token +
-              '&roadName=' + linkName + '&current=true';
+            let url = '/roadDataAnalysis/getCorridorCongestionSourceByRoadName?token=' + this.getHeader().token + '&roadName=' + linkName;
+            url += this.setUrlDate(startTime, endTime);
             this.$http.get(url).then((result) => {
               if (result.data.value[linkName]) {
                 this.allScore = Object.values(result.data.value[linkName]);

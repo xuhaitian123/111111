@@ -1714,7 +1714,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
         this.loadingSignal = true;
-        let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token + '&current=true';
+        let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
+        url += startTime ? '&current=' + this.formatDate(new Date(startTime), 'yyyyMMdd') : '&current=true';
         this.$http.get(url).then((response) => {
           this.currentSignal = response.data.value;
           let obj = {};
