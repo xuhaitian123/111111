@@ -177,7 +177,7 @@
                   placeholder="选择日期">
                 </el-date-picker>
               </div>
-              <div style="position: absolute;top: 15px;right: 40px">
+              <div class="data_views" style="position: absolute;top: 15px;right: 40px">
 
                 <el-select v-model="currentName" size="mini" class="area_titleSelect" placeholder="请选择"
                            :popper-append-to-body="false">
@@ -190,8 +190,8 @@
                   </el-option>
                 </el-select>
 
-                <el-button icon="el-icon-edit" type="info" circle size="mini"
-                           @click="getRoadDataAnalysisFlow()"></el-button>
+                <el-button  type="info"  size="mini"
+                           @click="getRoadDataAnalysisFlow()">确定</el-button>
               </div>
             </div>
             <smooth-bar-line :data="someHourFlow"></smooth-bar-line>
@@ -600,7 +600,7 @@
           3: true
         },
         someHourFlow: [],
-        trendTime: new Date(),
+        trendTime: new Date(new Date().getTime()-24*60*60*1000),
         currentName: 2,
       }
     },
@@ -767,6 +767,7 @@
           })
       },
 
+
       set_first_style_item: function (index, num) {
         for (let i = 0; i < this.first_setting_info[num].first_style.length; i++) {
           if (this.first_setting_info[num].first_style[i] == this.first_items[num].first_style[index]) {
@@ -844,3 +845,9 @@
 
   }
 </script>
+<style>
+  .data_views .el-button--info{
+    background: #54576a;
+    border: none;
+  }
+</style>

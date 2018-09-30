@@ -315,3 +315,7 @@
 .Dashboard_card_body_two .el-select-dropdown__list{
   width: inherit;
 }
+
+.big-select .el-select{
+  width: 200px;
+}

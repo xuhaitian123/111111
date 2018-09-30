@@ -8,7 +8,7 @@
       <div class="trafficVideo-container-left" v-loading="loading&&taskId" element-loading-background="rgba(0, 0, 0, 0.8)">
         <div class="trafficVideo-video-header">
           <div class="trafficVideo-video-header-left font16">{{nodeLinkName[0]}}-{{nodeLinkName[1]}}监控视频</div>
-          <div class="trafficVideo-video-header-right">
+          <div class="trafficVideo-video-header-right big-select">
 
             <el-select v-model="nodeId" @change="changeNode" class="area_titleSelect trafficVideo-select" placeholder="本区域所有监控视频路口"
                        :popper-append-to-body="false">
@@ -186,7 +186,7 @@
             </div>
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
-                行人
+                机动车
                 <img @click="countNumber('bike')" v-if="numberOfCarModal.numberOfModal.bike.status"
                      class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
                 <img @click="countNumber('bike')" v-if="!numberOfCarModal.numberOfModal.bike.status"

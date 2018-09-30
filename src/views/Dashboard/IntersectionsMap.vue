@@ -1703,6 +1703,7 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度
         this.loadingLength = true;
+
         let url = '/nodeData/getNodeAllDataD13ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
@@ -1712,7 +1713,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       },
       getSignalByNodeId(startTime, endTime) { //信号灯配时方案
         this.loadingSignal = true;
-        console.log('----------')
         let url = '/signal/signalByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += endTime ? '&current=' + endTime : '&current=true';
         this.$http.get(url).then((response) => {
@@ -1795,12 +1795,12 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         }
         let width111 = document.getElementById('width111').offsetWidth;
         let width112 = document.getElementById('width112').offsetWidth + width111;
-        let width121 = document.getElementById('width121').offsetWidth + width112 + width111;
-        let width122 = document.getElementById('width122').offsetWidth + width121 + width112 + width111;
+        let width121 = document.getElementById('width121').offsetWidth + width112;
+        let width122 = document.getElementById('width122').offsetWidth + width121;
         let width211 = document.getElementById('width211').offsetWidth;
         let width212 = document.getElementById('width212').offsetWidth + width211;
-        let width221 = document.getElementById('width221').offsetWidth + width212 + width211;
-        let width222 = document.getElementById('width222').offsetWidth + width221 + width212 + width211;
+        let width221 = document.getElementById('width221').offsetWidth + width212;
+        let width222 = document.getElementById('width222').offsetWidth + width221;
 
         let d1 = document.getElementById('111_red').offsetWidth;
         let d1S = document.getElementById('111_yellow').offsetWidth;
@@ -1821,6 +1821,8 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         let d8 = document.getElementById('222_red').offsetWidth;
         let d8S = document.getElementById('222_yellow').offsetWidth;
         this.currentColor = {};
+        console.log(left)
+        console.log(width122)
         if (left <= width111) {
           if (left <= d1) {
             this.currentColor[this.signalPlan['111'].key] = 'green';
