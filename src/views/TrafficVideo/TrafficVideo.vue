@@ -347,7 +347,8 @@
              var taskInfo = result[1].find(movement => {
               return movement.camera_name.substr(-1, 1) === link.link_direction
             });
-            link.taskId =  taskInfo ? taskInfo.camera_id : undefined;
+            link.taskId =  taskInfo ? taskInfo.camera_id : undefined
+            console.log(link.taskId);
             return link
           });
           var nodeInfo = {};

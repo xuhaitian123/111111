@@ -201,7 +201,7 @@
           //
           var isExist = this.findRoadIsOpen(node.node_id,node.node_name);
           console.log(isExist);
-          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/red.png"
+          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/close.png"
           var myIcon = new BMap.Icon(str_icon_path, new BMap.Size(40,40));
           var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
           marker.title = node.node_name;
