@@ -96,7 +96,9 @@
                           format="yyyy/MM/dd"
                       value-format="yyyy/MM/dd"
                       range-separator="至"
-                      placeholder="选择日期">
+                      placeholder="选择日期"
+                      @change="pick_date"
+                      :picker-options="pickerOptions2">
                     </el-date-picker>
                   </div>
                   <div class="show-filter-item">
@@ -175,6 +177,11 @@
       },
       data() {
         return {
+          pickerOptions2:{
+            disabledDate(time) {
+              return time.getTime() > Date.now() - 8.64e6
+            },
+          },
           week_data_picker_1: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy-MM-dd'), this.formatDate(new Date(), 'yyyy-MM-dd')],
           road_name:'人民路-珠海路',
           radio2: 3,
@@ -259,6 +266,24 @@
         this.getAllRoadInfo();
       },
       methods:{
+        pick_date(date){
+          var self = this
+          var start_time = new Date(date[0])
+          var end_time = new Date(date[1])
+          var time_difference = end_time-start_time
+          console.log(end_time)
+          if(time_difference <= 6*24*60*60*1000){
+          }
+          else {
+           var  new_end_time = start_time.getTime() +6*24*60*60*1000
+           var new_end_time_typeof_data= self.time_stamp_to_data_pick_date(new_end_time)
+            self.week_data_picker_1=[date[0],new_end_time_typeof_data]
+            self.$message({
+              message: '时间选择上限为7天,已超出，为您自动选择',
+              type: 'warning'
+            });
+          }
+        },
         get_car_type(id){
           var type = this.car_style
           for(var i=0 ;i<type.length;i++){
@@ -282,6 +307,13 @@
           var m = date.getMinutes();
           var s = date.getSeconds();
           return (M+D+h+m);
+        },
+        time_stamp_to_data_pick_date(time_stamp){
+          var date = new Date(time_stamp);
+          var Y = date.getFullYear() + '/';
+          var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '/';
+          var D = (date.getDate()+1 < 10 ? '0'+date.getDate() : date.getDate()) ;
+          return (Y+M+D);
         },
         get_road_name(index,road_info){
           for(var i =0; i<road_info.length;i++){
@@ -419,6 +451,8 @@
         },
         change_start_open_first_pass_status:function () {
           this.start_open_first_pass = !this.start_open_first_pass;
+          console.log(this.start_open_first_pass)
+
         },
         change_is_global_status:function () {
           this.is_global = !this.is_global;
@@ -428,8 +462,9 @@
           console.log(this.week_data_picker_1[0])
           var a =this.week_data_picker_1[0]
           var start_time = self.data_to_time_stamp(a)
-          var end_time = this.data_to_time_stamp((self.week_data_picker_1)[1])
-          console.log(this.week_date_picker_node)
+          var end_time = this.data_to_time_stamp((self.week_data_picker_1)[1])+24*60*60-1
+          console.log(start_time)
+          console.log(end_time)
           this.$http.get('/priorityVehicle/getPriorityVehicleData?startTime='+start_time+'&endTime='+end_time+'&cross='+this.week_date_picker_node+'&type='+this.filter_car_type+
             '&token=' + this.getHeader().token).then((result) => {
             this.filter_all_record_info = result.data
