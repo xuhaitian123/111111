@@ -3,7 +3,7 @@
     <Area></Area>
     <div class="main">
       <div class="header">
-        <img src="../../../static/map/toLeft.png" class="header_img">
+        <img src="../../../static/map/toLeft.png" class="header_img"@click="jumpPage('/main/dashboard')">
         <span class="header-span">拥堵情况变化趋势分析</span>
       </div>
       <div class="main_up">
@@ -390,6 +390,9 @@
 
           })
         })
+      },
+      jumpPage(key) {
+        this.$router.push(key);
       },
       pie_map_select() {
         this.road_ratio_loading = true;

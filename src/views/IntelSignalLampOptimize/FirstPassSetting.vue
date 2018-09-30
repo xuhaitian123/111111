@@ -5,7 +5,7 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPageToMain()"></i>智能信号灯控制</span>
+            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>智能信号灯控制</span>
             <div class="nav-right-style">
               <i class="iconfont icon-webicon03"></i>
             </div>
@@ -283,6 +283,9 @@
               type: 'warning'
             });
           }
+        },
+        jumpPage(key) {
+          this.$router.push(key);
         },
         get_car_type(id){
           var type = this.car_style

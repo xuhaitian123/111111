@@ -5,7 +5,7 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>拥堵地图</span>
+              <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>拥堵地图</span>
             <div style="float: right; padding: 3px 0">
               <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
               <i class="iconfont icon-shuxian"></i>

@@ -2,7 +2,7 @@
   <div v-loading="isLoadingInfo" element-loading-background="rgba(0, 0, 0, 0.8)">
     <Area></Area>
     <div class="trafficVideo-container-header">
-
+      <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>视频监控与分析</span>
     </div>
     <div class="trafficVideo-container">
       <div class="trafficVideo-container-left" v-loading="loading&&taskId" element-loading-background="rgba(0, 0, 0, 0.8)">
@@ -692,6 +692,9 @@
         }
 
       },
+      jumpPage(key) {
+        this.$router.push(key);
+      },
       countNumber(type) {
 
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
@@ -769,6 +772,8 @@
     height: 40px;
     margin: 10px 10px;
     background: rgb(53, 54, 68);
+    padding-left: 25px;
+    line-height: 40px;
   }
 
   .trafficVideo-container-left {
