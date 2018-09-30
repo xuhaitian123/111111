@@ -130,7 +130,7 @@ import { Message } from 'element-ui';
       },
       setStorageInfo(data) {
         this.setCookie("userToken", data.data.token, 7);
-        this.setCookie("username", data.data.user_name, 7);
+        this.setCookie("username", data.data.username, 7);
       },
 
     }

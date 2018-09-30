@@ -239,7 +239,7 @@
 
             <div class="signal_road_score">
               <div style="font-size: 14px;margin-top: 10px">交叉口交通运行评分</div>
-              <road-gauge :data="roadNetCongestionScore.toFixed(0)" :color="getSaturationColor(roadNetCongestionScore)" class="Dashboard_card_roadGauge"></road-gauge>
+              <road-gauge :data="roadNetCongestionScore.toFixed(0)" :color="scoreColor(roadNetCongestionScore)" class="Dashboard_card_roadGauge"></road-gauge>
             </div>
 
             <!--<div>-->
@@ -1734,6 +1734,15 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
       setFlowOrDelay(val) {
         this.currentTabs = val;
       },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
+        }
+      },
       getRoadFlow(key) {
         let text = '';
         switch (key) {
@@ -1821,8 +1830,6 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         let d8 = document.getElementById('222_red').offsetWidth;
         let d8S = document.getElementById('222_yellow').offsetWidth;
         this.currentColor = {};
-        console.log(left)
-        console.log(width122)
         if (left <= width111) {
           if (left <= d1) {
             this.currentColor[this.signalPlan['111'].key] = 'green';
