@@ -177,7 +177,7 @@
                   placeholder="选择日期">
                 </el-date-picker>
               </div>
-              <div style="position: absolute;top: 15px;right: 40px">
+              <div class="data_views" style="position: absolute;top: 15px;right: 40px">
 
                 <el-select v-model="currentName" size="mini" class="area_titleSelect" placeholder="请选择"
                            :popper-append-to-body="false">
@@ -845,3 +845,9 @@
 
   }
 </script>
+<style>
+  .data_views .el-button--info{
+    background: #54576a;
+    border: none;
+  }
+</style>
