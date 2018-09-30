@@ -103,7 +103,7 @@
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">路口</div>
-                    <el-select v-model="week_date_picker_node" size="mini" class="area_titleSelect min" placeholder="请选择"
+                    <el-select v-model="week_date_picker_node" size="mini" class="area_titleSelect first_min" placeholder="请选择"
                                :popper-append-to-body="false">
                       <el-option
                         v-for="item in nodes"
@@ -115,7 +115,7 @@
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">车辆类型</div>
-                    <el-select v-model="filter_car_type" size="mini" class="area_titleSelect min" placeholder="请选择"
+                    <el-select v-model="filter_car_type" size="mini" class="area_titleSelect first_min" placeholder="请选择"
                                :popper-append-to-body="false">
                       <el-option
                         v-for="item in car_style"
@@ -903,17 +903,20 @@
 
 </style>
 <style>
-  .min .el-input__inner,
-  .min .el-select-dropdown__item {
+  .first_min .el-input__inner,
+  .first_min .el-select-dropdown__item {
     font-size: 11px !important;
     text-align: left;
     /*background-color: #545768;*/
     /*border: 1px solid #545768;*/
-    background-color: #545768;
+    /*background-color: #545768;*/
     border: none;
   }
+  .first_min .el-input__inner{
+    background-color: #545768;
+  }
 
-  .min input {
+  .first_min input {
     padding-left: 10px
   }
 </style>
