@@ -339,7 +339,6 @@
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
-        this.getCrossAllLinks();
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
