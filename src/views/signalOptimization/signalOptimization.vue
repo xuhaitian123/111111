@@ -361,8 +361,12 @@
       heatChart_map_right_select() {
         this.road_24h_loading = true;
         var time = new Date(this.road_24h_date[0])
+        var end = new Date(this.road_24h_date[1]);
+
         var startTime = this.formatDate(new Date(time.getTime()), 'yyyyMMdd')
-        var endTime = this.formatDate(new Date(time.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
+        var endTime = this.formatDate(new Date(end.getTime()), 'yyyyMMdd')
+
+        // var endTime = this.formatDate(new Date(time.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
 
 
         this.$http.get('/roadDataAnalysis/24HourCorridorCongestionOfDayByRoadName?roadName=' + this.road_24h_picker_node + '&beginDay=' + startTime + '&endDay=' + endTime + '&token=' + this.getHeader().token).then((result) => {
@@ -389,9 +393,16 @@
       },
       pie_map_select() {
         this.road_ratio_loading = true;
+
+
+
         var time = new Date(this.road_ratio_date[0])
+        var end = new Date(this.road_ratio_date[1]);
+
         var startTime = this.formatDate(new Date(time.getTime()), 'yyyyMMdd')
-        var endTime = this.formatDate(new Date(time.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
+        var endTime = this.formatDate(new Date(end.getTime()), 'yyyyMMdd')
+
+        // var endTime = this.formatDate(new Date(time.getTime() + 1000 * 60 * 60 * 24), 'yyyyMMdd')
         // var beginTime =this.formatDate(flow_hour_data, 'yyyyMMdd');
 
         this.$http.get('roadDataAnalysis/getAvgCorridorCongestionOfDaysByRoadName?current=false&beginDay=' + startTime + '&endDay=' + endTime + '&roadName=' + this.road_ratio_node + '&token=' + this.getHeader().token)
