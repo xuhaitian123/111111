@@ -294,10 +294,10 @@
 
 
         road_24h_picker_node: '梁红玉路',
-        road_24h_date: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyyMMdd'), this.formatDate(new Date(), 'yyyyMMdd')],
+        road_24h_date: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy/MM/dd'), this.formatDate(new Date(), 'yyyy/MM/dd')],
 
         road_ratio_node: '梁红玉路',
-        road_ratio_date: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyyMMdd'), this.formatDate(new Date(), 'yyyyMMdd')],
+        road_ratio_date: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy/MM/dd'), this.formatDate(new Date(), 'yyyy/MM/dd')],
 
         map: {
           '梁红玉路': {
