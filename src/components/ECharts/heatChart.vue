@@ -73,7 +73,7 @@
           var i = 0;
           var data  = []
           for(var i=0;i<1;i++){
-            data.push([i,''])
+            data.push([])
           }
           this.heat_data =  [data,data.map(item=>item)]
         },200)
@@ -87,11 +87,12 @@
         let data = [];
         var linkNumber = this.heat_data[0].map(()=>1) ;
         let weeks = [0];
+        if(linkNumber.length>1){
+          linkNumber.forEach((item,index)=>{
+            data.push([0, index+1, ''])
+          })
+        }
 
-        linkNumber.forEach((item,index)=>{
-
-          data.push([0, index+1, 0])
-        })
         do {
           if(i<=288 ){
 
@@ -111,6 +112,7 @@
           weeks.push(i)
           i++
         } while (i <= 718)
+        console.log(data)
         let options = {
           tooltip: {
             position: 'top',
