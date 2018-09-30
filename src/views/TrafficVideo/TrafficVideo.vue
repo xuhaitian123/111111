@@ -186,7 +186,7 @@
             </div>
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
-                行人
+                机动车
                 <img @click="countNumber('bike')" v-if="numberOfCarModal.numberOfModal.bike.status"
                      class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
                 <img @click="countNumber('bike')" v-if="!numberOfCarModal.numberOfModal.bike.status"
