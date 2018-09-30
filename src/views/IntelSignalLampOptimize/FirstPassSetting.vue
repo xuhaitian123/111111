@@ -192,10 +192,10 @@
               ]
           },
           nodes:[],
-          week_date_picker_node:'沈坤路樱桃园路路口',
+          week_date_picker_node:'梁红玉路关天培路路口',
           car_style:[{type:'Police',name:'警卫车辆'},{type:'Police_1',name:'警务车辆'},{type:'LeadingVehicle',name:'领导车辆'},{type:'RescueVehicle',name:'救护车'},{type:'Bus',name:'公交车'}],
           open_road_record_List:[],
-          current_road:'人民路-珠海路',
+          current_road:'沈坤路樱桃园路路口',
           start_open_first_pass:true,
           is_global:false,
           filter_carID:'000090',
@@ -294,10 +294,15 @@
         },
         getAllRoadInfo(){
           var self = this;
+          var road_info =[]
           this.$http.get('/index/nodes' + '?token=' + this.getHeader().token)
             .then((response) => {
               self.nodes = response.data.nodes
-              console.log(this.nodes)
+              var roadInfo = (response.data).nodes
+              for(var i= 0 ;i<roadInfo.length;i++){
+                road_info.push({node_id:roadInfo[i].node_id,road_name:roadInfo[i].node_name});
+              }
+              self.open_road_record_List = road_info;
               self.showBMapPoint(response.data.nodes);
               return response.data;
             })
@@ -333,22 +338,22 @@
               open_li_status = " class='open-road-li-color'";
               close_window = " onclick='close_map_window()'"
             }
-            var title = "\"" +e.target.title + "\"";
-            var sContent = "<div style=''  class='box-content'>" +
-              "<div class='control-button'>" +
-              "<div class="+open_class+" onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
-              "<div class="+close_class+" onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
-              +"</div>"+
-              "<div class='select-options'><ul>" +
-              "<li"+open_li_status+close_window+">Default</li>"+
-              "<li"+open_li_status+close_window+">Minimize Delay</li>"+
-              "<li"+open_li_status+close_window+">Minimize</li>"+
-              "</ul>" +
-              "</div>"
-              +"</div>";
-
-            var infoBox = new BMap.InfoWindow(sContent);
-            map.openInfoWindow(infoBox, e.target.point)
+            // var title = "\"" +e.target.title + "\"";
+            // var sContent = "<div style=''  class='box-content'>" +
+            //   "<div class='control-button'>" +
+            //   "<div class="+open_class+" onclick='open_map_road_icon(" + e.target.id + "," +title +")'>开启</div>"+
+            //   "<div class="+close_class+" onclick='close_map_road_icon(" + e.target.id + "," +title +")'>关闭</div>"
+            //   +"</div>"+
+            //   "<div class='select-options'><ul>" +
+            //   "<li"+open_li_status+close_window+">Default</li>"+
+            //   "<li"+open_li_status+close_window+">Minimize Delay</li>"+
+            //   "<li"+open_li_status+close_window+">Minimize</li>"+
+            //   "</ul>" +
+            //   "</div>"
+            //   +"</div>";
+            //
+            // var infoBox = new BMap.InfoWindow(sContent);
+            // map.openInfoWindow(infoBox, e.target.point)
             self.current_road = e.target.title;
           });
           return marker;
