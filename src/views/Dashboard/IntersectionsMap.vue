@@ -290,7 +290,7 @@
             <div class="Node_right">
               <el-tabs type="border-card" style="height: 400px;background: #353644">
                 <el-tab-pane label="当前信号灯配时方案" v-loading="loadingSignal"
-                             element-loading-background="rgba(0, 0, 0, 0.8)">
+                             element-loading-background="rgba(0, 0, 0, 0.8)" style="height: 350px">
                   <el-row style="padding: 40px 20px 0;text-align: center">
                     <el-col :span="3" v-for="(value,index) in currentSignal" :key="index">
                       <div class="" style="margin-bottom: 5px">{{signalText[value.key]}}</div>
@@ -1699,7 +1699,11 @@ l-79 3 0 39 c0 25 -4 39 -12 38 -7 0 -53 -24 -103 -53z"/>
         let url = '/nodeData/getNodeDataD22ByNodeId?nodeId=' + this.$route.params.id + '&token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
-          this.roadNetCongestionScore = response.data.value;
+          if (response.data.value === 0) {
+            this.roadNetCongestionScore = 100;
+          } else {
+            this.roadNetCongestionScore = response.data.value;
+          }
         })
       },
       getNodeAllDataD13ByNodeId(startTime, endTime) {  //交叉口排队长度

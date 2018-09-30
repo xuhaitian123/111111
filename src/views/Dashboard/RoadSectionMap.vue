@@ -335,7 +335,7 @@
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
       },
       getAllData(startTime, endTime) {
-        this.getAllLinkId();
+        this.getAllLinkId(startTime, endTime);
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
@@ -415,7 +415,7 @@
             this.loading = false;
           } else {
             num += 1;
-            this.getLinksData(links, num)
+            this.getLinksData(links, num, startTime, endTime)
           }
         })
       },
@@ -435,7 +435,7 @@
               resolve(direction);
             } else {
               i += 1;
-              this.getLink(direction, i, resolve);
+              this.getLink(direction, i, resolve, startTime, endTime);
             }
           })
         });
