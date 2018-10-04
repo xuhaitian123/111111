@@ -553,6 +553,16 @@
                 this.imageList[startTime].endTime = new Date()
                 this.imageList[startTime].isLoading = 1
                 // }
+              }).catch(()=>{
+                if (!this.imageList[startTime]) return;
+                this.imageList[startTime].imageList = []
+                this.imageList[startTime].index = -1
+                this.imageList[startTime].preImage = []
+                this.imageList[startTime].flow = flow
+                this.imageList[startTime].endTime = new Date()
+                this.imageList[startTime].isLoading = 1
+
+
               })
             })
         })

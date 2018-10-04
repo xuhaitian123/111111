@@ -2,7 +2,7 @@
   <div>
     <div class="area_titleCascader">
       <div class="area_title_text">
-        <img src="../../../static/image/header/policeBadge.png" class="policeBadge"/><span class="text">淮安市淮安区交通大数据研判平台</span>
+        <img src="../../../static/image/header/policeBadge.png" class="policeBadge"/><span class="text">淮安市淮安区智能交通大数据研判平台</span>
       </div>
       <div class="area_select_container">
         <div>
@@ -342,7 +342,7 @@
           },
           {
             name: "淮安",
-            sub: [{name: "请选择"}, {name: "清河区"}, {name: "清浦区"}, {name: "楚州区"}, {name: "淮安区", available:  true }, {name: "涟水县"}, {name: "洪泽县"}, {name: "金湖县"}, {name: "盱眙县"}, {name: "其他"}],
+            sub: [{name: "请选择"}, {name: "淮阴区"}, {name: "清江浦区"}, {name: "淮安区", available:  true }, {name: "洪泽区"}, {name: "开发区"}, {name: "涟水县"}, {name: "盱眙县"}, {name: "金湖县"}],
             type: 0,
             available:  true
           },

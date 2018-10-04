@@ -47,12 +47,12 @@
         </div>
         <div class="countent">
           <div class="count">
-            <div class="car-count">汽车保有量</div>
-            <div class="car-data"><span class="count-size">{{showInfo.vehicle_par}}</span><span class="unit">万辆</span>
+            <div class="car-count">民用汽车拥有量</div>
+            <div class="car-data"><span class="count-size">{{showInfo.vehicle_par}}</span><span class="unit">辆</span>
             </div>
           </div>
           <div class="monitor">
-            <div class="monitor-count">监控数量</div>
+            <div class="monitor-count">系统监控数量</div>
             <div class=" monitor-data"><span class="count-size">{{showInfo.camera_num}}</span><span
               class="unit">个</span></div>
           </div>
