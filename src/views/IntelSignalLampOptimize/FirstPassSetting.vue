@@ -93,7 +93,7 @@
                       v-model="week_data_picker_1"
                       type="daterange"
                       size="mini"
-                          format="yyyy/MM/dd"
+                      format="yyyy/MM/dd"
                       value-format="yyyy/MM/dd"
                       range-separator="至"
                       placeholder="选择日期">

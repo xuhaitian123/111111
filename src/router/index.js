@@ -15,7 +15,6 @@ import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
 import DataAnalyse from '../views/IntelSignalLampOptimize/dataAnalyse'
 
-
 import  test  from  '../views/layout/test'
 
 Vue.use(Router)
