@@ -182,7 +182,7 @@
         getNodesInfoDate(cb){
           this.$http.get('/static/data.json').then((nodesInfo)=>{
             this.nodesInfo =  nodesInfo.data;
-
+            console.log(nodesInfo)
             this.currentNodeInfo = this.nodesInfo[Object.keys(this.nodesInfo)[0]]
             this.road_value =   this.currentNodeInfo.name
             cb()

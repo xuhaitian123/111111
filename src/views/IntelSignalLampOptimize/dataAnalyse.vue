@@ -323,7 +323,6 @@
           this.RoadCondition.after = all_data.score_data.after
           this.RoadCondition.before = all_data.score_data.before
           this.PriorityAccess = all_data.access_system_data
-
           this.loading_alarm= false;
             this.loading_speed=false;
             this.loading_flow=false;
