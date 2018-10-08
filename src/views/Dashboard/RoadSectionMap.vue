@@ -238,7 +238,7 @@
                     </div>
 
                     <road-gauge :data="corridorScore.toFixed(0)" style="height: 180px;padding-top: 80px"
-                                color="#c57426"></road-gauge>
+                                :color="scoreColor(corridorScore)"></road-gauge>
                   </div>
                 </el-col>
                 <el-col :span="14">
@@ -324,7 +324,6 @@
         allScore: [],
         scoreName: [],
         corridorScore: 0,
-        crossLinks: [],
       }
     },
     mounted() {
@@ -336,29 +335,21 @@
         window.congestionMap.centerAndZoom(new window.BMap.Point(this.$route.query.lng || 119.173971, this.$route.query.lat || 33.51613), 18);
       },
       getAllData(startTime, endTime) {
-        this.getAllLinkId();
+        this.getAllLinkId(startTime, endTime);
         this.getLinkDelayDoubleDirection(startTime, endTime);
         this.getAllDelay(startTime, endTime);
         this.getLinkByNodeScore(startTime, endTime);
-        this.getCrossAllLinks();
       },
       setUrlDate(startTime, endTime) {
         return (startTime && endTime) ? '&start=' + startTime + '&end=' + endTime + '&current=false' : '&current=true';
       },
-      getCrossAllLinks() {
-        this.$http.get('/index/roadCrossAllLinksByLinkId?linkId=' + this.$route.params.id + '&token=' + this.getHeader().token)
-          .then((response) => {
-            console.log(response.data)
-            this.crossLinks = response.data.cross_links;
-          })
-      },
-      getLinkByNodeScore() {
+      getLinkByNodeScore(startTime, endTime) {
         this.loadingNode = true;
         this.$http.get('trafficCongestion/roadAvgDelay?linkId=' + this.$route.params.id + '&current=true&token=' + this.getHeader().token)
           .then((response) => {
             let linkName = response.data.link.link_name;
-            let url = '/roadDataAnalysis/getCorridorCongestionSourceByRoadName?token=' + this.getHeader().token +
-              '&roadName=' + linkName + '&current=true';
+            let url = '/roadDataAnalysis/getCorridorCongestionSourceByRoadName?token=' + this.getHeader().token + '&roadName=' + linkName;
+            url += this.setUrlDate(startTime, endTime);
             this.$http.get(url).then((result) => {
               if (result.data.value[linkName]) {
                 this.allScore = Object.values(result.data.value[linkName]);
@@ -369,7 +360,6 @@
                   num += (val[0].value + val[1].value);
                 });
                 this.corridorScore = num / (this.allScore.length * 2);
-                console.log(this.corridorScore)
               }
               this.loadingNode = false;
             });
@@ -425,7 +415,7 @@
             this.loading = false;
           } else {
             num += 1;
-            this.getLinksData(links, num)
+            this.getLinksData(links, num, startTime, endTime)
           }
         })
       },
@@ -445,7 +435,7 @@
               resolve(direction);
             } else {
               i += 1;
-              this.getLink(direction, i, resolve);
+              this.getLink(direction, i, resolve, startTime, endTime);
             }
           })
         });
@@ -489,6 +479,15 @@
           return "#c9c9cc"
         }
       },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
+        }
+      },
       getRoadAvgDelayColor(num) {
         if (num <= 30) {
           return "#green"
@@ -511,7 +510,6 @@
           }
         } else if (val < this.startTime) {
           this.getAllData(val, val + 5 * 60 * 1000);
-          this.setRoadNetStatus(this.currentRoadNet, val, val + 5 * 60 * 1000);
           this.startTime = 0;
         } else {
           this.startTime = val;

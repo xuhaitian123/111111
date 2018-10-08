@@ -26,9 +26,14 @@
               <div class="passward-name">密码</div>
             </div>
             <div class="save_password">
-              <div class="save_password_el">
-                <input type="checkbox" class="square" v-model="isRecordUser" @change="save_password"/><span
-                style="color: #ffffff;font-size: 13px">记住账号</span>
+
+              <div class="save_password_el"
+                   @click="save_password">
+
+                <div class="empty-retangle">
+                  <div class="fill-retangle" v-if="isRecordUser"></div>
+                </div>
+                <span>保存密码</span>
               </div>
             </div>
             <button class="login-button" @click="login">登录</button>
@@ -56,20 +61,19 @@ import { Message } from 'element-ui';
     },
     methods: {
       get_username() {
-        var username = window.localStorage.getItem("username") || "";
-        this.username = username;
+        this.username = window.localStorage.getItem("username") || "";
         this.isRecordUser = !!this.username;
         // $(".user-text").val(username)
       },
       save_password() {
-        // if(this.checked ==true){
-        //   this.checked = false
-        // }else {
-        //   this.checked =true
-        // }
+        if (this.isRecordUser === true) {
+          this.isRecordUser = false
+        } else {
+          this.isRecordUser = true
+        }
       },
       login() {
-        var self = this;
+        let self = this;
         if (this.isRecordUser && this.username) {
           window.localStorage.setItem("username", this.username)
         }
@@ -89,48 +93,10 @@ import { Message } from 'element-ui';
             }
           })
 
-        // this.$http.axios.post('/login', {
-        //   username: username,
-        //   password: password
-        // })
-        //   .then(function (success) {
-        //     if(self.checked == true){
-        //       window.localStorage.setItem("username",username)
-        //     }
-        //     self.$message({
-        //       message: '恭喜你,登陆成功',
-        //       type: 'success',
-        //       duration:2000
-        //     });
-        //     console.log("登录成功")
-        //     self.$router.push({path: '/'});
-        //   })
-        //   .catch(function (error) {
-        //     if(self.checked == true){
-        //       console.log(self.checked)
-        //       window.localStorage.setItem("username",username)
-        //     }
-        //     self.$message.error('用户名或密码错误');
-        //   });
-        // if(username == 123  && password== 123){
-        //   if(self.checked == true){
-        //     window.localStorage.setItem("username",username)
-        //   }
-        //   self.$message({
-        //     message: '恭喜你,登陆成功',
-        //     type: 'success',
-        //     duration:2000
-        //   });
-        //   self.$router.push({path: '/main/map'});
-        // }
-        // else {
-        //   self.$message.error('用户名或密码错误');
-        // }
-
       },
       setStorageInfo(data) {
         this.setCookie("userToken", data.data.token, 7);
-        this.setCookie("username", data.data.user_name, 7);
+        this.setCookie("username", data.data.username, 7);
       },
 
     }
@@ -142,11 +108,11 @@ import { Message } from 'element-ui';
     height: 420px;
     width: 400px;
     margin: auto;
-    background-color: rgba(53,61,79,0.7);
+    background-color: rgba(53, 61, 79, 0.7);
     box-shadow: 5px 5px 5px #222;
   }
 
-  .container-block{
+  .container-block {
     position: absolute;
     width: 100%;
     margin: auto;
@@ -159,6 +125,22 @@ import { Message } from 'element-ui';
 
   .content-img {
     height: 40px;
+  }
+
+  .empty-retangle {
+    width: 11px;
+    height: 11px;
+    border-radius: 1px;
+    border: 1px solid #ed894b;
+    margin: 2.5px 5px 0 0;
+  }
+
+  .fill-retangle {
+    width: 7px;
+    height: 7px;
+    border-radius: 1px;
+    background-color: #ed894b;
+    margin: 2px;
   }
 
   .container-login {
@@ -257,7 +239,7 @@ import { Message } from 'element-ui';
     padding-top: 10px;
     height: 16px;
     color: #94949a;
-
+    font-size: 16px;
   }
 
   span {

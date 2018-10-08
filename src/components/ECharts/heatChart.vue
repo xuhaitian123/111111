@@ -112,7 +112,6 @@
           weeks.push(i)
           i++
         } while (i <= 718)
-        console.log(data)
         let options = {
           tooltip: {
             position: 'top',

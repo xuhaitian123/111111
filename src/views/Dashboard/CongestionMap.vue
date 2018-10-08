@@ -5,7 +5,7 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>拥堵地图</span>
+              <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>拥堵地图</span>
             <div style="float: right; padding: 3px 0">
               <i class="iconfont icon-fangda" @click="jumpPage('/main/dashboard')"></i>
               <i class="iconfont icon-shuxian"></i>
@@ -48,7 +48,7 @@
 
                 <el-row class="">
                   <el-col :span="12">
-                    <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="getRoadAvgDelayColor(roadNetCongestionScore)"></road-gauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :data="roadNetCongestionScore.toFixed(0)" :color="scoreColor(roadNetCongestionScore)"></road-gauge>
                   </el-col>
                   <el-col :span="12">
                     <div style="border-left: 2px solid #414251">
@@ -242,7 +242,11 @@
         let url = '/trafficCongestion/roadNetCongestionScore?token=' + this.getHeader().token;
         url += this.setUrlDate(startTime, endTime);
         this.$http.get(url).then((response) => {
-          this.roadNetCongestionScore = response.data.value;
+          if(response.data.isMock === 1 && response.data.value === 0){
+            this.roadNetCongestionScore = 100;
+          }else {
+            this.roadNetCongestionScore = response.data.value;
+          }
         })
       },
       getAllNodeCongestionAlarm(startTime, endTime) {  //交叉口报警信息
@@ -340,6 +344,15 @@
           return "中";
         } else if (val > 80) {
           return "重";
+        }
+      },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
         }
       },
       getNewTime(val) {

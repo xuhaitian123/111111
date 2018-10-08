@@ -2,7 +2,7 @@
   <div v-loading="isLoadingInfo" element-loading-background="rgba(0, 0, 0, 0.8)">
     <Area></Area>
     <div class="trafficVideo-container-header">
-
+      <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>视频监控与分析</span>
     </div>
     <div class="trafficVideo-container">
       <div class="trafficVideo-container-left" v-loading="loading&&taskId" element-loading-background="rgba(0, 0, 0, 0.8)">
@@ -125,7 +125,7 @@
           <div class="trafficVideo-video-header">
             <div class="trafficVideo-video-header-left">{{nodeLinkName[0]}}* {{nodeLinkName[1]}}</div>
             <div style="width: 20px;height: 21px">
-              <warn-popover :content="'可查看该路口各进道口小客车、重型车、行人流量。'"></warn-popover>
+              <warn-popover :content="'可查看该路口各进道口小客车、重型车、非机动车流量。'"></warn-popover>
             </div>
 
           </div>
@@ -188,7 +188,7 @@
             </div>
             <div class="trafficVideo-row">
               <div class="trafficVideo-li">
-                机动车
+                非机动车
                 <img @click="countNumber('bike')" v-if="numberOfCarModal.numberOfModal.bike.status"
                      class="trafficVideo-action-img" src="/static/image/trafficVideo/25.png">
                 <img @click="countNumber('bike')" v-if="!numberOfCarModal.numberOfModal.bike.status"
@@ -295,7 +295,7 @@
       this.getNodeList().then(()=>{
         this.nodeId = Number(this.$route.params.nodeId.toString())
         this.getNodeInfo(this.nodeId)
-        this.getBusRate()
+        // this.getBusRate()
       })
 
 
@@ -308,19 +308,22 @@
       // clearInterval(this.timer)
     },
     methods: {
-      getBusRate(link_id){
-        console.log(this.linkId)
+      getBusRate(startTime){
         if(!this.linkId) return
-        this.$http.get('/nodeData/getNodeDataD8ByLinkId?linkId='+ this.linkId+'&current=true' + '&token=' + this.getHeader().token).then(rate => {
+        var endTime = parseInt(startTime/(5*60*1000)) * 5*60*1000;
+        var beginTime =  (parseInt(startTime/(5*60*1000))-1) * 5*60*1000;
+        // var url = '/nodeData/getNodeDataD8ByLinkId?linkId='+ this.linkId+'&current=true' + '&token=' + this.getHeader().token
+        // if(startTime){
+           var  url  = '/nodeData/getNodeDataD8ByLinkId?linkId='+ this.linkId+'&current=false'+"&start="+ beginTime+ '&end='+ endTime + '&token=' + this.getHeader().token
+        // }
+        this.$http.get(url).then(rate => {
           this.ratio = parseInt(rate.data.value * 100)
-          console.log(rate)
-          // this.busRate =
         })
       },
       changeNode() {
         this.taskId =null;
         this.ratio = null;
-        this.loadingTime = true
+        this.loadingTime = null
         this.clearImage();
         this.getNodeInfo(this.nodeId)
 
@@ -344,7 +347,8 @@
              var taskInfo = result[1].find(movement => {
               return movement.camera_name.substr(-1, 1) === link.link_direction
             });
-            link.taskId =  taskInfo ? taskInfo.camera_id : undefined;
+            link.taskId =  taskInfo ? taskInfo.camera_id : undefined
+            console.log(link.taskId);
             return link
           });
           var nodeInfo = {};
@@ -383,14 +387,17 @@
 
         let startTime = time - this.delay_show;
 
+
+        if((this.ratio&&time%5000===0)|| (!this.ratio&&time%1000===0)){
+          if (this.loadingTime !==  startTime){
+            this.getBusRate(startTime)
+          }
+
+        }
         if (time % 1000 === 0) {
           this.loadImage(startTime);
-          this.loading = startTime
+          this.loadingTime = startTime
         }
-        if((this.ratio&&time%5000===0)|| (!this.ratio&&time%1000==0)){
-          this.getBusRate()
-        }
-
         let showTime = startTime - this.delay_show;
         this.showImage(Math.floor((showTime) / 1000) * 1000, millSecond)
       },
@@ -399,16 +406,12 @@
         var prevloadingTime = startTime + this.prevloading;
         for (var time = startTime; time < prevloadingTime; time += 1000) {
 
-
           if (this.imageList[time] && !this.imageList[time].isLoading) {
             this.isPauseTime = true;
-
           }
-
           if (!this.imageList[time] || !this.imageList[time].isLoading || this.imageList[time].imageList.length === 0) {
             return this.loading = Math.random()
           }
-
         }
         this.isPauseTime = false
 
@@ -451,6 +454,7 @@
             (images) => {
               images = images.data
               if (images.length === 0) {
+                // console.log('http://47.97.165.170:6001/frames?task_id='+ this.taskId + '&start=' + startTime + '&end=' + endTime + '&mask=1&flag=0')
                 return this.imageList[startTime] = {isLoading: 1, imageList: [], index: -2, startTime: new Date()};
               }
               var originUrl = images.map(item => {
@@ -549,6 +553,16 @@
                 this.imageList[startTime].endTime = new Date()
                 this.imageList[startTime].isLoading = 1
                 // }
+              }).catch(()=>{
+                if (!this.imageList[startTime]) return;
+                this.imageList[startTime].imageList = []
+                this.imageList[startTime].index = -1
+                this.imageList[startTime].preImage = []
+                this.imageList[startTime].flow = flow
+                this.imageList[startTime].endTime = new Date()
+                this.imageList[startTime].isLoading = 1
+
+
               })
             })
         })
@@ -688,6 +702,9 @@
         }
 
       },
+      jumpPage(key) {
+        this.$router.push(key);
+      },
       countNumber(type) {
 
         this.numberOfCarModal.numberOfModal[type].status = !this.numberOfCarModal.numberOfModal[type].status
@@ -765,6 +782,8 @@
     height: 40px;
     margin: 10px 10px;
     background: rgb(53, 54, 68);
+    padding-left: 25px;
+    line-height: 40px;
   }
 
   .trafficVideo-container-left {

@@ -5,7 +5,7 @@
       <el-col>
         <el-card shadow="never" :body-style="{ padding: '0px' }" class="Dashboard_box_card">
           <div class="Dashboard_clearfix">
-            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPageToMain()"></i>智能信号灯控制</span>
+            <span><i class="el-icon-arrow-left" style="margin-right: 10px" @click="jumpPage('/main/dashboard')"></i>智能信号灯控制</span>
             <div class="nav-right-style">
               <i class="iconfont icon-webicon03"></i>
             </div>
@@ -96,12 +96,14 @@
                       format="yyyy/MM/dd"
                       value-format="yyyy/MM/dd"
                       range-separator="至"
-                      placeholder="选择日期">
+                      placeholder="选择日期"
+                      @change="pick_date"
+                      :picker-options="pickerOptions2">
                     </el-date-picker>
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">路口</div>
-                    <el-select v-model="week_date_picker_node" size="mini" class="area_titleSelect min" placeholder="请选择"
+                    <el-select v-model="week_date_picker_node" size="mini" class="area_titleSelect first_min" placeholder="请选择"
                                :popper-append-to-body="false">
                       <el-option
                         v-for="item in nodes"
@@ -113,7 +115,7 @@
                   </div>
                   <div class="show-filter-item">
                     <div class="item-key-intro">车辆类型</div>
-                    <el-select v-model="filter_car_type" size="mini" class="area_titleSelect min" placeholder="请选择"
+                    <el-select v-model="filter_car_type" size="mini" class="area_titleSelect first_min" placeholder="请选择"
                                :popper-append-to-body="false">
                       <el-option
                         v-for="item in car_style"
@@ -175,6 +177,11 @@
       },
       data() {
         return {
+          pickerOptions2:{
+            disabledDate(time) {
+              return time.getTime() > Date.now() - 8.64e6
+            },
+          },
           week_data_picker_1: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24), 'yyyy-MM-dd'), this.formatDate(new Date(), 'yyyy-MM-dd')],
           road_name:'人民路-珠海路',
           radio2: 3,
@@ -259,6 +266,27 @@
         this.getAllRoadInfo();
       },
       methods:{
+        pick_date(date){
+          var self = this
+          var start_time = new Date(date[0])
+          var end_time = new Date(date[1])
+          var time_difference = end_time-start_time
+          console.log(end_time)
+          if(time_difference <= 6*24*60*60*1000){
+          }
+          else {
+           var  new_end_time = start_time.getTime() +6*24*60*60*1000
+           var new_end_time_typeof_data= self.time_stamp_to_data_pick_date(new_end_time)
+            self.week_data_picker_1=[date[0],new_end_time_typeof_data]
+            self.$message({
+              message: '时间选择上限为7天,已超出，为您自动选择',
+              type: 'warning'
+            });
+          }
+        },
+        jumpPage(key) {
+          this.$router.push(key);
+        },
         get_car_type(id){
           var type = this.car_style
           for(var i=0 ;i<type.length;i++){
@@ -282,6 +310,13 @@
           var m = date.getMinutes();
           var s = date.getSeconds();
           return (M+D+h+m);
+        },
+        time_stamp_to_data_pick_date(time_stamp){
+          var date = new Date(time_stamp);
+          var Y = date.getFullYear() + '/';
+          var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '/';
+          var D = (date.getDate()+1 < 10 ? '0'+date.getDate() : date.getDate()) ;
+          return (Y+M+D);
         },
         get_road_name(index,road_info){
           for(var i =0; i<road_info.length;i++){
@@ -313,7 +348,7 @@
           var pt = new BMap.Point(node.long, node.lat);
           //
           var isExist = this.findRoadIsOpen(node.node_id,node.node_name);
-          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/red.png"
+          var str_icon_path = isExist > -1 ? "/static/image/map/63.png" : "/static/image/map/close.png"
           var myIcon = new BMap.Icon(str_icon_path, new BMap.Size(40,40));
           var marker = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
           marker.title = node.node_name;
@@ -419,6 +454,8 @@
         },
         change_start_open_first_pass_status:function () {
           this.start_open_first_pass = !this.start_open_first_pass;
+          console.log(this.start_open_first_pass)
+
         },
         change_is_global_status:function () {
           this.is_global = !this.is_global;
@@ -428,8 +465,9 @@
           console.log(this.week_data_picker_1[0])
           var a =this.week_data_picker_1[0]
           var start_time = self.data_to_time_stamp(a)
-          var end_time = this.data_to_time_stamp((self.week_data_picker_1)[1])
-          console.log(this.week_date_picker_node)
+          var end_time = this.data_to_time_stamp((self.week_data_picker_1)[1])+24*60*60-1
+          console.log(start_time)
+          console.log(end_time)
           this.$http.get('/priorityVehicle/getPriorityVehicleData?startTime='+start_time+'&endTime='+end_time+'&cross='+this.week_date_picker_node+'&type='+this.filter_car_type+
             '&token=' + this.getHeader().token).then((result) => {
             this.filter_all_record_info = result.data
@@ -868,17 +906,20 @@
 
 </style>
 <style>
-  .min .el-input__inner,
-  .min .el-select-dropdown__item {
+  .first_min .el-input__inner,
+  .first_min .el-select-dropdown__item {
     font-size: 11px !important;
     text-align: left;
     /*background-color: #545768;*/
     /*border: 1px solid #545768;*/
-    background-color: #545768;
+    /*background-color: #545768;*/
     border: none;
   }
+  .first_min .el-input__inner{
+    background-color: #545768;
+  }
 
-  .min input {
+  .first_min input {
     padding-left: 10px
   }
 </style>
