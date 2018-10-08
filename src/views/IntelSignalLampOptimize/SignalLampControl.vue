@@ -35,7 +35,7 @@
                   <div class="use-intel-score-text">未启用智能控制评分</div>
                   <!--<road-gauge :data="unuse_intel_score" class="Dashboard_card_roadGauge"></road-gauge>-->
                   <div class="use-intel-score-image">
-                    <road-gauge class="Dashboard_card_roadGauge" :id="'before'" :data="currentNodeInfo.beforeValue" :color="getRoadFlowColor(currentNodeInfo.beforeValue)"></road-gauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :id="'before'" :data="currentNodeInfo.beforeValue" :color="scoreColor(currentNodeInfo.beforeValue)"></road-gauge>
                     <!--<div class="half-circle">-->
                       <!--<div class="intel-score-number red-text-color">{{currentNodeInfo.beforeValue}}</div>-->
                     <!--</div>-->
@@ -44,7 +44,7 @@
                 <div class="use-intel-score">
                   <div class="use-intel-score-text text-color">启用智能控制评分</div>
                   <div class="use-intel-score-image">
-                    <road-gauge class="Dashboard_card_roadGauge" :id="'after'" :data="currentNodeInfo.afterValue" :color="getRoadFlowColor(currentNodeInfo.afterValue)"></road-gauge>
+                    <road-gauge class="Dashboard_card_roadGauge" :id="'after'" :data="currentNodeInfo.afterValue" :color="scoreColor(currentNodeInfo.afterValue)"></road-gauge>
                     <!--<div class="half-circle">-->
                       <!--<div class="intel-score-number green-text-color">{{currentNodeInfo.afterValue}}</div>-->
                     <!--</div>-->
@@ -166,6 +166,15 @@
           this.showEchartColumn();
           this.showDayLineChart(0);
 
+        },
+        scoreColor(val) {
+          if (val <= 60) {
+            return "red";
+          } else if (val > 60 && val <= 80) {
+            return "#c8772a";
+          } else if (val > 80) {
+            return "green";
+          }
         },
         jumpPage(key) {
           this.$router.push(key);

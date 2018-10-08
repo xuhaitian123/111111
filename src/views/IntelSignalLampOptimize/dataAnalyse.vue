@@ -16,11 +16,11 @@
                v-loading="loading_score"
                element-loading-background="rgba(51, 54, 67, 1)">
           <div id="before_road_net_score" style="height: 120px;width: 170px;position: relative">
-            <RoadCondition :id ='"before"':RoadCondition = RoadCondition.before :color='"#B3424C"'></RoadCondition>
+            <RoadCondition :id ='"before"':RoadCondition = RoadCondition.before :color="scoreColor(RoadCondition.before)"></RoadCondition>
             <div style="position: absolute;top:90px;left: 28px">优化前路网总评分</div>
           </div>
           <div id="after_road_net_score" style="height: 120px;width: 170px;margin-left: 90px;position: relative">
-            <RoadCondition :id='"after"':RoadCondition = RoadCondition.after :color='"#3EA579"'></RoadCondition>
+            <RoadCondition :id='"after"':RoadCondition = RoadCondition.after :color="scoreColor(RoadCondition.after)"></RoadCondition>
             <div style="position: absolute;top:90px;left: 28px">优化后路网总评分</div>
           </div>
           <div id="before_road_net_proportion" style="height: 170px;width: 190px">
@@ -294,6 +294,15 @@
      //    })
      //
      //  },
+      scoreColor(val) {
+        if (val <= 60) {
+          return "red";
+        } else if (val > 60 && val <= 80) {
+          return "#c8772a";
+        } else if (val > 80) {
+          return "green";
+        }
+      },
       get_all_data(){
         this.loading_alarm=true;
           this.loading_speed=true;
@@ -302,7 +311,6 @@
           this.loading_score=true
         this.$http.get('/optimizationData.json').then((optimizationData)=>{
           let all_data = optimizationData.data;
-
           this.alarm_data =all_data.alarm_data
           this.intersection_data = all_data.intersection_data
           this.trafficLightOptimizeAlarmTimes=all_data.intersection_alarm_data
@@ -326,7 +334,7 @@
         },
       jumpPage(key) {
         this.$router.push(key);
-      },  
+      },
 
 
   },

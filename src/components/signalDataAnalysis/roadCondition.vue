@@ -7,7 +7,10 @@
         name: "road-condition",
       props:{
         RoadCondition: Number,
-        color:String ,
+        color: {
+          type: String,
+          default: '#c94343'
+        },
         id:String
       },
       data(){
@@ -44,7 +47,7 @@
                   show: true,
                   offsetCenter: [0, -20],
                   textStyle: {
-                    color: '#fff',
+                    color: this.color,
                     fontStyle: 'normal',
                     fontWeight: 'normal',
                     fontFamily: '微软雅黑',
