@@ -648,7 +648,7 @@
         let self = this;
         return {
           disabledDate(time) {
-            return time.getTime() > new Date(self.trendTime).getTime();
+            return time.getTime() > new Date().getTime();
           }
         }
       },
