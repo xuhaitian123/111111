@@ -50,6 +50,7 @@ import { Message } from 'element-ui';
     name: "login",
     data() {
       return {
+        curheigth :document.documentElement.clientHeight,
         isRecordUser: false,
         message: "",
         username: '',
@@ -77,23 +78,28 @@ import { Message } from 'element-ui';
         if (this.isRecordUser && this.username) {
           window.localStorage.setItem("username", this.username)
         }
-
-        this.$http.post('/login/login', {username: this.username, password: this.password})
-          .then((user) => {
-            if (user.data.code === 1) {
-              self.$message({
-                message: '恭喜你,登陆成功',
-                type: 'success',
-                duration: 2000
-              });
-              this.setStorageInfo(user);
-              self.$router.push({path: '/main/map'});
-            } else {
-              self.$message.error('用户名或密码错误');
-            }
-          })
-
-      },
+        if(this.username !== '' && this.password !== ''){
+          this.$http.post('/login', {username: this.username, password: this.password})
+            .then((user) => {
+              console.log(user)
+              if (user.data.status === 2) {
+                self.$message({
+                  message: '恭喜你,登陆成功',
+                  type: 'success',
+                  duration: 2000
+                });
+                this.setStorageInfo(user);
+                self.$router.push({path: '/main/map'});
+              }else if(user.data.status === 1){
+                self.$message.error('密码错误,请检测密码');
+              }else if(user.data.status === 0){
+                self.$message.error('未找到此用户，请联系管理员添加用户');              
+              } 
+            })
+          }else{
+            self.$message.error('账号密码不能为空！');              
+          }
+        },
       setStorageInfo(data) {
         this.setCookie("userToken", data.data.token, 7);
         this.setCookie("username", data.data.username, 7);

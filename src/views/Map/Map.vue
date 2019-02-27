@@ -417,7 +417,7 @@
       }
     },
     beforeMount() {
-      this.$http.get('/dataB/getDataB?token=' + this.getHeader().token)
+      this.$http.get('/getdata/get_data_city_info?token=' + this.getHeader().token)
         .then((data) => {
           this.map_info = data.data
         })
