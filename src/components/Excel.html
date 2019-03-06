@@ -40,14 +40,15 @@
                     }
                     //wb.SheetNames[0]是获取Sheets中第一个Sheet的名字
                     //wb.Sheets[Sheet名]获取第一个Sheet的数据
-                    console.log(JSON.stringify( XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) ))
-                    document.getElementById("demo").innerHTML= JSON.stringify( XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) );
+                    var a  =  XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]);
+                    document.getElementById("demo").innerHTML= JSON.stringify( XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]));
                 };
                 if(rABS) {
                     reader.readAsArrayBuffer(f);
                 } else {
                     reader.readAsBinaryString(f);
                 }
+                
             }
 
             function fixdata(data) { //文件流转BinaryString
