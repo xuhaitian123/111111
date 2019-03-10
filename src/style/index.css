@@ -1,0 +1,42 @@
+
+html{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: rgb(41,41,53);
+  /*min-width: 1640px;*/
+  color: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+
+body{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background: rgb(41,41,53);
+
+  /*min-width: 1640px;*/
+  color: #ffffff;
+  overflow: hidden;
+  box-sizing: border-box;
+
+}
+body {
+  font-size: 14px;
+}
+
+.font14{
+  font-size: 14px;
+}
+.font16{
+  font-size: 1em;
+}
+
+::-webkit-scrollbar { width: 0 !important }
+*{
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;}

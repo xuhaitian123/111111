@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-cn">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=1">
+  <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+  <title>首页加载动画</title>
+  <head>
+
+<body>
+  <!--<div class="welcome-main">-->
+    <!--<div class="top-info">-->
+      <!--<div class="wec-img"><div class="img-con"><img src="./static/map/地图1.png" alt=""></div></div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <div class="container">
+    <div class="test-image">
+      <img id="test" src="./static/map/地图1.png" alt="">
+    </div>
+  </div>
+  <div class="container2">
+    <div class="test-image2">
+      <img src="./static/map/地图2.png" alt="">
+    </div>
+  </div>
+  <div class="container3">
+    <div class="test-image3">
+      <img src="./static/map/地图3.png" alt="">
+    </div>
+  </div>
+
+
+</body>
+
+<script>
+
+  var i = 0
+  setInterval(()=>{
+    document.getElementById('test').style.width = 100+i +"%"
+  })
+  // $('.test-image').addClass('big');
+  // setTimeout(()=>{
+  //   $('.container2')[0].style.display='block'
+  // },1000)
+  // $('.welcome-main').addClass('loading');
+
+
+  // setTimeout(function () {
+  //   // $('.hi.fst').removeClass('loading');
+  //   $('.welcome-main').remove('loaded').addClass('out');
+  // }, 3700);
+
+</script>
+<style>
+
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .container2,
+  .container3,
+  .container{
+    width: 200%;
+    position: absolute;
+    left: -50%;
+    top: 0
+  }
+  .container2,
+  .container3{
+    display: none;
+  }
+
+  .test-image2{
+    margin: auto;
+    width: 50%;
+    transform-origin: 50% 50%;
+  }
+
+
+
+  .test-image{
+    margin: auto;
+    width: 50%;
+    transform-origin: 75% 60%;
+  }
+  .test-image2 img,
+  .test-image img{
+    width: 100%;
+  }
+
+  .big.test-image{
+    -webkit-animation: big 1s 0s ease both;
+  }
+  .small.test-image{
+    -webkit-animation: small 1s 0s ease both;
+  }
+  @-webkit-keyframes big{
+    0% {
+      transform: scale(1);
+      /*left: 0;*/
+      opacity: 1;
+    }
+    70%{
+      transform: scale(3);
+      /*left: -35%;*/
+      opacity: 1;
+    }
+    90% {
+      transform: scale(4);
+      opacity: 0.5;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  @-webkit-keyframes small{
+    0% {
+      transform: scale(4);
+      opacity: 0;
+    }
+    70%{
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+
+
+
+
+
+
+</style>
+</html>

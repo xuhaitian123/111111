@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="static/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mNYz8EIOCnBjGTk1w3Zaub9XdZly6MB0"></script>-->
+    <script type="text/javascript" src="static/offlinemap/map_load.js"></script>
+    <script type="text/javascript" src="static/offlinemap/tools/AreaRestriction_min.js"></script>
+    <script type="text/javascript" src="static/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="static/offlinemap/css/map.css"/>
+    <link rel="stylesheet" type="text/css" href="static/jquery-ui-1.12.1/jquery-ui.min.css"/>
+    <title>y</title>
+  </head>
+  <body>
+    <div id="container  ">
+      <div id="app"></div>
+    </div>
+
+
+    <!-- built files will be auto injected -->
+  </body>
+  <script>
+    function setRem() {
+      const scale = window.document.body.clientWidth / 1920;
+      document.getElementById('app').style.transform =  'scale('+  scale +')';
+      document.body.style.height =  window.screen.availHeight+"px";
+      document.getElementById('app').style.height =   (window.screen.availHeight)/ scale + 'px'
+    }
+
+    // 初始化
+      setRem()
+      // 改变窗口大小时重新设置 rem
+      window.onresize = function () {
+        setRem()
+      }
+
+
+  </script>
+
+</html>
