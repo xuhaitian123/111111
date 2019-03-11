@@ -51,6 +51,15 @@
         <el-menu-item index="/intelSignalLampOptimize/firstPassSetting">优先通行设置<div class="active-item"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
+
+      <el-submenu index="5">
+        <template slot="title">
+          <span>车辆信息可视化</span>
+      </template>
+        <el-menu-item index="/main/AllViolationInformation">违章车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/main/car_info_table">违章车辆查询<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/intelSignalLampOptimize/firstPassSetting">优先通行设置<div class="active-item"></div></el-menu-item>
+      </el-submenu>
     </el-menu>
 </template>
 <style scoped>

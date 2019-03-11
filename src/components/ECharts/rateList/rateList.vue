@@ -1,6 +1,5 @@
 <template>
-  <div v-for="(intersections, index) in intersectionsList" v-if="index*2 < intersectionsList.length"
-       class="rate-container">
+  <div v-for="(intersections, index) in intersectionsList" v-if="index*2 < intersectionsList.length" class="rate-container">
     <div class="rate-container-item">
       <div class="rate-container-item-title"> {{intersections.rate}}%</div>
       <div class="rate-container-cavans-container">

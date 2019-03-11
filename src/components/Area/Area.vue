@@ -2,7 +2,8 @@
   <div>
     <div class="area_titleCascader">
       <div class="area_title_text">
-        <!-- <img src="../../../static/image/header/policeBadge.png" class="policeBadge"/><span class="text">淮安市淮安区智能交通大数据研判平台</span> -->
+        <!-- <img src="../../../static/image/header/policeBadge.png" class="policeBadge"/> -->
+        <span class="text">车辆信息可视化平台</span>
       </div>
       <div class="area_select_container">
         <div>

@@ -14,7 +14,7 @@ import signalOptimization from '../views/signalOptimization/signalOptimization'
 import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
 import DataAnalyse from '../views/IntelSignalLampOptimize/dataAnalyse'
-
+import car_info_table from "../views/car_info/car_info_table"
 import  test  from  '../views/layout/test'
 
 Vue.use(Router)
@@ -29,6 +29,11 @@ export default new Router({
     {
       path: '/login',
       component: Login,
+      name: 'Layout'
+    },
+    {
+      path: '/car_info_table',
+      component: car_info_table,
       name: 'Layout'
     },
     // {
@@ -77,6 +82,18 @@ export default new Router({
           path: 'congestionMap',
           component: CongestionMap,
           name: 'CongestionMap'
+        }
+      ],
+    },
+    {
+      path: '/main',
+      component: Layout,
+      name: 'Layout',
+      children: [
+        {
+          path: 'car_info_table',
+          component: car_info_table,
+          name: 'car_info_table'
         }
       ],
     },
