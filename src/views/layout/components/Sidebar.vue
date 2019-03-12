@@ -31,15 +31,12 @@
           <el-menu-item index="/signalOptimization/signalOptimization">拥堵情况变化趋势<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <!--</el-menu-item-group>-->
       </el-submenu>
-      <el-submenu index="">
+      <!-- <el-submenu index="3">
         <template slot="title">
           <span>视频监控与分析</span>
         </template>
-        <!--<el-menu-item-group>-->
           <el-menu-item index="/main/trafficVideo/2">视频监控与分析<div class="active-item"></div></el-menu-item>
-          <!--<el-menu-item index="3-2">历史监控<div class="active-item"></div></el-menu-item>-->
-        <!--</el-menu-item-group>-->
-      </el-submenu>
+      </el-submenu> -->
       <el-submenu index="4">
         <template slot="title">
           <span>智能信号灯优化</span>
@@ -56,10 +53,22 @@
         <template slot="title">
           <span>车辆信息可视化</span>
       </template>
-        <el-menu-item index="/main/AllViolationInformation">违章车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
-        <el-menu-item index="/main/car_info_table">违章车辆查询<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/intelSignalLampOptimize/firstPassSetting">优先通行设置<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/VisualChart">可视化图表<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/AllViolationInformation">违章车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/car/car_info_table">违章车辆查询<div class="active-item"></div></el-menu-item>
       </el-submenu>
+
+
+      <el-submenu index="6">
+        <template slot="title">
+          <span>数据导入</span>
+      </template>
+        <el-menu-item index="/dataImport/Excel">Excel表导入<div class="active-item"></div></el-menu-item>
+        <!-- <el-menu-item index="/car/AllViolationInformation">违章车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item> -->
+        <!-- <el-menu-item index="/car/car_info_table">违章车辆查询<div class="active-item"></div></el-menu-item> -->
+      </el-submenu>
+
+
     </el-menu>
 </template>
 <style scoped>
@@ -74,7 +83,6 @@
     bottom: 0;
     width: 148px;
     left: 20px;
-
   }
   .el-menu>.el-menu-item:last-child .item-line{
     display: none;

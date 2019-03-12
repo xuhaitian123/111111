@@ -15,6 +15,9 @@ import FirstPassSetting from '../views/IntelSignalLampOptimize/FirstPassSetting'
 import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampControl'
 import DataAnalyse from '../views/IntelSignalLampOptimize/dataAnalyse'
 import car_info_table from "../views/car_info/car_info_table"
+import AllViolationInformation from "../views/car_info/AllViolationInformation"
+import VisualChart from "../views/car_info/VisualChart"
+import Excel from "../views/dataImport/Excel"
 import  test  from  '../views/layout/test'
 
 Vue.use(Router)
@@ -86,7 +89,7 @@ export default new Router({
       ],
     },
     {
-      path: '/main',
+      path: '/car',
       component: Layout,
       name: 'Layout',
       children: [
@@ -94,6 +97,28 @@ export default new Router({
           path: 'car_info_table',
           component: car_info_table,
           name: 'car_info_table'
+        },
+        {
+          path: 'VisualChart',
+          component: VisualChart,
+          name: 'VisualChart'
+        },
+        {
+          path: 'AllViolationInformation',
+          component: AllViolationInformation,
+          name: 'AllViolationInformation'
+        }
+      ],
+    },
+    {
+      path: '/dataImport',
+      component: Layout,
+      name: 'Layout',
+      children: [
+        {
+          path: 'Excel',
+          component: Excel,
+          name: 'Excel'
         }
       ],
     },

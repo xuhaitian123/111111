@@ -3,7 +3,7 @@
      <div class="logo-container">
        <img  class="logo-container-logo" src="/static/image/header/1.png">
        <div class="logo-container-line"></div>
-       <div class="logo-container-name">交通数据平台系统</div>
+       <div class="logo-container-name">车辆信息可视化平台</div>
 
      </div>
     <div class="logo-nav">
@@ -50,7 +50,7 @@
     box-sizing: border-box;
   }
   .logo-container{
-    width: 300px;
+    width: 320px;
     display: flex;
     justify-content: space-between;
     align-items: center;
