@@ -13,6 +13,7 @@ export default {
   name: "car_info_table",
   data() {
     return {
+      
       data: [
         { value: 335, name: "直接访问" },
         { value: 310, name: "邮件营销" },
