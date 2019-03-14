@@ -12,9 +12,7 @@
           <div class="score_title">
             <div class="score_title_text">优化前后路网总评分/路网各类路况占比</div>
           </div>
-          <div class="score_body_area" style="padding: 43px 43px 50px 43px;box-sizing: border-box;display: flex;flex-wrap: wrap;"
-               v-loading="loading_score"
-               element-loading-background="rgba(51, 54, 67, 1)">
+          <div class="score_body_area" style="padding: 43px 43px 50px 43px;box-sizing: border-box;display: flex;flex-wrap: wrap;" v-loading="loading_score"               element-loading-background="rgba(51, 54, 67, 1)">
           <div id="before_road_net_score" style="height: 120px;width: 170px;position: relative">
             <RoadCondition :id ='"before"':RoadCondition = RoadCondition.before :color="scoreColor(RoadCondition.before)"></RoadCondition>
             <div style="position: absolute;top:90px;left: 28px">优化前路网总评分</div>

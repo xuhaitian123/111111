@@ -476,6 +476,7 @@
       getWeekCongestionDate() {
         this.week_loading =  true;
         this.$http.get('/static/week.json').then((weekInfo)=>{
+          console.log(weekInfo)
          this.weekCongestionDate = weekInfo.data
           this.week_loading = false;
         })

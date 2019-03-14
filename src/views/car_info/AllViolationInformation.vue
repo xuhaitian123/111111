@@ -47,6 +47,12 @@
       width="180">
     </el-table-column>
     <el-table-column
+      prop="reg_city"
+      label="车辆登记地区"
+      sortable
+      width="180">
+    </el-table-column>
+    <el-table-column
       prop="reg_time"
       label="登记时间"
       sortable
