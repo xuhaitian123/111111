@@ -37,38 +37,46 @@
         </template>
           <el-menu-item index="/main/trafficVideo/2">视频监控与分析<div class="active-item"></div></el-menu-item>
       </el-submenu> -->
-      <el-submenu index="4">
+      <!-- <el-submenu index="4">
         <template slot="title">
           <span>智能信号灯优化</span>
         </template>
 
-        <!--<el-menu-item-group>-->
         <el-menu-item index="/intelSignalLampOptimize/dataAnalyse">智能优化效果分析<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <el-menu-item index="/intelSignalLampOptimize/signalLampControl">智能信号灯控制<div class="active-item"></div></el-menu-item>
         <el-menu-item index="/intelSignalLampOptimize/firstPassSetting">优先通行设置<div class="active-item"></div></el-menu-item>
-        <!--</el-menu-item-group>-->
-      </el-submenu>
-
-      <el-submenu index="5">
+      </el-submenu> -->
+      <el-submenu index="3">
         <template slot="title">
           <span>车辆信息可视化</span>
       </template>
         <el-menu-item index="/car/VisualChart">可视化图表<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/car/AllViolationInformation">违章车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
-        <el-menu-item index="/car/car_info_table">违章车辆查询<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/AllViolationInformation">所有车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/car/car_info_table">违章车辆概览<div class="active-item"></div></el-menu-item>
       </el-submenu>
-
-
-      <el-submenu index="6">
+       <el-submenu index="4">
+        <template slot="title">
+          <span>车辆信息查询</span>
+        </template>
+        <el-menu-item index="/car/select_violation_car">登记车辆与违章车辆查询<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/intelSignalLampOptimize/signalLampControl">车辆信息更新与管理<div class="active-item"></div></el-menu-item>
+      </el-submenu>
+      <el-submenu index="5">
         <template slot="title">
           <span>数据导入</span>
       </template>
-        <el-menu-item index="/dataImport/Excel">Excel表导入<div class="active-item"></div></el-menu-item>
-        <!-- <el-menu-item index="/car/AllViolationInformation">违章车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item> -->
-        <!-- <el-menu-item index="/car/car_info_table">违章车辆查询<div class="active-item"></div></el-menu-item> -->
+        <el-menu-item index="/dataImport/Excel">批量所有车辆数据导入(Excel)<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/AllViolationInformation">批量违章车辆数据导入(Excel)<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/car/car_info_table">批量车主信息导入(Excel)<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/car_info_table">单条数据导入<div class="active-item"></div></el-menu-item>
       </el-submenu>
-
-
+      <el-submenu index="6">
+        <template slot="title">
+          <span>用户管理</span>
+      </template>
+        <el-menu-item index="/dataImport/Excel">用户管理<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/car_info_table">权限管理<div class="active-item"></div></el-menu-item>
+      </el-submenu>
     </el-menu>
 </template>
 <style scoped>

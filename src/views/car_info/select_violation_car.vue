@@ -2,6 +2,10 @@
   <div>
     <Area></Area>
     <el-table
+    v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
     :data="tableData"
     style="width:90%;"
     max-height="800"
@@ -72,13 +76,14 @@
           <button @click="exportExcel">导出Excel表格</button>
   <div class="block">
     <el-pagination
+      background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      :page-sizes="[10, 200, 300, 400]"
+      :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="40">
+      :total="400">
     </el-pagination>
   </div>
   </div>
@@ -90,11 +95,22 @@ import FileSaver from "file-saver";
 import XLSX from "xlsx";
 
 export default {
-  name: "AllViolationInformation",
+  name: "select_violation_car",
   data() {
     return {
       data: [],
-      tableData: []
+      tableData: [],
+      currentPage1: 5,
+      currentPage2: 5,
+      currentPage3: 5,
+      currentPage4: 4,
+      loading :true,
+      params: {
+        username: "",
+        password: "",
+        start: "",
+        length: ""
+      }
     };
   },
   methods: {
@@ -102,7 +118,6 @@ export default {
       if (row.is_accident == "是") {
         return "accident";
       }
-      console.log(row);
       return "";
     },
     get_pie_data() {
@@ -113,11 +128,12 @@ export default {
           password: this.password
         })
         .then(data => {
-          console.log(data);
+          //   console.log(data);
           this_.tableData = data.data;
           this_.count = data.data.count;
           //   this_.init()
-          console.log(this_.tableData);
+          //   console.log(this_.tableData);
+          this_.loading = false
         });
     },
     exportExcel() {
@@ -143,6 +159,12 @@ export default {
         if (typeof console !== "undefined") console.log(e, wbout);
       }
       return wbout;
+    },
+    handleSizeChange(val) {
+      console.log(val);
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
     }
   },
   components: {
