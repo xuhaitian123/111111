@@ -106,8 +106,8 @@ export default {
       currentPage4: 4,
       loading :true,
       params: {
-        username: "",
-        password: "",
+        username: "q",
+        password: "q",
         start: "",
         length: ""
       }
@@ -121,19 +121,15 @@ export default {
       return "";
     },
     get_pie_data() {
-      var this_ = this;
-      this.$http
-        .post("/AllViolationInformation/allData", {
-          username: this.username,
-          password: this.password
-        })
+      // var this_ = this;
+      this.$http.post("/AllViolationInformation/allData", {username: this.username,password: this.password})
         .then(data => {
           //   console.log(data);
-          this_.tableData = data.data;
-          this_.count = data.data.count;
+          this.tableData = data.data;
+          this.count = data.data.count;
           //   this_.init()
           //   console.log(this_.tableData);
-          this_.loading = false
+          this.loading = false
         });
     },
     exportExcel() {
@@ -164,6 +160,7 @@ export default {
       console.log(val);
     },
     handleCurrentChange(val) {
+      this.currentPage4 = 1
       console.log(`当前页: ${val}`);
     }
   },

@@ -8,21 +8,22 @@
     element-loading-background="rgba(0, 0, 0, 0.8)"
     :data="tableData"
     @sort-change="handleSortChange"
-    style="width:100%;"
+    style="width:90%;"
     max-height="800"
-    :row-class-name="tableRowClassName"
-    :default-sort = "{prop: 'violation_time', order: 'descending'}"
+    :default-sort = "{prop: 'reg_time', order: 'descending'}"
     id="out-table"
     >
     <el-table-column
       prop="car_name"
       label="车辆名称"
-     >
+      
+      width="180">
     </el-table-column>
     <el-table-column
       prop="car_type"
       label="车辆类型"
-     >
+      
+      width="180">
     </el-table-column>
     <el-table-column
       prop="car_color"
@@ -31,12 +32,14 @@
     <el-table-column
       prop="license_num"
       label="车牌号"
-     >
+      
+      width="180">
     </el-table-column>
     <el-table-column
       prop="people_name"
       label="车主姓名"
-     >
+      
+      width="180">
     </el-table-column>
     <el-table-column
       prop="is_check"
@@ -45,47 +48,40 @@
     <el-table-column
       prop="is_accident"
       label="是否发生过事故"
-     >
+      
+      width="180">
     </el-table-column>
     <el-table-column
-      prop="violation_road"
-      label="违章路段"
-     >
+      prop="reg_city"
+      label="车辆登记地区"
+      
+      width="180">
     </el-table-column>
     <el-table-column
-      prop="violation_type"
-      label="违章类型"
-     >
-    </el-table-column>
-    <el-table-column
-      prop="name"
-      label="处罚措施"
-     >
-    </el-table-column>
-    <el-table-column
-      prop="violation_time"
-      label="违章时间"
+      prop="reg_time"
+      label="登记时间"
       sortable
-     >
+      width="180">
     </el-table-column>
     <el-table-column
       fixed="right"
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">查看描述</el-button>
+        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+        <el-button type="text" size="small">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
-    <button @click="exportExcel">导出Excel表格</button>
+          <button @click="exportExcel">导出Excel表格</button>
   <div class="block">
     <el-pagination
       background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="currentPage"
-      :page-sizes="[15, 30, 45,60,100]"
-      :page-size="15"
+      :page-sizes="[15, 30, 45, 60, 100]"
+      :page-size="10"
       layout="total, sizes, prev, pager, next, jumper"
       :total="count">
     </el-pagination>
@@ -99,38 +95,29 @@ import FileSaver from "file-saver";
 import XLSX from "xlsx";
 
 export default {
-  name: "select_violation_car",
+  name: "AllCarInformation",
   data() {
     return {
       data: [],
       tableData: [],
-      currentPage4: 1,
+      currentPage: 1,
       loading :true,
-      count : 0, //数据的总数
+      count: 0,
       params: {
         username: "q",
         password: "q",
-        start: "1",
-        length: "15",
+        start: 0,
+        length: 15,
         sort :{
-          name : "violation_time",
-          type : "DESC    "
+            name : "reg_time",
+            type : "desc"
         }
       }
     };
   },
   methods: {
-    handleClick(row){
-      console.log(row)
-    },
-    tableRowClassName({ row, rowIndex }) {
-      if (row.is_accident == "是") {
-        return "accident";
-      }
-      return "";
-    },
     get_data(params) {
-      this.$http.post("/AllViolationInformation/allData", params)
+      this.$http.post("/AllCarInformation/allData", params)
         .then(data => {
           this.tableData = data.data.data;
           this.count = data.data.total;
@@ -162,7 +149,6 @@ export default {
       return wbout;
     },
     handleSortChange(column){
-      console.log(column)
         if(column.order == "descending"){
             this.params.start = 0 ;
             this.currentPage = 1;
@@ -178,15 +164,15 @@ export default {
         }
     },
     handleSizeChange(val) {
-      this.currentPage = 1;
-      this.params.start = 0;
-      this.params.length = val;
-      this.loading = true;
-      this.get_data(this.params);
+        this.currentPage = 1;
+        this.params.start = 0;
+        this.params.length = val;
+        this.loading = true;
+        this.get_data(this.params);
     },
     handleCurrentChange(val) {
       this.currentPage = val;
-      this.params.start = this.params.length * (val -1);
+      this.params.start = this.params.length * (val - 1);
       this.get_data(this.params)
     }
   },

@@ -2,8 +2,14 @@
     <Area></Area>
 </template>
 
+
+
+
+
+
 <script>
   import Area from '../../components/Area/Area'
+  
 
 export default {
     name : "car_info_table",

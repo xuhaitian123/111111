@@ -16,6 +16,7 @@ import SignalLampControl from '../views/IntelSignalLampOptimize/SignalLampContro
 import DataAnalyse from '../views/IntelSignalLampOptimize/dataAnalyse'
 import car_info_table from "../views/car_info/car_info_table"
 import AllViolationInformation from "../views/car_info/AllViolationInformation"
+import AllCarInformation from "../views/car_info/AllCarInformation"
 import VisualChart from "../views/car_info/VisualChart"
 import Excel from "../views/dataImport/Excel"
 import  select_violation_car  from  '../views/car_info/select_violation_car'
@@ -118,7 +119,12 @@ export default new Router({
           path: 'select_violation_car',
           component: select_violation_car,
           name: 'select_violation_car'
-        }
+        },
+        {
+          path: 'AllCarInformation',
+          component: AllCarInformation,
+          name: 'AllCarInformation',
+        },    
       ],
     },
     {
@@ -215,11 +221,6 @@ export default new Router({
       ],
     },
 
-    {
-      path: '/test',
-      component: test,
-      name: 'test',
-    },
-
+    
   ]
 })

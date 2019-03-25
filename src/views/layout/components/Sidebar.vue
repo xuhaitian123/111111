@@ -51,8 +51,8 @@
           <span>车辆信息可视化</span>
       </template>
         <el-menu-item index="/car/VisualChart">可视化图表<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/car/AllViolationInformation">所有车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
-        <el-menu-item index="/car/car_info_table">违章车辆概览<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/AllCarInformation">所有车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/car/AllViolationInformation">违章车辆概览<div class="active-item"></div></el-menu-item>
       </el-submenu>
        <el-submenu index="4">
         <template slot="title">
@@ -66,16 +66,16 @@
           <span>数据导入</span>
       </template>
         <el-menu-item index="/dataImport/Excel">批量所有车辆数据导入(Excel)<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/car/AllViolationInformation">批量违章车辆数据导入(Excel)<div class="active-item"></div><div class="item-line"></div></el-menu-item>
-        <el-menu-item index="/car/car_info_table">批量车主信息导入(Excel)<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/car/car_info_table">单条数据导入<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/">批量违章车辆数据导入(Excel)<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/car/">批量车主信息导入(Excel)<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/">单条数据导入<div class="active-item"></div></el-menu-item>
       </el-submenu>
       <el-submenu index="6">
         <template slot="title">
           <span>用户管理</span>
       </template>
         <el-menu-item index="/dataImport/Excel">用户管理<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/car/car_info_table">权限管理<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/">权限管理<div class="active-item"></div></el-menu-item>
       </el-submenu>
     </el-menu>
 </template>
