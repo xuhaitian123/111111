@@ -590,5 +590,6 @@ export default {
     background: #545768;
     color : #ffffff !important;
   }
+  
 </style>
 

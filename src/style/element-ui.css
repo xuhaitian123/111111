@@ -319,3 +319,9 @@
 .big-select .el-select{
   width: 200px;
 }
+.v-modal {
+  display: none
+}
+.el-dialog__wrapper{
+  z-index: 2013;
+}
