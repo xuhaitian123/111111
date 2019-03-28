@@ -6,7 +6,7 @@
         <span class="text">车辆信息可视化平台</span>
       </div>
       <div class="area_select_container">
-        <div>
+        <!-- <div>
           省
           <el-select v-model="prov" size="mini" class="area_titleSelect" placeholder="请选择" :popper-append-to-body="false">
 
@@ -47,7 +47,7 @@
                        :disabled="!item.available">
             </el-option>
           </el-select>
-        </div>
+        </div> -->
       </div>
 
 
@@ -2206,7 +2206,7 @@
   }
 
   .area_time{
-    /*float: right;*/
+    float: right;
     align-items: right;
     font-size: 20px;
   }

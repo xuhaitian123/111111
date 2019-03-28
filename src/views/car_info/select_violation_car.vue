@@ -72,9 +72,9 @@
         <el-button type="text" size="small">编辑</el-button>
       </template>
     </el-table-column>
-  </el-table> -->
-          <!-- <button @click="exportExcel">导出Excel表格</button> -->
-  <!-- <div class="block">
+    </el-table>-->
+    <!-- <button @click="exportExcel">导出Excel表格</button> -->
+    <!-- <div class="block">
     <el-pagination
       background
       @size-change="handleSizeChange"
@@ -85,175 +85,163 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="400">
     </el-pagination>
-  </div> -->
- <input v-model="keyWords" type="text" placeholder="请输入关键词"  @input="handleQuery">
-   <ul>
-       <li v-for="(item,index) in results" :key='index' v-html='item.name' style="background:white;color:black"></li>
-   </ul>
-   <smart-input @sync="syncValueType" :list="valueTypeList"></smart-input>
+    </div>-->
+
+    <div class="title_div">
+      <div class="car_type_div">
+        <span class="span_info">要查询的车辆类型选择</span>
+        <el-select v-model="value" placeholder="请选择">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </div>
+      <div class="license_div">
+        <span class="span_info">车牌号关键字智能搜索</span>
+        <el-autocomplete
+          class="inline-input"
+          value-key="name"
+          v-model="license_num"
+          :fetch-suggestions="querySearch"
+          placeholder="请输入查询关键字"
+          :trigger-on-focus="true"
+        ></el-autocomplete>
+        <el-button
+          style="margin-left:20px;background:#353643;color:#ffffff;border:none"
+          type="submit"
+          @click="select"
+        >搜索</el-button>
+      </div>
+    </div>
+    <div style="width : 500px;height :500px">
+      <ul class="ul_left" v-for="(item,index) in alldata" :key="index">
+        <li><span class="left_sapn">车主姓名：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.people_name"  clearable> </el-input></li>
+        <li><span class="left_sapn">车牌号：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.license_num"  clearable> </el-input></li>
+        <li><span class="left_sapn">车辆名称：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.car_name"  clearable> </el-input></li>
+        <li><span class="left_sapn">车辆类型：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.car_type"  clearable> </el-input></li>
+        <li><span class="left_sapn">车辆颜色：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.car_color"  clearable> </el-input></li>
+        <li><span class="left_sapn">车辆归属地：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.home_loaction"  clearable> </el-input></li>
+        <li><span class="left_sapn">是否发生过事故：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.is_accident"  clearable> </el-input></li>
+        <li><span class="left_sapn">是否年检：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.is_check"  clearable> </el-input></li>
+        <li><span class="left_sapn">登记地区：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.reg_city"  clearable> </el-input></li>
+        <li><span class="left_sapn">登记时间：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.reg_time"  clearable> </el-input></li>
+      </ul>
+    </div>
   </div>
 </template>
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 import Area from "../../components/Area/Area";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
-Object.defineProperty(Number.prototype, 'circlePlus', {value: function (length, count = 1) {
-    return (this + count % length + length) % length;
-}});
-
 
 export default {
   name: "select_violation_car",
   data() {
     return {
       data: [],
-      tableData: [],
-      keyWords: '',
+      alldata: [],
+      people_data: [],
+      keyWords: "",
+      license_num: "",
       results: [],
       currentPage1: 5,
       currentPage2: 5,
       currentPage3: 5,
       currentPage4: 4,
-      loading :true,
+      loading: true,
       params: {
         username: "q",
         password: "q",
         start: "1",
         length: "10"
+      },
+      options: [
+        {
+          value: "违章车辆",
+          label: "违章车辆"
+        },
+        {
+          value: "登记车辆",
+          label: "登记车辆"
+        }
+      ],
+      value: "",
+      select_params: {
+        username: "",
+        password: "",
+        license_num: ""
       }
     };
   },
-  component:('smart-input', {
-        template: `<div class="friendSearchContainer">
-            <input v-model="input" class="form-control smartInput"
-                placeholder="输入文本自动检索，上下键选取，回车选中，可点选"
-                data-toggle="tooltip"
-                @focus="init" @keyup="search" @blur="blur" />
-            <ul v-show="searching" class="friendSearchList col-sm-8">
-                <li v-for="(item, index) in filtered" :class="{active: focusIndex===index}" @click.stop="clickOne">{{ item }}</li>
-            </ul>
-            <div v-show="searching" class="friendSearchModal" @click="searching=false"></div>
-        </div>`,
-        props: ['list', 'multiple', 'value'],
-        data() {
-            return {
-                searching: false,
-                timer: null,
-                filtered: {},
-                input: '',
-                focusIndex: 0,
-                invalidData: '',
-            };
-        },
-        computed: {
-            listLength() {
-                return this.filtered.length;
-            },
-            key() {
-                return /(?:.*,)*(.*)$/.exec(this.input)[1];
-            }
-        },
-        methods: {
-            // 调整联想搜索面板的大小和位置
-            init(e) {
-                this.searching = true;
-                this.filtered = this.list;
-            },
-            // 失去焦点时关闭面板，主要是按下tab键切换时的作用，随之带来的是所有相关的事件都要清除该定时器
-            blur() {
-                this.timer = setTimeout(() => {
-                    this.searching = false;
-                }, 200);
-            },
-            // 联想搜索的主体功能函数
-            search(e) {
-                e = e || window.event;
-                // clearTimeout(this.timer);
-                // 通过上下键和回车选择
-                if (e.keyCode === 38) {
-                    this.focusIndex = this.focusIndex.circlePlus(this.listLength);
-                    // $('.friendSearch').scrollTop($(selectee).index(selected) * 26 - 26);
-                } else if (e.keyCode === 40) {
-                    this.focusIndex = this.focusIndex.circlePlus(this.listLength, -1);
-                } else if (e.keyCode === 13) {
-                    this.selectOne();
-                } else {
-                    // 进行可选项过滤
-                    this.filtered = this.list.filter((item) => {
-                        return item.toLowerCase().includes(this.key.toLowerCase());
-                    });
-                }
-            },
-            clickOne(e) {
-                clearTimeout(this.timer);
-                e = e || window.event;
-                let value = $(e.target).text();
-                if (this.multiple) {
-                    let arr = this.input.split(',');
-                    arr.splice(arr.length, 1, value);
-                    this.input = arr.join(',') + ',';
-                } else {
-                    this.input = value;
-                }
-                $('input', $(this.$el)).focus();
-            },
-            // 选择一个参数
-            selectOne(e) {
-                let value = this.filtered[this.focusIndex];
-                if (this.multiple) {
-                    let arr = this.input.split(',');
-                    arr.splice(arr.length, 1, value);
-                    this.input = arr.join(',') + ',';
-                } else {
-                    this.input = value;
-                }
-            },
-        },
-        watch: {
-            value(val) {
-                this.input = val;
-            },
-            input(val) {
-                let inputArr = val.split(',');
-                if (this.multiple) {
-                    inputArr.pop();
-                    let invalidData = [];
-                    inputArr.forEach(item => {
-                        if (!this.list.includes(item)) {
-                            invalidData.push(item);
-                        }
-                    });
-                    let $input = $('input', $(this.$el));
-                    if (invalidData.length) {
-                        $input.attr('title', invalidData.join(',') + '数据不合法');
-                        $input.tooltip();
-                    } else {
-                        $input.tooltip('hide');
-                    }
-                }
-                this.$emit('sync', this.input);
-            },
-        }
-    }),
   methods: {
-    tableRowClassName({ row, rowIndex }) {
-      if (row.is_accident == "是") {
-        return "accident";
+    async querySearch(queryString, cb) {
+      var user = {
+        keyword: "%" + queryString + "%"
+      };
+      //这里是从后台获取数据
+      await this.$http.post("select_key_word/allCarInfo", user).then(res => {
+        console.log(res);
+        this.restaurants = res.data;
+        var restaurants = this.restaurants;
+        var results = queryString ? this.searchData(queryString) : restaurants;
+        // 调用 callback 返回建议列表的数据
+        cb(results);
+      });
+    },
+    searchData(issue_content) {
+      return this.restaurants.filter(function(product) {
+        return Object.keys(product).some(function(key) {
+          return (
+            String(product[key])
+              .toUpperCase()
+              .indexOf(issue_content) > -1
+          );
+        });
+      });
+      return this.products;
+    },
+    select() {
+      if (this.value == "") {
+        this.$message({
+          message: "请选择查询的车辆类型！",
+          type: "warning"
+        });
+      } else if (this.license_num == "") {
+        this.$message({
+          message: "请输入查询的车牌号！",
+          type: "warning"
+        });
+      } else {
+        if (this.value == "违章车辆") {
+          var url = "/select_car_info/violation_car_info";
+        } else {
+          var url = "/select_car_info/reg_car_info";
+        }
+        this.select_params.license_num = this.license_num;
+        this.$http.post(url, this.select_params).then(data => {
+          if(data.data.reg_car_info.length!==0){
+            this.alldata.push(data.data.reg_car_info[0]);
+            console.log(this.alldata);
+          }
+          else{
+            //未查到数据
+          }
+        });
       }
-      return "";
     },
     get_pie_data() {
-      // var this_ = this;
-      this.$http.post("/AllViolationInformation/allData", this.params)
+      this.$http
+        .post("/AllViolationInformation/allData", this.params)
         .then(data => {
           //   console.log(data);
           this.tableData = data.data;
           this.count = data.data.count;
           //   this_.init()
           //   console.log(this_.tableData);
-          this.loading = false
+          this.loading = false;
         });
     },
     exportExcel() {
@@ -284,58 +272,17 @@ export default {
       console.log(val);
     },
     handleCurrentChange(val) {
-      this.currentPage4 = 1
+      this.currentPage4 = 1;
       console.log(`当前页: ${val}`);
-    },
-    //关键词提示
-    clearTimer () {
-      if (this.timer) {
-        clearTimeout(this.timer)
-      }
-    },
-    handleQuery (event) {
-      this.clearTimer()
-      console.log(event.timeStamp)
-      this.timer = setTimeout(() => {
-        console.log(event.timeStamp)
-        this.$http.post('/select_key_word/violationCarInfo',{keyword:this.keyWords+"%"}).then(res => {
-          console.log(res.data)
-          this.changeColor(res.data)
-        })
-        // }
-      }, 2000)
-    },
-
-    changeColor (resultsList) {
-      resultsList.map((item, index) => {
-        console.log(this.keyWords)
-        // console.log('item', item)
-        if (this.keyWords && this.keyWords.length > 0) {
-          // 匹配关键字正则
-          let replaceReg = new RegExp(this.keyWords, 'g')
-          // 高亮替换v-html值
-          let replaceString =
-            '<span class="search-text">' + this.keyWords + '</span>'
-          resultsList[index].name = item.name.replace(
-            replaceReg,
-            replaceString
-          )
-        }
-      })
-      this.results = []
-      this.results = resultsList
     }
-  
   },
   components: {
     Area
   },
   created() {
-    this.get_pie_data();
+    // this.get_pie_data();
   },
-  mounted() {
-    
-  }
+  mounted() {}
 };
 </script>
 <style scoped>
@@ -351,10 +298,90 @@ export default {
 .accident {
   background-color: red;
 }
-.search-text{
-color: red;
+.search-text {
+  color: red;
 }
+.el-autocomplete-suggestion {
+  width: 150px;
+}
+.inline-input {
+  width: 150px;
+}
+.title_div {
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.car_type_div {
+  height: 50px;
+  width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.license_div {
+  height: 100%;
+  width: 50%;
+}
+.span_info {
+  font-size: 18px;
+  margin-right: 15px;
+}
+.license_div {
+  height: 50px;
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.left_sapn{
+  margin-right: 5px;
+  display: block;
+  padding: 0 5px;
+  width: 160px;
+  height: 30px;
+  line-height: 30px;
+  text-align: left;
+  font-size: 15px;
+}
+.ul_left li {
+  display: flex;
+  align-self: center;
+  padding-bottom:5px; 
+}
+.input{
+  width: 200px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <style>
 .el-pagination .el-select .el-input {
@@ -362,6 +389,9 @@ color: red;
   width: 100% !important;
 }
 .accident {
+  background-color: red;
+}
+.highlighted {
   background-color: red;
 }
 </style>
