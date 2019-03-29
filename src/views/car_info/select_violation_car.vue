@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="to_pdf_1">
     <Area></Area>
     <!-- <el-table
     v-loading="loading"
@@ -88,6 +88,7 @@
     </div>-->
 
     <div class="title_div">
+        <el-button @click="to_pdf">导出PDF</el-button>
       <div class="car_type_div">
         <span class="span_info">要查询的车辆类型选择</span>
         <el-select v-model="value" placeholder="请选择">
@@ -104,6 +105,7 @@
         <el-autocomplete
           class="inline-input"
           value-key="name"
+          prefix-icon="el-icon-search"
           v-model="license_num"
           :fetch-suggestions="querySearch"
           placeholder="请输入查询关键字"
@@ -116,21 +118,53 @@
         >搜索</el-button>
       </div>
     </div>
-    <div style="width : 500px;height :500px">
-      <ul class="ul_left" v-for="(item,index) in alldata" :key="index">
-        <li><span class="left_sapn">车主姓名：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.people_name"  clearable> </el-input></li>
-        <li><span class="left_sapn">车牌号：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.license_num"  clearable> </el-input></li>
-        <li><span class="left_sapn">车辆名称：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.car_name"  clearable> </el-input></li>
-        <li><span class="left_sapn">车辆类型：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.car_type"  clearable> </el-input></li>
-        <li><span class="left_sapn">车辆颜色：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.car_color"  clearable> </el-input></li>
-        <li><span class="left_sapn">车辆归属地：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.home_loaction"  clearable> </el-input></li>
-        <li><span class="left_sapn">是否发生过事故：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.is_accident"  clearable> </el-input></li>
-        <li><span class="left_sapn">是否年检：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.is_check"  clearable> </el-input></li>
-        <li><span class="left_sapn">登记地区：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.reg_city"  clearable> </el-input></li>
-        <li><span class="left_sapn">登记时间：</span> <el-input class="input" placeholder="请输入内容"  v-model="item.reg_time"  clearable> </el-input></li>
+    <div class="info_div_body" >
+      <div class="info_div_child" v-if="show_type == '登记车辆'"  id="to_pdf" >
+        <span class="title_span"  >登记车辆信息</span>
+        <span class="title_span"  v-show="false" >登记车辆信息</span>
+      <ul class="ul_left" v-for="(item,index) in alldata" :key="index" >
+        <li><span class="left_sapn">车主姓名：</span> <span class="info_value">{{item.people_name}}</span></li>
+        <li><span class="left_sapn">车牌号：</span> <span class="info_value">{{item.license_num}}</span></li>
+        <li><span class="left_sapn">车辆名称：</span> <span class="info_value">{{item.car_name}}</span></li>
+        <li><span class="left_sapn">车辆类型：</span> <span class="info_value">{{item.car_type}}</span></li>
+        <li><span class="left_sapn">车辆颜色：</span> <span class="info_value">{{item.car_color}}</span></li>
+        <li><span class="left_sapn">车辆归属地：</span> <span class="info_value">{{item.home_loaction}}</span></li>
+        <li><span class="left_sapn">是否发生过事故：</span> <span class="info_value">{{item.is_accident}}</span></li>
+        <li><span class="left_sapn">是否年检：</span> <span class="info_value">{{item.is_check}}</span></li>
+        <li><span class="left_sapn">登记地区：</span> <span class="info_value">{{item.reg_city}}</span></li>
+        <li><span class="left_sapn">登记时间：</span> <span class="info_value">{{item.reg_time}}</span></li>
+      </ul>
+    </div>
+      <div class="info_div_child" v-if="show_type == '违章车辆' ">
+        <span class="title_span" >违章车辆信息</span>
+      <ul class="ul_left" v-for="(item,index) in violation_car_info" :key="index">
+        <li><span class="left_sapn">车主姓名：</span> <span class="info_value">{{item.people_name}}</span></li>
+        <li><span class="left_sapn">车牌号：</span> <span class="info_value">{{item.license_num}}</span></li>
+        <li><span class="left_sapn">车辆名称：</span> <span class="info_value">{{item.car_name}}</span></li>
+        <li><span class="left_sapn">车辆类型：</span> <span class="info_value">{{item.car_type}}</span></li>
+        <li><span class="left_sapn">车辆颜色：</span> <span class="info_value">{{item.car_color}}</span></li>
+        <li><span class="left_sapn">是否年检：</span> <span class="info_value">{{item.is_check}}</span></li>
+        <li><span class="left_sapn">是否发生过事故：</span> <span class="info_value">{{item.is_accident}}</span></li>
+        <li><span class="left_sapn">违章类型：</span> <span class="info_value">{{item.violation_type}}</span></li>
+        <li><span class="left_sapn">违章路段：</span> <span class="info_value">{{item.violation_road}}</span></li>
+        <li><span class="left_sapn">违章时间：</span> <span class="info_value">{{item.violation_time}}</span></li>
+        <li><span class="left_sapn" style="height:60px;line-height:60px;">处理描述：</span> <span class="info_value_description">{{item.description}}</span></li>
+      </ul>
+    </div>
+    <div class="info_div_child" id="to_pdf3">
+        <span class="title_span">车辆所有者信息</span>
+      <ul class="ul_left" v-for="(item,index) in people_data" :key="index">
+        <li><span class="left_sapn">车牌号：</span> <span class="info_value">{{item.license_num}}</span></li>
+        <li><span class="left_sapn">车主姓名：</span> <span class="info_value">{{item.name}}</span></li>
+        <li><span class="left_sapn">身份证号码：</span> <span class="info_value">{{item.ID}}</span></li>
+        <li><span class="left_sapn">性别：</span> <span class="info_value">{{item.sex}}</span></li>
+        <li><span class="left_sapn">出生日期：</span> <span class="info_value">{{item.birthDate}}</span></li>
+        <li><span class="left_sapn">电话号码：</span> <span class="info_value">{{item.telphone}}</span></li>
+        <li><span class="left_sapn">家庭住址：</span> <span class="info_value">{{item.address}}</span></li>
       </ul>
     </div>
   </div>
+    </div>
 </template>
 <script>
 import Area from "../../components/Area/Area";
@@ -142,8 +176,47 @@ export default {
   data() {
     return {
       data: [],
-      alldata: [],
-      people_data: [],
+      alldata: [
+        {
+          car_color: "",
+          car_name: "",
+          car_type:  "",
+          home_loaction:  "",
+          is_accident: "",
+          is_check:  "",
+          license_num:  "",
+          people_name:  "",
+          reg_city: "",
+          reg_time:  "",
+        }
+      ],
+      people_data: [
+        {
+          ID:  "",
+          address:   "",
+          birthDate:   "",
+          license_num:   "",
+          name:   "",
+          sex:   "",
+          telphone:   "",
+        }
+      ],
+      show_type : "登记车辆",
+      violation_car_info :[
+        {
+          car_color: "",
+          car_name: "",
+          car_type: "",
+          description: "",
+          is_accident: "",
+          is_check: "",
+          license_num: "",
+          people_name: "",
+          violation_road:"",
+          violation_time: "",
+          violation_type: "",
+        }
+      ],
       keyWords: "",
       license_num: "",
       results: [],
@@ -204,6 +277,9 @@ export default {
       return this.products;
     },
     select() {
+    //   this.alldata = [];
+    //   this.people_data = [];
+    //   this.violation_car_info = [];
       if (this.value == "") {
         this.$message({
           message: "请选择查询的车辆类型！",
@@ -221,16 +297,44 @@ export default {
           var url = "/select_car_info/reg_car_info";
         }
         this.select_params.license_num = this.license_num;
+        //请求数据
         this.$http.post(url, this.select_params).then(data => {
-          if(data.data.reg_car_info.length!==0){
-            this.alldata.push(data.data.reg_car_info[0]);
-            console.log(this.alldata);
+          if(this.value == "违章车辆"){
+            this.show_type = "违章车辆"
+            if(data.data.violation_car_info.length!==0){
+              this.violation_car_info[0]=data.data.violation_car_info[0];
+            }else{
+              this.$message({
+                message: "未查到此车辆的信息 ！",
+                type: "warning"
+              });
+            }
+          }else{
+            this.show_type = "登记车辆"
+            if(data.data.reg_car_info.length!==0){
+              this.alldata[0] = data.data.reg_car_info[0];
+            }else{
+              this.$message({
+                message: "未查到此车辆的信息 ！",
+                type: "warning"
+              });
+            }
+          }
+          if(data.data.people_info.length!==0){
+            this.people_data[0] = data.data.people_info[0];
           }
           else{
             //未查到数据
+            this.$message({
+              message: "未查到此车辆的信息 ！",
+              type: "warning"
+            });
           }
         });
       }
+    },
+    to_pdf(){
+      this.getPdf('#to_pdf,#to_pdf3','车辆查询')
     },
     get_pie_data() {
       this.$http
@@ -239,42 +343,9 @@ export default {
           //   console.log(data);
           this.tableData = data.data;
           this.count = data.data.count;
-          //   this_.init()
-          //   console.log(this_.tableData);
           this.loading = false;
         });
     },
-    exportExcel() {
-      /* 从表生成工作簿对象 */
-      var wb = XLSX.utils.table_to_book(document.querySelector("#out-table"));
-      /* 获取二进制字符串作为输出 */
-      var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
-        bookSST: true,
-        type: "array"
-      });
-      try {
-        FileSaver.saveAs(
-          //Blob 对象表示一个不可变、原始数据的类文件对象。
-          //Blob 表示的不一定是JavaScript原生格式的数据。
-          //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-          //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-          new Blob([wbout], { type: "application/octet-stream" }),
-          //设置导出文件名称
-          "sheetjs.xlsx"
-        );
-      } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
-      }
-      return wbout;
-    },
-    handleSizeChange(val) {
-      console.log(val);
-    },
-    handleCurrentChange(val) {
-      this.currentPage4 = 1;
-      console.log(`当前页: ${val}`);
-    }
   },
   components: {
     Area
@@ -305,7 +376,7 @@ export default {
   width: 150px;
 }
 .inline-input {
-  width: 150px;
+  width: 160px;
 }
 .title_div {
   width: 100%;
@@ -338,11 +409,11 @@ export default {
   justify-content: center;
 }
 .left_sapn{
-  margin-right: 5px;
+  margin-right: 15px;
   display: block;
   padding: 0 5px;
   width: 160px;
-  height: 30px;
+  height: 40px;
   line-height: 30px;
   text-align: left;
   font-size: 15px;
@@ -351,13 +422,57 @@ export default {
   display: flex;
   align-self: center;
   padding-bottom:5px; 
+  justify-content: center
 }
 .input{
   width: 200px;
 }
+.info_div_body{
+  width: 100%;
+  height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding:  100px 100px 0 100px;
+  box-sizing: border-box;
+}
+.title_span{
+  display: block;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: skyblue;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+.info_div_child{
+  width: 600px;
+  height: 600px;
+  background-color: #282635;
+  border-radius: 50px;
 
-
-
+}
+.info_value{
+  width: 250px;
+  height: 40px;
+  background-color: rgb(25,25,38);
+  border-radius: 10px;
+  line-height: 40px;
+  text-align: center;
+  color: #ffffff
+}
+.info_value_description{
+  width: 250px;
+  height: 60px;
+  background-color: rgb(25,25,38);
+  border-radius: 10px;
+  /* line-height: 60px; */
+  text-align: center;
+  color: #ffffff;
+  overflow: auto;
+  padding: 5px;
+}
 
 
 
@@ -370,19 +485,6 @@ export default {
 
 
 </style>
-
-
-
-
-
-
-
-
-
-
-
-
-
 <style>
 .el-pagination .el-select .el-input {
   margin: 0 !important;
