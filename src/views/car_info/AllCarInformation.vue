@@ -29,12 +29,12 @@
         <el-table-column prop="reg_city" label="车辆登记地区" ></el-table-column>
         <el-table-column prop="home_loaction" label="车辆归属地" ></el-table-column>
         <el-table-column prop="reg_time" label="登记时间" sortable ></el-table-column>
-        <el-table-column label="操作" width="100">
+        <!-- <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
             <el-button type="text" size="small">编辑</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <div class="block">
         <el-pagination
