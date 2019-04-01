@@ -1,94 +1,8 @@
 <template>
   <div id="to_pdf_1">
     <Area></Area>
-    <!-- <el-table
-    v-loading="loading"
-    element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)"
-    :data="tableData"
-    style="width:90%;"
-    max-height="800"
-    :row-class-name="tableRowClassName"
-    :default-sort = "{prop: 'date', order: 'descending'}"
-    id="out-table"
-    >
-    <el-table-column
-      prop="car_name"
-      label="车辆名称"
-      
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="car_type"
-      label="车辆类型"
-      
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="car_color"
-      label="车辆颜色">
-    </el-table-column>
-    <el-table-column
-      prop="license_num"
-      label="车牌号"
-      
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="people_name"
-      label="车主姓名"
-      
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="is_check"
-      label="是否年检">
-    </el-table-column>
-    <el-table-column
-      prop="is_accident"
-      label="是否发生过事故"
-      
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="reg_city"
-      label="车辆登记地区"
-      
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="reg_time"
-      label="登记时间"
-      sortable
-      width="180">
-    </el-table-column>
-    <el-table-column
-      fixed="right"
-      label="操作"
-      width="100">
-      <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-        <el-button type="text" size="small">编辑</el-button>
-      </template>
-    </el-table-column>
-    </el-table>-->
-    <!-- <button @click="exportExcel">导出Excel表格</button> -->
-    <!-- <div class="block">
-    <el-pagination
-      background
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[10, 200, 300, 400]"
-      :page-size="10"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
-    </el-pagination>
-    </div>-->
-
     <div class="title_div">
-        <el-button @click="to_pdf">导出PDF</el-button>
+      <a :href="dataURL" download="test"  class="load_img">下载图片信息到本地</a>
       <div class="car_type_div">
         <span class="span_info">要查询的车辆类型选择</span>
         <el-select v-model="value" placeholder="请选择">
@@ -118,55 +32,143 @@
         >搜索</el-button>
       </div>
     </div>
-    <div class="info_div_body" >
-      <div class="info_div_child" v-if="show_type == '登记车辆'"  id="to_pdf" >
-        <span class="title_span"  >登记车辆信息</span>
-        <span class="title_span"  v-show="false" >登记车辆信息</span>
-      <ul class="ul_left" v-for="(item,index) in alldata" :key="index" >
-        <li><span class="left_sapn">车主姓名：</span> <span class="info_value">{{item.people_name}}</span></li>
-        <li><span class="left_sapn">车牌号：</span> <span class="info_value">{{item.license_num}}</span></li>
-        <li><span class="left_sapn">车辆名称：</span> <span class="info_value">{{item.car_name}}</span></li>
-        <li><span class="left_sapn">车辆类型：</span> <span class="info_value">{{item.car_type}}</span></li>
-        <li><span class="left_sapn">车辆颜色：</span> <span class="info_value">{{item.car_color}}</span></li>
-        <li><span class="left_sapn">车辆归属地：</span> <span class="info_value">{{item.home_loaction}}</span></li>
-        <li><span class="left_sapn">是否发生过事故：</span> <span class="info_value">{{item.is_accident}}</span></li>
-        <li><span class="left_sapn">是否年检：</span> <span class="info_value">{{item.is_check}}</span></li>
-        <li><span class="left_sapn">登记地区：</span> <span class="info_value">{{item.reg_city}}</span></li>
-        <li><span class="left_sapn">登记时间：</span> <span class="info_value">{{item.reg_time}}</span></li>
-      </ul>
-    </div>
-      <div class="info_div_child" v-if="show_type == '违章车辆' ">
-        <span class="title_span" >违章车辆信息</span>
-      <ul class="ul_left" v-for="(item,index) in violation_car_info" :key="index">
-        <li><span class="left_sapn">车主姓名：</span> <span class="info_value">{{item.people_name}}</span></li>
-        <li><span class="left_sapn">车牌号：</span> <span class="info_value">{{item.license_num}}</span></li>
-        <li><span class="left_sapn">车辆名称：</span> <span class="info_value">{{item.car_name}}</span></li>
-        <li><span class="left_sapn">车辆类型：</span> <span class="info_value">{{item.car_type}}</span></li>
-        <li><span class="left_sapn">车辆颜色：</span> <span class="info_value">{{item.car_color}}</span></li>
-        <li><span class="left_sapn">是否年检：</span> <span class="info_value">{{item.is_check}}</span></li>
-        <li><span class="left_sapn">是否发生过事故：</span> <span class="info_value">{{item.is_accident}}</span></li>
-        <li><span class="left_sapn">违章类型：</span> <span class="info_value">{{item.violation_type}}</span></li>
-        <li><span class="left_sapn">违章路段：</span> <span class="info_value">{{item.violation_road}}</span></li>
-        <li><span class="left_sapn">违章时间：</span> <span class="info_value">{{item.violation_time}}</span></li>
-        <li><span class="left_sapn" style="height:60px;line-height:60px;">处理描述：</span> <span class="info_value_description">{{item.description}}</span></li>
-      </ul>
-    </div>
-    <div class="info_div_child" id="to_pdf3">
-        <span class="title_span">车辆所有者信息</span>
-      <ul class="ul_left" v-for="(item,index) in people_data" :key="index">
-        <li><span class="left_sapn">车牌号：</span> <span class="info_value">{{item.license_num}}</span></li>
-        <li><span class="left_sapn">车主姓名：</span> <span class="info_value">{{item.name}}</span></li>
-        <li><span class="left_sapn">身份证号码：</span> <span class="info_value">{{item.ID}}</span></li>
-        <li><span class="left_sapn">性别：</span> <span class="info_value">{{item.sex}}</span></li>
-        <li><span class="left_sapn">出生日期：</span> <span class="info_value">{{item.birthDate}}</span></li>
-        <li><span class="left_sapn">电话号码：</span> <span class="info_value">{{item.telphone}}</span></li>
-        <li><span class="left_sapn">家庭住址：</span> <span class="info_value">{{item.address}}</span></li>
-      </ul>
+
+    <div class="info_div_body" ref="imageWrapper">
+      <slot>
+        <div class="info_div_child" v-if="show_type == '登记车辆'">
+          <span class="title_span">登记车辆信息</span>
+          <span class="title_span" v-show="false">登记车辆信息</span>
+          <ul class="ul_left" v-for="(item,index) in alldata" :key="index">
+            <li>
+              <span class="left_sapn">车主姓名：</span>
+              <span class="info_value">{{item.people_name}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车牌号：</span>
+              <span class="info_value">{{item.license_num}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车辆名称：</span>
+              <span class="info_value">{{item.car_name}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车辆类型：</span>
+              <span class="info_value">{{item.car_type}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车辆颜色：</span>
+              <span class="info_value">{{item.car_color}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车辆归属地：</span>
+              <span class="info_value">{{item.home_loaction}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">是否发生过事故：</span>
+              <span class="info_value">{{item.is_accident}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">是否年检：</span>
+              <span class="info_value">{{item.is_check}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">登记地区：</span>
+              <span class="info_value">{{item.reg_city}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">登记时间：</span>
+              <span class="info_value">{{item.reg_time}}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="info_div_child" v-if="show_type == '违章车辆' ">
+          <span class="title_span">违章车辆信息</span>
+          <ul class="ul_left" v-for="(item,index) in violation_car_info" :key="index">
+            <li>
+              <span class="left_sapn">车主姓名：</span>
+              <span class="info_value">{{item.people_name}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车牌号：</span>
+              <span class="info_value">{{item.license_num}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车辆名称：</span>
+              <span class="info_value">{{item.car_name}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车辆类型：</span>
+              <span class="info_value">{{item.car_type}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车辆颜色：</span>
+              <span class="info_value">{{item.car_color}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">是否年检：</span>
+              <span class="info_value">{{item.is_check}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">是否发生过事故：</span>
+              <span class="info_value">{{item.is_accident}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">违章类型：</span>
+              <span class="info_value">{{item.violation_type}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">违章路段：</span>
+              <span class="info_value">{{item.violation_road}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">违章时间：</span>
+              <span class="info_value">{{item.violation_time}}</span>
+            </li>
+            <li>
+              <span class="left_sapn" style="height:60px;line-height:60px;">处理描述：</span>
+              <span class="info_value_description">{{item.description}}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="info_div_child" id="to_pdf3">
+          <span class="title_span">车辆所有者信息</span>
+          <ul class="ul_left" v-for="(item,index) in people_data" :key="index">
+            <li>
+              <span class="left_sapn">车牌号：</span>
+              <span class="info_value">{{item.license_num}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">车主姓名：</span>
+              <span class="info_value">{{item.name}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">身份证号码：</span>
+              <span class="info_value">{{item.ID}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">性别：</span>
+              <span class="info_value">{{item.sex}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">出生日期：</span>
+              <span class="info_value">{{item.birthDate}}</span>
+            </li>
+            <li>
+              <span class="left_sapn">电话号码：</span>
+              <span class="info_value">{{item.telphone}}</span>
+            </li>
+            <li>
+              <span class="left_sapn" style="height:60px;line-height:60px;">家庭住址：</span>
+              <span class="info_value_description">{{item.address}}</span>
+            </li>
+          </ul>
+        </div>
+      </slot>
     </div>
   </div>
-    </div>
 </template>
 <script>
+import html2Canvas from "html2canvas";
 import Area from "../../components/Area/Area";
 import FileSaver from "file-saver";
 import XLSX from "xlsx";
@@ -176,33 +178,34 @@ export default {
   data() {
     return {
       data: [],
+      dataURL: "",
       alldata: [
         {
           car_color: "",
           car_name: "",
-          car_type:  "",
-          home_loaction:  "",
+          car_type: "",
+          home_loaction: "",
           is_accident: "",
-          is_check:  "",
-          license_num:  "",
-          people_name:  "",
+          is_check: "",
+          license_num: "",
+          people_name: "",
           reg_city: "",
-          reg_time:  "",
+          reg_time: ""
         }
       ],
       people_data: [
         {
-          ID:  "",
-          address:   "",
-          birthDate:   "",
-          license_num:   "",
-          name:   "",
-          sex:   "",
-          telphone:   "",
+          ID: "",
+          address: "",
+          birthDate: "",
+          license_num: "",
+          name: "",
+          sex: "",
+          telphone: ""
         }
       ],
-      show_type : "登记车辆",
-      violation_car_info :[
+      show_type: "登记车辆",
+      violation_car_info: [
         {
           car_color: "",
           car_name: "",
@@ -212,9 +215,9 @@ export default {
           is_check: "",
           license_num: "",
           people_name: "",
-          violation_road:"",
+          violation_road: "",
           violation_time: "",
-          violation_type: "",
+          violation_type: ""
         }
       ],
       keyWords: "",
@@ -241,7 +244,7 @@ export default {
           label: "登记车辆"
         }
       ],
-      value: "",
+      value: "", //显示现在是查询的是什么类型的车
       select_params: {
         username: "",
         password: "",
@@ -277,9 +280,7 @@ export default {
       return this.products;
     },
     select() {
-    //   this.alldata = [];
-    //   this.people_data = [];
-    //   this.violation_car_info = [];
+      console.log(this.show_type);
       if (this.value == "") {
         this.$message({
           message: "请选择查询的车辆类型！",
@@ -299,31 +300,36 @@ export default {
         this.select_params.license_num = this.license_num;
         //请求数据
         this.$http.post(url, this.select_params).then(data => {
-          if(this.value == "违章车辆"){
-            this.show_type = "违章车辆"
-            if(data.data.violation_car_info.length!==0){
-              this.violation_car_info[0]=data.data.violation_car_info[0];
-            }else{
+          console.log(this.value);
+          if (this.value == "违章车辆") {
+            this.show_type = "违章车辆";
+            if (data.data.violation_car_info.length !== 0) {
+              for (var key in this.violation_car_info[0]) {
+                this.violation_car_info[0][key] =
+                  data.data.violation_car_info[0][key];
+              }
+            } else {
               this.$message({
                 message: "未查到此车辆的信息 ！",
                 type: "warning"
               });
             }
-          }else{
-            this.show_type = "登记车辆"
-            if(data.data.reg_car_info.length!==0){
-              this.alldata[0] = data.data.reg_car_info[0];
-            }else{
+          } else {
+            this.show_type = "登记车辆";
+            if (data.data.reg_car_info.length !== 0) {
+              for (var key in this.alldata[0]) {
+                this.alldata[0][key] = data.data.reg_car_info[0][key];
+              }
+            } else {
               this.$message({
                 message: "未查到此车辆的信息 ！",
                 type: "warning"
               });
             }
           }
-          if(data.data.people_info.length!==0){
+          if (data.data.people_info.length !== 0) {
             this.people_data[0] = data.data.people_info[0];
-          }
-          else{
+          } else {
             //未查到数据
             this.$message({
               message: "未查到此车辆的信息 ！",
@@ -332,28 +338,25 @@ export default {
           }
         });
       }
+      this.to_pdf()
     },
-    to_pdf(){
-      this.getPdf('#to_pdf,#to_pdf3','车辆查询')
-    },
-    get_pie_data() {
-      this.$http
-        .post("/AllViolationInformation/allData", this.params)
-        .then(data => {
-          //   console.log(data);
-          this.tableData = data.data;
-          this.count = data.data.count;
-          this.loading = false;
-        });
-    },
+    to_pdf() {
+      // this.getPdf('to_pdf','车辆查询')
+      html2Canvas(this.$refs.imageWrapper, {
+        backgroundColor: null
+      }).then(canvas => {
+        let dataURL = canvas.toDataURL("image/png");
+        this.dataURL = dataURL;
+      });
+    }
   },
   components: {
     Area
   },
-  created() {
-    // this.get_pie_data();
-  },
-  mounted() {}
+  created() {},
+  mounted() {
+    
+  }
 };
 </script>
 <style scoped>
@@ -408,7 +411,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
-.left_sapn{
+.left_sapn {
   margin-right: 15px;
   display: block;
   padding: 0 5px;
@@ -421,22 +424,22 @@ export default {
 .ul_left li {
   display: flex;
   align-self: center;
-  padding-bottom:5px; 
-  justify-content: center
+  padding-bottom: 5px;
+  justify-content: center;
 }
-.input{
+.input {
   width: 200px;
 }
-.info_div_body{
+.info_div_body {
   width: 100%;
   height: 700px;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding:  100px 100px 0 100px;
+  padding: 100px 100px 0 100px;
   box-sizing: border-box;
 }
-.title_span{
+.title_span {
   display: block;
   width: 100%;
   height: 50px;
@@ -446,37 +449,44 @@ export default {
   font-size: 20px;
   margin-bottom: 5px;
 }
-.info_div_child{
+.info_div_child {
   width: 600px;
   height: 600px;
   background-color: #282635;
   border-radius: 50px;
-
 }
-.info_value{
+.info_value {
   width: 250px;
   height: 40px;
-  background-color: rgb(25,25,38);
+  background-color: rgb(25, 25, 38);
   border-radius: 10px;
   line-height: 40px;
   text-align: center;
-  color: #ffffff
+  color: #ffffff;
 }
-.info_value_description{
-  width: 250px;
+.info_value_description {
+  width: 240px;
   height: 60px;
-  background-color: rgb(25,25,38);
+  background-color: rgb(25, 25, 38);
   border-radius: 10px;
   /* line-height: 60px; */
   text-align: center;
   color: #ffffff;
   overflow: auto;
   padding: 5px;
+  box-sizing: border-box;
 }
-
-
-
-
+.load_img{
+  display: block;
+  width: 150px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: rgb(53, 54, 67);
+  color: #ffffff;
+  border-radius: 10px;
+  text-decoration :none
+}
 
 
 
@@ -485,6 +495,13 @@ export default {
 
 
 </style>
+
+
+
+
+
+
+
 <style>
 .el-pagination .el-select .el-input {
   margin: 0 !important;
