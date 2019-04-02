@@ -93,12 +93,14 @@ export default {
         document.querySelector("#out-table"),
         xlsxParam
       );
+      console.log(wb)
       /* 获取二进制字符串作为输出 */
       var wbout = XLSX.write(wb, {
         bookType: "xlsx",
         bookSST: true,
         type: "array"
       });
+      console.log(wbout)
       try {
         FileSaver.saveAs(
           //Blob 对象表示一个不可变、原始数据的类文件对象。

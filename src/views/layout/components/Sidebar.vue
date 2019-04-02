@@ -61,8 +61,8 @@
         <template slot="title">
           <span>车辆信息录入</span>
         </template>
-        <el-menu-item index="/car/InformationEntry">信息录入<div class="active-item"></div><div class="item-line"></div></el-menu-item>
-        <el-menu-item index="/car/InformationUpadte">信息更新<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/Information/InformationEntry">信息录入<div class="active-item"></div><div class="item-line"></div></el-menu-item>
+        <el-menu-item index="/Information/InformationUpadte">信息更新<div class="active-item"></div></el-menu-item>
       </el-submenu>
       <el-submenu index="5">
         <template slot="title">
@@ -76,8 +76,8 @@
         <template slot="title">
           <span>用户管理</span>
       </template>
-        <el-menu-item index="/dataImport/Excel">用户管理<div class="active-item"></div></el-menu-item>
-        <el-menu-item index="/car/">权限管理<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/userInfo/user">用户管理<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/userInfo/auth">权限管理<div class="active-item"></div></el-menu-item>
       </el-submenu>
     </el-menu>
 </template>

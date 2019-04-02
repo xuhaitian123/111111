@@ -20,7 +20,10 @@ import AllCarInformation from "../views/car_info/AllCarInformation"
 import VisualChart from "../views/car_info/VisualChart"
 import Excel from "../views/dataImport/Excel"
 import  select_violation_car  from  '../views/car_info/select_violation_car'
-import  test  from  '../views/layout/test'
+import  user  from  '../views/userInfo/user'
+import  auth  from  '../views/userInfo/auth'
+import  InformationUpadte  from  '../views/Information/InformationUpadte'
+import  InformationEntry  from  '../views/Information/InformationEntry'
 
 Vue.use(Router)
 
@@ -36,28 +39,6 @@ export default new Router({
       component: Login,
       name: 'Layout'
     },
-    // {
-    //   path: '/car_info_table',
-    //   component: car_info_table,
-    //   name: 'Layout'
-    // },
-    // {
-    //   path: '/select_violation_car',
-    //   component: select_violation_car,
-    //   name: 'Layout'
-    // },
-    // {
-    //   path:'/dataAnalyse',
-    //   component:Layout,
-    //   name:'dataAnalyse',
-    //   children:[
-    //     {
-    //       path: 'dataAnalyse',
-    //       component: DataAnalyse,
-    //       name: 'dataAnalyse'
-    //     }
-    //   ]
-    // },
     {
       path: '/main',
       component: LayoutMap,
@@ -140,14 +121,36 @@ export default new Router({
       ],
     },
     {
-      path: '/main',
+      path: '/userInfo',
       component: Layout,
       name: 'Layout',
       children: [
         {
-          path: 'roadSectionMap/:id',
-          component: RoadSectionMap,
-          name: 'RoadSectionMap'
+          path: 'user',
+          component: user,
+          name: 'user'
+        },
+        {
+          path: 'auth',
+          component: auth,
+          name: 'auth'
+        }
+      ],
+    },
+    {
+      path: '/Information',
+      component: Layout,
+      name: 'Layout',
+      children: [
+        {
+          path: 'InformationUpadte',
+          component: InformationUpadte,
+          name: 'InformationUpadte'
+        },
+        {
+          path: 'InformationEntry',
+          component: InformationEntry,
+          name: 'InformationEntry'
         }
       ],
     },
@@ -199,14 +202,6 @@ export default new Router({
 
       ],
     },
-    // {
-    //   path: '/main',
-    //   component: Layout,
-    //   name: 'Layout',
-    //   children: [
-    //
-    //   ],
-    // },
     {
       path: '/signalOptimization',
       component: Layout,

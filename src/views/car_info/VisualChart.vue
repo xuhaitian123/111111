@@ -4,7 +4,7 @@
     <div class="contianer">
       <div class="contianer_body_title">
         <div class="title">
-          <img class="toLeft"  src="../../../static/map/toLeft.png" @click="jumpPage('/main/dashboard')">
+          <!-- <img class="toLeft"  src="../../../static/map/toLeft.png" @click="jumpPage('/main/dashboard')"> -->
           <span class="title_text">可视化图表</span>
         </div>
       </div>
@@ -440,7 +440,7 @@ export default {
       this.myChart.setOption(option, true);
     },
     jumpPage(key) {
-      this.$router.push(key);
+      // this.$router.push(key);
     }
   },
   components: {
