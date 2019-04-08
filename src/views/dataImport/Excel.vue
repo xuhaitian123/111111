@@ -24,15 +24,13 @@
           :on-remove="remove"
           action="http://localhost:3000/upload/res"
         >
-          <div class="auto">
-            <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button
-              style="margin-left: 10px;"
-              size="small"
-              type="success"
-              @click="submitUpload"
-            >上传到服务器</el-button>
-          </div>
+          <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+          <el-button
+            style="margin-left: 10px;"
+            size="small"
+            type="success"
+            @click="submitUpload"
+          >上传到服务器</el-button>
           <div
             class="el-upload__tip"
             slot="tip"
@@ -50,7 +48,7 @@
           ></el-option>
         </el-select>
         <el-button @click="download_template">确定下载</el-button>
-      </div>-->
+      </div> -->
     </div>
     <div class="middle">
       <span class="title">上传的数据详情展示：共{{total}}条数据</span>
@@ -72,7 +70,6 @@
 <script>
 import Area from "../../components/Area/Area";
 import XLSX from "xlsx";
-
 export default {
   name: "car_info_table",
   data() {
@@ -173,7 +170,6 @@ export default {
           this.show_tip = false;
           this.Exceldata = this.xlsxJson;
           console.log(this.xlsxJson.length);
-
           // xlsxJson就是解析出来的json数据,数据格式如下
           // [
           //   {
@@ -203,7 +199,7 @@ export default {
         };
         reader.readAsBinaryString(file.raw);
       });
-    }
+    },
     // download_template() {
     //   if (this.download_type == "") {
     //     var download_template_data = [];
@@ -271,7 +267,6 @@ export default {
   font-size: 15px;
   width: 100%;
 }
-
 .tip {
   height: 100%;
   /* background-color: #fff; */
@@ -323,14 +318,6 @@ export default {
   /* max-width: 500px; */
   max-height: 450px;
   overflow: auto;
-}
-.auto{
-  width: 380px;
-  display: flex;
-  justify-content:space-around;
-  padding: 0 50px 0 50px ;
-  box-sizing: border-box
-
 }
 </style>
 
