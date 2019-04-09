@@ -18,7 +18,25 @@
           </div>
         </div>
         <div class="up_middle">
-          
+          <div class="up_left_pie_title">
+            <span>违章车辆不同类型增长趋势对比分析图表</span>
+          </div>
+          <div style="width: 100%;height: 100%;">
+            <div class="select_time">
+              <span style="margin-right:30px;">请选择时间</span>
+              <el-date-picker
+                v-model="week_data_picker_3"
+                type="datetimerange"
+                size="mini"
+                format="yyyy-MM-dd hh:mm:ss"
+                value-format="yyyy-MM-dd hh:mm:ss"
+                range-separator="至"
+                placeholder="选择日期">
+              </el-date-picker>
+              <el-button class="search-button" v-on:click="get_top_bar_data()">查询</el-button>
+            </div>
+            <div></div>
+          </div>
         </div>
         <div class="down_left_bar">
           <div class="down_left_bar_title">
@@ -89,6 +107,7 @@ export default {
       loading_pie : true,
       week_data_picker_1: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24*30), 'yyyy-MM-dd hh:mm:ss'), this.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')],
       week_data_picker_2: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24*30), 'yyyy-MM-dd hh:mm:ss'), this.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')],
+      week_data_picker_3: [this.formatDate(new Date(new Date().getTime() - 1000 * 60 * 60 * 24*30), 'yyyy-MM-dd hh:mm:ss'), this.formatDate(new Date(), 'yyyy-MM-dd hh:mm:ss')],
         
     };
   },
@@ -143,6 +162,25 @@ export default {
           this_.init3();
         });
     },
+    get_top_bar_data() {
+      var this_ = this;
+      var time = new Date(this.week_data_picker_3[0])
+      var end = new Date(this.week_data_picker_3[1]);
+      var startTime = this.formatDate(new Date(time.getTime()), 'yyyy-MM-dd hh:mm:ss')
+      var endTime = this.formatDate(new Date(end.getTime()), 'yyyy-MM-dd hh:mm:ss')
+      this.$http
+        .post("/violation_car_type", {
+          username: this.username,
+          password: this.password,
+          start_time: startTime,
+          end_time: endTime,
+          select_type : "闯红灯,未系安全带,无证驾驶",
+        })
+        .then(data => {
+          this_.bar_data = data.data;
+          // this_.init4();
+        });
+    },
     init1() {
       this.myChart = this.$echarts.init(document.getElementById("pie"));
       var option = {},
@@ -189,7 +227,7 @@ export default {
               name: "详情",
               type: "pie",
               radius: "55%",
-              center: ["40%", "50%"],
+              center: ["50%", "50%"],
               data: this.data,
               itemStyle: {
                 emphasis: {
@@ -495,9 +533,9 @@ export default {
 
 
   .up_left_pie {
-    height: 400px;
-    width: 600px;
-    margin-right: 10px;
+    height: 500px;
+    width: 40%;
+    margin-right: 1%;
     background-color: #1d1d2c ;
   }
   .up_left_pie_title{
@@ -508,13 +546,15 @@ export default {
     justify-content: center;
   }
   .up_left_pie_body_area {
-    height: 370px;
+    height: 470px;
     background: #333643;
     padding: 0 !important;
   }
   .up_middle{
-    width: 800px;
-    height: 200px;
+    height: 500px;
+    width: 59%;
+    /* margin-right: 1%; */
+    background-color: #1d1d2c ;
   }
 
 
@@ -571,6 +611,14 @@ export default {
    width: 805px;
    padding: 5px 200px 5px 20px;
    text-align: center;
+ }
+ .select_time{
+   height: 40px;
+   width: 100%;
+   padding: 5px 20px 5px 20px;
+   text-align: center;
+   background-color: #fff;
+   box-sizing: border-box;
  }
 .search-button {
     background: #54576a;

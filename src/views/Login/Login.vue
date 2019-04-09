@@ -89,7 +89,7 @@ import { Message } from 'element-ui';
                   duration: 2000
                 });
                 this.setStorageInfo(user);
-                self.$router.push({path: '/main/map'});
+                self.$router.push({path: '/car/VisualChart'});
               }else if(user.data.status === 1){
                 self.$message.error('密码错误,请检测密码');
               }else if(user.data.status === 0){
