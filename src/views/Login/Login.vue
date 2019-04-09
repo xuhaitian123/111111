@@ -14,14 +14,14 @@
             <div class="user">
               <div class="user-input">
                 <img src="../../../static/image/login/user.png" class="user-img">
-                <input class="user-text" v-model="username" type="text"/>
+                <input class="user-text" v-model="username" type="text" v-on:keyup.enter="login"/>
               </div>
               <div class="user-name">用户名</div>
             </div>
             <div class="passward">
               <div class="passward-input">
                 <img src="../../../static/image/login/0919-41.png" class="user-img">
-                <input class="passward-text" v-model="password" type="password"/>
+                <input class="passward-text" v-model="password" type="password" v-on:keyup.enter="login"/>
               </div>
               <div class="passward-name">密码</div>
             </div>

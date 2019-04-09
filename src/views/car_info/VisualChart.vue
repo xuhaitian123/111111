@@ -617,7 +617,7 @@ export default {
    width: 100%;
    padding: 5px 20px 5px 20px;
    text-align: center;
-   background-color: #fff;
+   background-color: #333643;
    box-sizing: border-box;
  }
 .search-button {
