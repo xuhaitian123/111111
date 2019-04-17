@@ -14,7 +14,7 @@
 <script>
 import Area from "../../components/Area/Area";
 import XLSX from "xlsx";
-
+import axios from 'axios'
 export default {
   name: "auth",
   data() {
@@ -38,10 +38,8 @@ export default {
   },
   methods: {
     get_data(params) {
-      this.$http.post("/AllCarInformation/allData", params).then(data => {
-        this.tableData = data.data.data;
-        this.count = data.data.total;
-        this.loading = false;
+      axios.get("/all_city_reg/city_loaction").then(data => {
+        console.log(data)
       });
     },
     
@@ -50,6 +48,7 @@ export default {
     Area
   },
   created() {
+    this.get_data()
   },
   mounted() {}
 };

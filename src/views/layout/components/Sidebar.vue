@@ -47,6 +47,7 @@
         <template slot="title">
           <span>车辆信息可视化</span>
       </template>
+        <el-menu-item index="/car/all_reg_car_loaction">所有登记车辆地区分布图<div class="active-item"></div></el-menu-item>
         <el-menu-item index="/car/VisualChart">可视化图表<div class="active-item"></div></el-menu-item>
         <el-menu-item index="/car/AllCarInformation">所有车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <el-menu-item index="/car/AllViolationInformation">违章车辆概览<div class="active-item"></div></el-menu-item>

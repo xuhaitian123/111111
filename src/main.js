@@ -20,6 +20,7 @@ import "vue-timelinepick/dist/vue-timelinepick.css"
 import echarts from 'echarts'
 import htmlToPdf from '@/components/pdf.js'
 
+
 Vue.use(htmlToPdf);
 Vue.use(timelinepick);
 Vue.use(VueAxios, axios);

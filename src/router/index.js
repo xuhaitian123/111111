@@ -20,6 +20,7 @@ import AllCarInformation from "../views/car_info/AllCarInformation"
 import VisualChart from "../views/car_info/VisualChart"
 import Excel from "../views/dataImport/Excel"
 import  select_violation_car  from  '../views/car_info/select_violation_car'
+import  all_reg_car_loaction  from  '../views/car_info/all_reg_car_loaction'
 import  user  from  '../views/userInfo/user'
 import  auth  from  '../views/userInfo/auth'
 import  InformationUpadte  from  '../views/Information/InformationUpadte'
@@ -90,6 +91,11 @@ export default new Router({
           path: 'VisualChart',
           component: VisualChart,
           name: 'VisualChart'
+        },
+        {
+          path: 'all_reg_car_loaction',
+          component: all_reg_car_loaction,
+          name: 'all_reg_car_loaction'
         },
         {
           path: 'AllViolationInformation',

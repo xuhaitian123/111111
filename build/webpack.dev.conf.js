@@ -9,7 +9,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-
+const express = require('express')
+var app = express()  //  从这后面开始加
+ 
+var goodsData = require('../static/data.json')
+var router = express.Router()
+router.get("/city_loaction", function (req,res) {
+  res.json(goodsData)
+})
+app.use(router)
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
