@@ -4,7 +4,7 @@
     <div class="layout_table">
       <div class="title_div">
         <el-button type="text" style="width:80px" size="small" @click="exportExcel">导出Excel表格</el-button>
-        <div class="title">所有车辆登记信息数据概览表</div>
+        <div class="title">所有车主登记信息数据概览表</div>
         <el-button type="text" style="width:80px" size="small" ></el-button>
       </div>
       <el-table
@@ -16,25 +16,17 @@
         @sort-change="handleSortChange"
         style="width:100%;"
         max-height="750"
-        :default-sort="{prop: 'reg_time', order: 'descending'}"
+        :default-sort="{prop: 'birthDate', order: 'descending'}"
         id="out-table"
       >
-        <el-table-column prop="car_name" label="车辆名称" ></el-table-column>
-        <el-table-column prop="car_type" label="车辆类型" ></el-table-column>
-        <el-table-column prop="car_color" label="车辆颜色"></el-table-column>
+        <el-table-column prop="name" label="车主姓名" ></el-table-column>
+        <el-table-column prop="ID" label="身份证号码" ></el-table-column>
+        <el-table-column prop="address" label="家庭住址"></el-table-column>
+        <el-table-column prop="telphone" label="联系方式" ></el-table-column>
+        <el-table-column prop="sex" label="性别" ></el-table-column>
+        <el-table-column prop="birthDate" label="出生日期" ></el-table-column>
         <el-table-column prop="license_num" label="车牌号" ></el-table-column>
-        <el-table-column prop="people_name" label="车主姓名" ></el-table-column>
-        <el-table-column prop="is_check" label="是否年检"></el-table-column>
-        <el-table-column prop="is_accident" label="是否发生过事故" ></el-table-column>
-        <el-table-column prop="reg_city" label="车辆登记地区" ></el-table-column>
-        <el-table-column prop="home_loaction" label="车辆归属地" ></el-table-column>
         <el-table-column prop="reg_time" label="登记时间" sortable ></el-table-column>
-        <!-- <el-table-column label="操作" width="100">
-          <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-            <el-button type="text" size="small">编辑</el-button>
-          </template>
-        </el-table-column> -->
       </el-table>
       <div class="block">
         <el-pagination
@@ -80,7 +72,7 @@ export default {
   },
   methods: {
     get_data(params) {
-      this.$http.post("/AllCarInformation/allData", params).then(data => {
+      this.$http.post("/AllPeopleInformation/allData", params).then(data => {
         this.tableData = data.data.data;
         this.count = data.data.total;
         this.loading = false;
@@ -109,7 +101,7 @@ export default {
           //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
           new Blob([wbout], { type: "application/octet-stream" }),
           //设置导出文件名称
-          "登记车辆数据.xlsx"
+          "车主数据.xlsx"
         );
       } catch (e) {
         if (typeof console !== "undefined") console.log(e, wbout);

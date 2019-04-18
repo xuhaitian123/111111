@@ -97,7 +97,7 @@ export default {
       showfilelist: true,
       limmit: 1,
       params: {
-        username: "test1",
+        username: "test",
         password: "123456"
       }
     };

@@ -51,6 +51,7 @@
         <el-menu-item index="/car/VisualChart">可视化图表<div class="active-item"></div></el-menu-item>
         <el-menu-item index="/car/AllCarInformation">所有车辆概览<div class="active-item"></div><div class="item-line"></div></el-menu-item>
         <el-menu-item index="/car/AllViolationInformation">违章车辆概览<div class="active-item"></div></el-menu-item>
+        <el-menu-item index="/car/AllPeopleInformation">车主信息概览<div class="active-item"></div></el-menu-item>
       </el-submenu>
        <el-submenu index="4">
         <template slot="title">
