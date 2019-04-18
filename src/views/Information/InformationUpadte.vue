@@ -33,10 +33,10 @@
     </div>
 
     <div class="info_div_body" ref="imageWrapper">
-     <div class="content">
+      <div class="content">
         <div>
           <ul class="ul_info">
-            <li v-for="item in data_info" :key="item.name" >
+            <li v-for="item in data_info" :key="item.name">
               <span>{{item.name}}</span>
               <el-input
                 class="time_picker"
@@ -71,7 +71,7 @@ export default {
     return {
       data: [],
       dataURL: "",
-      data_info:[],
+      data_info: [],
       reg_info: [
         {
           flag: false,
@@ -243,7 +243,7 @@ export default {
           telphone: ""
         }
       ],
-      show_type: "登记车辆",
+      // show_type: "登记车辆",
       violation_car_info: [
         {
           car_color: "",
@@ -273,7 +273,7 @@ export default {
         start: "1",
         length: "10"
       },
-     options: [
+      options: [
         {
           value: "登记车辆",
           label: "登记车辆"
@@ -323,7 +323,7 @@ export default {
       return this.products;
     },
     select() {
-      console.log(this.show_type);
+      // console.log(this.show_type);
       if (this.value == "") {
         this.$message({
           message: "请选择查询的车辆类型！",
@@ -335,18 +335,18 @@ export default {
           type: "warning"
         });
       } else {
-        if (this.value == "违章车辆") {
-          this.data_info = this.violation_info
-          var url = "/select_car_info/violation_car_info";
-        } else {
-          var url = "/select_car_info/reg_car_info";
-        }
+        // if (this.value == "违章车辆") {
+        //   this.data_info = this.violation_info;
+        //   var url = "/select_car_info/violation_car_info";
+        // } else {
+        //   var url = "/select_car_info/reg_car_info";
+        // }
         this.select_params.license_num = this.license_num;
         //请求数据
-        this.$http.post(url, this.select_params).then(data => {
+        this.$http.post('url', this.select_params).then(data => {
           console.log(this.value);
           if (this.value == "违章车辆") {
-            this.show_type = "违章车辆";
+            // this.show_type = "违章车辆";1
             if (data.data.violation_car_info.length !== 0) {
               for (var key in this.violation_car_info[0]) {
                 this.violation_car_info[0][key] =
@@ -358,9 +358,9 @@ export default {
                 type: "warning"
               });
             }
-          } else {
-            this.show_type = "登记车辆";
-            this.data_info = this.reg_info
+          } else if(this.value == "登记车辆"){
+            // this.show_type = "登记车辆";
+            this.data_info = this.reg_info;
             if (data.data.reg_car_info.length !== 0) {
               for (var key in this.alldata[0]) {
                 this.alldata[0][key] = data.data.reg_car_info[0][key];
@@ -371,6 +371,8 @@ export default {
                 type: "warning"
               });
             }
+          }else{
+            this.data_info =  this.people_info;
           }
           if (data.data.people_info.length !== 0) {
             this.people_data[0] = data.data.people_info[0];
@@ -383,14 +385,14 @@ export default {
           }
         });
       }
-    },
+    }
   },
   components: {
     Area
   },
   created() {},
   mounted() {
-     this.data_info = this.reg_info;
+    this.data_info = this.reg_info;
   }
 };
 </script>
@@ -511,7 +513,7 @@ export default {
   padding: 5px;
   box-sizing: border-box;
 }
-.load_img{
+.load_img {
   display: block;
   width: 150px;
   height: 40px;
@@ -520,10 +522,8 @@ export default {
   background-color: rgb(53, 54, 67);
   color: #ffffff;
   border-radius: 10px;
-  text-decoration :none
+  text-decoration: none;
 }
-
-
 
 .content {
   width: 100%;
@@ -545,13 +545,12 @@ export default {
   margin-left: 15px;
 }
 .ul_info {
-    margin-top: 40px;
-    width: 100%;
-    height: 450px;
-    display: flex;
-    flex-flow: wrap;
-    justify-content: center;
-
+  margin-top: 40px;
+  width: 100%;
+  height: 450px;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
 }
 .ul_info li {
   display: flex;
@@ -563,7 +562,6 @@ export default {
   line-height: 60px;
   background-color: #282635;
   float: left;
-
 }
 .ul_info li span {
   display: block;
@@ -571,28 +569,25 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px
+  font-size: 20px;
 }
 .time_picker {
   width: 300px;
 }
-.submit_btn{
+.submit_btn {
   height: 50px;
   background-color: rgb(53, 54, 67);
   border: none;
-  color:#fff;
+  color: #fff;
   font-size: 16px;
 }
-.btn_parent{
+.btn_parent {
   width: 200px;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-
-
 </style>
 
 
