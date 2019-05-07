@@ -253,9 +253,9 @@ export default {
       var option = {
         // backgroundColor: "red",
         title: {
-          text: "全国主要城市空气质量",
-          subtext: "data from PM25.in",
-          sublink: "http://www.pm25.in",
+          text: "全国车辆分布情况图",
+          // subtext: "data from PM25.in",
+          // sublink: "http://www.pm25.in",
           x: "center",
           textStyle: {
             color: "#fff"

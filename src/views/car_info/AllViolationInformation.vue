@@ -31,11 +31,11 @@
         <el-table-column prop="violation_type" label="违章类型"></el-table-column>
         <el-table-column prop="description" label="处罚措施"></el-table-column>
         <el-table-column prop="violation_time" label="违章时间" sortable></el-table-column>
-        <el-table-column label="操作" width="100">
+        <!-- <el-table-column label="操作" width="100">
           <template slot-scope="scope">
             <el-button @click="handleClick(scope.row)" type="text" size="small">查看描述</el-button>
           </template>
-        </el-table-column>
+        </el-table-column> -->
       </el-table>
       <div class="block">
         <el-pagination

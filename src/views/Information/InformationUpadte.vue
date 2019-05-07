@@ -29,6 +29,11 @@
           type="submit"
           @click="select"
         >搜索</el-button>
+        <el-button
+          style="margin-left:20px;background:#353643;color:#ffffff;border:none"
+          type="submit"
+          @click="update"
+        >确定更新</el-button>
       </div>
     </div>
 
@@ -76,51 +81,61 @@ export default {
         {
           flag: false,
           name: "车主姓名",
+          English: "people_name",
           value: ""
         },
         {
           flag: false,
           name: "车牌号",
+          English: "license_num",
           value: ""
         },
         {
           flag: false,
           name: "车辆名称",
+          English: "car_name",
           value: ""
         },
         {
           flag: false,
           name: "车辆类型",
+          English: "car_type",
           value: ""
         },
         {
           flag: false,
           name: "车辆颜色",
+          English: "car_color",
           value: ""
         },
         {
           flag: false,
           name: "车辆归属地",
+          English: "home_loaction",
           value: ""
         },
         {
           flag: false,
           name: "是否发生过事故",
+          English: "is_accident",
           value: ""
         },
         {
           flag: false,
           name: "是否年检",
+          English: "is_check",
           value: ""
         },
         {
           flag: false,
           name: "登记地区",
+          English: "reg_city",
           value: ""
         },
         {
           flag: true,
           name: "登记时间",
+          English: "reg_time",
           value: ""
         }
       ],
@@ -128,56 +143,67 @@ export default {
         {
           flag: false,
           name: "车主姓名",
+          English: "people_name",
           value: ""
         },
         {
           flag: false,
           name: "车牌号",
+          English: "license_num",
           value: ""
         },
         {
           flag: false,
           name: "车辆名称",
+          English: "car_name",
           value: ""
         },
         {
           flag: false,
           name: "车辆类型",
+          English: "car_type",
           value: ""
         },
         {
           flag: false,
           name: "车辆颜色",
+          English: "car_color",
           value: ""
         },
         {
           flag: false,
           name: "是否发生过事故",
+          English: "is_accident",
           value: ""
         },
         {
           flag: false,
           name: "是否年检",
+          English: "is_check",
           value: ""
         },
         {
           flag: false,
           name: "违章类型",
+          English: "violation_type",
           value: ""
         },
         {
           flag: false,
           name: "违章路段",
+          English: "violation_road",
           value: ""
         },
         {
           flag: true,
           name: "违章时间",
+          English: "violation_time",
           value: ""
         },
         {
           flag: false,
           name: "处理描述",
+          English: "description",
           value: ""
         }
       ],
@@ -185,36 +211,43 @@ export default {
         {
           flag: false,
           name: "车牌号",
+          English: "license_num",
           value: ""
         },
         {
           flag: false,
           name: "车主姓名",
+          English: "name",
           value: ""
         },
         {
           flag: false,
           name: "身份证号码",
+          English: "ID",
           value: ""
         },
         {
           flag: false,
           name: "性别",
+          English: "sex",
           value: ""
         },
         {
           flag: true,
           name: "出生日期",
+          English: "birthDate",
           value: ""
         },
         {
           flag: false,
           name: "电话号码",
+          English: "telphone",
           value: ""
         },
         {
           flag: false,
           name: "家庭住址",
+          English: "address",
           value: ""
         }
       ],
@@ -291,7 +324,8 @@ export default {
       select_params: {
         username: "",
         password: "",
-        license_num: ""
+        license_num: "",
+        type: ""
       }
     };
   },
@@ -322,8 +356,29 @@ export default {
       });
       return this.products;
     },
+    update() {
+      let params ={
+            type : this.value,
+            data : this.date_string(this.data_info)
+          }
+      this.$http.post("/Information/update/update", params).then(data => {
+        if(data.data.status =="1"){
+          this.$message({
+            message: '信息更新成功！',
+            type: 'success'
+          });
+          this.data_info.forEach(item =>{
+            item.value = ""
+          })
+        }else{
+          this.$message({
+            message: "信息更新失败，请重新录入！",
+            type: "warning"
+          });
+        }
+      });
+    },
     select() {
-      // console.log(this.show_type);
       if (this.value == "") {
         this.$message({
           message: "请选择查询的车辆类型！",
@@ -335,56 +390,79 @@ export default {
           type: "warning"
         });
       } else {
-        // if (this.value == "违章车辆") {
-        //   this.data_info = this.violation_info;
-        //   var url = "/select_car_info/violation_car_info";
-        // } else {
-        //   var url = "/select_car_info/reg_car_info";
-        // }
         this.select_params.license_num = this.license_num;
+        this.select_params.type = this.value;
         //请求数据
-        this.$http.post('url', this.select_params).then(data => {
-          console.log(this.value);
-          if (this.value == "违章车辆") {
-            // this.show_type = "违章车辆";1
-            if (data.data.violation_car_info.length !== 0) {
-              for (var key in this.violation_car_info[0]) {
-                this.violation_car_info[0][key] =
-                  data.data.violation_car_info[0][key];
+        this.$http
+          .post("Information//update/get_info", this.select_params)
+          .then(data => {
+            console.log(data);
+            console.log(this.value);
+            if (this.value == "违章车辆") {
+              this.show_type = "违章车辆";
+              if (data.data.length !== 0) {
+                for (var key in data.data[0]) {
+                  this.violation_info.forEach(element => {
+                    console.log(data.data[0][key])
+                    if(element.English == key){
+                      element.value = data.data[0][key];
+                  }
+                  });
+                }
+                this.data_info = this.violation_info;
+              } else {
+                this.$message({
+                  message: "未查到此车辆的信息 ！",
+                  type: "warning"
+                });
+              }
+            } else if (this.value == "登记车辆") {
+              this.show_type = "登记车辆";
+              this.data_info = this.reg_info;
+              if (data.data.length !== 0) {
+               for (var key in data.data[0]) {
+                  this.reg_info.forEach(element => {
+                    console.log(data.data[0][key])
+                    if(element.English == key){
+                      element.value = data.data[0][key];
+                  }
+                  });
+                }
+              } else {
+                this.$message({
+                  message: "未查到此车辆的信息 ！",
+                  type: "warning"
+                });
               }
             } else {
+              for (var key in data.data[0]) {
+                  this.people_info.forEach(element => {
+                    console.log(data.data[0][key])
+                    if(element.English == key){
+                      element.value = data.data[0][key];
+                  }
+                  });
+                }
+              //  this.data_info =  this.people_info;
+              this.data_info = this.people_info;
+            }
+            if (data.data.length == 0) {
+              //未查到数据
               this.$message({
                 message: "未查到此车辆的信息 ！",
                 type: "warning"
               });
             }
-          } else if(this.value == "登记车辆"){
-            // this.show_type = "登记车辆";
-            this.data_info = this.reg_info;
-            if (data.data.reg_car_info.length !== 0) {
-              for (var key in this.alldata[0]) {
-                this.alldata[0][key] = data.data.reg_car_info[0][key];
-              }
-            } else {
-              this.$message({
-                message: "未查到此车辆的信息 ！",
-                type: "warning"
-              });
-            }
-          }else{
-            this.data_info =  this.people_info;
-          }
-          if (data.data.people_info.length !== 0) {
-            this.people_data[0] = data.data.people_info[0];
-          } else {
-            //未查到数据
-            this.$message({
-              message: "未查到此车辆的信息 ！",
-              type: "warning"
-            });
-          }
-        });
+          });
       }
+    },
+    date_string(data){
+      data.forEach(item =>{
+        if(item.flag){
+          item.value = this.formatDate(item.value, 'yyyy-MM-dd hh:mm:ss')
+        }
+      })
+      return data
     }
   },
   components: {
@@ -433,17 +511,13 @@ export default {
   align-items: center;
   justify-content: flex-end;
 }
-.license_div {
-  height: 100%;
-  width: 50%;
-}
 .span_info {
   font-size: 18px;
   margin-right: 15px;
 }
 .license_div {
   height: 50px;
-  width: 500px;
+  width: 600px;
   display: flex;
   align-items: center;
   justify-content: center;

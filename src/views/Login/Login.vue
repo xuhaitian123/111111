@@ -63,6 +63,7 @@ import { Message } from 'element-ui';
     methods: {
       get_username() {
         this.username = window.localStorage.getItem("username") || "";
+        this.password = window.localStorage.getItem("password") || "";
         this.isRecordUser = !!this.username;
         // $(".user-text").val(username)
       },
@@ -77,11 +78,12 @@ import { Message } from 'element-ui';
         let self = this;
         if (this.isRecordUser && this.username) {
           window.localStorage.setItem("username", this.username)
+          window.localStorage.setItem("password", this.password)
         }
         if(this.username !== '' && this.password !== ''){
-          this.$http.post('/login', {username: this.username, password: this.password})
+          this.$http.post('/login', {username: this.username, password: this.password}) 
             .then((user) => {
-              console.log(user)
+              // console.log(user.data.data.nickname)
               if (user.data.status === 2) {
                 self.$message({
                   message: '恭喜你,登陆成功',
@@ -89,6 +91,8 @@ import { Message } from 'element-ui';
                   duration: 2000
                 });
                 this.setStorageInfo(user);
+                localStorage.setItem("nickname",user.data.data.nickname)
+                // localStorage.setItem("username",user.data.data.username)
                 self.$router.push({path: '/car/VisualChart'});
               }else if(user.data.status === 1){
                 self.$message.error('密码错误,请检测密码');

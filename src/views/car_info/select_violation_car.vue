@@ -310,7 +310,7 @@ export default {
               }
             } else {
               this.$message({
-                message: "未查到此车辆的信息 ！",
+                message: "未查到此车辆的违章信息 ！",
                 type: "warning"
               });
             }
@@ -322,7 +322,7 @@ export default {
               }
             } else {
               this.$message({
-                message: "未查到此车辆的信息 ！",
+                message: "未查到此车辆的登记信息 ！",
                 type: "warning"
               });
             }
@@ -332,7 +332,7 @@ export default {
           } else {
             //未查到数据
             this.$message({
-              message: "未查到此车辆的信息 ！",
+              message: "未查到此车辆的车主信息 ！",
               type: "warning"
             });
           }

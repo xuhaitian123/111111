@@ -97,7 +97,7 @@ export default {
       showfilelist: true,
       limmit: 1,
       params: {
-        username: "test",
+        username: "test1",
         password: "123456"
       }
     };
@@ -137,6 +137,7 @@ export default {
             message: "恭喜你，上传成功！",
             type: "success"
           });
+          this.total = 0;
           this.remove();
           this.Exceldata = [];
           this.show_tip = true;

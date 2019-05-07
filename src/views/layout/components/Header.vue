@@ -21,7 +21,7 @@
   export  default {
     data(){
       return {
-        name: '测试账号'||window.localStorage.getItem("username")
+        name: localStorage.getItem("nickname")
       }
     },
     components:{
