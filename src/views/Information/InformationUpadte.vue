@@ -294,6 +294,7 @@ export default {
       ],
       keyWords: "",
       license_num: "",
+      license_num_old : '',
       results: [],
       currentPage1: 5,
       currentPage2: 5,
@@ -325,7 +326,7 @@ export default {
         username: "",
         password: "",
         license_num: "",
-        type: ""
+        type: "",
       }
     };
   },
@@ -359,7 +360,8 @@ export default {
     update() {
       let params ={
             type : this.value,
-            data : this.date_string(this.data_info)
+            data : this.date_string(this.data_info),
+            license_num_old : this.license_num_old
           }
       this.$http.post("/Information/update/update", params).then(data => {
         if(data.data.status =="1"){
@@ -396,6 +398,9 @@ export default {
         this.$http
           .post("Information//update/get_info", this.select_params)
           .then(data => {
+            if (data.data.length !== 0){
+              this.license_num_old = data.data[0].license_num
+            }
             console.log(data);
             console.log(this.value);
             if (this.value == "违章车辆") {
@@ -459,7 +464,7 @@ export default {
     date_string(data){
       data.forEach(item =>{
         if(item.flag){
-          item.value = this.formatDate(item.value, 'yyyy-MM-dd hh:mm:ss')
+          item.value = this.formatDate(new Date(item.value), 'yyyy-MM-dd hh:mm:ss')
         }
       })
       return data
