@@ -280,7 +280,6 @@ export default {
       return this.products;
     },
     select() {
-      console.log(this.show_type);
       if (this.value == "") {
         this.$message({
           message: "请选择查询的车辆类型！",

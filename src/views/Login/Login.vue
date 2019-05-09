@@ -1,9 +1,9 @@
 <template>
   <div class="">
-    <div class="nav">
+    <!-- <div class="nav">
       <img src="../../../static/image/login/logo.png" class="logo">
       <span class="text-image">交通数据平台系统</span>
-    </div>
+    </div> -->
     <div class="container-login">
       <div class="container-block">
         <div class="container">
@@ -135,6 +135,7 @@ import { Message } from 'element-ui';
 
   .content-img {
     height: 40px;
+    visibility: hidden;
   }
 
   .empty-retangle {
@@ -241,6 +242,7 @@ import { Message } from 'element-ui';
     padding-bottom: 30px;
     fill: #ffffff;
     line-height: 12px;
+    visibility: hidden;
 
   }
 
