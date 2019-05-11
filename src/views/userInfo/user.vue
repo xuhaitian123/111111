@@ -42,7 +42,7 @@
           @current-change="handleCurrentChange"
           :current-page="currentPage"
           :page-sizes="[15, 30, 45, 60, 100]"
-          :page-size="10"
+          :page-size="params.length"
           layout="total, sizes, prev, pager, next, jumper"
           :total="count"
         ></el-pagination>
@@ -60,8 +60,8 @@
             <el-form-item label="所属部门" prop="department">
               <el-input type="department" v-model="ruleForm2.department" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="密码" prop="pass">
-              <el-input  v-model="ruleForm2.pass" autocomplete="off"></el-input>
+            <el-form-item label="密码" prop="password">
+              <el-input  v-model="ruleForm2.password" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="创建时间" prop="create_time">
               <el-date-picker
@@ -122,21 +122,9 @@ export default {
         if (value === '') {
           callback(new Error('请输入密码'));
         } else {
-          // if (this.ruleForm2.checkPass !== '') {
-          //   this.$refs.ruleForm2.validateField('checkPass');
-          // }
           callback();
         }
       };
-      // var validatePass2 = (rule, value, callback) => {
-      //   if (value === '') {
-      //     callback(new Error('请再次输入密码'));
-      //   } else if (value !== this.ruleForm2.pass) {
-      //     callback(new Error('两次输入密码不一致!'));
-      //   } else {
-      //     callback();
-      //   }
-      // };
     return {
       data: [],
       tableData: [],
@@ -157,14 +145,15 @@ export default {
         }
       },
       ruleForm2: {
-        pass: '',
+        password: '',
         create_time: '',
         username: '',
         department: '',
         nickname: '',
+        creator : "1"
       },
       rules2: {
-        pass: [
+        password: [
           { validator: validatePass, trigger: 'blur' }
         ],
         create_time: [
@@ -179,39 +168,25 @@ export default {
         nickname: [
           { validator: nickname, trigger: 'blur' }
         ],
-        // checkPass: [
-        //   { validator: validatePass2, trigger: 'blur' }
-        // ],
-        // age: [
-        //   { validator: checkAge, trigger: 'blur' }
-        // ]
       }
     };
   },
   methods: {
-    get_data() {
-      this.$http.get("/user/getUser").then(data => {
+    get_data(params) {
+      console.log(params)
+      this.$http.post("/user/getUser",params).then(data => {
         console.log(data)
-        this.tableData = data.data;
+        this.tableData = data.data.data;
         this.count = data.data.total;
+        console.log(this.count)
         this.loading = false;
       });
     },
-    submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
       handleClick(row){
-        this.$http.post("/user/deleteUser",{id : row.id}).then(data => {
+        this.$http.post("/user/deleteUser",{username : row.username}).then(data => {
         if(data.data.code == 200){
           this.$message({
             message: '删除成功',
@@ -221,39 +196,74 @@ export default {
         }else if(data.data.code == 500){
           this.$message.error('删除失败，未知错误');
         }
-        this.get_data()
+        this.get_data(this.params)
       });
       },
       add_user() {
         this.show_table = false
       },
       show_table_button(){
-        this.show_table = true,
-        this.add = false
+        this.show_table = true;
+        this.add = false;
+        this.get_data(this.params)
+      },
+      handleSizeChange(val) {
+        this.currentPage = 1;
+        this.params.start = 0;
+        this.params.length = val;
+        this.loading = true;
+        this.get_data(this.params);
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
+        this.params.start = this.params.length * (val - 1);
+        this.get_data(this.params);
+      },
+      handleSortChange(column) {
+        if (column.order == "descending") {
+          this.params.start = 0;
+          this.currentPage = 1;
+          this.params.sort.type = "desc";
+          this.params.sort.name = column.prop;
+          this.get_data(this.params);
+        } else if (column.order == "ascending") {
+          this.params.start = 0;
+          this.currentPage = 1;
+          this.params.sort.type = "asc";
+          this.params.sort.name = column.prop;
+          this.get_data(this.params);
+        }
       },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
-          console.log(formName)
-          console.log(valid)
-          console.log(this.ruleForm2)
           if (valid) {
-            alert('submit!');
+            this.ruleForm2.creator = localStorage.getItem("username")
+            this.$http.post("/user/addUser",{data :this.ruleForm2}).then(data => {
+              console.log(data)
+              if(data.data.status == 2){
+                this.$message({
+                  message: '添加成功',
+                  type: 'success',
+                  duration: 2000
+                });
+                this.$refs[formName].resetFields();
+              }else if(data.data.status == 0){
+                this.$message.error('添加失败，用户名存在');
+              }
+            });
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      }
   },
   components: {
     Area
   },
   created() {},
   mounted() {
-    this.get_data()
+    this.get_data(this.params)
   }
 };
 </script>
