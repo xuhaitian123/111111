@@ -237,7 +237,9 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            var date = this.formatDate(new Date(this.ruleForm2.create_time.getTime()),"yyyy-MM-dd hh:mm:ss")
             this.ruleForm2.creator = localStorage.getItem("username")
+            this.ruleForm2.create_time = date
             this.$http.post("/user/addUser",{data :this.ruleForm2}).then(data => {
               console.log(data)
               if(data.data.status == 2){

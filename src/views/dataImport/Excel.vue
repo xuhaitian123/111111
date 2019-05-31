@@ -97,8 +97,8 @@ export default {
       showfilelist: true,
       limmit: 1,
       params: {
-        username: "test1",
-        password: "123456"
+        username: this.getCookie('username'),
+        password: this.getCookie('password'),
       }
     };
   },

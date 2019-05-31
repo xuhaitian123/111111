@@ -92,7 +92,8 @@ import { Message } from 'element-ui';
                 });
                 this.setStorageInfo(user);
                 localStorage.setItem("nickname",user.data.data.nickname)
-                // localStorage.setItem("username",user.data.data.username)
+                localStorage.setItem("type",user.data.data.type)
+                localStorage.setItem("username",user.data.data.username)
                 self.$router.push({path: '/car/VisualChart'});
               }else if(user.data.status === 1){
                 self.$message.error('密码错误,请检测密码');
@@ -105,10 +106,10 @@ import { Message } from 'element-ui';
           }
         },
       setStorageInfo(data) {
-        this.setCookie("userToken", data.data.token, 7);
-        this.setCookie("username", data.data.username, 7);
+        this.setCookie("userToken", data.data.data.token, 3);
+        this.setCookie("username", data.data.data.username, 3);
+        this.setCookie("password", data.data.data.password, 3);
       },
-
     }
   }
 </script>

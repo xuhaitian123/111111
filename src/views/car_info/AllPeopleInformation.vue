@@ -59,8 +59,8 @@ export default {
       loading: true,
       count: 0,
       params: {
-        username: "q",
-        password: "q",
+       username: this.getCookie('username'),
+        password: this.getCookie('password'),
         start: 0,
         length: 15,
         sort: {

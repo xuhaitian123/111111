@@ -229,8 +229,8 @@ export default {
       currentPage4: 4,
       loading: true,
       params: {
-        username: "q",
-        password: "q",
+       username: this.getCookie('username'),
+        password: this.getCookie('password'),
         start: "1",
         length: "10"
       },
@@ -246,8 +246,8 @@ export default {
       ],
       value: "", //显示现在是查询的是什么类型的车
       select_params: {
-        username: "",
-        password: "",
+        username: this.getCookie('username'),
+        password: this.getCookie('password'),
         license_num: ""
       }
     };

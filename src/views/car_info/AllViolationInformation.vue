@@ -77,8 +77,8 @@ export default {
       centerDialogVisible: false,
       count: 0, //数据的总数
       params: {
-        username: "q",
-        password: "q",
+        username: this.getCookie('username'),
+        password: this.getCookie('password'),
         start: "1",
         length: "15",
         sort: {
